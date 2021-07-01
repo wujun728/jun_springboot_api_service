@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vacomall.mapper.BlogMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		id, title, conrtent, userId, createTime
+	</sql>
+	
+		
+	<select id="selectMap" resultType="java.util.HashMap">
+	
+		SELECT b.*,u.`userName` FROM `tb_blog` b
+		LEFT JOIN `sys_user` u ON u.`id` = b.`userId`
+		
+	</select>
+	
+</mapper>
