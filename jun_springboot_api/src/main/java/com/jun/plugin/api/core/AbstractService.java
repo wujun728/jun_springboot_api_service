@@ -1,4 +1,4 @@
-package com.company.project.core;
+package com.jun.plugin.api.core;
 
 
 import org.apache.ibatis.exceptions.TooManyResultsException;

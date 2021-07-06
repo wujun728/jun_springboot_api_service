@@ -1,4 +1,4 @@
-package com.company.project.configurer;
+package com.jun.plugin.api.configurer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

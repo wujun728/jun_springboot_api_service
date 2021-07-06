@@ -1,11 +1,12 @@
-package com.company.project.service.impl;
+package com.jun.plugin.api.service.impl;
 
-import com.company.project.mapper.CompanyMapper;
-import com.company.project.model.Company;
-import com.company.project.service.CompanyService;
-import com.company.project.core.AbstractService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.jun.plugin.api.core.AbstractService;
+import com.jun.plugin.api.mapper.CompanyMapper;
+import com.jun.plugin.api.model.Company;
+import com.jun.plugin.api.service.CompanyService;
 
 import javax.annotation.Resource;
 

@@ -1,8 +1,10 @@
-package com.company.project.configurer;
+package com.jun.plugin.api.configurer;
 
-import com.company.project.core.ProjectConstant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.jun.plugin.api.core.ProjectConstant;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;

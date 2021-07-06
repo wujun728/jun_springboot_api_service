@@ -1,10 +1,11 @@
-package com.company.project.controller;
-import com.company.project.core.Result;
-import com.company.project.core.ResultGenerator;
-import com.company.project.model.Company;
-import com.company.project.service.CompanyService;
+package com.jun.plugin.api.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jun.plugin.api.core.Result;
+import com.jun.plugin.api.core.ResultGenerator;
+import com.jun.plugin.api.model.Company;
+import com.jun.plugin.api.service.CompanyService;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.*;
