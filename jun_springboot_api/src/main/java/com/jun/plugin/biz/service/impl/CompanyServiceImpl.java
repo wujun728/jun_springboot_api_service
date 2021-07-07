@@ -1,14 +1,14 @@
-package com.jun.plugin.api.service.impl;
+package com.jun.plugin.biz.service.impl;
+
+import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jun.plugin.api.core.AbstractService;
-import com.jun.plugin.api.mapper.CompanyMapper;
-import com.jun.plugin.api.model.Company;
-import com.jun.plugin.api.service.CompanyService;
-
-import javax.annotation.Resource;
+import com.jun.plugin.biz.mapper.CompanyMapper;
+import com.jun.plugin.biz.model.Company;
+import com.jun.plugin.biz.service.CompanyService;
 
 
 /**
