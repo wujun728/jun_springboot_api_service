@@ -1,12 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.vacomall</groupId>
-	<artifactId>Vacomall-Spring-RestApi</artifactId>
+	
+	<groupId>com.jun.plugin</groupId>
+	<artifactId>jun_spring_api</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Vacomall-Spring-RestApi Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<version>1.0</version>
 
 	<properties>
 
