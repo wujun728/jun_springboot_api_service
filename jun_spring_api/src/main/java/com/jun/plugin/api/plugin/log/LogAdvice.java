@@ -22,7 +22,7 @@ public class LogAdvice {
 	
 	public static final Logger logger = Logger.getLogger(LogAdvice.class);
 	
-	@Pointcut("@annotation(com.vacomall.common.anno.Log)")
+	@Pointcut("@annotation(com.jun.plugin.api.common.anno.Log)")
 	public void controllerAspect() {
 		
 	}

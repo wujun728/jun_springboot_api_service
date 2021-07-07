@@ -16,8 +16,7 @@
 
 	<modules>
 		<module>jun_springboot_api</module>
-		<module>jun_springboot_apiservice</module>
-		<module>jun_spring_restapi</module>
+		<module>jun_spring_api</module>
 		
 	</modules>
 

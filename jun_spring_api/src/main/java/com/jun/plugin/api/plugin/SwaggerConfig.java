@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @EnableWebMvc  
 @EnableSwagger2  
-@ComponentScan(basePackages = {"com.vacomall.controller"})  
+@ComponentScan(basePackages = {"com.jun.plugin.api.controller"})  
 @Configuration  
 public class SwaggerConfig  {
 
@@ -29,7 +29,7 @@ public class SwaggerConfig  {
 	        return new Docket(DocumentationType.SWAGGER_2)  
 	                .apiInfo(apiInfo())  
 	                .select()  
-	                .apis(RequestHandlerSelectors.basePackage("com.vacomall.controller"))  
+	                .apis(RequestHandlerSelectors.basePackage("com.jun.plugin.api.controller"))  
 	                .paths(PathSelectors.any())  
 	                .build();  
 	    }  

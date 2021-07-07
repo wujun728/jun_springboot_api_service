@@ -57,7 +57,7 @@
 		class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:xml/mybatis-config.xml" />
-		<property name="typeAliasesPackage" value="com.vacomall.entity" />
+		<property name="typeAliasesPackage" value="com.jun.plugin.api.entity" />
 		<property name="mapperLocations" value="classpath:mapper/*Mapper.xml" />
 		<property name="plugins">
 			<array>
@@ -71,6 +71,6 @@
 	</bean>
 
 	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.vacomall.mapper" />
+		<property name="basePackage" value="com.jun.plugin.api.mapper" />
 	</bean>
 </beans>
