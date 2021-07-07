@@ -1,4 +1,4 @@
-package com.jun.plugin.api.configurer;
+package com.jun.plugin.api.core.configuration;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.plugin.Interceptor;

@@ -1,4 +1,4 @@
-package com.jun.plugin.api.configurer;
+package com.jun.plugin.api.core.configuration;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
