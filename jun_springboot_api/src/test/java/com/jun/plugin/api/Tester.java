@@ -7,7 +7,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jun.plugin.api.ApiServiceApplication;
+import com.jun.plugin.ApiServiceApplication;
 
 /**
  * 单元测试继承该类即可
