@@ -6,6 +6,10 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatis的API接口服�
 基于当前项目，可快速构建中小型API、RESTful API接口，项目含有代码生成器，单表标接口一键生成
 该项目已经有过多个真实项目的实践，稳定、简单、快速，让码农脱离重复劳动，专注于业务代码的编写，减少加班。
 
+### 功能截图：
+![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/1.png) 
+![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/2.png) 
+![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/3.png) 
  
 ### 本文使用框架如下：
 * 核心框架：spring boot 2.1.6
@@ -20,11 +24,6 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatis的API接口服�
 * MyBatisb通用Mapper插件（[查看官方中文文档](https://mapperhelper.github.io/docs/)）
 * MyBatis PageHelper分页插件（[查看官方中文文档](https://pagehelper.github.io/)）
 * 其他略
-
-![](https://raw.githubusercontent.com/wujun728/jun_spring_api/master/src/main/resources/static/images/1.jpg) 
-![](https://raw.githubusercontent.com/wujun728/jun_spring_api/master/src/main/resources/static/images2.JPG) 
-![](https://raw.githubusercontent.com/wujun728/jun_spring_api/master/src/main/resources/static/images/3.JPG) 
-![](https://raw.githubusercontent.com/wujun728/jun_spring_api/master/src/main/resources/static/images/4.JPG) 
 
 
  ### 特征&提供
