@@ -2,6 +2,8 @@ package com.jun.plugin.api.utils;
 
 import java.security.MessageDigest;
 
+import com.jun.plugin.api.entity.SysUser;
+
 /**
 * @ClassName:       PasswordEncoder
 *                   密码加密
@@ -102,7 +104,15 @@ public class PasswordEncoder {
 	}
 
 	public static void main(String[] args) {
-
+		String salt = PasswordUtils.getSalt();
+		String passEncode = PasswordUtils.encode("admin", salt);
+		SysUser u = new SysUser();
+		u.setSalt(salt);
+		u.setUsername("admin");
+		u.setPassword("admin");
+		System.out.println(passEncode);
+		System.out.println(salt);
+		System.out.println(PasswordUtils.matches(u.getSalt(),u.getPassword(),u.getPassword()));
 	}
 
 

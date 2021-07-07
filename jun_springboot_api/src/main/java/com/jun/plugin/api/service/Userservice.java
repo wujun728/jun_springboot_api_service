@@ -1,8 +1,8 @@
-package com.jun.plugin.biz.service;
+package com.jun.plugin.api.service;
 
-import com.jun.plugin.biz.entity.SysUser;
-import com.jun.plugin.biz.vo.req.LoginReqVO;
-import com.jun.plugin.biz.vo.resp.LoginRespVO;
+import com.jun.plugin.api.entity.SysUser;
+import com.jun.plugin.api.vo.req.LoginReqVO;
+import com.jun.plugin.api.vo.resp.LoginRespVO;
 
 /**
  * @ClassName: Userservice

@@ -51,7 +51,7 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.yingxue.lesson.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.jun.plugin.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(pars)
@@ -61,8 +61,8 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Swagger2构建RESTful APIs")
-                .description("测试Swagger2文档")
+                .title("Jun_SpringBoot_APi Swagger2构建RESTful APIs")
+                .description("Swagger2接口明细描述文档")
                 .termsOfServiceUrl("")
                 .version("1.0")
                 .build();

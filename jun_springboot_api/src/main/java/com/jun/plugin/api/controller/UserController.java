@@ -1,15 +1,21 @@
-package com.jun.plugin.biz.controller;
+package com.jun.plugin.api.controller;
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.jun.plugin.api.service.Userservice;
+import com.jun.plugin.api.utils.DataResult;
+import com.jun.plugin.api.vo.req.LoginReqVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.jun.plugin.biz.service.Userservice;
-import com.jun.plugin.biz.utils.DataResult;
-import com.jun.plugin.biz.vo.req.LoginReqVO;
 
 
 /**

@@ -1,6 +1,6 @@
-package com.jun.plugin.biz.mapper;
+package com.jun.plugin.api.mapper;
 
-import com.jun.plugin.biz.entity.SysUser;
+import com.jun.plugin.api.entity.SysUser;
 
 public interface SysUserMapper {
     int deleteByPrimaryKey(String id);

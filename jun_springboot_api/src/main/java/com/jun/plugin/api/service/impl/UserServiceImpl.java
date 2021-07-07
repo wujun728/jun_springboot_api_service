@@ -1,19 +1,20 @@
-package com.jun.plugin.biz.service.impl;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.jun.plugin.biz.entity.SysUser;
-import com.jun.plugin.biz.exception.BusinessException;
-import com.jun.plugin.biz.mapper.SysUserMapper;
-import com.jun.plugin.biz.service.RedisService;
-import com.jun.plugin.biz.service.Userservice;
-import com.jun.plugin.biz.utils.PasswordUtils;
-import com.jun.plugin.biz.vo.req.LoginReqVO;
-import com.jun.plugin.biz.vo.resp.LoginRespVO;
+package com.jun.plugin.api.service.impl;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.jun.plugin.api.entity.SysUser;
+import com.jun.plugin.api.exception.BusinessException;
+import com.jun.plugin.api.mapper.SysUserMapper;
+import com.jun.plugin.api.service.RedisService;
+import com.jun.plugin.api.service.Userservice;
+import com.jun.plugin.api.utils.PasswordUtils;
+import com.jun.plugin.api.vo.req.LoginReqVO;
+import com.jun.plugin.api.vo.resp.LoginRespVO;
 
 /**
  * @ClassName: UserServiceImpl
@@ -24,10 +25,15 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class UserServiceImpl implements Userservice {
+    @Value("${session.timeout}")
+    private Integer sessionTimeout;
+    
     @Autowired
     private SysUserMapper sysUserMapper;
+    
     @Autowired
     private RedisService redisService;
+    
     @Override
     public LoginRespVO login(LoginReqVO vo) {
         SysUser userByUserName = sysUserMapper.getUserByUserName(vo.getUsername());
@@ -44,7 +50,7 @@ public class UserServiceImpl implements Userservice {
         loginRespVO.setId(userByUserName.getId());
         loginRespVO.setSessionId(UUID.randomUUID().toString());
         //把凭证存入到reids
-        redisService.set(loginRespVO.getSessionId(),loginRespVO.getId(),60, TimeUnit.MINUTES);
+        redisService.set(loginRespVO.getSessionId(),loginRespVO.getId(),sessionTimeout, TimeUnit.MINUTES);
         return loginRespVO;
     }
 

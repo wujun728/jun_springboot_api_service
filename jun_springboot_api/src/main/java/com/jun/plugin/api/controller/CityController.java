@@ -17,6 +17,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping(value = "/api/public/city")
+@Api(tags = "城市表模块相关接口")
 public class CityController {
     @Resource
     private CityService cityService;
