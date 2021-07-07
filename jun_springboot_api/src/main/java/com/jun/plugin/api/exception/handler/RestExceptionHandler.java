@@ -16,8 +16,7 @@ import java.util.List;
 /**
  * @ClassName: RestExceptionHandler
  * TODO:类文件简单描述
- * @Author: 小霍
- * @UpdateUser: 小霍
+ * @author Wujun
  * @Version: 0.0.1
  */
 @RestControllerAdvice
@@ -37,10 +36,7 @@ public class RestExceptionHandler {
     }
     /**
      * 处理validation 框架异常
-     * @Author:      小霍
-     * @UpdateUser:
      * @Version:     0.0.1
-     * @param e
      * @return       com.yingxue.lesson.utils.DataResult<T>
      * @throws
      */

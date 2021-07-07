@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * @ClassName: CustomRealm
  * TODO:类文件简单描述
- * @Author: 小霍
- * @UpdateUser: 小霍
+ * @author Wujun
  * @Version: 0.0.1
  */
 public class CustomRealm extends AuthorizingRealm {
@@ -45,8 +44,6 @@ public class CustomRealm extends AuthorizingRealm {
 
     /**
      * 模拟通过数据库获取权限数据
-     * @Author:      小霍
-     * @UpdateUser:
      * @Version:     0.0.1
      * @param userId
      * @return       java.util.List<java.lang.String>
@@ -68,8 +65,6 @@ public class CustomRealm extends AuthorizingRealm {
 
     /**
      * 模拟通过数据库获取用户角色信息
-     * @Author:      小霍
-     * @UpdateUser:
      * @Version:     0.0.1
      * @param userId
      * @return       java.util.List<java.lang.String>

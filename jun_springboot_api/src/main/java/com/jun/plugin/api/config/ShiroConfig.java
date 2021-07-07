@@ -21,8 +21,7 @@ import java.util.Map;
 /**
  * @ClassName: ShiroConfig
  * TODO:类文件简单描述
- * @Author: 小霍
- * @UpdateUser: 小霍
+ * @author Wujun
  * @Version: 0.0.1
  */
 @Configuration
@@ -47,8 +46,6 @@ public class ShiroConfig {
     }
     /**
      * shiro过滤器，配置拦截哪些请求
-     * @Author:      小霍
-     * @UpdateUser:
      * @Version:     0.0.1
      * @param securityManager
      * @return       org.apache.shiro.spring.web.ShiroFilterFactoryBean
@@ -83,7 +80,6 @@ public class ShiroConfig {
     /**
      * 开启shiro aop注解支持.
      * 使用代理方式;所以需要开启代码支持;
-     * @Author:      小霍
      * @UpdateUser:
      * @Version:     0.0.1
      * @param securityManager

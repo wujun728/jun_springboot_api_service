@@ -5,11 +5,6 @@ import java.util.UUID;
 /**
 * @ClassName:       PasswordUtils
 *                   密码工具类
-* @Author:          小霍
-* @CreateDate:      2019/9/7 13:44
-* @UpdateUser:      小霍
-* @UpdateDate:      2019/9/7 13:44
-* @Version:         0.0.1
 */
 public class PasswordUtils {
 

@@ -6,6 +6,14 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatis的API接口服�
 基于当前项目，可快速构建中小型API、RESTful API接口，项目含有代码生成器，单表标接口一键生成
 该项目已经有过多个真实项目的实践，稳定、简单、快速，让码农脱离重复劳动，专注于业务代码的编写，减少加班。
 
+###
+- Swagger地址：http://localhost:8080/swagger-ui.html
+- 登录地址：localhost:8080/api/user/login?username=admin&password=admin
+- 接口地址：localhost:8080/api/public/company/list
+- session超时，30分；
+
+
+
 ### 使用框架如下：
 * 核心框架：spring boot 2.1.6
 * 持久层框架：mybatis
