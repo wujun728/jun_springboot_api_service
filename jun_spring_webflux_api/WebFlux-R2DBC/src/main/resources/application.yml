@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  profiles: local
+  r2dbc:
+    url: r2dbc:pool:postgresql://127.0.0.1:5432/basquiat
+    username: postgres
+    password: basquiat
+    pool:
+      initial-size: 10
+      max-size: 30
+      max-idle-time: 30m
+      validation-query: SELECT 1
+
+springfox:
+  documentation:
+    swagger-ui:
+      base-url: /documentation
+
+logging:
+  level:
+    org.springframework.data.r2dbc: DEBUG
