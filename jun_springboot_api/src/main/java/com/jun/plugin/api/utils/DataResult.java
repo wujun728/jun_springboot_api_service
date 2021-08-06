@@ -2,6 +2,7 @@ package com.jun.plugin.api.utils;
 
 import com.jun.plugin.api.exception.code.BaseResponseCode;
 import com.jun.plugin.api.exception.code.ResponseCodeInterface;
+import com.jun.plugin.api.vo.resp.LoginRespVO;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -139,5 +140,6 @@ public class DataResult <T>{
 
         return new <T>DataResult(responseCode,data);
     }
+
 
 }
