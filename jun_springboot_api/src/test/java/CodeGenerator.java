@@ -7,7 +7,7 @@ import org.mybatis.generator.internal.DefaultShellCallback;
 
 import javax.persistence.Id;
 
-import static com.jun.plugin.api.core.ProjectConstant.*;
+import static com.jun.plugin.base.core.ProjectConstant.*;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -39,7 +39,7 @@ public class CodeGenerator {
     private static final String DATE = new SimpleDateFormat("yyyy/MM/dd").format(new Date());//@date
 
     public static void main(String[] args) {
-        genCode("city");
+        genCode("customer");
 //        genCode("company");
 //        genCodeByCustomModelName("输入表名","输入自定义Model名称");
     }
@@ -145,6 +145,7 @@ public class CodeGenerator {
             data.put("modelNameUpperCamel", modelNameUpperCamel);
             data.put("modelNameLowerCamel", tableNameConvertLowerCamel(tableName));
             data.put("basePackage", BASE_PACKAGE);
+            data.put("baseImportPackage", BASE_IMPORT_PACKAGE);
 
             File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_SERVICE + modelNameUpperCamel + "Service.java");
             if (!file.getParentFile().exists()) {
@@ -178,6 +179,7 @@ public class CodeGenerator {
             data.put("modelNameUpperCamel", modelNameUpperCamel);
             data.put("modelNameLowerCamel", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, modelNameUpperCamel));
             data.put("basePackage", BASE_PACKAGE);
+            data.put("baseImportPackage", BASE_IMPORT_PACKAGE);
 
             File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER + modelNameUpperCamel + "Controller.java");
             if (!file.getParentFile().exists()) {

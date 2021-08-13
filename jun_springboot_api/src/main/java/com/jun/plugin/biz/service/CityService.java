@@ -1,5 +1,5 @@
 package com.jun.plugin.biz.service;
-import com.jun.plugin.api.core.Service;
+import com.jun.plugin.base.core.Service;
 import com.jun.plugin.biz.model.City;
 
 

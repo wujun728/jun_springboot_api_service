@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jun.plugin.api.core.Result;
-import com.jun.plugin.api.core.ResultGenerator;
+import com.jun.plugin.base.core.Result;
+import com.jun.plugin.base.core.ResultGenerator;
 import com.jun.plugin.biz.model.Company;
 import com.jun.plugin.biz.service.CompanyService;
 

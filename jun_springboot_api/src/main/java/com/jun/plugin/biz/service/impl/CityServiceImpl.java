@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jun.plugin.api.core.AbstractService;
+import com.jun.plugin.base.core.AbstractService;
 import com.jun.plugin.biz.mapper.CityMapper;
 import com.jun.plugin.biz.model.City;
 import com.jun.plugin.biz.service.CityService;
