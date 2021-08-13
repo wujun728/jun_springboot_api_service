@@ -1,7 +1,7 @@
-package com.jun.plugin.api.mapper;
+package com.jun.plugin.biz.mapper;
 
 import com.jun.plugin.api.core.Mapper;
-import com.jun.plugin.api.model.Company;
+import com.jun.plugin.biz.model.Company;
 
 public interface CompanyMapper extends Mapper<Company> {
 }

@@ -1,6 +1,6 @@
-package com.jun.plugin.api.service;
+package com.jun.plugin.biz.service;
 import com.jun.plugin.api.core.Service;
-import com.jun.plugin.api.model.Company;
+import com.jun.plugin.biz.model.Company;
 
 
 /**

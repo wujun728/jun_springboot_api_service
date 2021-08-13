@@ -1,13 +1,14 @@
-package com.jun.plugin.api.service.impl;
+package com.jun.plugin.biz.service.impl;
 
-import com.jun.plugin.api.mapper.CityMapper;
-import com.jun.plugin.api.model.City;
-import com.jun.plugin.api.service.CityService;
-import com.jun.plugin.api.core.AbstractService;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
+import com.jun.plugin.api.core.AbstractService;
+import com.jun.plugin.biz.mapper.CityMapper;
+import com.jun.plugin.biz.model.City;
+import com.jun.plugin.biz.service.CityService;
 
 
 /**

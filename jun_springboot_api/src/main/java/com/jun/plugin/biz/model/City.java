@@ -1,4 +1,4 @@
-package com.jun.plugin.api.model;
+package com.jun.plugin.biz.model;
 
 import java.util.Date;
 import javax.persistence.*;

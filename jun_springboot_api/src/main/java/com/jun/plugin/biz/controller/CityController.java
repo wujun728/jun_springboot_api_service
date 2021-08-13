@@ -1,16 +1,28 @@
-package com.jun.plugin.api.controller;
-import com.jun.plugin.api.core.Result;
-import com.jun.plugin.api.core.ResultGenerator;
-import com.jun.plugin.api.model.City;
-import com.jun.plugin.api.service.CityService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import io.swagger.annotations.*;
+package com.jun.plugin.biz.controller;
+import java.util.List;
 
 import javax.annotation.Resource;
-import java.util.List;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.jun.plugin.api.core.Result;
+import com.jun.plugin.api.core.ResultGenerator;
+import com.jun.plugin.biz.model.City;
+import com.jun.plugin.biz.service.CityService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 
 /**
 * Created by Wujun on 2021/07/07.

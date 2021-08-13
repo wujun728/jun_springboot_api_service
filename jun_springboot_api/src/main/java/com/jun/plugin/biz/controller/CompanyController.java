@@ -1,4 +1,4 @@
-package com.jun.plugin.api.controller;
+package com.jun.plugin.biz.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,8 +17,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jun.plugin.api.core.Result;
 import com.jun.plugin.api.core.ResultGenerator;
-import com.jun.plugin.api.model.Company;
-import com.jun.plugin.api.service.CompanyService;
+import com.jun.plugin.biz.model.Company;
+import com.jun.plugin.biz.service.CompanyService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
