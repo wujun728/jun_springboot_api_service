@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jun.plugin.biz.mapper.CustomerMapper">
+  <resultMap id="BaseResultMap" type="com.jun.plugin.biz.model.Customer">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="CUSTOMER_ID" jdbcType="INTEGER" property="customerId" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="MYID" jdbcType="VARCHAR" property="myid" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="CREATED" jdbcType="DATE" property="created" />
+    <result column="LASTMOD" jdbcType="DATE" property="lastmod" />
+    <result column="CREATER" jdbcType="INTEGER" property="creater" />
+    <result column="MODIFIYER" jdbcType="INTEGER" property="modifiyer" />
+    <result column="CLASS_ID" jdbcType="INTEGER" property="classId" />
+    <result column="TEL" jdbcType="VARCHAR" property="tel" />
+    <result column="FAX" jdbcType="VARCHAR" property="fax" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="AREA_ID" jdbcType="INTEGER" property="areaId" />
+    <result column="AREA_NAME" jdbcType="VARCHAR" property="areaName" />
+    <result column="PROVINCE_ID" jdbcType="INTEGER" property="provinceId" />
+    <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName" />
+    <result column="CITY_ID" jdbcType="INTEGER" property="cityId" />
+    <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+    <result column="ZIP" jdbcType="VARCHAR" property="zip" />
+    <result column="LEVEL_ID" jdbcType="INTEGER" property="levelId" />
+    <result column="LEVEL_NAME" jdbcType="VARCHAR" property="levelName" />
+    <result column="PRICE_LEVEL" jdbcType="INTEGER" property="priceLevel" />
+    <result column="CONTACT_PERIOD" jdbcType="INTEGER" property="contactPeriod" />
+    <result column="SOURCE_ID" jdbcType="INTEGER" property="sourceId" />
+    <result column="SOURCE_NAME" jdbcType="VARCHAR" property="sourceName" />
+    <result column="NATURE_ID" jdbcType="INTEGER" property="natureId" />
+    <result column="NATURE_NAME" jdbcType="VARCHAR" property="natureName" />
+    <result column="INDUSTRY_ID" jdbcType="INTEGER" property="industryId" />
+    <result column="INDUSTRY_NAME" jdbcType="VARCHAR" property="industryName" />
+    <result column="MAIN_BUSINESS" jdbcType="VARCHAR" property="mainBusiness" />
+    <result column="SIZE_ID" jdbcType="INTEGER" property="sizeId" />
+    <result column="SIZE_NAME" jdbcType="VARCHAR" property="sizeName" />
+    <result column="SETUP_DATE" jdbcType="TIMESTAMP" property="setupDate" />
+    <result column="CAPITAL" jdbcType="INTEGER" property="capital" />
+    <result column="CORPORATION" jdbcType="VARCHAR" property="corporation" />
+    <result column="CREDIT_ID" jdbcType="INTEGER" property="creditId" />
+    <result column="CREDIT_NAME" jdbcType="VARCHAR" property="creditName" />
+    <result column="BANK" jdbcType="VARCHAR" property="bank" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="TAXNO" jdbcType="VARCHAR" property="taxno" />
+    <result column="SHARED" jdbcType="VARCHAR" property="shared" />
+    <result column="PID" jdbcType="INTEGER" property="pid" />
+    <result column="ATTACHMENT_ID" jdbcType="INTEGER" property="attachmentId" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="SALE_ID" jdbcType="INTEGER" property="saleId" />
+    <result column="SALE_NAME" jdbcType="VARCHAR" property="saleName" />
+    <result column="SALE_ORGANIZATION_ID" jdbcType="INTEGER" property="saleOrganizationId" />
+    <result column="SALE_ORGANIZATION_NAME" jdbcType="VARCHAR" property="saleOrganizationName" />
+    <result column="CUSTOMER_STATUS" jdbcType="CHAR" property="customerStatus" />
+    <result column="CLASS_NAME" jdbcType="VARCHAR" property="className" />
+    <result column="EMP_COUNT" jdbcType="INTEGER" property="empCount" />
+    <result column="TAX" jdbcType="INTEGER" property="tax" />
+    <result column="SETUP_ACCOUNT" jdbcType="INTEGER" property="setupAccount" />
+    <result column="CURRENCY_ID" jdbcType="INTEGER" property="currencyId" />
+    <result column="CURRENCY_NAME" jdbcType="VARCHAR" property="currencyName" />
+    <result column="TOTAL_SALES" jdbcType="VARCHAR" property="totalSales" />
+    <result column="DEDUCTION_TAX" jdbcType="CHAR" property="deductionTax" />
+  </resultMap>
+</mapper>

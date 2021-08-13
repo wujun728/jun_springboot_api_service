@@ -1,8 +1,8 @@
-package ${basePackage}.controller;
-import ${baseImportPackage}.core.Result;
-import ${baseImportPackage}.core.ResultGenerator;
-import ${basePackage}.model.${modelNameUpperCamel};
-import ${basePackage}.service.${modelNameUpperCamel}Service;
+package com.jun.plugin.biz.controller;
+import com.jun.plugin.base.core.Result;
+import com.jun.plugin.base.core.ResultGenerator;
+import com.jun.plugin.biz.model.Customer;
+import com.jun.plugin.biz.service.CustomerService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.http.MediaType;
@@ -13,19 +13,19 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by ${author} on ${date}.
+* Created by Wujun on 2021/08/14.
 */
 @RestController
-@RequestMapping(value = "${baseRequestMapping}")
-public class ${modelNameUpperCamel}Controller {
+@RequestMapping(value = "/customer")
+public class CustomerController {
     @Resource
-    private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
+    private CustomerService customerService;
 
     @ApiOperation(value = "新增")
-    @ApiImplicitParams({@ApiImplicitParam(name = "${modelNameLowerCamel}", value = "", required = true, dataType = "String")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "customer", value = "", required = true, dataType = "String")})
     @PostMapping(value = "/add", produces = "application/json", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public Result add(@RequestParam(value = "${modelNameLowerCamel}") ${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
+    public Result add(@RequestParam(value = "customer") Customer customer) {
+        customerService.save(customer);
         return ResultGenerator.genSuccessResult();
     }
 
@@ -33,15 +33,15 @@ public class ${modelNameUpperCamel}Controller {
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "", required = true, dataType = "int")})
     @DeleteMapping(value = "/delete", produces = "application/json")
     public Result delete(@RequestParam(value = "id") int id) {
-        ${modelNameLowerCamel}Service.deleteById(id);
+        customerService.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
 
     @ApiOperation(value = "修改")
-    @ApiImplicitParams({@ApiImplicitParam(name = "${modelNameLowerCamel}", value = "", required = true, dataType = "String")})
+    @ApiImplicitParams({@ApiImplicitParam(name = "customer", value = "", required = true, dataType = "String")})
     @PutMapping(value = "/update", produces = "application/json", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public Result update(@RequestParam(value = "${modelNameLowerCamel}") ${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
+    public Result update(@RequestParam(value = "customer") Customer customer) {
+        customerService.update(customer);
         return ResultGenerator.genSuccessResult();
     }
 
@@ -49,8 +49,8 @@ public class ${modelNameUpperCamel}Controller {
     @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "", required = true, dataType = "int")})
     @GetMapping(value = "/detail",produces = "application/json")
     public Result detail(@RequestParam(value = "id") int id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
-        return ResultGenerator.genSuccessResult(${modelNameLowerCamel});
+        Customer customer = customerService.findById(id);
+        return ResultGenerator.genSuccessResult(customer);
     }
 
     @ApiOperation(value = "查询列表")
@@ -60,7 +60,7 @@ public class ${modelNameUpperCamel}Controller {
     public Result list( @RequestParam(value = "page", required = false, defaultValue = "0") int page,
                         @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         PageHelper.startPage(page, size);
-        List<${modelNameUpperCamel}> list = ${modelNameLowerCamel}Service.findAll();
+        List<Customer> list = customerService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
