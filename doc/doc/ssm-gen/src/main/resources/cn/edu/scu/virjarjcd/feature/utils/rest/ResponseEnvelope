@@ -1,0 +1,53 @@
+package cn.edu.scu.virjarjcd.feature.utils.rest;
+
+import lombok.Getter;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+/**
+ * The response envelope to envelope the response data and make it as the
+ * standard data
+ * 
+ * @author weijia.deng
+ *
+ * @param <T>
+ */
+@JsonInclude(Include.NON_EMPTY)
+public class ResponseEnvelope<T> {
+	@Getter
+	private T data;
+	@Getter
+	private PageInfo pageInfo;
+	@Getter
+	private RestApiError error;
+	@Getter
+	private boolean status;
+
+	public ResponseEnvelope() {
+		this(null, null, false);
+	}
+
+	public ResponseEnvelope(T data) {
+		this(data, null, false);
+	}
+
+	public ResponseEnvelope(T data, PageInfo pageInfo, boolean status) {
+		this.data = data;
+		this.pageInfo = pageInfo;
+		this.status = status;
+	}
+
+	public ResponseEnvelope(RestApiError error) {
+		this.error = error;
+	}
+
+	public ResponseEnvelope(T data, boolean status) {
+		this(data, null, status);
+	}
+
+	public ResponseEnvelope(RestApiError error, boolean status) {
+		this.error = error;
+		this.status = status;
+	}
+}
