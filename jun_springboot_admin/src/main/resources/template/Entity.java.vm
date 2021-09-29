@@ -3,7 +3,7 @@ package ${package}.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.jun.plugin.entity.BaseEntity;
+import com.jun.plugin.system.entity.BaseEntity;
 import org.springframework.data.annotation.Id;
 
 #if(${hasBigDecimal})

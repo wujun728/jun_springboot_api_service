@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jun.plugin.service.ISysGeneratorService;
+import com.jun.plugin.system.service.ISysGeneratorService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
