@@ -28,7 +28,7 @@ public class TestApplicationTests {
     public void contextLoads() throws IOException {
     	String tables = "biz_customer_test";
     	byte[] data = sysGeneratorService.generatorCode(tables.split(","));
-    	FileUtils.writeByteArrayToFile(new File("D:/"+tables+".zip"), data);
+    	FileUtils.writeByteArrayToFile(new File("D:/"+tables+668+".zip"), data);
     	log.info("代码生成成功！");
     }
     

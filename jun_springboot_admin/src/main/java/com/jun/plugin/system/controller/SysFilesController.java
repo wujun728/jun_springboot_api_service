@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -36,7 +37,8 @@ public class SysFilesController {
     @ApiOperation(value = "新增")
     @PostMapping("/upload")
     @RequiresPermissions(value = {"sysFiles:add", "sysContent:update", "sysContent:add"}, logical = Logical.OR)
-    public DataResult add(@RequestParam(value = "file") MultipartFile file) {
+    public DataResult add(@RequestParam(value = "file") MultipartFile file,@RequestParam(value = "bizdata") String param) {
+    	System.err.println(param);
         //判断文件是否空
         if (file == null || file.getOriginalFilename() == null || "".equalsIgnoreCase(file.getOriginalFilename().trim())) {
             return DataResult.fail("文件为空");

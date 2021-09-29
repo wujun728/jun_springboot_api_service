@@ -9,6 +9,7 @@
 </head>
 <body>
 <div class="table_div">
+<input name="id" id="id" value="667" hidden/>
   <input id="copy_in" style="display: none" />
   <div id="searchParam"  shiro:hasPermission="sysFiles:add">
     <div class="layui-form-item">
@@ -82,6 +83,10 @@
     var uploadInst = upload.render({
       elem: '#upload' //绑定元素
       ,url: '/sysFiles/upload?authorization='+tokenQuery //上传接口
+      ,data: {
+    	  bizdata:{id:$('#id').val(),
+        	  biztype:'abcde'}
+       }
       ,done: function(res){
         search();
         //上传完毕回调
