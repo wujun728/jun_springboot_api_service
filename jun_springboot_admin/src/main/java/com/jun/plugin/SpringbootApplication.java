@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import java.net.InetAddress;
 
 @SpringBootApplication(exclude = DruidDataSourceAutoConfigure.class)
-@MapperScan("com.jun.plugin.mapper")
+@MapperScan("com.jun.plugin.**.mapper")
 @Slf4j
 public class SpringbootApplication {
 
