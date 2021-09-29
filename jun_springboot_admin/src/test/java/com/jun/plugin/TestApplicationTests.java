@@ -14,8 +14,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jun.plugin.system.service.ISysGeneratorService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class TestApplicationTests {
 	
 	@Resource
@@ -23,9 +26,10 @@ public class TestApplicationTests {
 
     @Test
     public void contextLoads() throws IOException {
-    	String tables = "pj_customer";
+    	String tables = "biz_customer_test";
     	byte[] data = sysGeneratorService.generatorCode(tables.split(","));
     	FileUtils.writeByteArrayToFile(new File("D:/"+tables+".zip"), data);
+    	log.info("代码生成成功！");
     }
     
     

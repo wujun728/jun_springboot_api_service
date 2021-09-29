@@ -1,6 +1,8 @@
 package com.jun.plugin.system.common.comfig;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.google.common.base.Predicates;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -32,7 +34,8 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jun.plugin.**.controller"))
+                .apis(Predicates.or(RequestHandlerSelectors.basePackage("com.jun.plugin.system.controller"),
+                		RequestHandlerSelectors.basePackage("com.jun.plugin.bizservice.controller")))
                 .paths(PathSelectors.any())
                 .build();
     }
