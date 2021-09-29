@@ -16,7 +16,8 @@
 
 	<modules>
 		<module>jun_springboot_api</module>
-		<module>jun_spring_api</module>
+		<module>jun_springboot_admin</module>
+		<module>jun_springboot_common</module>
 		
 	</modules>
 
