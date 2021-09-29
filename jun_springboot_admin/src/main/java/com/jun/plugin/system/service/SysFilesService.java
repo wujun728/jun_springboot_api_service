@@ -20,5 +20,7 @@ public interface SysFilesService extends IService<SysFilesEntity> {
     DataResult saveFile(MultipartFile file);
 
     void removeByIdsAndFiles(List<String> ids);
+
+	DataResult saveFile(MultipartFile file, String biztype, String bizid);
 }
 

@@ -1,6 +1,7 @@
 package com.jun.plugin.system.service.impl;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.jun.plugin.system.common.comfig.FileUploadProperties;
 import com.jun.plugin.system.common.exception.BusinessException;
 import com.jun.plugin.system.common.utils.DataResult;
@@ -35,6 +39,8 @@ import com.jun.plugin.system.service.SysFilesService;
 public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEntity> implements SysFilesService {
     @Resource
     private FileUploadProperties fileUploadProperties;
+    
+    private static final ThreadLocal<Map<Object, Object>> mapTmp = new ThreadLocal();
 
     @Override
     public DataResult saveFile(MultipartFile file) {
@@ -60,11 +66,7 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
             //拷贝文件到输出文件对象
             FileUtils.copyInputStreamToFile(file.getInputStream(), outFile);
             //保存文件记录
-            SysFilesEntity sysFilesEntity = new SysFilesEntity();
-            sysFilesEntity.setFileName(fileName);
-            sysFilesEntity.setFilePath(newFilePathName);
-            sysFilesEntity.setUrl(url);
-            this.save(sysFilesEntity);
+            saveFilesEntity(fileName, newFilePathName, url, "filemanager", "");
             Map<String, String> resultMap = new HashMap<>();
             resultMap.put("src", url);
             return DataResult.success(resultMap);
@@ -72,6 +74,16 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
             throw new BusinessException("上传文件失败");
         }
     }
+
+	private void saveFilesEntity(String fileName, String newFilePathName, String url, String biztype, String bizid) {
+		SysFilesEntity sysFilesEntity = new SysFilesEntity();
+		sysFilesEntity.setFileName(fileName);
+		sysFilesEntity.setFilePath(newFilePathName);
+		sysFilesEntity.setUrl(url);
+		sysFilesEntity.setDictBiztype(String.valueOf(mapTmp.get().get("biztype")));
+		sysFilesEntity.setRefBizid(String.valueOf(mapTmp.get().get("bizid")));
+		this.save(sysFilesEntity);
+	}
 
     @Override
     public void removeByIdsAndFiles(List<String> ids) {
@@ -99,4 +111,11 @@ public class SysFilesServiceImpl extends ServiceImpl<SysFilesMapper, SysFilesEnt
         }
         return "";
     }
+
+	@Override
+	public DataResult saveFile(MultipartFile file, String biztype, String bizid) {
+		mapTmp.set(ImmutableMap.builder().put("biztype",biztype).put("bizid", bizid).build());
+		return this.saveFile(file);
+	}
+
 }

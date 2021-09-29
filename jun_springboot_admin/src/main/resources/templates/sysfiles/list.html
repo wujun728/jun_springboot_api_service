@@ -82,10 +82,11 @@
     //执行实例
     var uploadInst = upload.render({
       elem: '#upload' //绑定元素
+      ,exts: 'jpg|gif|png|jpeg|txt|doc|docx|sql|pdf'
       ,url: '/sysFiles/upload?authorization='+tokenQuery //上传接口
       ,data: {
-    	  bizdata:{id:$('#id').val(),
-        	  biztype:'abcde'}
+    	  	  bizid:$('#id').val(),
+        	  biztype:'abcde'
        }
       ,done: function(res){
         search();

@@ -46,6 +46,12 @@ public class SysFilesEntity extends BaseEntity implements Serializable {
 
     @TableField("file_path")
     private String filePath;
+    
+    @TableField("dict_biztype")
+    private String dictBiztype;
+    
+    @TableField("ref_bizid")
+    private String refBizid;
 
 
 }
