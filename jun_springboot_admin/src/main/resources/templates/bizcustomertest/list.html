@@ -187,7 +187,8 @@
       }
       , cols: [
         [
-          {type: 'checkbox', fixed: 'left'},            {field: 'id', title: '', sort: true  ,hide:true  },
+          {type: 'checkbox', fixed: 'left'},            
+          {field: 'id', title: '', sort: true  ,hide:true  },
           {field: 'cusname', title: '客户名称', sort: true  },
           {field: 'money', title: '注册金额', sort: true  },
           {field: 'cusdesc', title: '客户描述', sort: true  },
@@ -233,6 +234,14 @@
 			url: '/bizCustomerTest/listByPage?authorization='+tokenQuery,
 			method: 'POST',
 			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
 			cols: [
 				[
 					{ type: 'radio' },
@@ -244,10 +253,14 @@
 		},
 		done: function (elem, data) {
 			var NEWJSON = []
-			layui.each(data.data.records, function (index, item) {
-				NEWJSON.push(item.cusname)
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.cusname);
+				$("#refId").val(item.id);
+// 				$("#refId]").val("战三");
+				console.log('info');  
 			})
 			elem.val(NEWJSON.join(","))
+// 			form.render();
 		}
 	});
 
