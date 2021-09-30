@@ -6,6 +6,16 @@
   <title>Title</title>
   <link rel="stylesheet" href="/layui/css/layui.css">
   <link rel="stylesheet" href="/css/custom.form.css">
+  <style>
+		element.style { width: 180px; }
+		.layui-form-label.layui-required:after{
+	        content:"*";
+	        color:red;
+	        position: absolute;
+	        top:10px;
+	        left:24px;
+	    }
+  </style>
 </head>
 <body>
 <!-- 新增修改的DIV页面-begin,默认hidden -->
@@ -18,13 +28,14 @@
     <input name="${column.attrname}" id="${column.attrname}" hidden/>
   #else
     <div class="layui-form-item" #if($column.columnName == $pk.columnName) ,hide:true #end >
-      <label class="layui-form-label #if($column.comments=='') style="display:none" #end ">${column.comments}</label>
+      <label class="layui-form-label #if($column.isNull == 'NO')layui-required#end " #if($column.comments=='') style="display:none" #end>${column.comments}</label>
       <div class="layui-input-block">
-##if($column.columnName.toString().contains("dict_"))
+       
+##注解支持，不展示
 #if($column.dataType == 'datetime')
-	<input type="${column.attrname}" name="${column.attrname}" id="date" lay-verify="#if($column.isNull == 'NO')required|#end date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+	<input type="${column.attrname}" name="${column.attrname}"  id="${column.attrname}" lay-verify="#if($column.isNull == 'NO')required|#end date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
 #elseif($column.dataType == 'text')
-	<textarea placeholder="请输入内容" class="layui-textarea" name="${column.attrname}"></textarea>
+	<textarea placeholder="请输入内容" class="layui-textarea" name="${column.attrname}"  id="${column.attrname}"></textarea>
 #elseif($column.columnName.toString().contains("dict_"))
 	<select id="${column.attrname}" name="${column.attrname}" lay-filter="select-type" th:with="type=${@sysDictService.getType('${column.columnName}')}">
         <option value="0">请选择</option>
@@ -32,9 +43,9 @@
     </select>
 #else
 	#if($column.isNull == 'NO') 
-	<input type="${column.attrname}" name="${column.attrname}"  lay-verify="required|${column.attrname}" lay-max="${column.maxLength}"   placeholder="请输入${column.comments}"  autocomplete="off" class="layui-input">
+	<input type="${column.attrname}" name="${column.attrname}"  id="${column.attrname}"  lay-verify="required|${column.attrname}" lay-max="${column.maxLength}"   placeholder="请输入${column.comments}"  autocomplete="off" class="layui-input">
 	#else
-	<input type="text" name="${column.attrname}"  placeholder="请输入${column.comments}" autocomplete="off" class="layui-input">
+	<input type="text" name="${column.attrname}"  id="${column.attrname}"  placeholder="请输入${column.comments}" autocomplete="off" class="layui-input">
 	#end
 #end
       </div>
@@ -97,10 +108,18 @@
   var layedit = layui.layedit;
   var $ = jQuery = layui.jquery;
   var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
   //定义lay全局对象
 
-  layui.use(['table', 'layer', 'laydate' ,'form', 'layedit'], function () {
-
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
     //加载table
     tableIns1 = table.render({
       elem: '#showTable'
@@ -119,31 +138,41 @@
       }
       , cols: [
         [
-          {type: 'checkbox', fixed: 'left'},
-	#foreach($column in $columns)
-          {field: '${column.attrname}', title: '${column.comments}', sort: true 
-          	#if($column.columnName == $pk.columnName) ,hide:true #end
-          	#if($column.columnName.toString().contains("dict_"))
-          		, templet: function (item) {
-                        //获取类型对应的字典label
-                        var datas = "[[${@sysDictService.getType('${column.attrname}')}]]".replace(/&quot;/g,"\"");
-                        return CoreUtil.selectDictLabel(datas, item.${column.attrname});
-                        }
-          	#end
-          	},
-          
-	#end
+          {type: 'checkbox', fixed: 'left'},  #foreach($column in $columns)
+          {field: '${column.attrname}', title: '${column.comments}', sort: true #if($column.columnName == $pk.columnName) ,hide:true #end
+#if($column.columnName.toString().contains("dict_"))
+	, templet: function (item) {
+            //获取类型对应的字典label
+            var datas = "[[${@sysDictService.getType('${column.columnName}')}]]".replace(/&quot;/g,"\"");
+            return CoreUtil.selectDictLabel(datas, item.${column.attrname});
+            }
+#end },
+#end
           {width: 120, toolbar: "#tool", title: '操作'}
         ]
       ]
       , toolbar: '#toolbar'
     });
-    
-   //日期
-  laydate.render({
-    elem: '#date'
-    ,type: 'datetime'
-  });
+
+#foreach($column in $columns) 
+#if($column.columnName != $pk.columnName)
+#if($column.dataType == 'datetime')
+ 	//日期
+	laydate.render({
+	    elem: '#${column.attrname}'
+	    ,type: 'datetime'
+    });
+#elseif($column.dataType == 'decimal' || $column.dataType == 'int')
+	numberInput.render("#${column.attrname}", {
+	    autoSelcet: false,
+	    max: 99999999999,
+	    min: 0,
+		step: 1,
+	    precision: 2
+	});
+#end
+#end
+#end
 
 
     //表头工具
@@ -185,9 +214,10 @@
           $(".table_div").hide();
           $(".operation").show();
           $(".title").html("编辑");
-	#foreach($column in $columns)
-          $(".operation input[name=${column.attrname}]").val(data.${column.attrname});
-	#end
+#foreach($column in $columns)
+      $(".operation input[name=${column.attrname}]").val(data.${column.attrname});
+#end
+		  form.render();
           break;
       }
     });
@@ -265,7 +295,8 @@
   //lay-verify="required|account" lay-min="6" 
   // https://blog.csdn.net/m0_48373030/article/details/108783184
     form.verify({
-#foreach($column in $columns) #if($column.columnName != $pk.columnName)
+#foreach($column in $columns) 
+#if($column.columnName != $pk.columnName)
 #if($column.isNull == 'NO')
 ${column.attrname}: function(value, item){
             var max = item.getAttribute('lay-max');

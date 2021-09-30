@@ -34,8 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class FileServiceImpl implements FileService {
 
-//    @Autowired
-//    private UserMapper userMapper;
     @Value("${filepath}")
     private String file_root;
 

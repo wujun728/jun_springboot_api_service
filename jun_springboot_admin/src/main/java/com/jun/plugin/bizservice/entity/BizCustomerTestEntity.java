@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.jun.plugin.system.entity.BaseEntity;
 import org.springframework.data.annotation.Id;
 
+import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-09-29 15:03:44
+ * @date 2021-09-30 14:59:58
  */
 @Data
 @TableName("biz_customer_test")
@@ -35,6 +36,12 @@ public class BizCustomerTestEntity extends BaseEntity implements Serializable {
 	 */
 	@TableField("cusname")
 	private String cusname;
+
+	/**
+	 * 注册金额
+	 */
+	@TableField("money")
+	private BigDecimal money;
 
 	/**
 	 * 客户描述

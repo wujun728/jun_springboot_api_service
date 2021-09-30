@@ -7,6 +7,7 @@
     <resultMap type="com.jun.plugin.bizservice.entity.BizCustomerTestEntity" id="bizCustomerTestMap">
         <result property="id" column="id"/>
         <result property="cusname" column="cusname"/>
+        <result property="money" column="money"/>
         <result property="cusdesc" column="cusdesc"/>
         <result property="fullname" column="fullname"/>
         <result property="dictCussex" column="dict_cussex"/>

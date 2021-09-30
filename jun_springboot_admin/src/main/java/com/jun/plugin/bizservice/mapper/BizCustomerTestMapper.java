@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-09-29 15:03:44
+ * @date 2021-09-30 14:59:58
  */
 public interface BizCustomerTestMapper extends BaseMapper<BizCustomerTestEntity> {
 	
