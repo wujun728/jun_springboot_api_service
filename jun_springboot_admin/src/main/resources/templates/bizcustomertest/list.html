@@ -6,9 +6,9 @@
   <title>Title</title>
   <link rel="stylesheet" href="/layui/css/layui.css">
   <link rel="stylesheet" href="/css/custom.form.css">
-    <style>
+  <style>
 		element.style { width: 180px; }
-				.layui-form-label.layui-required:after{
+		.layui-form-label.layui-required:after{
 	        content:"*";
 	        color:red;
 	        position: absolute;
@@ -25,32 +25,37 @@
 <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
       <input name="id" id="id" hidden/>
         <div class="layui-form-item"  >
-      <label class="layui-form-label  layui-required ">客户名称</label>
+      <label class="layui-form-label layui-required " >客户名称</label>
       <div class="layui-input-block">
+       
 		<input type="cusname" name="cusname"  id="cusname"  lay-verify="required|cusname" lay-max="16"   placeholder="请输入客户名称"  autocomplete="off" class="layui-input">
 	      </div>
     </div>
       <div class="layui-form-item"  >
-      <label class="layui-form-label  ">注册金额</label>
+      <label class="layui-form-label  " >注册金额</label>
       <div class="layui-input-block">
+       
 		<input type="text" name="money"  id="money"  placeholder="请输入注册金额" autocomplete="off" class="layui-input">
 	      </div>
     </div>
       <div class="layui-form-item"  >
-      <label class="layui-form-label  ">客户描述</label>
+      <label class="layui-form-label layui-required " >客户描述</label>
       <div class="layui-input-block">
+       
 		<input type="cusdesc" name="cusdesc"  id="cusdesc"  lay-verify="required|cusdesc" lay-max="255"   placeholder="请输入客户描述"  autocomplete="off" class="layui-input">
 	      </div>
     </div>
       <div class="layui-form-item"  >
-      <label class="layui-form-label  ">客户全称</label>
+      <label class="layui-form-label  " >客户全称</label>
       <div class="layui-input-block">
+       
 		<input type="text" name="fullname"  id="fullname"  placeholder="请输入客户全称" autocomplete="off" class="layui-input">
 	      </div>
     </div>
       <div class="layui-form-item"  >
-      <label class="layui-form-label  ">客户性质</label>
+      <label class="layui-form-label  " >客户性质</label>
       <div class="layui-input-block">
+       
 	<select id="dictCussex" name="dictCussex" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_cussex')}">
         <option value="0">请选择</option>
         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
@@ -58,23 +63,39 @@
       </div>
     </div>
       <div class="layui-form-item"  >
-      <label class="layui-form-label  ">注册时间</label>
+      <label class="layui-form-label layui-required " >注册时间</label>
       <div class="layui-input-block">
+       
 	<input type="registerDate" name="registerDate"  id="registerDate" lay-verify="required| date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
       </div>
     </div>
       <div class="layui-form-item"  >
-      <label class="layui-form-label  ">客户类型</label>
+      <label class="layui-form-label  " >客户类型</label>
       <div class="layui-input-block">
+       
 	<select id="dictCustype" name="dictCustype" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_custype')}">
         <option value="0">请选择</option>
         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
     </select>
       </div>
     </div>
-      <div class="layui-form-item"  >
-      <label class="layui-form-label  ">备注</label>
+      <div class="layui-form-item"  style="display:none" >
+      <label class="layui-form-label  "  ></label>
       <div class="layui-input-block">
+       
+		<input type="text" name="refId"  id="refId"  placeholder="请输入" autocomplete="off" class="layui-input">
+	      </div>
+    </div>
+      <div class="layui-form-item"  >
+      <label class="layui-form-label  " >关联子客户名称</label>
+      <div class="layui-input-block">
+		<input type="text" name="refUsername"  id="refUsername"  placeholder="请输入关联子客户名称" autocomplete="off" class="layui-input" value="张恒"  ts-selected="002">
+	      </div>
+    </div>
+      <div class="layui-form-item"  >
+      <label class="layui-form-label  " >备注</label>
+      <div class="layui-input-block">
+       
 	<textarea placeholder="请输入内容" class="layui-textarea" name="remark"  id="remark"></textarea>
       </div>
     </div>
@@ -121,6 +142,7 @@
 </body>
 </html>
 <script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
 <script src="/js/core.util.js"></script>
 <script>
   //获取token
@@ -135,6 +157,7 @@
   var $ = jQuery = layui.jquery;
   var laydate = layui.laydate;
   var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
   //定义lay全局对象
 
   layui.config({
@@ -142,7 +165,6 @@
     }).extend({
         treetable: 'treetable-lay/treetable',
         iconPicker: 'icon/iconPicker',
-        tableSelected: "tableSelected/index",
         numberInput: 'numberInput/js/index'
     }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
 	numberInput = layui.numberInput;
@@ -183,6 +205,8 @@
             return CoreUtil.selectDictLabel(datas, item.dictCustype);
             }
  },
+          {field: 'refId', title: '', sort: true  },
+          {field: 'refUsername', title: '关联子客户名称', sort: true  },
           {field: 'remark', title: '备注', sort: true  },
           {width: 120, toolbar: "#tool", title: '操作'}
         ]
@@ -202,6 +226,31 @@
 	    elem: '#registerDate'
 	    ,type: 'datetime'
     });
+	tableSelect.render({
+		elem: '#refUsername',
+		checkedKey: 'id',
+		table: {
+			url: '/bizCustomerTest/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' },
+					{ field: 'cusname', title: 'cusname' },
+					{ field: 'fullname', title: 'fullname' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data.records, function (index, item) {
+				NEWJSON.push(item.cusname)
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+
 
 
     //表头工具
@@ -232,6 +281,8 @@
 	          $(".operation input[name=dictCussex]").val("");
 	          $(".operation input[name=registerDate]").val("");
 	          $(".operation input[name=dictCustype]").val("");
+	          $(".operation input[name=refId]").val("");
+	          $(".operation input[name=refUsername]").val("");
 	          $(".operation input[name=remark]").val("");
 	          break;
       };
@@ -257,6 +308,8 @@
       $(".operation input[name=dictCussex]").val(data.dictCussex);
       $(".operation input[name=registerDate]").val(data.registerDate);
       $(".operation input[name=dictCustype]").val(data.dictCustype);
+      $(".operation input[name=refId]").val(data.refId);
+      $(".operation input[name=refUsername]").val(data.refUsername);
       $(".operation input[name=remark]").val(data.remark);
 		  form.render();
           break;

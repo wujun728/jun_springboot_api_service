@@ -13,6 +13,8 @@
         <result property="dictCussex" column="dict_cussex"/>
         <result property="registerDate" column="register_date"/>
         <result property="dictCustype" column="dict_custype"/>
+        <result property="refId" column="ref_id"/>
+        <result property="refUsername" column="ref_username"/>
         <result property="remark" column="remark"/>
     </resultMap>
 

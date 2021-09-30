@@ -27,8 +27,8 @@
   #if($column.columnName == $pk.columnName)
     <input name="${column.attrname}" id="${column.attrname}" hidden/>
   #else
-    <div class="layui-form-item" #if($column.columnName == $pk.columnName) ,hide:true #end >
-      <label class="layui-form-label #if($column.isNull == 'NO')layui-required#end " #if($column.comments=='') style="display:none" #end>${column.comments}</label>
+    <div class="layui-form-item" #if($column.columnName == $pk.columnName) ,hide:true #end  #if($column.comments=='') style="display:none" #end>
+      <label class="layui-form-label #if($column.isNull == 'NO')layui-required#end " >${column.comments}</label>
       <div class="layui-input-block">
        
 ##注解支持，不展示
@@ -95,6 +95,7 @@
 </body>
 </html>
 <script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
 <script src="/js/core.util.js"></script>
 <script>
   //获取token

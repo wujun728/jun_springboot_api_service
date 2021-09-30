@@ -17,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-09-30 14:59:58
+ * @date 2021-09-30 17:19:06
  */
 @Data
 @TableName("biz_customer_test")
@@ -72,6 +72,18 @@ public class BizCustomerTestEntity extends BaseEntity implements Serializable {
 	 */
 	@TableField("dict_custype")
 	private String dictCustype;
+
+	/**
+	 * 
+	 */
+	@TableField("ref_id")
+	private String refId;
+
+	/**
+	 * 关联子客户名称
+	 */
+	@TableField("ref_username")
+	private String refUsername;
 
 	/**
 	 * 备注
