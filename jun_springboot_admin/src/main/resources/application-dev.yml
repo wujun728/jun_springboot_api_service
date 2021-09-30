@@ -33,7 +33,7 @@ spring:
         max-idle: 8 # 连接池中的最大空闲连接
         min-idle: 0 # 连接池中的最小空闲连接
     timeout: 3000ms # 连接超时时间（毫秒
-
+filepath: "D:\\file_system\\"
 file:
   #文件上传目录 绝对路径 末尾请加 /
   path: D:/files/ #windows

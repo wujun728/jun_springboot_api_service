@@ -6,6 +6,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -144,5 +145,11 @@ public class IndexController {
     @GetMapping("/sysFiles")
     public String sysFiles() {
         return "sysfiles/list";
+    }
+    
+    //localhost:8080/index/goto/file
+    @GetMapping("/goto/{pagePath}")
+    public String gotPage(@PathVariable String pagePath) {
+    	return pagePath;
     }
 }
