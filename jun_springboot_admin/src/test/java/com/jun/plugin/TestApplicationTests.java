@@ -3,6 +3,7 @@ package com.jun.plugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -26,9 +27,9 @@ public class TestApplicationTests {
 
     @Test
     public void contextLoads() throws IOException {
-    	String tables = "biz_customer_test";
+    	String tables = "oa_notes_info";
     	byte[] data = sysGeneratorService.generatorCode(tables.split(","));
-    	FileUtils.writeByteArrayToFile(new File("D:/"+tables+66977+".zip"), data);
+    	FileUtils.writeByteArrayToFile(new File("D:/"+tables+(new Random().nextInt(999))+".zip"), data);
     	log.info("代码生成成功！");
     }
     

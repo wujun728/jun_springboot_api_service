@@ -301,7 +301,7 @@
 #if($column.isNull == 'NO')
 ${column.attrname}: function(value, item){
             var max = item.getAttribute('lay-max');
-            if(value.length >= max){
+            if(value.length > max){
                 return '${column.comments}不能大于'+max+'个字符的长度！';
             }
         } #if($columns.size() != ${velocityCount}) ,  #end
