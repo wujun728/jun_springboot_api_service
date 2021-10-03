@@ -8,7 +8,7 @@ import com.jun.plugin.bizservice.entity.OaNotesInfoEntity;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-02 23:28:44
+ * @date 2021-10-03 20:39:02
  */
 public interface OaNotesInfoService extends IService<OaNotesInfoEntity> {
 

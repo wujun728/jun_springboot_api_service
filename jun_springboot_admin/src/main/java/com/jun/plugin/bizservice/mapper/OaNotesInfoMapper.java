@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-02 23:28:44
+ * @date 2021-10-03 20:39:02
  */
 public interface OaNotesInfoMapper extends BaseMapper<OaNotesInfoEntity> {
 	

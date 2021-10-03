@@ -9,7 +9,7 @@
         <result property="title" column="title"/>
         <result property="content" column="content"/>
         <result property="msgType" column="msg_type"/>
-        <result property="isDraft" column="is_draft"/>
+        <result property="dictIsDraft" column="dict_is_draft"/>
         <result property="sendDate" column="send_date"/>
         <result property="sendPerson" column="send_person"/>
         <result property="sendDept" column="send_dept"/>

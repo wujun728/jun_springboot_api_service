@@ -28,7 +28,7 @@
       <label class="layui-form-label layui-required " >标题</label>
       <div class="layui-input-block">
        
-		<input type="title" name="title"  id="title"  lay-verify="required|title" lay-max="200"   placeholder="请输入标题"  autocomplete="off" class="layui-input">
+		<input type="title" name="title"  id="title"  lay-verify="required|title" lay-max="255"   placeholder="请输入标题"  autocomplete="off" class="layui-input">
 	      </div>
     </div>
       <div class="layui-form-item"   >
@@ -49,8 +49,11 @@
       <label class="layui-form-label layui-required " >是否草稿</label>
       <div class="layui-input-block">
        
-		<input type="isDraft" name="isDraft"  id="isDraft"  lay-verify="required|isDraft" lay-max="1"   placeholder="请输入是否草稿"  autocomplete="off" class="layui-input">
-	      </div>
+	<select id="dictIsDraft" name="dictIsDraft" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_is_draft')}">
+        <option value="0">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+    </select>
+      </div>
     </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >发送日期</label>
@@ -178,7 +181,12 @@
           {field: 'title', title: '标题', sort: true  },
           {field: 'content', title: '发布内容', sort: true  },
           {field: 'msgType', title: '发布信息类型', sort: true  },
-          {field: 'isDraft', title: '是否草稿', sort: true  },
+          {field: 'dictIsDraft', title: '是否草稿', sort: true 	, templet: function (item) {
+            //获取类型对应的字典label
+            var datas = "[[${@sysDictService.getType('dict_is_draft')}]]".replace(/&quot;/g,"\"");
+            return CoreUtil.selectDictLabel(datas, item.dictIsDraft);
+            }
+ },
           {field: 'sendDate', title: '发送日期', sort: true  },
           {field: 'sendPerson', title: '发布人', sort: true  },
           {field: 'sendDept', title: '发布部门', sort: true  },
@@ -231,7 +239,7 @@
 	          $(".operation input[name=title]").val("");
 	          $(".operation input[name=content]").val("");
 	          $(".operation input[name=msgType]").val("");
-	          $(".operation input[name=isDraft]").val("");
+	          $(".operation input[name=dictIsDraft]").val("");
 	          $(".operation input[name=sendDate]").val("");
 	          $(".operation input[name=sendPerson]").val("");
 	          $(".operation input[name=sendDept]").val("");
@@ -257,7 +265,7 @@
       $(".operation input[name=title]").val(data.title);
       $(".operation input[name=content]").val(data.content);
       $(".operation input[name=msgType]").val(data.msgType);
-      $(".operation input[name=isDraft]").val(data.isDraft);
+      $(".operation input[name=dictIsDraft]").val(data.dictIsDraft);
       $(".operation input[name=sendDate]").val(data.sendDate);
       $(".operation input[name=sendPerson]").val(data.sendPerson);
       $(".operation input[name=sendDept]").val(data.sendDept);
@@ -356,7 +364,7 @@ title: function(value, item){
             if(value.length > max){
                 return '发布信息类型不能大于'+max+'个字符的长度！';
             }
-        }  ,  isDraft: function(value, item){
+        }  ,  dictIsDraft: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
                 return '是否草稿不能大于'+max+'个字符的长度！';

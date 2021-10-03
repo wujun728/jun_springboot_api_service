@@ -16,7 +16,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-02 23:28:44
+ * @date 2021-10-03 20:39:02
  */
 @Data
 @TableName("oa_notes_info")
@@ -51,8 +51,8 @@ public class OaNotesInfoEntity extends BaseEntity implements Serializable {
 	/**
 	 * 是否草稿
 	 */
-	@TableField("is_draft")
-	private String isDraft;
+	@TableField("dict_is_draft")
+	private String dictIsDraft;
 
 	/**
 	 * 发送日期
