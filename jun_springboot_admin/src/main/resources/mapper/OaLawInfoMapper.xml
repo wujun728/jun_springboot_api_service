@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.OaLawInfoMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.OaLawInfoEntity" id="oaLawInfoMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="msgType" column="msg_type"/>
+        <result property="dictIsDraft" column="dict_is_draft"/>
+        <result property="sendDate" column="send_date"/>
+        <result property="sendPerson" column="send_person"/>
+        <result property="sendDept" column="send_dept"/>
+        <result property="publishDate" column="publish_date"/>
+        <result property="invalidDate" column="invalid_date"/>
+    </resultMap>
+
+
+</mapper>
