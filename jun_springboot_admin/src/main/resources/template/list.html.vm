@@ -90,6 +90,7 @@
 <script type="text/html" id="tool">
   <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="${classname}:update">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="${classname}:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="bizCustomerTest:update">附件</a>
 </script>
 
 </body>
@@ -110,6 +111,7 @@
   var $ = jQuery = layui.jquery;
   var laydate = layui.laydate;
   var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
   //定义lay全局对象
 
   layui.config({
@@ -129,18 +131,19 @@
       , page: true //开启分页
       , url: '/${classname}/listByPage' //数据接口
       , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
-        return {
-          "code": res.code, //解析接口状态
-          "msg": res.msg, //解析提示文本
-          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
-          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
-        }
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
       }
       , cols: [
         [
           {type: 'checkbox', fixed: 'left'},  #foreach($column in $columns)
-          {field: '${column.attrname}', title: '${column.comments}', sort: true #if($column.columnName == $pk.columnName) ,hide:true #end
+          {field: '${column.attrname}', title: '${column.comments}', sort: true #if($column.columnName == $pk.columnName || $column.isNull != 'NO') ,hide:true #end
 #if($column.columnName.toString().contains("dict_"))
 	, templet: function (item) {
             //获取类型对应的字典label
@@ -149,7 +152,7 @@
             }
 #end },
 #end
-          {width: 120, toolbar: "#tool", title: '操作'}
+          {width: 160, toolbar: "#tool", title: '操作'}
         ]
       ]
       , toolbar: '#toolbar'
@@ -174,6 +177,42 @@
 #end
 #end
 #end
+
+	tableSelect.render({
+		elem: '#refUsername',
+		checkedKey: 'id',
+		table: {
+			url: '/bizCustomerTest/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' },
+					{ field: 'cusname', title: 'cusname' },
+					{ field: 'fullname', title: 'fullname' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.cusname);
+				$("#refId").val(item.id);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+// 			form.render();
+		}
+	});
 
 
     //表头工具
@@ -220,6 +259,21 @@
 #end
 		  form.render();
           break;
+        case 'file':
+          CoreUtil.setData("bizcustomertest_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
       }
     });
 

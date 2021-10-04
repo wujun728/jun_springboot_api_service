@@ -24,35 +24,35 @@
 <div class="layui-card-body">
 <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
       <input name="id" id="id" hidden/>
-        <div class="layui-form-item"  >
+        <div class="layui-form-item"   >
       <label class="layui-form-label layui-required " >客户名称</label>
       <div class="layui-input-block">
        
 		<input type="cusname" name="cusname"  id="cusname"  lay-verify="required|cusname" lay-max="16"   placeholder="请输入客户名称"  autocomplete="off" class="layui-input">
 	      </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label  " >注册金额</label>
       <div class="layui-input-block">
        
 		<input type="text" name="money"  id="money"  placeholder="请输入注册金额" autocomplete="off" class="layui-input">
 	      </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label layui-required " >客户描述</label>
       <div class="layui-input-block">
        
 		<input type="cusdesc" name="cusdesc"  id="cusdesc"  lay-verify="required|cusdesc" lay-max="255"   placeholder="请输入客户描述"  autocomplete="off" class="layui-input">
 	      </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户全称</label>
       <div class="layui-input-block">
        
 		<input type="text" name="fullname"  id="fullname"  placeholder="请输入客户全称" autocomplete="off" class="layui-input">
 	      </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户性质</label>
       <div class="layui-input-block">
        
@@ -62,14 +62,14 @@
     </select>
       </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label layui-required " >注册时间</label>
       <div class="layui-input-block">
        
 	<input type="registerDate" name="registerDate"  id="registerDate" lay-verify="required| date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
       </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户类型</label>
       <div class="layui-input-block">
        
@@ -79,20 +79,21 @@
     </select>
       </div>
     </div>
-      <div class="layui-form-item"  style="display:none" >
-      <label class="layui-form-label  "  ></label>
+      <div class="layui-form-item"    style="display:none" >
+      <label class="layui-form-label  " ></label>
       <div class="layui-input-block">
        
 		<input type="text" name="refId"  id="refId"  placeholder="请输入" autocomplete="off" class="layui-input">
 	      </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label  " >关联子客户名称</label>
       <div class="layui-input-block">
-		<input type="text" name="refUsername"  id="refUsername"  placeholder="请输入关联子客户名称" autocomplete="off" class="layui-input" value="张恒"  ts-selected="002">
+       
+		<input type="text" name="refTitleUsername"  id="refTitleUsername"  placeholder="请输入关联子客户名称" autocomplete="off" class="layui-input">
 	      </div>
     </div>
-      <div class="layui-form-item"  >
+      <div class="layui-form-item"   >
       <label class="layui-form-label  " >备注</label>
       <div class="layui-input-block">
        
@@ -137,6 +138,7 @@
 <script type="text/html" id="tool">
   <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="bizCustomerTest:update">编辑</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="bizCustomerTest:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="bizCustomerTest:update">附件</a>
 </script>
 
 </body>
@@ -177,39 +179,39 @@
       , page: true //开启分页
       , url: '/bizCustomerTest/listByPage' //数据接口
       , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
-        return {
-          "code": res.code, //解析接口状态
-          "msg": res.msg, //解析提示文本
-          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
-          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
-        }
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
       }
       , cols: [
         [
-          {type: 'checkbox', fixed: 'left'},            
-          {field: 'id', title: '', sort: true  ,hide:true  },
+          {type: 'checkbox', fixed: 'left'},            {field: 'id', title: '', sort: true  ,hide:true  },
           {field: 'cusname', title: '客户名称', sort: true  },
-          {field: 'money', title: '注册金额', sort: true  },
+          {field: 'money', title: '注册金额', sort: true  ,hide:true  },
           {field: 'cusdesc', title: '客户描述', sort: true  },
-          {field: 'fullname', title: '客户全称', sort: true  },
-          {field: 'dictCussex', title: '客户性质', sort: true 	, templet: function (item) {
+          {field: 'fullname', title: '客户全称', sort: true  ,hide:true  },
+          {field: 'dictCussex', title: '客户性质', sort: true  ,hide:true 	, templet: function (item) {
             //获取类型对应的字典label
             var datas = "[[${@sysDictService.getType('dict_cussex')}]]".replace(/&quot;/g,"\"");
             return CoreUtil.selectDictLabel(datas, item.dictCussex);
             }
  },
           {field: 'registerDate', title: '注册时间', sort: true  },
-          {field: 'dictCustype', title: '客户类型', sort: true 	, templet: function (item) {
+          {field: 'dictCustype', title: '客户类型', sort: true  ,hide:true 	, templet: function (item) {
             //获取类型对应的字典label
             var datas = "[[${@sysDictService.getType('dict_custype')}]]".replace(/&quot;/g,"\"");
             return CoreUtil.selectDictLabel(datas, item.dictCustype);
             }
  },
-          {field: 'refId', title: '', sort: true  },
-          {field: 'refUsername', title: '关联子客户名称', sort: true  },
-          {field: 'remark', title: '备注', sort: true  },
-          {width: 120, toolbar: "#tool", title: '操作'}
+          {field: 'refId', title: '', sort: true  ,hide:true  },
+          {field: 'refTitleUsername', title: '关联子客户名称', sort: true  ,hide:true  },
+          {field: 'remark', title: '备注', sort: true  ,hide:true  },
+          {width: 160, toolbar: "#tool", title: '操作'}
         ]
       ]
       , toolbar: '#toolbar'
@@ -227,6 +229,7 @@
 	    elem: '#registerDate'
 	    ,type: 'datetime'
     });
+
 	tableSelect.render({
 		elem: '#refUsername',
 		checkedKey: 'id',
@@ -265,7 +268,6 @@
 	});
 
 
-
     //表头工具
     table.on('toolbar(showTable)', function(obj){
       switch(obj.event){
@@ -295,7 +297,7 @@
 	          $(".operation input[name=registerDate]").val("");
 	          $(".operation input[name=dictCustype]").val("");
 	          $(".operation input[name=refId]").val("");
-	          $(".operation input[name=refUsername]").val("");
+	          $(".operation input[name=refTitleUsername]").val("");
 	          $(".operation input[name=remark]").val("");
 	          break;
       };
@@ -313,19 +315,35 @@
           $(".table_div").hide();
           $(".operation").show();
           $(".title").html("编辑");
-      $(".operation input[name=id]").val(data.id);
-      $(".operation input[name=cusname]").val(data.cusname);
-      $(".operation input[name=money]").val(data.money);
-      $(".operation input[name=cusdesc]").val(data.cusdesc);
-      $(".operation input[name=fullname]").val(data.fullname);
-      $(".operation input[name=dictCussex]").val(data.dictCussex);
-      $(".operation input[name=registerDate]").val(data.registerDate);
-      $(".operation input[name=dictCustype]").val(data.dictCustype);
-      $(".operation input[name=refId]").val(data.refId);
-      $(".operation input[name=refUsername]").val(data.refUsername);
-      $(".operation input[name=remark]").val(data.remark);
+	      $(".operation input[name=id]").val(data.id);
+	      $(".operation input[name=cusname]").val(data.cusname);
+	      $(".operation input[name=money]").val(data.money);
+	      $(".operation input[name=cusdesc]").val(data.cusdesc);
+	      $(".operation input[name=fullname]").val(data.fullname);
+	      $(".operation input[name=dictCussex]").val(data.dictCussex);
+	      $(".operation input[name=registerDate]").val(data.registerDate);
+	      $(".operation input[name=dictCustype]").val(data.dictCustype);
+	      $(".operation input[name=refId]").val(data.refId);
+	      $(".operation input[name=refTitleUsername]").val(data.refTitleUsername);
+	      $(".operation input[name=remark]").val(data.remark);
 		  form.render();
           break;
+        case 'file':
+          CoreUtil.setData("bizcustomertest_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+//               content: '../table/edit.html',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
       }
     });
 
@@ -404,17 +422,17 @@
     form.verify({
 cusname: function(value, item){
             var max = item.getAttribute('lay-max');
-            if(value.length >= max){
+            if(value.length > max){
                 return '客户名称不能大于'+max+'个字符的长度！';
             }
         }  ,  cusdesc: function(value, item){
             var max = item.getAttribute('lay-max');
-            if(value.length >= max){
+            if(value.length > max){
                 return '客户描述不能大于'+max+'个字符的长度！';
             }
         }  ,  registerDate: function(value, item){
             var max = item.getAttribute('lay-max');
-            if(value.length >= max){
+            if(value.length > max){
                 return '注册时间不能大于'+max+'个字符的长度！';
             }
         }  ,      });

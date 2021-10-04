@@ -30,6 +30,7 @@
 </script>
 <script type="text/html" id="tool">
   <a class="layui-btn layui-btn-xs" lay-event="pre" shiro:hasPermission="sysFiles:list">预览</a>
+  <a class="layui-btn layui-btn-xs" lay-event="down" shiro:hasPermission="sysFiles:list">下载</a>
   <a class="layui-btn layui-btn-xs" lay-event="copy" shiro:hasPermission="sysFiles:list">一键复制</a>
   <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="sysFiles:delete">删除</a>
 </script>
@@ -82,7 +83,7 @@
     //执行实例
     var uploadInst = upload.render({
       elem: '#upload' //绑定元素
-      ,exts: 'jpg|gif|png|jpeg|txt|doc|docx|sql|pdf'
+      ,exts: 'jpg|gif|png|jpeg|txt|doc|docx|sql|pdf|xls|xlsx|ppt|pptx'
       ,url: '/sysFiles/upload?authorization='+tokenQuery //上传接口
       ,data: {
     	  	  bizid:$('#id').val(),
@@ -127,6 +128,10 @@
           break;
         case 'pre':
           //预览
+          window.open(data.url,'_blank');
+          break;
+        case 'down':
+          //下载
           window.open(data.url,'_blank');
           break;
         case 'copy':

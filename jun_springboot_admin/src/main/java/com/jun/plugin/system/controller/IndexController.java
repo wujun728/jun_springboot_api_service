@@ -147,6 +147,11 @@ public class IndexController {
         return "sysfiles/list";
     }
     
+    @GetMapping("/sysFilesByUser")
+    public String sysFilesByUser() {
+    	return "sysfiles/listByUser";
+    }
+    
     //localhost:8080/index/goto/file
     @GetMapping("/goto/{pagePath}")
     public String gotPage(@PathVariable String pagePath) {

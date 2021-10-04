@@ -68,5 +68,19 @@ public class SysFilesController {
 				Wrappers.<SysFilesEntity>lambdaQuery().orderByDesc(SysFilesEntity::getCreateDate));
 		return DataResult.success(iPage);
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@ApiOperation(value = "查询分页数据")
+	@PostMapping("/listByPageUser")
+	@RequiresPermissions("sysFiles:list")
+	public DataResult listByPageUser(@RequestBody SysFilesEntity sysFiles) {
+		Page page = new Page(sysFiles.getPage(), sysFiles.getLimit());
+		IPage<SysFilesEntity> iPage = sysFilesService.page(page,
+				Wrappers.<SysFilesEntity>lambdaQuery()
+				.eq(SysFilesEntity::getRefBizid, sysFiles.getRefBizid())
+				.eq(SysFilesEntity::getDictBiztype, sysFiles.getDictBiztype())
+				.orderByDesc(SysFilesEntity::getCreateDate));
+		return DataResult.success(iPage);
+	}
 
 }

@@ -24,7 +24,7 @@ import com.jun.plugin.bizservice.service.BizCustomerTestService;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-09-30 17:19:06
+ * @date 2021-10-04 15:38:01
  */
 @Controller
 @RequestMapping("/")
@@ -69,7 +69,7 @@ public class BizCustomerTestController {
     }
 
     @ApiOperation(value = "查询分页数据")
-    @RequestMapping("bizCustomerTest/listByPage")
+    @PostMapping("bizCustomerTest/listByPage")
     @RequiresPermissions("bizCustomerTest:list")
     @ResponseBody
     public DataResult findListByPage(@RequestBody BizCustomerTestEntity bizCustomerTest){
@@ -80,5 +80,5 @@ public class BizCustomerTestController {
         IPage<BizCustomerTestEntity> iPage = bizCustomerTestService.page(page, queryWrapper);
         return DataResult.success(iPage);
     }
-     
+
 }

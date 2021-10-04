@@ -8,7 +8,7 @@ import com.jun.plugin.bizservice.entity.BizCustomerTestEntity;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-09-30 17:19:06
+ * @date 2021-10-04 15:38:01
  */
 public interface BizCustomerTestService extends IService<BizCustomerTestEntity> {
 
