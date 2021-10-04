@@ -17,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-04 15:38:01
+ * @date 2021-10-04 21:39:35
  */
 @Data
 @TableName("biz_customer_test")

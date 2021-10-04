@@ -35,7 +35,7 @@ public class TestApplicationTests {
 //    	
 //    	String tables = "pj_project_invoice,pj_project_member,pj_project_plan,pj_project_recheck,pj_project_report,pj_project_reportnumber";
     	byte[] data = sysGeneratorService.generatorCode(tables.split(","));
-    	FileUtils.writeByteArrayToFile(new File("D:/"+"12321"+(new Random().nextInt(999))+".zip"), data);
+    	FileUtils.writeByteArrayToFile(new File("D:/"+"542543"+(new Random().nextInt(999))+".zip"), data);
     	log.info("代码生成成功！");
     }
     

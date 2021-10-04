@@ -67,10 +67,20 @@
 <div class="table_div">
   <div id="searchParam"  shiro:hasPermission="${classname}:list">
     <div class="layui-form-item">
+###遍历查询条件       
+#foreach($column in $columns)
+#if($column.columnName != $pk.columnName && $column.isNull == 'NO') 
+#if($column.dataType == 'datetime')
       <div class="layui-input-inline">
-        <input type="text" id="key" class="layui-input"  autocomplete="off" placeholder="请输入">
+	<input type="${column.attrname}" name="${column.attrname}Condition"  id="${column.attrname}Condition" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
       </div>
-
+#else
+      <div class="layui-input-inline">
+    <input type="${column.attrname}" name="${column.attrname}Condition"  id="${column.attrname}Condition" class="layui-input"  autocomplete="off" placeholder="请输入${column.comments}">
+      </div>
+#end
+#end
+#end
       <div class="layui-input-inline ">
         <button class="layui-btn" onclick="search()"  id="search">查询</button>
         <button class="layui-btn"   id="export">导出全部</button>
@@ -158,6 +168,8 @@
       , toolbar: '#toolbar'
     });
 
+
+//遍历列，并渲染各种表单组件
 #foreach($column in $columns) 
 #if($column.columnName != $pk.columnName)
 #if($column.dataType == 'datetime')
@@ -175,14 +187,12 @@
 	    precision: 2
 	});
 #end
-#end
-#end
-
+#if($column.columnName.toString().contains("ref_title_"))
 	tableSelect.render({
-		elem: '#refUsername',
+		elem: '#${column.attrname}',
 		checkedKey: 'id',
 		table: {
-			url: '/bizCustomerTest/listByPage?authorization='+tokenQuery,
+			url: '/${classname}/listByPage?authorization='+tokenQuery,
 			method: 'POST',
 			contentType: 'application/json',
 			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -197,8 +207,8 @@
 				[
 					{ type: 'radio' },
 					{ field: 'id', title: 'ID' },
-					{ field: 'cusname', title: 'cusname' },
-					{ field: 'fullname', title: 'fullname' }
+					{ field: 'cusname', title: '标题' },
+					{ field: 'fullname', title: '名称' }
 				]
 			]
 		},
@@ -210,9 +220,12 @@
 				console.log('info');  
 			})
 			elem.val(NEWJSON.join(","))
-// 			form.render();
 		}
 	});
+#end
+#end
+#end
+
 
 
     //表头工具
@@ -255,7 +268,7 @@
           $(".operation").show();
           $(".title").html("编辑");
 #foreach($column in $columns)
-      $(".operation input[name=${column.attrname}]").val(data.${column.attrname});
+          $(".operation input[name=${column.attrname}]").val(data.${column.attrname});
 #end
 		  form.render();
           break;
@@ -338,9 +351,16 @@
     //这里以搜索为例
     tableIns1.reload({
       where: { //设定异步数据接口的额外参数，任意设
-        key: $("#key").val()
+        '1':'1'
+        //,key: $("#key").val()
+###遍历查询条件       
+#foreach($column in $columns)
+#if($column.columnName != $pk.columnName && $column.isNull == 'NO') 
+		,${column.attrname}: $("#${column.attrname}Condition").val()
+#end
+#end
       }
-      , page: {
+      ,page: {
         curr: 1 //重新从第 1 页开始
       }
     });
@@ -352,7 +372,7 @@
     form.verify({
 #foreach($column in $columns) 
 #if($column.columnName != $pk.columnName)
-#if($column.isNull == 'NO')
+###if($column.isNull == 'NO')
 ${column.attrname}: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
@@ -360,7 +380,7 @@ ${column.attrname}: function(value, item){
             }
         } #if($columns.size() != ${velocityCount}) ,  #end
 #end
-#end
+###end
 #end
     });
 </script>

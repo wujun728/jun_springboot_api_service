@@ -116,9 +116,14 @@
   <div id="searchParam"  shiro:hasPermission="bizCustomerTest:list">
     <div class="layui-form-item">
       <div class="layui-input-inline">
-        <input type="text" id="key" class="layui-input"  autocomplete="off" placeholder="请输入">
+    <input type="cusname" name="cusnameCondition"  id="cusnameCondition" class="layui-input"  autocomplete="off" placeholder="请输入客户名称">
       </div>
-
+      <div class="layui-input-inline">
+    <input type="cusdesc" name="cusdescCondition"  id="cusdescCondition" class="layui-input"  autocomplete="off" placeholder="请输入客户描述">
+      </div>
+      <div class="layui-input-inline">
+	<input type="registerDate" name="registerDateCondition"  id="registerDateCondition" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+      </div>
       <div class="layui-input-inline ">
         <button class="layui-btn" onclick="search()"  id="search">查询</button>
         <button class="layui-btn"   id="export">导出全部</button>
@@ -217,6 +222,8 @@
       , toolbar: '#toolbar'
     });
 
+
+//遍历列，并渲染各种表单组件
 	numberInput.render("#money", {
 	    autoSelcet: false,
 	    max: 99999999999,
@@ -229,9 +236,8 @@
 	    elem: '#registerDate'
 	    ,type: 'datetime'
     });
-
 	tableSelect.render({
-		elem: '#refUsername',
+		elem: '#refTitleUsername',
 		checkedKey: 'id',
 		table: {
 			url: '/bizCustomerTest/listByPage?authorization='+tokenQuery,
@@ -249,8 +255,8 @@
 				[
 					{ type: 'radio' },
 					{ field: 'id', title: 'ID' },
-					{ field: 'cusname', title: 'cusname' },
-					{ field: 'fullname', title: 'fullname' }
+					{ field: 'cusname', title: '标题' },
+					{ field: 'fullname', title: '名称' }
 				]
 			]
 		},
@@ -259,13 +265,12 @@
 			layui.each(data.data, function (index, item) {
 				NEWJSON.push(item.cusname);
 				$("#refId").val(item.id);
-// 				$("#refId]").val("战三");
 				console.log('info');  
 			})
 			elem.val(NEWJSON.join(","))
-// 			form.render();
 		}
 	});
+
 
 
     //表头工具
@@ -315,17 +320,17 @@
           $(".table_div").hide();
           $(".operation").show();
           $(".title").html("编辑");
-	      $(".operation input[name=id]").val(data.id);
-	      $(".operation input[name=cusname]").val(data.cusname);
-	      $(".operation input[name=money]").val(data.money);
-	      $(".operation input[name=cusdesc]").val(data.cusdesc);
-	      $(".operation input[name=fullname]").val(data.fullname);
-	      $(".operation input[name=dictCussex]").val(data.dictCussex);
-	      $(".operation input[name=registerDate]").val(data.registerDate);
-	      $(".operation input[name=dictCustype]").val(data.dictCustype);
-	      $(".operation input[name=refId]").val(data.refId);
-	      $(".operation input[name=refTitleUsername]").val(data.refTitleUsername);
-	      $(".operation input[name=remark]").val(data.remark);
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=cusname]").val(data.cusname);
+          $(".operation input[name=money]").val(data.money);
+          $(".operation input[name=cusdesc]").val(data.cusdesc);
+          $(".operation input[name=fullname]").val(data.fullname);
+          $(".operation input[name=dictCussex]").val(data.dictCussex);
+          $(".operation input[name=registerDate]").val(data.registerDate);
+          $(".operation input[name=dictCustype]").val(data.dictCustype);
+          $(".operation input[name=refId]").val(data.refId);
+          $(".operation input[name=refTitleUsername]").val(data.refTitleUsername);
+          $(".operation input[name=remark]").val(data.remark);
 		  form.render();
           break;
         case 'file':
@@ -338,7 +343,6 @@
               shadeClose: true,
               area: ['80%', '80%'],
               content: '/index/sysFilesByUser',
-//               content: '../table/edit.html',
           });
           $(window).on("resize", function () {
               layer.full(index);
@@ -408,9 +412,13 @@
     //这里以搜索为例
     tableIns1.reload({
       where: { //设定异步数据接口的额外参数，任意设
-        key: $("#key").val()
+        '1':'1'
+        //,key: $("#key").val()
+		,cusname: $("#cusnameCondition").val()
+		,cusdesc: $("#cusdescCondition").val()
+		,registerDate: $("#registerDateCondition").val()
       }
-      , page: {
+      ,page: {
         curr: 1 //重新从第 1 页开始
       }
     });
@@ -425,15 +433,50 @@ cusname: function(value, item){
             if(value.length > max){
                 return '客户名称不能大于'+max+'个字符的长度！';
             }
+        }  ,  money: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '注册金额不能大于'+max+'个字符的长度！';
+            }
         }  ,  cusdesc: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
                 return '客户描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  fullname: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户全称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  dictCussex: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户性质不能大于'+max+'个字符的长度！';
             }
         }  ,  registerDate: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
                 return '注册时间不能大于'+max+'个字符的长度！';
             }
-        }  ,      });
+        }  ,  dictCustype: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refId: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refTitleUsername: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '关联子客户名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }     });
 </script>
