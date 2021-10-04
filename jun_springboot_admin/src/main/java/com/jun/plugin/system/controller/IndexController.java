@@ -157,4 +157,11 @@ public class IndexController {
     public String gotPage(@PathVariable String pagePath) {
     	return pagePath;
     }
+    
+    //http://localhost:8090/admin/view/flow/processList.html
+    //http://localhost:8090/index/processList
+    @GetMapping("/processList")
+    public String processList() {
+    	return "admin/view/flow/processList";
+    }
 }

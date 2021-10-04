@@ -92,6 +92,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/captcha.jpg", "anon");
         filterChainDefinitionMap.put("/csrf", "anon");
         filterChainDefinitionMap.put("/public/**", "anon");
+        filterChainDefinitionMap.put("*.css", "anon");
+        filterChainDefinitionMap.put("*.js", "anon");
         //文件上传可直接访问
         filterChainDefinitionMap.put(fileUploadProperties.getAccessUrl(), "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
@@ -101,6 +103,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/layui-ext/**", "anon");
         filterChainDefinitionMap.put("/api/**", "anon");
         filterChainDefinitionMap.put("/lib/**", "anon");
+        filterChainDefinitionMap.put("/component/**", "anon");
         filterChainDefinitionMap.put("/**", "token,authc");
         shiroFilterFactoryBean.setLoginUrl("/index/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
