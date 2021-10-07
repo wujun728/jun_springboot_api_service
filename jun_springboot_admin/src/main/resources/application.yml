@@ -7,6 +7,7 @@ spring:
     active: dev
   mvc:
     throw-exception-if-no-handler-found: true
+#    static-path-pattern: /static/**
   resources:
     add-mappings: false
   application:
