@@ -21,7 +21,7 @@ public class SpringbootApplication {
         Environment env = application.getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
                         "SpringbootApplication '{}' is running! Access URLs:\n\t" +
-                        "Login: \thttp://{}:{}/login\n\t" +
+                        "Login: \thttp://{}:{}/\n\t" +
                         "----------------------------------------------------------",
                 env.getProperty("spring.application.name"),
                 InetAddress.getLocalHost().getHostAddress(),

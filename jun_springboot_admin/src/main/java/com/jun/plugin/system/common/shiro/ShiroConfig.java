@@ -1,6 +1,6 @@
 package com.jun.plugin.system.common.shiro;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+//import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -31,10 +31,10 @@ public class ShiroConfig {
     @Resource
     private FileUploadProperties fileUploadProperties;
 
-    @Bean(name = "shiroDialect")
-    public ShiroDialect shiroDialect() {
-        return new ShiroDialect();
-    }
+//    @Bean(name = "shiroDialect")
+//    public ShiroDialect shiroDialect() {
+//        return new ShiroDialect();
+//    }
 
     @Bean
     public CustomHashedCredentialsMatcher customHashedCredentialsMatcher() {
@@ -75,12 +75,14 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filtersMap);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
-        filterChainDefinitionMap.put("/sys/user/login", "anon");
+        filterChainDefinitionMap.put("/*.html", "anon");
         filterChainDefinitionMap.put("/sys/user/token", "anon");
+        filterChainDefinitionMap.put("/sys/user/login", "anon");
         filterChainDefinitionMap.put("/sys/getVerify", "anon");
         filterChainDefinitionMap.put("/sys/checkVerify", "anon");
         filterChainDefinitionMap.put("/index/**", "anon");
-        filterChainDefinitionMap.put("*.html", "anon");
+        filterChainDefinitionMap.put("/pages/*.html", "anon");
+        filterChainDefinitionMap.put("/**/*.html", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/doc.html", "anon");
         filterChainDefinitionMap.put("/swagger-resources/**", "anon");
@@ -92,8 +94,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/captcha.jpg", "anon");
         filterChainDefinitionMap.put("/csrf", "anon");
         filterChainDefinitionMap.put("/public/**", "anon");
-        filterChainDefinitionMap.put("*.css", "anon");
-        filterChainDefinitionMap.put("*.js", "anon");
         //文件上传可直接访问
         filterChainDefinitionMap.put(fileUploadProperties.getAccessUrl(), "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
@@ -105,7 +105,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/lib/**", "anon");
         filterChainDefinitionMap.put("/component/**", "anon");
         filterChainDefinitionMap.put("/**", "token,authc");
-        shiroFilterFactoryBean.setLoginUrl("/index/login");
+        shiroFilterFactoryBean.setLoginUrl("/login.html");
+//        shiroFilterFactoryBean.setLoginUrl("/index/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

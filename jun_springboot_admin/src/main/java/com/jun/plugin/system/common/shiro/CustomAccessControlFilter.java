@@ -63,7 +63,7 @@ public class CustomAccessControlFilter extends AccessControlFilter {
             if (HttpContextUtils.isAjaxRequest(request)) {
                 customResponse(exception.getMessageCode(), exception.getDetailMessage(), servletResponse);
             } else if (exception.getMessageCode() == BaseResponseCode.TOKEN_ERROR.getCode()) {
-                servletRequest.getRequestDispatcher("/index/login").forward(servletRequest, servletResponse);
+                servletRequest.getRequestDispatcher("/login.html").forward(servletRequest, servletResponse);
             } else if (exception.getMessageCode() == BaseResponseCode.UNAUTHORIZED_ERROR.getCode()) {
                 servletRequest.getRequestDispatcher("/index/403").forward(servletRequest, servletResponse);
             } else {
