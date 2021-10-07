@@ -25,7 +25,7 @@ public class TestApplicationTests {
 	@Resource
     private ISysGeneratorService sysGeneratorService;
 
-    @Test
+//    @Test
     public void contextLoads() throws IOException {
     	String tables = "biz_customer_test";
 //    	String tables = "oa_law_info,oa_learn_info,oa_notes_info";
