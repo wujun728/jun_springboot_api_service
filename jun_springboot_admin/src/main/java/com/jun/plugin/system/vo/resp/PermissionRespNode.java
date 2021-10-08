@@ -24,6 +24,9 @@ public class PermissionRespNode {
 
     @ApiModelProperty(value = "接口地址")
     private String url;
+    
+    @ApiModelProperty(value = "接口地址")
+    private String href;
 
     @ApiModelProperty(value = "icon")
     private String icon;
@@ -48,6 +51,7 @@ public class PermissionRespNode {
     @ApiModelProperty(value = "是否选中 默认false")
     private boolean checked;
     private List<?> children;
+    private List<?> child;
 
 
 }

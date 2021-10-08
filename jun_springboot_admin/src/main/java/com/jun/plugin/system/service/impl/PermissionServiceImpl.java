@@ -168,8 +168,10 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
 
                 if (type) {
                     permissionRespNode.setChildren(getChildExcBtn(sysPermission.getId(), all));
+                    permissionRespNode.setChild(getChildExcBtn(sysPermission.getId(), all));
                 } else {
                     permissionRespNode.setChildren(getChildAll(sysPermission.getId(), all));
+                    permissionRespNode.setChild(getChildAll(sysPermission.getId(), all));
                 }
                 list.add(permissionRespNode);
             }
@@ -189,6 +191,7 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
                 BeanUtils.copyProperties(sysPermission, permissionRespNode);
                 permissionRespNode.setTitle(sysPermission.getName());
                 permissionRespNode.setChildren(getChildAll(sysPermission.getId(), all));
+                permissionRespNode.setChild(getChildAll(sysPermission.getId(), all));
                 list.add(permissionRespNode);
             }
         }
@@ -207,6 +210,7 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
                 BeanUtils.copyProperties(sysPermission, permissionRespNode);
                 permissionRespNode.setTitle(sysPermission.getName());
                 permissionRespNode.setChildren(getChildExcBtn(sysPermission.getId(), all));
+                permissionRespNode.setChild(getChildExcBtn(sysPermission.getId(), all));
                 list.add(permissionRespNode);
             }
         }
@@ -250,6 +254,7 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
         respNode.setTitle("默认顶级菜单");
         respNode.setSpread(true);
         respNode.setChildren(getTree(list, true));
+        respNode.setChild(getTree(list, true));
         result.add(respNode);
         return result;
     }

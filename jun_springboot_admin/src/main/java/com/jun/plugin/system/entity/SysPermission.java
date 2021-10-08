@@ -29,7 +29,11 @@ public class SysPermission implements Serializable {
 
     private String perms;
 
+    @TableField("url")
     private String url;
+    
+    @TableField("url")
+    private String href;
 
     private String icon;
 
