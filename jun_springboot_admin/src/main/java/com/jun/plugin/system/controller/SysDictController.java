@@ -1,5 +1,6 @@
 package com.jun.plugin.system.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -95,6 +96,12 @@ public class SysDictController {
         queryWrapper.orderByAsc(SysDictEntity::getName);
         IPage<SysDictEntity> iPage = sysDictService.page(page, queryWrapper);
         return DataResult.success(iPage);
+    }
+    
+    @ApiOperation(value = "查询字典明细数据")
+    @RequestMapping("/getType/{name}")
+    public JSONArray getType(@PathVariable String name) {
+    	return sysDictService.getType(name);
     }
 
 }

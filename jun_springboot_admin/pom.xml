@@ -88,7 +88,7 @@
 		</dependency>
 
 		<!--thymeleaf默认使用html5规则标签必须闭合等 使用次此包正常解析 -->
-		<!--
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -98,7 +98,7 @@
 			<artifactId>thymeleaf-extras-shiro</artifactId>
 			<version>${thymeleaf-shiro.version}</version>
 		</dependency>
-		-->
+		<!-- -->
 		<!--数据库持久化 及 插件依赖 -->
 		<dependency>
 			<groupId>com.baomidou</groupId>

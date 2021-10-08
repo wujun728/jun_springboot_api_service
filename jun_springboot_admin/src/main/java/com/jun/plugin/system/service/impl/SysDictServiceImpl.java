@@ -35,6 +35,7 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDictEntity
      * @param name 字典名称
      * @return 参数键值
      **/
+    @Override
     public JSONArray getType(String name) {
         if (StringUtils.isEmpty(name)) {
             return new JSONArray();

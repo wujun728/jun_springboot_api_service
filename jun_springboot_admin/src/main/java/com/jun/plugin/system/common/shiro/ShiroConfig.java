@@ -80,6 +80,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/sys/user/login", "anon");
         filterChainDefinitionMap.put("/sys/getVerify", "anon");
         filterChainDefinitionMap.put("/sys/checkVerify", "anon");
+        filterChainDefinitionMap.put("/sysDict/getType/*", "anon");
         filterChainDefinitionMap.put("/index/**", "anon");
         filterChainDefinitionMap.put("/pages/*.html", "anon");
         filterChainDefinitionMap.put("/**/*.html", "anon");
@@ -106,7 +107,6 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/component/**", "anon");
         filterChainDefinitionMap.put("/**", "token,authc");
         shiroFilterFactoryBean.setLoginUrl("/login.html");
-//        shiroFilterFactoryBean.setLoginUrl("/index/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

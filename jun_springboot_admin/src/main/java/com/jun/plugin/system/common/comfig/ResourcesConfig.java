@@ -1,6 +1,8 @@
 package com.jun.plugin.system.common.comfig;
 
-import org.springframework.beans.factory.annotation.Value;
+import javax.annotation.Resource;
+
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -11,10 +13,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 通用配置
  * 
- * @author ruoyi
  */
 @Configuration
+@EnableConfigurationProperties(FileUploadProperties.class)
 public class ResourcesConfig implements WebMvcConfigurer {
+	
+  @Resource
+  private FileUploadProperties fileUploadProperties;
 	/**
 	 * 首页地址
 	 */
@@ -49,7 +54,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
 		/** 本地文件上传路径 */
 //        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**").addResourceLocations("file:" + Global.getProfile() + "/");
 
-		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/","classpath:/views/","classpath:/templates/");
+		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/","classpath:/templates/","classpath:/templates2/","classpath:/views/");
 //		registry.addResourceHandler("/**").addResourceLocations("classpath:/templates/");
 		registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
@@ -57,6 +62,8 @@ public class ResourcesConfig implements WebMvcConfigurer {
 		/** swagger配置 */
 		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+		/** 文件下载映射配置,同下 */
+        registry.addResourceHandler(fileUploadProperties.getAccessUrl()).addResourceLocations("file:" + fileUploadProperties.getPath());
 	}
 
 	/**

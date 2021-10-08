@@ -14,7 +14,7 @@
         <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
             <input name="id" hidden/>
             <div class="layui-form-item">
-                <label class="layui-form-label">标题</label>
+                <label class="layui-form-label">标题00</label>
                 <div class="layui-input-block">
                     <input type="title" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
                 </div>
@@ -22,10 +22,11 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">类型</label>
                 <div class="layui-input-block">
-                    <select id="type" name="type" lay-filter="select-type" th:with="type=${@sysDictService.getType('content_type')}">
+                	<select name="type" id="type" lay-filter="type"></select>
+                    <!-- <select id="type" name="type" lay-filter="select-type" th:with="type=${@sysDictService.getType('content_type')}">
                         <option value="0">请选择</option>
                         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
-                    </select>
+                    </select> -->
                 </div>
             </div>
             <div class="layui-form-item">
@@ -79,7 +80,7 @@
 <script src="/js/core.util.js"></script>
 <script>
     //文章类型字典数据
-    var datas = "[[${@sysDictService.getType('content_type')}]]".replace(/&quot;/g,"\"");
+    var datas = "";//"[[${@sysDictService.getType('content_type')}]]".replace(/&quot;/g,"\"");
     //获取token
     var token = CoreUtil.getData("access_token");
     //地址栏转义token中的#号
@@ -92,16 +93,38 @@
     var laydate = layui.laydate;
     var layedit = layui.layedit;
 
-    layui.use(['table', 'layer', 'laydate', 'layedit'], function () {
+    layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index',
+        layselect:'layselect'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit','jquery','form','layselect'], function () {
+    	var select = layui.layselect;
+    	
         //图片
         layedit.set({
             uploadImage: {
-                url: '/sysFiles/upload?authorization=' + tokenQuery +"&bizid=0&biztype=content"//接口url
+                url: '/sysFiles/upload?authorization=' + tokenQuery //接口url
                 , type: 'post' //默认post
             }
         });
         //建立富文本编辑器
         var editIndex = layedit.build('content');
+        //初始化下拉框
+        select.render({
+    		  elem:"#type",
+    		  url:'/sysDict/getType/content_type',//归属类型
+   		  	  format:function(row){
+  			    return{
+  				  code:row.value,
+  				  status:row.status||'1',
+  				  codeName:row.label
+  			  };
+  	  	  }
+    	});
+        
         //加载table
         tableIns1 = table.render({
             elem: '#showTable'
@@ -124,8 +147,7 @@
                     {field: 'id', title: 'id', sort: true},
                     {field: 'title', title: '标题', sort: true},
                     {field: 'type', title: '类型', sort: true, templet: function (item) {
-                        //获取类型对应的字典label
-                        return CoreUtil.selectDictLabel(datas, item.type);
+                          	return CoreUtil.selectDictLabelV2(datas, item.type);
                         }
                     },
                     {field: 'content', title: '内容', sort: true},
@@ -135,7 +157,7 @@
             ]
             , toolbar: '#toolbar'
         });
-
+        
         //表头工具
         table.on('toolbar(showTable)', function (obj) {
             switch (obj.event) {
@@ -249,7 +271,7 @@
             return false;
         });
     });
-
+	
 
     //执行查询
     function search() {

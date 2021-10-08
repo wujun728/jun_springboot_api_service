@@ -39,8 +39,8 @@ public class SysFilesController {
 	@ApiOperation(value = "新增")
 	@PostMapping("/upload")
 	@RequiresPermissions(value = { "sysFiles:add", "sysContent:update", "sysContent:add" }, logical = Logical.OR)
-	public DataResult add(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "bizid") String bizid,
-			@RequestParam(value = "biztype") String biztype) {
+	public DataResult add(@RequestParam(value = "file") MultipartFile file, @RequestParam(value = "bizid",required = false) String bizid,
+			@RequestParam(value = "biztype",required = false) String biztype) {
 		log.info(biztype);
 		log.info(bizid);
 		// 判断文件是否空
