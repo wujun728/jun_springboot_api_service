@@ -6,7 +6,7 @@ import com.jun.plugin.system.entity.SysDictDetailEntity;
 /**
  * 字典详情 Mapper
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

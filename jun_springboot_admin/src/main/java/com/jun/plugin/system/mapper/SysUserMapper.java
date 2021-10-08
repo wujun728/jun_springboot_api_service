@@ -6,7 +6,7 @@ import com.jun.plugin.system.entity.SysUser;
 /**
  * 用户 Mapper
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

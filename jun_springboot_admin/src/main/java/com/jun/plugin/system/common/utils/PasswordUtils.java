@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * 密码工具类
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

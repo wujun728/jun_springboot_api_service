@@ -7,7 +7,7 @@ import com.jun.plugin.system.entity.SysGenerator;
 /**
  * 代码生成
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

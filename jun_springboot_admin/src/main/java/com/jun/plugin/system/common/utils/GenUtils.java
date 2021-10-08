@@ -24,7 +24,7 @@ import java.util.zip.ZipOutputStream;
 /**
  * 代码生成器 工具类
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */
