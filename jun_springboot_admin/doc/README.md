@@ -30,7 +30,7 @@ GitHub地址：[https://github.com/aitangbao/springboot-admin](https://github.co
 - 代码文档地址：[http://doc.aitangbao.cn](http://121.42.10.80:9000)
 - 演示地址：[http://manager.aitangbao.cn](http://121.42.10.80:8080)
 - 账号密码：guest/123456
-- 带宽1m 不太给力 请见谅 :joy:
+- 带宽1m 不太给力 请见谅
 
 ## 代码结构
 ```
@@ -136,14 +136,6 @@ GitHub地址：[https://github.com/aitangbao/springboot-admin](https://github.co
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0929/142027_57d18746_997722.png "home1.png")
 ![2](https://images.gitee.com/uploads/images/2020/0521/110629_7526055a_997722.png)
 
-### 捐赠
-> 项目的发展离不开您的支持， 如果您够宽裕，请作者喝杯咖啡吧！  
-
-![image-20200506154143271](https://images.gitee.com/uploads/images/2020/0521/110630_6be55411_997722.png)
-
-### 交流群
-> 如果大家有疑难杂症，技术交流， 可以加我拉你们进群, 务必备注: 开源
-![输入图片说明](https://images.gitee.com/uploads/images/2021/0812/150909_069903b5_997722.png "微信截图_20210812150831.png")
 
 
 

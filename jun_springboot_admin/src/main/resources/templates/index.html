@@ -13,7 +13,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
     <link rel="icon" href="images/favicon.ico">
-    <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all">
+<!--     <link rel="stylesheet" href="lib/layui-v2.5.5/css/layui.css" media="all"> -->
+    <link rel="stylesheet" href="/layui/css/layui.css">
     <link rel="stylesheet" href="css/layuimini.css?v=2.0.4.2" media="all">
     <link rel="stylesheet" href="css/themes/default.css" media="all">
     <link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" media="all">
@@ -59,14 +60,27 @@
                 <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                     <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                 </li>
+                <!-- 
+                <li class="layui-nav-item  layuimini-setting">
+	                <a href="javascript:;">
+	                    <div><span id="nickName">guest</span></div>
+	                </a>
+	                <dl class="layui-nav-child">
+	                    <dd><a href="javascript:;" data-id="userProper" data-title="基本资料" data-url="/index/users/info"
+	                           class="menuNvaBar">基本资料</a></dd>
+	                    <dd><a href="javascript:;" data-id="userSafe" data-title="安全设置" data-url="/index/users/password"
+	                           class="menuNvaBar">更换密码</a></dd>
+	                    <dd><a href="javascript:;" id="logout">退出登录</a></dd>
+	                </dl>
+	            </li> -->
                 <li class="layui-nav-item layuimini-setting">
                     <a href="javascript:;">admin</a>
                     <dl class="layui-nav-child">
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="page/user-setting.html" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
+                            <a href="javascript:;" layuimini-content-href="/index/users/info" data-title="基本资料" data-icon="fa fa-gears">基本资料<span class="layui-badge-dot"></span></a>
                         </dd>
                         <dd>
-                            <a href="javascript:;" layuimini-content-href="page/user-password.html" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
+                            <a href="javascript:;" layuimini-content-href="/index/users/password" data-title="修改密码" data-icon="fa fa-gears">修改密码</a>
                         </dd>
                         <dd>
                             <hr>
