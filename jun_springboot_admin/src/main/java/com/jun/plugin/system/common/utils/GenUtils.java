@@ -226,7 +226,7 @@ public class GenUtils {
         }
 
         if (template.contains("list.html.vm")) {
-            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator + className.toLowerCase() + File.separator + "list" + ".html";
+            return "main" + File.separator + "resources" + File.separator + "templates2" + File.separator + className.toLowerCase() + File.separator + "list" + ".html";
         }
 
         return null;

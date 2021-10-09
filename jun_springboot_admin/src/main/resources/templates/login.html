@@ -87,7 +87,8 @@
                             value: res.data.accessToken
                         })
                         layer.msg('登录成功', {time: 1000}, function () {
-                            window.location = '/home.html';
+                            window.location = '/index.html';
+//                             window.location = '/home.html';
                         });
                     } else {
                         layer.msg(res.msg);
