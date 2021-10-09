@@ -86,7 +86,7 @@
                             <hr>
                         </dd>
                         <dd>
-                            <a href="javascript:;" class="login-out">退出登录</a>
+                            <a href="javascript:;" class="login-out"  id="logout" >退出登录</a>
                         </dd>
                     </dl>
                 </li>
@@ -143,10 +143,16 @@
 </div>
 <script src="lib/layui-v2.5.5/layui.js" charset="utf-8"></script>
 <script src="js/lay-config.js?v=2.0.0" charset="utf-8"></script>
-<script src="/js/core.util.js"></script>
+<script src="js/core.util.js"></script>
+<script src="js/jquery.js"></script>
 <script>
 	var token = CoreUtil.getData("access_token");
+	console.log(token);
+	if(token == undefined){
+		window.location = 'login.html';
+	}
 	var tokenQuery = token.replace("#", "%23");
+	console.log(tokenQuery);
     layui.use(['jquery', 'layer', 'miniAdmin'], function () {
         var $ = layui.jquery,
             layer = layui.layer,
@@ -166,13 +172,32 @@
             maxTabNum: 20,              // 最大的tab打开数量
         };
         miniAdmin.render(options);
-
-        $('.login-out').on("click", function () {
-            layer.msg('退出登录成功', function () {
-                window.location = 'login.html';
-            });
+        
+      //推出登录
+        $("#logout").click(function () {
+            logoutDialog();
         });
+
+//         $('.login-out').on("click", function () {
+//             layer.msg('退出登录成功', function () {
+//                 window.location = 'login.html';
+//             });
+//         });
+        
     });
+    
+    var logoutDialog = function () {
+        layer.open({
+            content: '确定要退出登录么？',
+            yes: function (index, layero) {
+                layer.close(index); //如果设定了yes回调，需进行手工关闭
+                CoreUtil.sendGet("/sys/user/logout", null, function (res) {
+                    layui.data('LocalData', null);
+                    top.window.location.href = "/index/login";
+                });
+            }
+        });
+    }
 </script>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.PjCustomerMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.PjCustomerEntity" id="pjCustomerMap">
+        <result property="id" column="id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerCode" column="customer_code"/>
+        <result property="dictCustomerType" column="dict_customer_type"/>
+        <result property="phone" column="phone"/>
+        <result property="financialManager" column="financial_manager"/>
+        <result property="fmPhone" column="fm_phone"/>
+        <result property="customerLinks" column="customer_links"/>
+        <result property="customerBusiness" column="customer_business"/>
+        <result property="businessLicense" column="business_license"/>
+        <result property="conpanyName" column="conpany_name"/>
+        <result property="businessLicenseNo" column="business_license_no"/>
+        <result property="legalRepresentative" column="legal_representative"/>
+        <result property="registeredCapital" column="registered_capital"/>
+        <result property="customerAddress" column="customer_address"/>
+        <result property="dictCompanyType" column="dict_company_type"/>
+        <result property="companyBegin" column="company_begin"/>
+        <result property="paiclupCapital" column="paiclup_capital"/>
+        <result property="businessScope" column="business_scope"/>
+        <result property="businessTermStart" column="business_term_start"/>
+        <result property="businessTermEnd" column="business_term_end"/>
+        <result property="registrationAuthority" column="registration_authority"/>
+        <result property="licensingDay" column="licensing_day"/>
+        <result property="customerBillingInformation" column="customer_billing_information"/>
+        <result property="taxRegNumber" column="tax_reg_number"/>
+        <result property="dutyParagraph" column="duty_paragraph"/>
+        <result property="openingBank" column="opening_bank"/>
+        <result property="accountNumber" column="account_number"/>
+        <result property="telephone" column="telephone"/>
+        <result property="companyAddress" column="company_address"/>
+        <result property="dictIsOldCustomer" column="dict_is_old_customer"/>
+        <result property="customerRespPerson" column="customer_resp_person"/>
+        <result property="customerRelationPerson" column="customer_relation_person"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+
+</mapper>

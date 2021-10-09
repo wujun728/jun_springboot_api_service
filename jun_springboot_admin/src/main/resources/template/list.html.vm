@@ -23,24 +23,28 @@
   <div class="panel-heading title"></div>
 <div class="layui-card-body">
 <form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
+###遍历新增修改表单
 #foreach($column in $columns)
   #if($column.columnName == $pk.columnName)
     <input name="${column.attrname}" id="${column.attrname}" hidden/>
   #else
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
     <div class="layui-form-item" #if($column.columnName == $pk.columnName) ,hide:true #end  #if($column.comments=='') style="display:none" #end>
       <label class="layui-form-label #if($column.isNull == 'NO')layui-required#end " >${column.comments}</label>
       <div class="layui-input-block">
-       
 ##注解支持，不展示
 #if($column.dataType == 'datetime')
 	<input type="${column.attrname}" name="${column.attrname}"  id="${column.attrname}" lay-verify="#if($column.isNull == 'NO')required|#end date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-#elseif($column.dataType == 'text')
-	<textarea placeholder="请输入内容" class="layui-textarea" name="${column.attrname}"  id="${column.attrname}"></textarea>
-#elseif($column.columnName.toString().contains("dict_"))
+#elseif($column.columnName.toString().contains("dict"))
 	<select id="${column.attrname}" name="${column.attrname}" lay-filter="select-type" th:with="type=${@sysDictService.getType('${column.columnName}')}">
         <option value="0">请选择</option>
         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
     </select>
+#elseif($column.dataType == 'text')
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="${column.attrname}"  id="${column.attrname}"></textarea>
 #else
 	#if($column.isNull == 'NO') 
 	<input type="${column.attrname}" name="${column.attrname}"  id="${column.attrname}"  lay-verify="required|${column.attrname}" lay-max="${column.maxLength}"   placeholder="请输入${column.comments}"  autocomplete="off" class="layui-input">
@@ -48,8 +52,8 @@
 	<input type="text" name="${column.attrname}"  id="${column.attrname}"  placeholder="请输入${column.comments}" autocomplete="off" class="layui-input">
 	#end
 #end
-      </div>
-    </div>
+  </div>
+ </div>
 #end
 #end
 <div class="layui-form-item">
@@ -70,6 +74,10 @@
 ###遍历查询条件       
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName && $column.isNull == 'NO') 
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
 #if($column.dataType == 'datetime')
       <div class="layui-input-inline">
 	<input type="${column.attrname}" name="${column.attrname}Condition"  id="${column.attrname}Condition" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
@@ -108,6 +116,7 @@
 <script src="/layui/layui.all.js"></script>
 <script src="/layui-ext/tableSelect.js"></script>
 <script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
 <script>
   //获取token
   var token = CoreUtil.getData("access_token");
@@ -152,15 +161,24 @@
       }
       , cols: [
         [
-          {type: 'checkbox', fixed: 'left'},  #foreach($column in $columns)
-          {field: '${column.attrname}', title: '${column.comments}', sort: true #if($column.columnName == $pk.columnName || $column.isNull != 'NO') ,hide:true #end
+          {type: 'checkbox', fixed: 'left'},  
+#foreach($column in $columns)
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
+          {field: '${column.attrname}', title: '${column.comments}', sort: true ##
+#if($column.columnName == $pk.columnName || $column.isNull != 'NO') 
+,hide:true ##
+#end
 #if($column.columnName.toString().contains("dict_"))
-	, templet: function (item) {
-            //获取类型对应的字典label
-            var datas = "[[${@sysDictService.getType('${column.columnName}')}]]".replace(/&quot;/g,"\"");
-            return CoreUtil.selectDictLabel(datas, item.${column.attrname});
+, templet: function (item) { ##
+	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('${column.columnName}')}]]".replace(/&quot;/g,"\"");
+	            return CoreUtil.selectDictLabel(datas, item.${column.attrname});
             }
-#end },
+#end 
+}, 
 #end
           {width: 160, toolbar: "#tool", title: '操作'}
         ]
@@ -172,6 +190,10 @@
 //遍历列，并渲染各种表单组件
 #foreach($column in $columns) 
 #if($column.columnName != $pk.columnName)
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
 #if($column.dataType == 'datetime')
  	//日期
 	laydate.render({
@@ -187,7 +209,7 @@
 	    precision: 2
 	});
 #end
-#if($column.columnName.toString().contains("ref_title_"))
+#if($column.columnName.toString().contains("ref_"))
 	tableSelect.render({
 		elem: '#${column.attrname}',
 		checkedKey: 'id',
@@ -226,8 +248,6 @@
 #end
 #end
 
-
-
     //表头工具
     table.on('toolbar(showTable)', function(obj){
       switch(obj.event){
@@ -248,9 +268,13 @@
           $(".table_div").hide();
           $(".operation").show();
           $(".title").html("新增");
-	#foreach($column in $columns)
+#foreach($column in $columns)
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
           $(".operation input[name=${column.attrname}]").val("");
-	#end
+#end
           break;
       };
     });
@@ -268,6 +292,10 @@
           $(".operation").show();
           $(".title").html("编辑");
 #foreach($column in $columns)
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
           $(".operation input[name=${column.attrname}]").val(data.${column.attrname});
 #end
 		  form.render();
@@ -372,7 +400,10 @@
     form.verify({
 #foreach($column in $columns) 
 #if($column.columnName != $pk.columnName)
-###if($column.isNull == 'NO')
+##跳过循环，新增及修改时间字段，注解支持，不展示
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+	#break
+#end
 ${column.attrname}: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
@@ -380,7 +411,6 @@ ${column.attrname}: function(value, item){
             }
         } #if($columns.size() != ${velocityCount}) ,  #end
 #end
-###end
 #end
     });
 </script>

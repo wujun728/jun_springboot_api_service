@@ -37,7 +37,7 @@ public class ThymeleafConfigration {
         System.out.println("new outside_templates is "+outside_templates);
         templateResolver.setPrefix("file://"+outside_templates);
 
-        templateResolver.setSuffix(".htm");
+        templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
         templateResolver.setOrder(0);
@@ -51,7 +51,7 @@ public class ThymeleafConfigration {
     public ClassLoaderTemplateResolver secondaryTemplateResolver() {
         ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
         secondaryTemplateResolver.setPrefix("templates2/");
-        secondaryTemplateResolver.setSuffix(".htm");
+        secondaryTemplateResolver.setSuffix(".html");
         secondaryTemplateResolver.setTemplateMode(TemplateMode.HTML);
         secondaryTemplateResolver.setCharacterEncoding("UTF-8");
         secondaryTemplateResolver.setOrder(1);

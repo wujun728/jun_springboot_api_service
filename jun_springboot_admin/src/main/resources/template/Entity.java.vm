@@ -2,6 +2,7 @@ package ${package}.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.jun.plugin.system.entity.BaseEntity;
 import org.springframework.data.annotation.Id;
@@ -36,7 +37,12 @@ public class ${className}Entity extends BaseEntity implements Serializable {
 	private $column.attrType $column.attrname;
 #end
 #if($column.columnName != $pk.columnName)
-	@TableField("$column.columnName")
+	@TableField(value = "$column.columnName" ##
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted")) 
+, fill = FieldFill.INSERT ##
+#elseif($column.columnName.toString().contains("update")) 
+, fill = FieldFill.INSERT_UPDATE ##
+#end )
 	private $column.attrType $column.attrname;
 #end
 
