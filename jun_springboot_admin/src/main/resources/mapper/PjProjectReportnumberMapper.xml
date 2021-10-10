@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.PjProjectReportnumberMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.PjProjectReportnumberEntity" id="pjProjectReportnumberMap">
+        <result property="id" column="id"/>
+        <result property="refReportnumberCode" column="ref_reportnumber_code"/>
+        <result property="refReportnumberTitle" column="ref_reportnumber_title"/>
+        <result property="reportnumberCode" column="reportnumber_code"/>
+        <result property="refReportnumberMan" column="ref_reportnumber_man"/>
+        <result property="refReportnumberCheckMan" column="ref_reportnumber_check_man"/>
+        <result property="refSignatureAccountant" column="ref_signature_accountant"/>
+        <result property="dictRpStatus" column="dict_rp_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+
+</mapper>

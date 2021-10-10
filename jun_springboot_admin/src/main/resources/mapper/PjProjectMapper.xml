@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.PjProjectMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.PjProjectEntity" id="pjProjectMap">
+        <result property="id" column="id"/>
+        <result property="projectCode" column="project_code"/>
+        <result property="projectName" column="project_name"/>
+        <result property="dictProjectType" column="dict_project_type"/>
+        <result property="dictProjectTypeSub" column="dict_project_type_sub"/>
+        <result property="refIdCuscode" column="ref_id_cuscode"/>
+        <result property="refCusname" column="ref_cusname"/>
+        <result property="projectStarttime" column="project_starttime"/>
+        <result property="projectEndtime" column="project_endtime"/>
+        <result property="cusnameTodo" column="cusname_todo"/>
+        <result property="refProjectManager" column="ref_project_manager"/>
+        <result property="refUndertakePerson" column="ref_undertake_person"/>
+        <result property="refUndertakTpersonDo" column="ref_undertak_tperson_do"/>
+        <result property="dictRiskAssessment" column="dict_risk_assessment"/>
+        <result property="dictFirstUndertake" column="dict_first_undertake"/>
+        <result property="customerReq" column="customer_req"/>
+        <result property="remark" column="remark"/>
+        <result property="projectProgress" column="project_progress"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+
+</mapper>

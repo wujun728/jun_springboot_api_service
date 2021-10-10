@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.PjProjectReportMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.PjProjectReportEntity" id="pjProjectReportMap">
+        <result property="id" column="id"/>
+        <result property="reportName" column="report_name"/>
+        <result property="refProjectCode" column="ref_project_code"/>
+        <result property="refProjectName" column="ref_project_name"/>
+        <result property="refCustomerCode" column="ref_customer_code"/>
+        <result property="refCustomerName" column="ref_customer_name"/>
+        <result property="contractNo" column="contract_no"/>
+        <result property="dictReportType" column="dict_report_type"/>
+        <result property="reportDesc" column="report_desc"/>
+        <result property="customerReq" column="customer_req"/>
+        <result property="reportDetail" column="report_detail"/>
+        <result property="reportTime" column="report_time"/>
+        <result property="refReportBy" column="ref_report_by"/>
+        <result property="reportFinashDays" column="report_finash_days"/>
+        <result property="reportFinshPercent" column="report_finsh_percent"/>
+        <result property="dictReportStatus" column="dict_report_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+
+</mapper>
