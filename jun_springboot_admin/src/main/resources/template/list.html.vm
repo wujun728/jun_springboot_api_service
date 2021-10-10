@@ -29,7 +29,7 @@
     <input name="${column.attrname}" id="${column.attrname}" hidden/>
   #else
 ##跳过循环，新增及修改时间字段，注解支持，不展示
-#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted")  || $column.columnName.toString().contains("update")) 
 	#break
 #end
     <div class="layui-form-item" #if($column.columnName == $pk.columnName) ,hide:true #end  #if($column.comments=='') style="display:none" #end>
@@ -75,7 +75,7 @@
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName && $column.isNull == 'NO') 
 ##跳过循环，新增及修改时间字段，注解支持，不展示
-#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted")   || $column.columnName.toString().contains("update")) 
 	#break
 #end
 #if($column.dataType == 'datetime')
@@ -164,7 +164,7 @@
           {type: 'checkbox', fixed: 'left'},  
 #foreach($column in $columns)
 ##跳过循环，新增及修改时间字段，注解支持，不展示
-#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted")  || $column.columnName.toString().contains("update")) 
 	#break
 #end
           {field: '${column.attrname}', title: '${column.comments}', sort: true ##
@@ -191,7 +191,7 @@
 #foreach($column in $columns) 
 #if($column.columnName != $pk.columnName)
 ##跳过循环，新增及修改时间字段，注解支持，不展示
-#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted")   || $column.columnName.toString().contains("update")) 
 	#break
 #end
 #if($column.dataType == 'datetime')
@@ -200,13 +200,21 @@
 	    elem: '#${column.attrname}'
 	    ,type: 'datetime'
     });
-#elseif($column.dataType == 'decimal' || $column.dataType == 'int')
+#elseif($column.dataType == 'decimal' )
 	numberInput.render("#${column.attrname}", {
 	    autoSelcet: false,
-	    max: 99999999999,
+	    max: 10000000000,
 	    min: 0,
 		step: 1,
 	    precision: 2
+	});
+#elseif($column.dataType == 'int')
+	numberInput.render("#${column.attrname}", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
 	});
 #end
 #if($column.columnName.toString().contains("ref_"))
@@ -270,7 +278,7 @@
           $(".title").html("新增");
 #foreach($column in $columns)
 ##跳过循环，新增及修改时间字段，注解支持，不展示
-#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted") || $column.columnName.toString().contains("update")) 
+#if($column.columnName.toString().contains("create")  || $column.columnName.toString().contains("deleted")   || $column.columnName.toString().contains("update")) 
 	#break
 #end
           $(".operation input[name=${column.attrname}]").val("");
