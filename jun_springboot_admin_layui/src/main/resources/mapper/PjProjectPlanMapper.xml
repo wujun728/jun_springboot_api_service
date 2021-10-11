@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.PjProjectPlanMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.PjProjectPlanEntity" id="pjProjectPlanMap">
+        <result property="id" column="id"/>
+        <result property="refProjectCode" column="ref_project_code"/>
+        <result property="refProjectName" column="ref_project_name"/>
+        <result property="planName" column="plan_name"/>
+        <result property="planDetail" column="plan_detail"/>
+        <result property="planTimeStart" column="plan_time_start"/>
+        <result property="planTimeEnd" column="plan_time_end"/>
+        <result property="planDates" column="plan_dates"/>
+        <result property="planGivenTime" column="plan_given_time"/>
+        <result property="planFinashDays" column="plan_finash_days"/>
+        <result property="planFinashDays2" column="plan_finash_days2"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+
+</mapper>
