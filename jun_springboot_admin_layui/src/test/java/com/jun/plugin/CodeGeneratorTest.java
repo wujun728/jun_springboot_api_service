@@ -37,10 +37,11 @@ public class CodeGeneratorTest {
 //    	String tables = "pj_project_member";
 //    	String tables = "pj_project_plan";
 //    	String tables = "pj_project_recheck";
-    	
-    	
-    	String tables = " ";
 //    	String tables = "oa_law_info,oa_learn_info,oa_notes_info";
+    	String tables = "oa_poms_workmarks_outsite,oa_poms_workmarks_payroll,oa_poms_workmarks_times";
+    	
+    	
+//    	String tables = " ";
 //    	String tables = "hr_templet_assessment,hr_templet_assessment_userscore,hr_templet_quota_detail,hr_templet_quota_detail_userscore_detail";
 //    	String tables = "oa_poms_workmarks,oa_poms_workmarks_payroll,oa_poms_workmarks_times";
 //    	

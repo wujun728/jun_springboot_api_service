@@ -2,6 +2,7 @@ package com.jun.plugin.bizservice.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.jun.plugin.system.entity.BaseEntity;
 import org.springframework.data.annotation.Id;
@@ -16,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-03 20:39:02
+ * @date 2021-10-11 15:45:48
  */
 @Data
 @TableName("oa_learn_info")
@@ -33,56 +34,92 @@ public class OaLearnInfoEntity extends BaseEntity implements Serializable {
 	/**
 	 * 标题
 	 */
-	@TableField("title")
+	@TableField(value = "title"  )
 	private String title;
 
 	/**
 	 * 发布内容
 	 */
-	@TableField("content")
+	@TableField(value = "content"  )
 	private String content;
 
 	/**
 	 * 发布信息类型
 	 */
-	@TableField("msg_type")
+	@TableField(value = "msg_type"  )
 	private String msgType;
 
 	/**
 	 * 是否草稿
 	 */
-	@TableField("dict_is_draft")
+	@TableField(value = "dict_is_draft"  )
 	private String dictIsDraft;
 
 	/**
 	 * 发送日期
 	 */
-	@TableField("send_date")
+	@TableField(value = "send_date"  )
 	private Date sendDate;
 
 	/**
 	 * 发布人
 	 */
-	@TableField("send_person")
+	@TableField(value = "send_person"  )
 	private String sendPerson;
 
 	/**
 	 * 发布部门
 	 */
-	@TableField("send_dept")
+	@TableField(value = "send_dept"  )
 	private String sendDept;
 
 	/**
 	 * 发布时间
 	 */
-	@TableField("publish_date")
+	@TableField(value = "publish_date"  )
 	private Date publishDate;
 
 	/**
 	 * 失效时间
 	 */
-	@TableField("invalid_date")
+	@TableField(value = "invalid_date"  )
 	private Date invalidDate;
+
+	/**
+	 * 备注
+	 */
+	@TableField(value = "remark"  )
+	private String remark;
+
+	/**
+	 * 
+	 */
+	@TableField(value = "create_time" , fill = FieldFill.INSERT  )
+	private Date createTime;
+
+	/**
+	 * 
+	 */
+	@TableField(value = "create_id" , fill = FieldFill.INSERT  )
+	private String createId;
+
+	/**
+	 * 
+	 */
+	@TableField(value = "update_time" , fill = FieldFill.INSERT_UPDATE  )
+	private Date updateTime;
+
+	/**
+	 * 
+	 */
+	@TableField(value = "update_id" , fill = FieldFill.INSERT_UPDATE  )
+	private String updateId;
+
+	/**
+	 * 
+	 */
+	@TableField(value = "deleted" , fill = FieldFill.INSERT  )
+	private Integer deleted;
 
 
 }
