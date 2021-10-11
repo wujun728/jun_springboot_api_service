@@ -10,8 +10,8 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jun.plugin</groupId>
-	<artifactId>jun_springboot_admin</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>jun_springboot_admin_layui</artifactId>
+	<version>1.0</version>
 
 	<properties>
 		<java.version>1.8</java.version>
