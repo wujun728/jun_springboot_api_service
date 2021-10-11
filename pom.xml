@@ -15,10 +15,10 @@
 	</properties>
 
 	<modules>
+		<module>jun_springboot_admin_layui</module>
 		<module>jun_springboot_api</module>
-		<module>jun_springboot_admin</module>
 		<module>jun_springboot_common</module>
-		<module>jun_springboot_velocity</module>
+		<module>jun_springboot_generator</module>
 	</modules>
 
 	<dependencies>
