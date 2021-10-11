@@ -51299,9 +51299,6 @@
       if (symbolEl.__edge) {
         symbolEl.onHoverStateChange = function (toState) {
           if (toState !== 'blur') {
-            // NOTE: Ensure the parent elements will been blurred firstly.
-            // According to the return of getAncestorsIndices and getDescendantIndices
-            // TODO: A bit tricky.
             var parentEl = node.parentNode && data.getItemGraphicEl(node.parentNode.dataIndex);
 
             if (!(parentEl && parentEl.hoverState === HOVER_STATE_BLUR)) {
