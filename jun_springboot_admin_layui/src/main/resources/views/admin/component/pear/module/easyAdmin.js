@@ -58,13 +58,15 @@ layui.define(['jquery', 'element', 'form', 'table', 'yaml', 'common'], function 
                 beforeSend: function (request) {
                     if (o.sendToken) {
                         o.beforeSend && o.beforeSend();
-                        var user = layui.data('user');
-                        // 用于判断未登录跳转到登录页
-                        if (JSON.stringify(user) == "{}") {
-                            console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
-//                            location.href = "login.html";
-                        }
-                        request.setRequestHeader(user.token.name, user.token.value);
+//                        var user = layui.data('user');
+//                        if (JSON.stringify(user) == "{}") {
+//                            console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
+////                            location.href = "login.html";
+//                        }
+							var localData = layui.data('LocalData');
+				        	var token = localData["access_token"];
+				            var headers =  {"authorization": token};
+                        request.setRequestHeader("authorization", token);
                     }
                 },
                 success: function (res) {
@@ -137,19 +139,21 @@ layui.define(['jquery', 'element', 'form', 'table', 'yaml', 'common'], function 
             var o = $.extend({}, defaults, options);
             // 配置服务端地址
             var adminServerUrl = layui.data('easyAdmin').serverUrl;
-            var user;
-            if (o.sendToken) {
-                user = layui.data('user');
-                // 用于判断未登录跳转到登录页
-                if (JSON.stringify(user) == "{}") {
-                    console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
-//                    location.href = "login.html";
-                }
-            }
-            var tokenName = user.token.name;
-            var tokenValue = user.token.value;
-            var headers = {};
-            headers[tokenName] = tokenValue;
+//            var user;
+//            if (o.sendToken) {
+//                user = layui.data('user');
+//                // 用于判断未登录跳转到登录页
+//                if (JSON.stringify(user) == "{}") {
+//                    console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
+////                    location.href = "login.html";
+//                }
+//            }
+            var localData = layui.data('LocalData');
+        	var token = localData["access_token"];
+//        {"authorization": token}
+//            var tokenName = user.token.name;
+//            var tokenValue = user.token.value;
+            var headers =  {"authorization": token};
             table.render({
                 elem: o.elem, // 对应table的id
                 headers: headers,

@@ -25,7 +25,7 @@ public class UpdateDataTest {
 	@Resource
     private JdbcTemplate jdbcTemplate;
 
-    @Test
+//    @Test
     public void contextLoads() throws IOException {
     	List<Map<String, Object>> list = this.jdbcTemplate.queryForList(" select * from sys_user ");
     	list.forEach(item->{
@@ -38,6 +38,23 @@ public class UpdateDataTest {
     				this.jdbcTemplate.update("update sys_user set username = ? where id = ? and username !='admin' ", new Object[] {username,id});
     			}
     		});
+    	});
+    }
+    
+    @Test
+    public void queryMysqlTreeData() throws IOException {
+    	StringBuffer sb = new StringBuffer();
+    	sb.append(" WITH RECURSIVE temp AS (\r\n"
+    			+ "    SELECT rr.*  FROM hr_templet_quota_detail rr WHERE rr.pid is null   \r\n"
+    			+ "  UNION ALL\r\n"
+    			+ "    SELECT r.*   FROM hr_templet_quota_detail r  ,temp tt WHERE tt.id = r.pid\r\n"
+    			+ ") select * from temp tt WHERE  templateid = 1  order by tt.pid,tt.qorder ");
+    	List<Map<String, Object>> list = this.jdbcTemplate.queryForList(sb.toString());
+    	list.forEach(item->{
+    		log.error("item="+JSON.toJSONString(item));
+//    		item.forEach((key,value)->{
+//    			log.info("key="+key,"value="+value);
+//    		});
     	});
     }
     

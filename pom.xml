@@ -19,6 +19,7 @@
 		<module>jun_springboot_api</module>
 		<module>jun_springboot_common</module>
 		<module>jun_springboot_generator</module>
+		<module>jun_springboot_snakerflow</module> 
 	</modules>
 
 	<dependencies>
