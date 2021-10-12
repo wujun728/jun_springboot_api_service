@@ -17,7 +17,6 @@ public class SpringbootApplication {
 
     public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext application = SpringApplication.run(SpringbootApplication.class, args);
-
         Environment env = application.getEnvironment();
         log.info("\n----------------------------------------------------------\n\t" +
                         "SpringbootApplication '{}' is running! Access URLs:\n\t" +
@@ -29,5 +28,5 @@ public class SpringbootApplication {
                 InetAddress.getLocalHost().getHostAddress(),
                 env.getProperty("server.port"));
     }
-
+    
 }
