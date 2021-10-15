@@ -1,4 +1,4 @@
-package com.jun.plugin;
+package com.jun.plugin.test;
 
 import java.io.IOException;
 import java.util.List;

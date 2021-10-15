@@ -1,4 +1,4 @@
-package com.jun.plugin;
+package com.jun.plugin.test;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
