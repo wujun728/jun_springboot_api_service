@@ -40,12 +40,13 @@
 			<artifactId>jun_springboot_common</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<!-- 
 		<dependency>
 			<groupId>com.jun.plugin</groupId>
 		    <artifactId>jun_springboot_snakerflow</artifactId>
 		    <version>1.0</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.jun.plugin</groupId>
 			<artifactId>jun_code_velocity</artifactId>
 			<version>1.0</version>
@@ -77,6 +78,32 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.3.1</version>
+			<!-- <exclusions>
+				<exclusion>
+					<groupId>com.baomidou</groupId>
+					<artifactId>mybatis-plus-generator</artifactId>
+				</exclusion>
+			</exclusions> -->
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+		<dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus-generator</artifactId>
+		    <version>3.3.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
+		<dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus-extension</artifactId>
+		    <version>3.3.1</version>
+		</dependency>
+		
+		
 
 		<!--shiro 依赖 -->
 		<dependency>
