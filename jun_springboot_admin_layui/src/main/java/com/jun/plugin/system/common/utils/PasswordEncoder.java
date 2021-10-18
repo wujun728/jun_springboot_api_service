@@ -109,9 +109,9 @@ public class PasswordEncoder {
         return HEX_DIGITS[d1] + HEX_DIGITS[d2];
     }
 
-    public static void main(String[] args) {
-
-    }
+//    public static void main(String[] args) {
+//
+//    }
 
 
 }

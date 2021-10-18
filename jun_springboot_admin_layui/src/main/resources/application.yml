@@ -1,10 +1,14 @@
 # 端口
 server:
   port: 8081
-
+  compression:
+    enabled: true
+    min-response-size: 1KB
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/css
+    
 spring:
   profiles:
-    active: dev
+    active: dev2
   mvc:
     throw-exception-if-no-handler-found: true
 #    static-path-pattern: /static/**
@@ -37,23 +41,13 @@ mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:mapper/${project.database}/**/*.xml,classpath:mapper/*.xml
+  type-aliases-package: org.snaker.engine.entity
   global-config:
     db-config:
       logic-delete-value: 0
       logic-not-delete-value: 1
       logic-delete-field: deleted
 
-#使用代码生成模块时 指定要生成的表存在于哪种数据库，可选值有【mysql、oracle、sqlServer】
-snaker:
-  flow:
-    auto-init-schema: false       #是否初始化数据库脚本，默认为false
-    db-access-type: mybatis-plus  #sql执行器类型 可选 jdbc、spring、mybatis_plus。默认为jdbc
-    expression-type: juel         #决策表达式类型 可选juel和spel。默认为juel
-    cache:
-      cache-type: redis           #缓存类型 可选内存、ehcache、redis
-      timeout: 2                  #过期时间  (当前版本仅对redis模式生效，后续会对其他类型做扩展)
-      time-unit: hours            #时间单位  (同上)
-      key-prefix: "snakerflow::"  #缓存键前缀(同上)
 project:
   database: mysql
 
