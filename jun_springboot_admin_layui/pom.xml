@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.6.RELEASE</version>
+		<version>2.3.5.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jun.plugin</groupId>
@@ -78,6 +78,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		 <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 		
 		<dependency>
 			<groupId>com.baomidou</groupId>
@@ -255,12 +259,8 @@
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        配置管理
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
+       
+
 
         模板引擎freemarker
         <dependency>
@@ -271,12 +271,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency> 
-         <dependency>
-            <groupId>com.github.zc-libre</groupId>
-            <artifactId>snakerflow-spring-boot-stater</artifactId>
-            <version>2.0.3</version>
-    	</dependency>
 -->
+<!-- 		 配置管理 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+         <dependency>
+            <groupId>com.github.snakerflow-starter</groupId>
+            <artifactId>snakerflow-spring-boot-starter</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+        -->
         <!-- 
         验证码
         <dependency>
@@ -303,11 +310,6 @@
             <version>0.4.14</version>
         </dependency> 
         -->
-
-        <dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
 	</dependencies>
 
 	<build>
