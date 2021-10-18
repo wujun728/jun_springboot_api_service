@@ -103,8 +103,6 @@
 		    <version>3.3.1</version>
 		</dependency>
 		
-		
-
 		<!--shiro 依赖 -->
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
@@ -221,6 +219,95 @@
 		    <artifactId>pinyin4j</artifactId>
 		    <version>2.5.0</version>
 		</dependency>
+		
+		
+		<!-- 工具类 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.5.2</version>
+        </dependency>
+        
+		<!-- 
+        Excel处理
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.8</version>
+        </dependency>
+
+        邮箱
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        参数校验
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+
+        websocket
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        配置管理
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        模板引擎freemarker
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency> 
+         <dependency>
+            <groupId>com.github.zc-libre</groupId>
+            <artifactId>snakerflow-spring-boot-stater</artifactId>
+            <version>2.0.3</version>
+    	</dependency>
+-->
+        <!-- 
+        验证码
+        <dependency>
+            <groupId>com.github.whvcse</groupId>
+            <artifactId>easy-captcha</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        根据ip获取归属地
+        <dependency>
+            <groupId>org.lionsoul</groupId>
+            <artifactId>ip2region</artifactId>
+            <version>1.7.2</version>
+        </dependency>
+        nginx配置文件处理
+        <dependency>
+            <groupId>com.github.odiszapc</groupId>
+            <artifactId>nginxparser</artifactId>
+            <version>0.9.6</version>
+        </dependency>
+        图片处理
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.14</version>
+        </dependency> 
+        -->
+
+        <dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
