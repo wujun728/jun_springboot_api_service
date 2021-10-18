@@ -40,17 +40,7 @@
 			<artifactId>jun_springboot_common</artifactId>
 			<version>1.0</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>com.jun.plugin</groupId>
-		    <artifactId>jun_springboot_snakerflow</artifactId>
-		    <version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jun.plugin</groupId>
-			<artifactId>jun_code_velocity</artifactId>
-			<version>1.0</version>
-		</dependency> -->
+		 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -67,7 +57,6 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 
-		<!--数据源 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>
@@ -82,30 +71,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-		
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>3.3.1</version>
-			<!-- <exclusions>
-				<exclusion>
-					<groupId>com.baomidou</groupId>
-					<artifactId>mybatis-plus-generator</artifactId>
-				</exclusion>
-			</exclusions> -->
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
-		<dependency>
-		    <groupId>com.baomidou</groupId>
-		    <artifactId>mybatis-plus-generator</artifactId>
-		    <version>3.3.1</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
-		<dependency>
-		    <groupId>com.baomidou</groupId>
-		    <artifactId>mybatis-plus-extension</artifactId>
-		    <version>3.3.1</version>
-		</dependency>
 		
 		<!--shiro 依赖 -->
 		<dependency>
@@ -126,7 +91,6 @@
 		</dependency>
 
 		<!--thymeleaf默认使用html5规则标签必须闭合等 使用次此包正常解析 -->
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -136,7 +100,6 @@
 			<artifactId>thymeleaf-extras-shiro</artifactId>
 			<version>${thymeleaf-shiro.version}</version>
 		</dependency>
-		<!-- -->
 		<!--数据库持久化 及 插件依赖 -->
 		<dependency>
 			<groupId>com.baomidou</groupId>
@@ -153,6 +116,13 @@
 			<artifactId>mybatis-plus-boot-starter</artifactId>
 			<version>${mybatis-plus.version}</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+		<dependency>
+		    <groupId>com.baomidou</groupId>
+		    <artifactId>mybatis-plus-generator</artifactId>
+		    <version>3.3.1</version>
+		</dependency>
+		 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -232,37 +202,19 @@
             <version>5.5.2</version>
         </dependency>
         
-		<!-- 
-        Excel处理
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
             <version>2.2.8</version>
         </dependency>
-
-        邮箱
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
-
-        参数校验
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
-
-        websocket
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-
-       
-
-
-        模板引擎freemarker
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
@@ -271,7 +223,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency> 
--->
 <!-- 		 配置管理 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -284,32 +235,11 @@
             <version>1.0.6</version>
         </dependency>
         -->
-        <!-- 
-        验证码
-        <dependency>
-            <groupId>com.github.whvcse</groupId>
-            <artifactId>easy-captcha</artifactId>
-            <version>1.6.2</version>
-        </dependency>
-        根据ip获取归属地
-        <dependency>
-            <groupId>org.lionsoul</groupId>
-            <artifactId>ip2region</artifactId>
-            <version>1.7.2</version>
-        </dependency>
-        nginx配置文件处理
-        <dependency>
-            <groupId>com.github.odiszapc</groupId>
-            <artifactId>nginxparser</artifactId>
-            <version>0.9.6</version>
-        </dependency>
-        图片处理
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.14</version>
         </dependency> 
-        -->
 	</dependencies>
 
 	<build>
