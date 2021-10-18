@@ -100,7 +100,7 @@ layui.define(['jquery', 'element', 'form', 'table', 'yaml', 'common'], function 
         };
 
         this.redirectToLogin = function (data) {
-            if (!data.success && data.code === '401') {
+            if (data &&!data.success && data.code === '401') {
                 console.log("会话已经过期了")
                 layer.open({
                     time: 1500,// 自动关闭所需毫秒
@@ -108,7 +108,7 @@ layui.define(['jquery', 'element', 'form', 'table', 'yaml', 'common'], function 
                     end: function () {
                         var login = layui.data('login');
                         if (top != window) { // 如果不是最外面的壳，则让浏览器的url改变
-                            top.location.href = login.url;
+                            // top.location.href = login.url;
                         }
                     }
                 });
