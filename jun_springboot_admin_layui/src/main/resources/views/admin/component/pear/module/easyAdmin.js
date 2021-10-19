@@ -7,20 +7,39 @@ layui.define(['jquery', 'element', 'form', 'table', 'yaml', 'common'], function 
     var element = layui.element;
     var common = layui.common;
     var form = layui.form;
+//    debugger;
+    var yaml = layui.yaml;
+    // 配置服务端地址,先获取adminServerUrl，否则第一次easyAdmin为空
+    let adminServerUrl = 'http://localhost:8081';
+//    let adminServerUrl = yaml.load("config/pear.config.yml").admin.server;
+    layui.data('easyAdmin', {
+        key: 'serverUrl'
+        , value: adminServerUrl
+    });
+    console.log('服务端地址:' + adminServerUrl);
+ 
     var easyAdmin = new function () {
+	
+	    layui.data('easyAdmin', {
+	        key: 'serverUrl'
+	        , value: 'http://localhost:8081'
+	    });
+	    var adminServerUrl = layui.data('easyAdmin').serverUrl;
+	    console.log('服务端地址1111:' + 2233332);
 
         this.GetAdminServerUrl = function () {
             return layui.data('easyAdmin').serverUrl;
         }
 
         this.GetTokenQueryString = function () {
-            var user = layui.data('user');
+//            var user = layui.data('user');
             // 用于判断未登录跳转到登录页
-            if (JSON.stringify(user) == "{}") {
-                console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
+//            if (JSON.stringify(user) == "{}") {
+//                console.log("当前浏览器存储中没有用户信息，讲跳转到login.html")
 //                location.href = "login.html";
-            }
-            return user.token.name + "=" + user.token.value;
+//            }
+//            return user.token.name + "=" + user.token.value;
+			return '';
         }
         /**
          * 通用 http请求 参数同 ajax 有部分扩展

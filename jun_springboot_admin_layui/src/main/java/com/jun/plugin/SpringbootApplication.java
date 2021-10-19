@@ -1,15 +1,14 @@
 package com.jun.plugin;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
-import lombok.extern.slf4j.Slf4j;
+import java.net.InetAddress;
+
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.Environment;
 
-import java.net.InetAddress;
+import lombok.extern.slf4j.Slf4j;
 
 
 @SpringBootApplication // 多数据源 (exclude = DruidDataSourceAutoConfigure.class)

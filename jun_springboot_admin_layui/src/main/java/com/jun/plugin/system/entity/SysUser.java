@@ -1,15 +1,18 @@
 package com.jun.plugin.system.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.validation.constraints.NotBlank;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.jun.plugin.module.ext.entity.SysDataPower;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 用户
@@ -85,4 +88,10 @@ public class SysUser extends BaseEntity implements Serializable {
 
     @TableField(exist = false)
     private String captcha;
+    
+    @TableField(exist = false)
+    private List<SysDataPower> userDataPowers;
+
+    @TableField(exist = false)
+    public Boolean isSuperAdmin;
 }

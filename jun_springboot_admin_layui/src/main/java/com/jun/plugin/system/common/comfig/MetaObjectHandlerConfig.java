@@ -4,11 +4,15 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.jun.plugin.system.common.utils.Constant;
 import com.jun.plugin.system.service.HttpSessionService;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -22,6 +26,7 @@ import java.util.HashSet;
  * @date 2020年3月18日
  */
 @Component
+@Slf4j
 public class MetaObjectHandlerConfig implements MetaObjectHandler {
 
     @Lazy
@@ -61,6 +66,11 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
             //创建时间默认当前时间
             setFieldValByName("updateDate", currentDate, metaObject);
         }
+        
+        log.info("start insert fill ....");
+//        this.strictInsertFill(metaObject, "createTime", () -> LocalDateTime.now(), LocalDateTime.class);
+//        this.strictInsertFill(metaObject, "createBy", String.class, httpSessionService.getCurrentUserId());
+//        this.strictInsertFill(metaObject, "createDeptId", String.class, httpSessionService.getCurrentUserId());
 
 
     }
@@ -82,5 +92,8 @@ public class MetaObjectHandlerConfig implements MetaObjectHandler {
             //创建时间默认当前时间
             setFieldValByName("updateId", httpSessionService.getCurrentUserId(), metaObject);
         }
+        log.info("start update fill ....");
+//        this.strictUpdateFill(metaObject, "updateTime", () -> LocalDateTime.now(), LocalDateTime.class);
+//        this.strictUpdateFill(metaObject, "operator", String.class, "张三");
     }
 }

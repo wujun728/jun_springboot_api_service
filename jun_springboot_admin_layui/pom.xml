@@ -15,7 +15,7 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		<mybatis-plus.version>3.4.0</mybatis-plus.version>
+		<mybatis-plus.version>3.4.1</mybatis-plus.version>
 		<mybatis-plus-dynamic.version>2.5.5</mybatis-plus-dynamic.version>
 		<ojdbc6.version>12.1.0.1-atlassian-hosted</ojdbc6.version>
 		<sqlserver.version>4.0</sqlserver.version>
@@ -25,7 +25,7 @@
 		<velocity.version>1.7</velocity.version>
 		<quartz.version>2.3.2</quartz.version>
 		<shiro.version>1.4.0</shiro.version>
-		<druid.version>1.1.10</druid.version>
+		<druid.version>1.1.18</druid.version>
 		<fastjson.version>1.2.74</fastjson.version>
 		<thymeleaf-shiro.version>2.0.0</thymeleaf-shiro.version>
 		<knife4j.version>2.0.2</knife4j.version>
@@ -40,6 +40,12 @@
 			<artifactId>jun_springboot_common</artifactId>
 			<version>1.0</version>
 		</dependency>
+		
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+	        <optional>true</optional>
+	    </dependency>
 		 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -124,6 +130,11 @@
 		    <artifactId>mybatis-plus-generator</artifactId>
 		    <version>3.3.1</version>
 		</dependency>
+		<dependency>
+        	<groupId>com.baomidou</groupId>
+        	<artifactId>mybatis-plus-extension</artifactId>
+        	<version>${mybatis-plus.version}</version>
+        </dependency>
 		 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -241,7 +252,8 @@
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
             <version>0.4.14</version>
-        </dependency> 
+        </dependency>
+        
 	</dependencies>
 
 	<build>
