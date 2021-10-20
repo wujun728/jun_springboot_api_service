@@ -1,11 +1,14 @@
 package com.jun.plugin.system.common.aop.aspect;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.jun.plugin.system.common.exception.BusinessException;
 import com.jun.plugin.system.common.utils.Constant;
 import com.jun.plugin.system.entity.*;
 import com.jun.plugin.system.service.*;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
@@ -32,6 +35,7 @@ import java.util.stream.Collectors;
  */
 @Aspect
 @Component
+@Slf4j
 public class DataScopeAspect {
 
     @Resource
@@ -92,8 +96,10 @@ public class DataScopeAspect {
     private List<String> getUserIdsByRoles(List<SysRole> sysRoles, String userId) {
         //本人
         SysUser sysUser = userService.getById(userId);
+        log.info("userId="+userId);
         //本部门
         SysDept sysDept = deptService.getById(sysUser.getDeptId());
+        log.info("sysDept="+JSON.toJSONString(sysDept));
         //部门ids， 定义哪些部门最终拥有权限查看
         LinkedList<Object> deptList = new LinkedList<>();
         //用户ids，定义列表中哪些人创建的可查看
@@ -123,10 +129,12 @@ public class DataScopeAspect {
                 userIdList.add(userId);
             }
         });
+        log.info("deptList="+JSON.toJSONString(deptList));
         if (!CollectionUtils.isEmpty(deptList)) {
             QueryWrapper<SysUser> queryWrapper = Wrappers.<SysUser>query().select("id").in("dept_id", deptList);
             userIdList.addAll(userService.listObjs(queryWrapper));
         }
+        log.info("userIdList="+JSON.toJSONString(userIdList));
         //如果配置了角色数据范围， 最终没有查到userId， 那么返回无数据
         if (CollectionUtils.isEmpty(userIdList)) {
             throw new BusinessException("无数据");

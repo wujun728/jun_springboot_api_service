@@ -34,8 +34,6 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public HomeRespVO getHomeInfo(String userId) {
-
-
         SysUser sysUser = userService.getById(userId);
         UserInfoRespVO vo = new UserInfoRespVO();
 
@@ -47,13 +45,25 @@ public class HomeServiceImpl implements HomeService {
                 vo.setDeptName(sysDept.getName());
             }
         }
-
         List<PermissionRespNode> menus = permissionService.permissionTreeList(userId);
-
         HomeRespVO respVO = new HomeRespVO();
         respVO.setMenus(menus);
         respVO.setUserInfo(vo);
-
         return respVO;
+    }
+    
+    @Override
+    public UserInfoRespVO getUserInfo(String userId) {
+    	SysUser sysUser = userService.getById(userId);
+    	UserInfoRespVO vo = new UserInfoRespVO();
+    	if (sysUser != null) {
+    		BeanUtils.copyProperties(sysUser, vo);
+    		SysDept sysDept = deptService.getById(sysUser.getDeptId());
+    		if (sysDept != null) {
+    			vo.setDeptId(sysDept.getId());
+    			vo.setDeptName(sysDept.getName());
+    		}
+    	}
+    	return vo;
     }
 }

@@ -1,6 +1,7 @@
 package com.jun.plugin.system.service;
 
 import com.jun.plugin.system.vo.resp.HomeRespVO;
+import com.jun.plugin.system.vo.resp.UserInfoRespVO;
 
 /**
  * 首页
@@ -18,4 +19,12 @@ public interface HomeService {
      * @return HomeRespVO
      */
     HomeRespVO getHomeInfo(String userId);
+    
+    /**
+     * 获取首页信息
+     *
+     * @param userId userId
+     * @return HomeRespVO
+     */
+    UserInfoRespVO getUserInfo(String userId);
 }

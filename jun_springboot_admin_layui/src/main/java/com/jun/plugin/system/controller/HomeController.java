@@ -65,6 +65,7 @@ public class HomeController {
     	result.put("homeInfo", homeInfo);
     	result.put("logoInfo", logoInfo);
     	result.put("menuInfo", menus);
+    	result.put("data", homeService.getUserInfo(userId));
     	return result;
     }
 }
