@@ -21,8 +21,9 @@
         <result property="dictRiskAssessment" column="dict_risk_assessment"/>
         <result property="dictFirstUndertake" column="dict_first_undertake"/>
         <result property="customerReq" column="customer_req"/>
-        <result property="remark" column="remark"/>
         <result property="projectProgress" column="project_progress"/>
+        <result property="dictWfState" column="dict_wf_state"/>
+        <result property="remark" column="remark"/>
         <result property="createTime" column="create_time"/>
         <result property="createId" column="create_id"/>
         <result property="updateTime" column="update_time"/>

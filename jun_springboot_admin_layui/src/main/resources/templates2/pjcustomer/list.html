@@ -28,14 +28,14 @@
       <label class="layui-form-label layui-required " >客户名称</label>
       <div class="layui-input-block">
 		<input type="customerName" name="customerName"  id="customerName"  lay-verify="required|customerName" lay-max="256"   placeholder="请输入客户名称"  autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label layui-required " >客户编码</label>
       <div class="layui-input-block">
 		<input type="customerCode" name="customerCode"  id="customerCode"  lay-verify="required|customerCode" lay-max="256"   placeholder="请输入客户编码"  autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label layui-required " >客户类型</label>
       <div class="layui-input-block">
@@ -43,74 +43,74 @@
         <option value="0">请选择</option>
         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
     </select>
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label layui-required " >公司电话</label>
       <div class="layui-input-block">
 		<input type="phone" name="phone"  id="phone"  lay-verify="required|phone" lay-max="256"   placeholder="请输入公司电话"  autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >财务经理</label>
       <div class="layui-input-block">
 		<input type="text" name="financialManager"  id="financialManager"  placeholder="请输入财务经理" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >财务经理电话</label>
       <div class="layui-input-block">
 		<input type="text" name="fmPhone"  id="fmPhone"  placeholder="请输入财务经理电话" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户联系信息</label>
       <div class="layui-input-block">
-	<textarea placeholder="请输入内容" class="layui-textarea" name="customerLinks"  id="customerLinks"></textarea>
-      </div>
-    </div>
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="customerLinks"  id="customerLinks"></textarea>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户营业信息</label>
       <div class="layui-input-block">
-	<textarea placeholder="请输入内容" class="layui-textarea" name="customerBusiness"  id="customerBusiness"></textarea>
-      </div>
-    </div>
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="customerBusiness"  id="customerBusiness"></textarea>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >营业执照</label>
       <div class="layui-input-block">
 		<input type="text" name="businessLicense"  id="businessLicense"  placeholder="请输入营业执照" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >公司全称</label>
       <div class="layui-input-block">
-	<textarea placeholder="请输入内容" class="layui-textarea" name="conpanyName"  id="conpanyName"></textarea>
-      </div>
-    </div>
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="conpanyName"  id="conpanyName"></textarea>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >营业执照编码</label>
       <div class="layui-input-block">
 		<input type="text" name="businessLicenseNo"  id="businessLicenseNo"  placeholder="请输入营业执照编码" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >法定代表人</label>
       <div class="layui-input-block">
 		<input type="text" name="legalRepresentative"  id="legalRepresentative"  placeholder="请输入法定代表人" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >注册资本</label>
       <div class="layui-input-block">
 		<input type="text" name="registeredCapital"  id="registeredCapital"  placeholder="请输入注册资本" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户地址</label>
       <div class="layui-input-block">
 		<input type="text" name="customerAddress"  id="customerAddress"  placeholder="请输入客户地址" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >公司类型</label>
       <div class="layui-input-block">
@@ -118,92 +118,92 @@
         <option value="0">请选择</option>
         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
     </select>
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >公司始建于</label>
       <div class="layui-input-block">
 	<input type="companyBegin" name="companyBegin"  id="companyBegin" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >实收资本</label>
       <div class="layui-input-block">
 		<input type="text" name="paiclupCapital"  id="paiclupCapital"  placeholder="请输入实收资本" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >经营范围</label>
       <div class="layui-input-block">
 		<input type="text" name="businessScope"  id="businessScope"  placeholder="请输入经营范围" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >营业期限开始</label>
       <div class="layui-input-block">
 	<input type="businessTermStart" name="businessTermStart"  id="businessTermStart" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >营业期限结束</label>
       <div class="layui-input-block">
 	<input type="businessTermEnd" name="businessTermEnd"  id="businessTermEnd" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >登记机关</label>
       <div class="layui-input-block">
 		<input type="text" name="registrationAuthority"  id="registrationAuthority"  placeholder="请输入登记机关" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >执照发放日</label>
       <div class="layui-input-block">
 	<input type="licensingDay" name="licensingDay"  id="licensingDay" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户开票信息</label>
       <div class="layui-input-block">
-	<textarea placeholder="请输入内容" class="layui-textarea" name="customerBillingInformation"  id="customerBillingInformation"></textarea>
-      </div>
-    </div>
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="customerBillingInformation"  id="customerBillingInformation"></textarea>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >纳税人识别号</label>
       <div class="layui-input-block">
 		<input type="text" name="taxRegNumber"  id="taxRegNumber"  placeholder="请输入纳税人识别号" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >税号</label>
       <div class="layui-input-block">
 		<input type="text" name="dutyParagraph"  id="dutyParagraph"  placeholder="请输入税号" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >开户行</label>
       <div class="layui-input-block">
 		<input type="text" name="openingBank"  id="openingBank"  placeholder="请输入开户行" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >账号</label>
       <div class="layui-input-block">
 		<input type="text" name="accountNumber"  id="accountNumber"  placeholder="请输入账号" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >电话</label>
       <div class="layui-input-block">
 		<input type="text" name="telephone"  id="telephone"  placeholder="请输入电话" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >公司地址</label>
       <div class="layui-input-block">
 		<input type="text" name="companyAddress"  id="companyAddress"  placeholder="请输入公司地址" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >是否老客户</label>
       <div class="layui-input-block">
@@ -211,26 +211,26 @@
         <option value="0">请选择</option>
         <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
     </select>
-      </div>
-    </div>
+  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户对接责任人</label>
       <div class="layui-input-block">
 		<input type="text" name="customerRespPerson"  id="customerRespPerson"  placeholder="请输入客户对接责任人" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >客户关系维护责任人</label>
       <div class="layui-input-block">
 		<input type="text" name="customerRelationPerson"  id="customerRelationPerson"  placeholder="请输入客户关系维护责任人" autocomplete="off" class="layui-input">
-	      </div>
-    </div>
+	  </div>
+ </div>
       <div class="layui-form-item"   >
       <label class="layui-form-label  " >备注信息</label>
       <div class="layui-input-block">
 	    <textarea placeholder="请输入内容" class="layui-textarea" name="remark"  id="remark"></textarea>
-      </div>
-    </div>
+  </div>
+ </div>
   	<div class="layui-form-item">
   <div class="layui-input-block">
     <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
@@ -290,7 +290,7 @@
   //获取token
   var token = CoreUtil.getData("access_token");
   //地址栏转义token中的#号
-  var tokenQuery = token.replace("#", "%23");
+  var tokenQuery = token==null?"":token.replace("#", "%23");
   var tableIns1;
   var table = layui.table;
   var form = layui.form;
@@ -317,7 +317,7 @@
       , contentType: 'application/json'
       , headers: {"authorization": token}
       , page: true //开启分页
-      , url: '/pjCustomer/listByPage' //数据接口
+      , url: '/pjCustomer/listBySelect' //数据接口
       , method: 'POST'
       ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -336,7 +336,12 @@
           {field: 'customerCode', title: '客户编码', sort: true }, 
           {field: 'dictCustomerType', title: '客户类型', sort: true , templet: function (item) { 	            //获取类型对应的字典label
 	            var datas = "[[${@sysDictService.getType('dict_customer_type')}]]".replace(/&quot;/g,"\"");
-	            return CoreUtil.selectDictLabel(datas, item.dictCustomerType);
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictCustomerType);
             }
 }, 
           {field: 'phone', title: '公司电话', sort: true }, 
@@ -352,7 +357,12 @@
           {field: 'customerAddress', title: '客户地址', sort: true ,hide:true }, 
           {field: 'dictCompanyType', title: '公司类型', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
 	            var datas = "[[${@sysDictService.getType('dict_company_type')}]]".replace(/&quot;/g,"\"");
-	            return CoreUtil.selectDictLabel(datas, item.dictCompanyType);
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictCompanyType);
             }
 }, 
           {field: 'companyBegin', title: '公司始建于', sort: true ,hide:true }, 
@@ -371,7 +381,12 @@
           {field: 'companyAddress', title: '公司地址', sort: true ,hide:true }, 
           {field: 'dictIsOldCustomer', title: '是否老客户', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
 	            var datas = "[[${@sysDictService.getType('dict_is_old_customer')}]]".replace(/&quot;/g,"\"");
-	            return CoreUtil.selectDictLabel(datas, item.dictIsOldCustomer);
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictIsOldCustomer);
             }
 }, 
           {field: 'customerRespPerson', title: '客户对接责任人', sort: true ,hide:true }, 

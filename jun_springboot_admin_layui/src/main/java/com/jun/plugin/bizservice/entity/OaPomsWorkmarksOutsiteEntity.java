@@ -18,7 +18,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 16:19:28
+ * @date 2021-10-20 16:28:52
  */
 @Data
 @TableName("oa_poms_workmarks_outsite")

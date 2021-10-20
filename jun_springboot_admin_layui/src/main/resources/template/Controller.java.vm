@@ -11,10 +11,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import com.jun.plugin.system.common.utils.DataResult;
+import com.jun.plugin.system.common.aop.annotation.DataScope;
 
 import ${package}.entity.${className}Entity;
+import ${package}.mapper.${className}Mapper;
 import ${package}.service.${className}Service;
 
 
@@ -28,9 +31,14 @@ import ${package}.service.${className}Service;
  */
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class ${className}Controller {
+
     @Autowired
     private ${className}Service ${classname}Service;
+
+    @Autowired
+    private ${className}Mapper ${classname}Mapper;
 
 
     /**
@@ -72,12 +80,38 @@ public class ${className}Controller {
     @PostMapping("${classname}/listByPage")
     @RequiresPermissions("${classname}:list")
     @ResponseBody
+    @DataScope
     public DataResult findListByPage(@RequestBody ${className}Entity ${classname}){
         Page page = new Page(${classname}.getPage(), ${classname}.getLimit());
         LambdaQueryWrapper<${className}Entity> queryWrapper = Wrappers.lambdaQuery();
         //查询条件示例
         //queryWrapper.eq(${className}Entity::getId, ${classname}.getId());
         IPage<${className}Entity> iPage = ${classname}Service.page(page, queryWrapper);
+        return DataResult.success(iPage);
+    }
+    
+    @ApiOperation(value = "查询单条数据")
+    @PostMapping("${classname}/findOne")
+    @ResponseBody
+    public DataResult findOne(@RequestBody ${className}Entity ${classname}){
+    	LambdaQueryWrapper<${className}Entity> queryWrapper = Wrappers.lambdaQuery();
+    	//查询条件示例
+    	//queryWrapper.eq(${className}Entity::getId, ${classname}.getId());
+    	//${className}Entity one = ${classname}Service.getOne(queryWrapper);
+    	${className}Entity one = ${classname}Service.getById(${classname}.getId());
+    	return DataResult.success(one);
+    }
+
+    @ApiOperation(value = "查询下拉框数据")
+    @PostMapping("${classname}/listBySelect")
+    @ResponseBody
+    public DataResult findListBySelect(@RequestBody ${className}Entity ${classname}){
+        Page page = new Page(${classname}.getPage(), ${classname}.getLimit());
+        LambdaQueryWrapper<${className}Entity> queryWrapper = Wrappers.lambdaQuery();
+        //查询条件示例
+        //queryWrapper.eq(${className}Entity::getId, ${classname}.getId());
+        IPage<${className}Entity> iPage = ${classname}Service.page(page, queryWrapper);
+        log.info("\n this.${classname}Mapper.selectCountUser()="+this.${classname}Mapper.selectCountUser());
         return DataResult.success(iPage);
     }
 

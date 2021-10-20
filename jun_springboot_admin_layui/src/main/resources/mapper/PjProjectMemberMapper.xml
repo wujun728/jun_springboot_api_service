@@ -11,6 +11,7 @@
         <result property="refMemberName" column="ref_member_name"/>
         <result property="memberRole" column="member_role"/>
         <result property="memberWorkContent" column="member_work_content"/>
+        <result property="dictYesNo" column="dict_yes_no"/>
         <result property="memberParts" column="member_parts"/>
         <result property="memberWorkDays" column="member_work_days"/>
         <result property="memberPartsMoney" column="member_parts_money"/>
@@ -19,7 +20,6 @@
         <result property="createId" column="create_id"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateId" column="update_id"/>
-        <result property="deleted" column="deleted"/>
     </resultMap>
 
 

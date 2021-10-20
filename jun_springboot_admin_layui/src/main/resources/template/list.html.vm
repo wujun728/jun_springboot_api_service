@@ -148,7 +148,7 @@
       , contentType: 'application/json'
       , headers: {"authorization": token}
       , page: true //开启分页
-      , url: '/${classname}/listByPage' //数据接口
+      , url: '/${classname}/listBySelect' //数据接口
       , method: 'POST'
       ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -175,7 +175,12 @@
 , templet: function (item) { ##
 	            //获取类型对应的字典label
 	            var datas = "[[${@sysDictService.getType('${column.columnName}')}]]".replace(/&quot;/g,"\"");
-	            return CoreUtil.selectDictLabel(datas, item.${column.attrname});
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.${column.attrname});
             }
 #end 
 }, 

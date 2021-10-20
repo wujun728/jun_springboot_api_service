@@ -182,7 +182,7 @@
   //获取token
   var token = CoreUtil.getData("access_token");
   //地址栏转义token中的#号
-  var tokenQuery = token.replace("#", "%23");
+  var tokenQuery = token==null?"":token.replace("#", "%23");
   var tableIns1;
   var table = layui.table;
   var form = layui.form;
@@ -209,7 +209,7 @@
       , contentType: 'application/json'
       , headers: {"authorization": token}
       , page: true //开启分页
-      , url: '/pjProjectInvoice/listByPage' //数据接口
+      , url: '/pjProjectInvoice/listBySelect' //数据接口
       , method: 'POST'
       ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -238,7 +238,12 @@
           {field: 'invoiceState', title: '审批状态', sort: true }, 
           {field: 'dictWfState', title: '流程状态', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
 	            var datas = "[[${@sysDictService.getType('dict_wf_state')}]]".replace(/&quot;/g,"\"");
-	            return CoreUtil.selectDictLabel(datas, item.dictWfState);
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictWfState);
             }
 }, 
           {field: 'remark', title: '备注', sort: true ,hide:true }, 

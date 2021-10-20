@@ -17,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 13:33:17
+ * @date 2021-10-20 16:28:53
  */
 @Data
 @TableName("pj_project_member")
@@ -38,7 +38,7 @@ public class PjProjectMemberEntity extends BaseEntity implements Serializable {
 	private String refProjectCode;
 
 	/**
-	 * 项目名称
+	 * 成员名称
 	 */
 	@TableField(value = "ref_project_name"  )
 	private String refProjectName;
@@ -62,7 +62,13 @@ public class PjProjectMemberEntity extends BaseEntity implements Serializable {
 	private String memberWorkContent;
 
 	/**
-	 * 成员分成比例
+	 * 是否参与分成
+	 */
+	@TableField(value = "dict_yes_no"  )
+	private String dictYesNo;
+
+	/**
+	 * 成员工作分成比例
 	 */
 	@TableField(value = "member_parts"  )
 	private Integer memberParts;
@@ -108,12 +114,6 @@ public class PjProjectMemberEntity extends BaseEntity implements Serializable {
 	 */
 	@TableField(value = "update_id" , fill = FieldFill.INSERT_UPDATE  )
 	private String updateId;
-
-	/**
-	 * 
-	 */
-	@TableField(value = "deleted" , fill = FieldFill.INSERT  )
-	private Integer deleted;
 
 
 }

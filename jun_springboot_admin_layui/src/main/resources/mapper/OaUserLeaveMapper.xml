@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.OaUserLeaveMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.OaUserLeaveEntity" id="oaUserLeaveMap">
+        <result property="id" column="id"/>
+        <result property="refUsercoce" column="ref_usercoce"/>
+        <result property="refUsername" column="ref_username"/>
+        <result property="refUserdept" column="ref_userdept"/>
+        <result property="leaveDate" column="leave_date"/>
+        <result property="leaveDesc" column="leave_desc"/>
+        <result property="leaveHours" column="leave_hours"/>
+        <result property="leaveHours2" column="leave_hours2"/>
+        <result property="dictLeanveType" column="dict_leanve_type"/>
+        <result property="dictApproveStatus" column="dict_approve_status"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+    </resultMap>
+
+
+</mapper>

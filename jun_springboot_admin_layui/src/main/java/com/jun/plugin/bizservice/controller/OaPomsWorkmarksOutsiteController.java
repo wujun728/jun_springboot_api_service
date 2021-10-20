@@ -11,10 +11,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import com.jun.plugin.system.common.utils.DataResult;
+import com.jun.plugin.system.common.aop.annotation.DataScope;
 
 import com.jun.plugin.bizservice.entity.OaPomsWorkmarksOutsiteEntity;
+import com.jun.plugin.bizservice.mapper.OaPomsWorkmarksOutsiteMapper;
 import com.jun.plugin.bizservice.service.OaPomsWorkmarksOutsiteService;
 
 
@@ -24,13 +27,18 @@ import com.jun.plugin.bizservice.service.OaPomsWorkmarksOutsiteService;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 16:19:28
+ * @date 2021-10-20 16:28:52
  */
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class OaPomsWorkmarksOutsiteController {
+
     @Autowired
     private OaPomsWorkmarksOutsiteService oaPomsWorkmarksOutsiteService;
+
+    @Autowired
+    private OaPomsWorkmarksOutsiteMapper oaPomsWorkmarksOutsiteMapper;
 
 
     /**
@@ -72,12 +80,38 @@ public class OaPomsWorkmarksOutsiteController {
     @PostMapping("oaPomsWorkmarksOutsite/listByPage")
     @RequiresPermissions("oaPomsWorkmarksOutsite:list")
     @ResponseBody
+    @DataScope
     public DataResult findListByPage(@RequestBody OaPomsWorkmarksOutsiteEntity oaPomsWorkmarksOutsite){
         Page page = new Page(oaPomsWorkmarksOutsite.getPage(), oaPomsWorkmarksOutsite.getLimit());
         LambdaQueryWrapper<OaPomsWorkmarksOutsiteEntity> queryWrapper = Wrappers.lambdaQuery();
         //查询条件示例
         //queryWrapper.eq(OaPomsWorkmarksOutsiteEntity::getId, oaPomsWorkmarksOutsite.getId());
         IPage<OaPomsWorkmarksOutsiteEntity> iPage = oaPomsWorkmarksOutsiteService.page(page, queryWrapper);
+        return DataResult.success(iPage);
+    }
+    
+    @ApiOperation(value = "查询单条数据")
+    @PostMapping("oaPomsWorkmarksOutsite/findOne")
+    @ResponseBody
+    public DataResult findOne(@RequestBody OaPomsWorkmarksOutsiteEntity oaPomsWorkmarksOutsite){
+    	LambdaQueryWrapper<OaPomsWorkmarksOutsiteEntity> queryWrapper = Wrappers.lambdaQuery();
+    	//查询条件示例
+    	//queryWrapper.eq(OaPomsWorkmarksOutsiteEntity::getId, oaPomsWorkmarksOutsite.getId());
+    	//OaPomsWorkmarksOutsiteEntity one = oaPomsWorkmarksOutsiteService.getOne(queryWrapper);
+    	OaPomsWorkmarksOutsiteEntity one = oaPomsWorkmarksOutsiteService.getById(oaPomsWorkmarksOutsite.getId());
+    	return DataResult.success(one);
+    }
+
+    @ApiOperation(value = "查询下拉框数据")
+    @PostMapping("oaPomsWorkmarksOutsite/listBySelect")
+    @ResponseBody
+    public DataResult findListBySelect(@RequestBody OaPomsWorkmarksOutsiteEntity oaPomsWorkmarksOutsite){
+        Page page = new Page(oaPomsWorkmarksOutsite.getPage(), oaPomsWorkmarksOutsite.getLimit());
+        LambdaQueryWrapper<OaPomsWorkmarksOutsiteEntity> queryWrapper = Wrappers.lambdaQuery();
+        //查询条件示例
+        //queryWrapper.eq(OaPomsWorkmarksOutsiteEntity::getId, oaPomsWorkmarksOutsite.getId());
+        IPage<OaPomsWorkmarksOutsiteEntity> iPage = oaPomsWorkmarksOutsiteService.page(page, queryWrapper);
+        log.info("\n this.oaPomsWorkmarksOutsiteMapper.selectCountUser()="+this.oaPomsWorkmarksOutsiteMapper.selectCountUser());
         return DataResult.success(iPage);
     }
 

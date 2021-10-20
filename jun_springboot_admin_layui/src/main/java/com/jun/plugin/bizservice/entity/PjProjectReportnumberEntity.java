@@ -17,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-09 17:26:13
+ * @date 2021-10-20 16:28:53
  */
 @Data
 @TableName("pj_project_reportnumber")
@@ -102,12 +102,6 @@ public class PjProjectReportnumberEntity extends BaseEntity implements Serializa
 	 */
 	@TableField(value = "update_id" , fill = FieldFill.INSERT_UPDATE  )
 	private String updateId;
-
-	/**
-	 * 
-	 */
-	@TableField(value = "deleted" , fill = FieldFill.INSERT  )
-	private Integer deleted;
 
 
 }

@@ -26,9 +26,10 @@ public class CodeGeneratorTest {
 
     @Test
     public void contextLoads() throws IOException {
-//    	String tables = "biz_customer_test";
-//    	String tables = "pj_customer";
+//    	String tables = "biz_test";
 //    	String tables = "biz_common";
+    	String tables = "biz_common,biz_mail,biz_test,hr_templet_assessment,hr_templet_assessment_userscore,hr_templet_quota_detail,hr_templet_quota_detail_userscore_detail,oa_law_info,oa_learn_info,oa_notes_info,oa_office_count,oa_poms_workmarks_outsite,oa_poms_workmarks_payroll,oa_poms_workmarks_times,oa_user_leave,oa_user_worktimes,pj_contract,pj_customer,pj_project,pj_project_appraise,pj_project_borrow,pj_project_daily,pj_project_draft,pj_project_invoice,pj_project_member,pj_project_plan,pj_project_prodess_risk,pj_project_recheck,pj_project_report,pj_project_reportnumber";
+//    	String tables = "pj_customer";
 //    	String tables = "pj_project";
 //    	String tables = "pj_contract";
 //    	String tables = "pj_project_report";
@@ -38,7 +39,7 @@ public class CodeGeneratorTest {
 //    	String tables = "pj_project_plan";
 //    	String tables = "pj_project_recheck";
 //    	String tables = "oa_law_info,oa_learn_info,oa_notes_info";
-    	String tables = "oa_poms_workmarks_outsite,oa_poms_workmarks_payroll,oa_poms_workmarks_times";
+//    	String tables = "oa_poms_workmarks_outsite,oa_poms_workmarks_payroll,oa_poms_workmarks_times";
     	
     	
 //    	String tables = " ";
@@ -46,7 +47,7 @@ public class CodeGeneratorTest {
 //    	String tables = "oa_poms_workmarks,oa_poms_workmarks_payroll,oa_poms_workmarks_times";
 //    	
     	byte[] data = sysGeneratorService.generatorCode(tables.split(","));
-    	FileUtils.writeByteArrayToFile(new File("D:/"+tables+"1011"+(new Random().nextInt(999))+".zip"), data);
+    	FileUtils.writeByteArrayToFile(new File("D:/"+1111+"1020"+(new Random().nextInt(999))+".zip"), data);
     	log.info("代码生成成功！");
     }
     
