@@ -114,8 +114,7 @@
                 cols: [
                     [
                         {type: 'numbers'},
-                        {field: 'deptNo', title: '部门编码', width: 150},
-                        {field: 'name', title: '部门名称',},
+                        {field: 'name', title: '部门名称1', width: 250},
                         {
                             field: 'pidName', title: '上级部门名称', templet: function (item) {
                                 if (item.pidName === null || item.pidName === undefined) {
@@ -125,6 +124,7 @@
                                 }
                             }
                         },
+                        {field: 'deptNo', title: '部门编码', width: 150},
                         {field: 'relationCode', title: '层级关系编码'},
                         {field: 'managerName', title: '部门经理'},
                         {field: 'phone', title: '部门经理联系电话'},

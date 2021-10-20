@@ -121,7 +121,7 @@
   //获取token
   var token = CoreUtil.getData("access_token");
   //地址栏转义token中的#号
-  var tokenQuery = token.replace("#", "%23");
+  var tokenQuery = token==null?"":token.replace("#", "%23");
   var tableIns1;
   var table = layui.table;
   var form = layui.form;

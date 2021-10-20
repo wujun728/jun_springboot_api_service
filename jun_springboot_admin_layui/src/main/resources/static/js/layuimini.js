@@ -72,6 +72,8 @@ layui.define(["element", "jquery"], function (exports) {
         this.initHome = function (data) {
             sessionStorage.setItem('layuiminiHomeHref', data.href);
             $('#layuiminiHomeTabId').html('<i class="' + data.icon + '"></i> <span>' + data.title + '</span>');
+            console.log('data='+data);
+            $("#nickName").html(data.userInfo.username);
             $('#layuiminiHomeTabId').attr('lay-id', data.href);
             $('#layuiminiHomeTabIframe').html('<iframe width="100%" height="100%" frameborder="0"  src="' + data.href + '"></iframe>');
         };

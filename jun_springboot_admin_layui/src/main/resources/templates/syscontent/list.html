@@ -77,13 +77,14 @@
 </html>
 <script src="/layui/layui.all.js"></script>
 <script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
 <script>
     //文章类型字典数据
     var datas = "[[${@sysDictService.getType('content_type')}]]".replace(/&quot;/g,"\"");
     //获取token
     var token = CoreUtil.getData("access_token");
     //地址栏转义token中的#号
-    var tokenQuery = token.replace("#", "%23");
+    var tokenQuery = token==null?"":token.replace("#", "%23");
     var tableIns1;
     var table = layui.table;
     var form = layui.form;
