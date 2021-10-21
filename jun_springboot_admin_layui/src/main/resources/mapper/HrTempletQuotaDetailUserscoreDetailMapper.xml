@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.HrTempletQuotaDetailUserscoreDetailMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.HrTempletQuotaDetailUserscoreDetailEntity" id="hrTempletQuotaDetailUserscoreDetailMap">
+        <result property="id" column="id"/>
+        <result property="qno" column="qno"/>
+        <result property="qname" column="qname"/>
+        <result property="pid" column="pid"/>
+        <result property="dictQtype" column="dict_qtype"/>
+        <result property="qlevel" column="qlevel"/>
+        <result property="gradeformulA" column="gradeformulA"/>
+        <result property="qorder" column="qorder"/>
+        <result property="qweight" column="qweight"/>
+        <result property="dictQtype2" column="dict_qtype2"/>
+        <result property="dclid" column="dclid"/>
+        <result property="templateid" column="templateid"/>
+        <result property="templatename" column="templatename"/>
+        <result property="userid" column="userid"/>
+        <result property="username" column="username"/>
+        <result property="userscore" column="userscore"/>
+    </resultMap>
+
+
+</mapper>

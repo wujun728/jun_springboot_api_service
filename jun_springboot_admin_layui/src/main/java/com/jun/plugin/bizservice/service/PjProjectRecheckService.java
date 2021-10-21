@@ -8,7 +8,7 @@ import com.jun.plugin.bizservice.entity.PjProjectRecheckEntity;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 13:36:30
+ * @date 2021-10-20 16:28:53
  */
 public interface PjProjectRecheckService extends IService<PjProjectRecheckEntity> {
 

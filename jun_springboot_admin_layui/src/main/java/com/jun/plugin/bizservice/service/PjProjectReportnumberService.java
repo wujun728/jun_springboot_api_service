@@ -8,7 +8,7 @@ import com.jun.plugin.bizservice.entity.PjProjectReportnumberEntity;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-09 17:26:13
+ * @date 2021-10-20 16:28:53
  */
 public interface PjProjectReportnumberService extends IService<PjProjectReportnumberEntity> {
 

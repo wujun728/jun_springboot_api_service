@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jun.plugin.bizservice.mapper.PjProjectProdessRiskMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.jun.plugin.bizservice.entity.PjProjectProdessRiskEntity" id="pjProjectProdessRiskMap">
+        <result property="id" column="id"/>
+        <result property="planName" column="plan_name"/>
+        <result property="refProjectCode" column="ref_project_code"/>
+        <result property="planDetail" column="plan_detail"/>
+        <result property="planTimeStart" column="plan_time_start"/>
+        <result property="planTimeEnd" column="plan_time_end"/>
+        <result property="isRisk" column="is_risk"/>
+        <result property="isAskHelp" column="is_ask_help"/>
+        <result property="solution" column="solution"/>
+        <result property="cantBeSolved" column="cant_be_solved"/>
+        <result property="askForHelper" column="ask_for_helper"/>
+        <result property="refFilename" column="ref_filename"/>
+        <result property="remark" column="remark"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createId" column="create_id"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateId" column="update_id"/>
+    </resultMap>
+
+
+</mapper>

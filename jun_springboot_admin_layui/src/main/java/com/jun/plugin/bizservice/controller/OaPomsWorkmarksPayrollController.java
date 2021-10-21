@@ -11,10 +11,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import com.jun.plugin.system.common.utils.DataResult;
+import com.jun.plugin.system.common.aop.annotation.DataScope;
 
 import com.jun.plugin.bizservice.entity.OaPomsWorkmarksPayrollEntity;
+import com.jun.plugin.bizservice.mapper.OaPomsWorkmarksPayrollMapper;
 import com.jun.plugin.bizservice.service.OaPomsWorkmarksPayrollService;
 
 
@@ -24,13 +27,18 @@ import com.jun.plugin.bizservice.service.OaPomsWorkmarksPayrollService;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 16:19:28
+ * @date 2021-10-20 16:28:52
  */
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class OaPomsWorkmarksPayrollController {
+
     @Autowired
     private OaPomsWorkmarksPayrollService oaPomsWorkmarksPayrollService;
+
+    @Autowired
+    private OaPomsWorkmarksPayrollMapper oaPomsWorkmarksPayrollMapper;
 
 
     /**
@@ -72,12 +80,38 @@ public class OaPomsWorkmarksPayrollController {
     @PostMapping("oaPomsWorkmarksPayroll/listByPage")
     @RequiresPermissions("oaPomsWorkmarksPayroll:list")
     @ResponseBody
+    @DataScope
     public DataResult findListByPage(@RequestBody OaPomsWorkmarksPayrollEntity oaPomsWorkmarksPayroll){
         Page page = new Page(oaPomsWorkmarksPayroll.getPage(), oaPomsWorkmarksPayroll.getLimit());
         LambdaQueryWrapper<OaPomsWorkmarksPayrollEntity> queryWrapper = Wrappers.lambdaQuery();
         //查询条件示例
         //queryWrapper.eq(OaPomsWorkmarksPayrollEntity::getId, oaPomsWorkmarksPayroll.getId());
         IPage<OaPomsWorkmarksPayrollEntity> iPage = oaPomsWorkmarksPayrollService.page(page, queryWrapper);
+        return DataResult.success(iPage);
+    }
+    
+    @ApiOperation(value = "查询单条数据")
+    @PostMapping("oaPomsWorkmarksPayroll/findOne")
+    @ResponseBody
+    public DataResult findOne(@RequestBody OaPomsWorkmarksPayrollEntity oaPomsWorkmarksPayroll){
+    	LambdaQueryWrapper<OaPomsWorkmarksPayrollEntity> queryWrapper = Wrappers.lambdaQuery();
+    	//查询条件示例
+    	//queryWrapper.eq(OaPomsWorkmarksPayrollEntity::getId, oaPomsWorkmarksPayroll.getId());
+    	//OaPomsWorkmarksPayrollEntity one = oaPomsWorkmarksPayrollService.getOne(queryWrapper);
+    	OaPomsWorkmarksPayrollEntity one = oaPomsWorkmarksPayrollService.getById(oaPomsWorkmarksPayroll.getId());
+    	return DataResult.success(one);
+    }
+
+    @ApiOperation(value = "查询下拉框数据")
+    @PostMapping("oaPomsWorkmarksPayroll/listBySelect")
+    @ResponseBody
+    public DataResult findListBySelect(@RequestBody OaPomsWorkmarksPayrollEntity oaPomsWorkmarksPayroll){
+        Page page = new Page(oaPomsWorkmarksPayroll.getPage(), oaPomsWorkmarksPayroll.getLimit());
+        LambdaQueryWrapper<OaPomsWorkmarksPayrollEntity> queryWrapper = Wrappers.lambdaQuery();
+        //查询条件示例
+        //queryWrapper.eq(OaPomsWorkmarksPayrollEntity::getId, oaPomsWorkmarksPayroll.getId());
+        IPage<OaPomsWorkmarksPayrollEntity> iPage = oaPomsWorkmarksPayrollService.page(page, queryWrapper);
+        log.info("\n this.oaPomsWorkmarksPayrollMapper.selectCountUser()="+this.oaPomsWorkmarksPayrollMapper.selectCountUser());
         return DataResult.success(iPage);
     }
 

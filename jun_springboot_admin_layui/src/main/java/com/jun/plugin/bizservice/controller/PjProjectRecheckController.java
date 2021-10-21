@@ -11,10 +11,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 import com.jun.plugin.system.common.utils.DataResult;
+import com.jun.plugin.system.common.aop.annotation.DataScope;
 
 import com.jun.plugin.bizservice.entity.PjProjectRecheckEntity;
+import com.jun.plugin.bizservice.mapper.PjProjectRecheckMapper;
 import com.jun.plugin.bizservice.service.PjProjectRecheckService;
 
 
@@ -24,13 +27,18 @@ import com.jun.plugin.bizservice.service.PjProjectRecheckService;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 13:36:30
+ * @date 2021-10-20 16:28:53
  */
 @Controller
 @RequestMapping("/")
+@Slf4j
 public class PjProjectRecheckController {
+
     @Autowired
     private PjProjectRecheckService pjProjectRecheckService;
+
+    @Autowired
+    private PjProjectRecheckMapper pjProjectRecheckMapper;
 
 
     /**
@@ -72,12 +80,38 @@ public class PjProjectRecheckController {
     @PostMapping("pjProjectRecheck/listByPage")
     @RequiresPermissions("pjProjectRecheck:list")
     @ResponseBody
+    @DataScope
     public DataResult findListByPage(@RequestBody PjProjectRecheckEntity pjProjectRecheck){
         Page page = new Page(pjProjectRecheck.getPage(), pjProjectRecheck.getLimit());
         LambdaQueryWrapper<PjProjectRecheckEntity> queryWrapper = Wrappers.lambdaQuery();
         //查询条件示例
         //queryWrapper.eq(PjProjectRecheckEntity::getId, pjProjectRecheck.getId());
         IPage<PjProjectRecheckEntity> iPage = pjProjectRecheckService.page(page, queryWrapper);
+        return DataResult.success(iPage);
+    }
+    
+    @ApiOperation(value = "查询单条数据")
+    @PostMapping("pjProjectRecheck/findOne")
+    @ResponseBody
+    public DataResult findOne(@RequestBody PjProjectRecheckEntity pjProjectRecheck){
+    	LambdaQueryWrapper<PjProjectRecheckEntity> queryWrapper = Wrappers.lambdaQuery();
+    	//查询条件示例
+    	//queryWrapper.eq(PjProjectRecheckEntity::getId, pjProjectRecheck.getId());
+    	//PjProjectRecheckEntity one = pjProjectRecheckService.getOne(queryWrapper);
+    	PjProjectRecheckEntity one = pjProjectRecheckService.getById(pjProjectRecheck.getId());
+    	return DataResult.success(one);
+    }
+
+    @ApiOperation(value = "查询下拉框数据")
+    @PostMapping("pjProjectRecheck/listBySelect")
+    @ResponseBody
+    public DataResult findListBySelect(@RequestBody PjProjectRecheckEntity pjProjectRecheck){
+        Page page = new Page(pjProjectRecheck.getPage(), pjProjectRecheck.getLimit());
+        LambdaQueryWrapper<PjProjectRecheckEntity> queryWrapper = Wrappers.lambdaQuery();
+        //查询条件示例
+        //queryWrapper.eq(PjProjectRecheckEntity::getId, pjProjectRecheck.getId());
+        IPage<PjProjectRecheckEntity> iPage = pjProjectRecheckService.page(page, queryWrapper);
+        log.info("\n this.pjProjectRecheckMapper.selectCountUser()="+this.pjProjectRecheckMapper.selectCountUser());
         return DataResult.success(iPage);
     }
 

@@ -31,9 +31,9 @@
 	  </div>
  </div>
       <div class="layui-form-item"   >
-      <label class="layui-form-label  " >项目名称</label>
+      <label class="layui-form-label  " >成员名称</label>
       <div class="layui-input-block">
-		<input type="text" name="refProjectName"  id="refProjectName"  placeholder="请输入项目名称" autocomplete="off" class="layui-input">
+		<input type="text" name="refProjectName"  id="refProjectName"  placeholder="请输入成员名称" autocomplete="off" class="layui-input">
 	  </div>
  </div>
       <div class="layui-form-item"   >
@@ -55,9 +55,18 @@
 	  </div>
  </div>
       <div class="layui-form-item"   >
-      <label class="layui-form-label  " >成员分成比例</label>
+      <label class="layui-form-label  " >是否参与分成</label>
       <div class="layui-input-block">
-		<input type="text" name="memberParts"  id="memberParts"  placeholder="请输入成员分成比例" autocomplete="off" class="layui-input">
+	<select id="dictYesNo" name="dictYesNo" lay-filter="select-type" th:with="type=${@sysDictService.getType('dict_yes_no')}">
+        <option value="0">请选择</option>
+        <option th:each="dict : ${type}" th:text="${dict.label}" th:value="${dict.value}"></option>
+    </select>
+  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >成员工作分成比例</label>
+      <div class="layui-input-block">
+		<input type="text" name="memberParts"  id="memberParts"  placeholder="请输入成员工作分成比例" autocomplete="off" class="layui-input">
 	  </div>
  </div>
       <div class="layui-form-item"   >
@@ -128,7 +137,7 @@
   //获取token
   var token = CoreUtil.getData("access_token");
   //地址栏转义token中的#号
-  var tokenQuery = token.replace("#", "%23");
+  var tokenQuery = token==null?"":token.replace("#", "%23");
   var tableIns1;
   var table = layui.table;
   var form = layui.form;
@@ -155,7 +164,7 @@
       , contentType: 'application/json'
       , headers: {"authorization": token}
       , page: true //开启分页
-      , url: '/pjProjectMember/listByPage' //数据接口
+      , url: '/pjProjectMember/listBySelect' //数据接口
       , method: 'POST'
       ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
@@ -171,11 +180,21 @@
           {type: 'checkbox', fixed: 'left'},  
           {field: 'id', title: '成员ID', sort: true ,hide:true }, 
           {field: 'refProjectCode', title: '', sort: true }, 
-          {field: 'refProjectName', title: '项目名称', sort: true ,hide:true }, 
+          {field: 'refProjectName', title: '成员名称', sort: true ,hide:true }, 
           {field: 'refMemberName', title: '成员名称', sort: true ,hide:true }, 
           {field: 'memberRole', title: '成员项目角色', sort: true ,hide:true }, 
           {field: 'memberWorkContent', title: '成员工作内容', sort: true ,hide:true }, 
-          {field: 'memberParts', title: '成员分成比例', sort: true ,hide:true }, 
+          {field: 'dictYesNo', title: '是否参与分成', sort: true ,hide:true , templet: function (item) { 	            //获取类型对应的字典label
+	            var datas = "[[${@sysDictService.getType('dict_yes_no')}]]".replace(/&quot;/g,"\"");
+	            if(item.dictCustomerType%2==0){
+		            return '<span class="layui-btn layui-btn-normal layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}else{
+		            return '<span class="layui-btn layui-btn-warm layui-btn-xs">'+CoreUtil.selectDictLabel(datas, item.dictCustomerType)+'</span>';
+          		}
+	            // return CoreUtil.selectDictLabel(datas, item.dictYesNo);
+            }
+}, 
+          {field: 'memberParts', title: '成员工作分成比例', sort: true ,hide:true }, 
           {field: 'memberWorkDays', title: '成员合计投入项目工作日', sort: true ,hide:true }, 
           {field: 'memberPartsMoney', title: '分成金额', sort: true ,hide:true }, 
           {field: 'remark', title: '备注', sort: true ,hide:true }, 
@@ -337,6 +356,7 @@
           $(".operation input[name=refMemberName]").val("");
           $(".operation input[name=memberRole]").val("");
           $(".operation input[name=memberWorkContent]").val("");
+          $(".operation input[name=dictYesNo]").val("");
           $(".operation input[name=memberParts]").val("");
           $(".operation input[name=memberWorkDays]").val("");
           $(".operation input[name=memberPartsMoney]").val("");
@@ -363,6 +383,7 @@
           $(".operation input[name=refMemberName]").val(data.refMemberName);
           $(".operation input[name=memberRole]").val(data.memberRole);
           $(".operation input[name=memberWorkContent]").val(data.memberWorkContent);
+          $(".operation input[name=dictYesNo]").val(data.dictYesNo);
           $(".operation input[name=memberParts]").val(data.memberParts);
           $(".operation input[name=memberWorkDays]").val(data.memberWorkDays);
           $(".operation input[name=memberPartsMoney]").val(data.memberPartsMoney);
@@ -470,7 +491,7 @@ refProjectCode: function(value, item){
         }  ,  refProjectName: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
-                return '项目名称不能大于'+max+'个字符的长度！';
+                return '成员名称不能大于'+max+'个字符的长度！';
             }
         }  ,  refMemberName: function(value, item){
             var max = item.getAttribute('lay-max');
@@ -487,10 +508,15 @@ refProjectCode: function(value, item){
             if(value.length > max){
                 return '成员工作内容不能大于'+max+'个字符的长度！';
             }
+        }  ,  dictYesNo: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '是否参与分成不能大于'+max+'个字符的长度！';
+            }
         }  ,  memberParts: function(value, item){
             var max = item.getAttribute('lay-max');
             if(value.length > max){
-                return '成员分成比例不能大于'+max+'个字符的长度！';
+                return '成员工作分成比例不能大于'+max+'个字符的长度！';
             }
         }  ,  memberWorkDays: function(value, item){
             var max = item.getAttribute('lay-max');

@@ -2,6 +2,7 @@ package com.jun.plugin.bizservice.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.jun.plugin.system.entity.BaseEntity;
 import org.springframework.data.annotation.Id;
@@ -17,11 +18,11 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-04 21:39:35
+ * @date 2021-10-20 16:28:52
  */
 @Data
-@TableName("biz_customer_test")
-public class BizCustomerTestEntity extends BaseEntity implements Serializable {
+@TableName("biz_test")
+public class BizTestEntity extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -34,61 +35,61 @@ public class BizCustomerTestEntity extends BaseEntity implements Serializable {
 	/**
 	 * 客户名称
 	 */
-	@TableField("cusname")
+	@TableField(value = "cusname"  )
 	private String cusname;
 
 	/**
 	 * 注册金额
 	 */
-	@TableField("money")
+	@TableField(value = "money"  )
 	private BigDecimal money;
 
 	/**
 	 * 客户描述
 	 */
-	@TableField("cusdesc")
+	@TableField(value = "cusdesc"  )
 	private String cusdesc;
 
 	/**
 	 * 客户全称
 	 */
-	@TableField("fullname")
+	@TableField(value = "fullname"  )
 	private String fullname;
 
 	/**
 	 * 客户性质
 	 */
-	@TableField("dict_cussex")
+	@TableField(value = "dict_cussex"  )
 	private String dictCussex;
 
 	/**
 	 * 注册时间
 	 */
-	@TableField("register_date")
+	@TableField(value = "register_date"  )
 	private Date registerDate;
 
 	/**
 	 * 客户类型
 	 */
-	@TableField("dict_custype")
+	@TableField(value = "dict_custype"  )
 	private String dictCustype;
 
 	/**
 	 * 
 	 */
-	@TableField("ref_id")
+	@TableField(value = "ref_id"  )
 	private String refId;
 
 	/**
 	 * 关联子客户名称
 	 */
-	@TableField("ref_title_username")
+	@TableField(value = "ref_title_username"  )
 	private String refTitleUsername;
 
 	/**
 	 * 备注
 	 */
-	@TableField("remark")
+	@TableField(value = "remark"  )
 	private String remark;
 
 

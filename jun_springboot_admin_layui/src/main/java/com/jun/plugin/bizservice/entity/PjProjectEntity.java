@@ -17,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-09 15:45:46
+ * @date 2021-10-20 16:28:53
  */
 @Data
 @TableName("pj_project")
@@ -122,16 +122,22 @@ public class PjProjectEntity extends BaseEntity implements Serializable {
 	private String customerReq;
 
 	/**
-	 * 备注
-	 */
-	@TableField(value = "remark"  )
-	private String remark;
-
-	/**
 	 * 项目进度
 	 */
 	@TableField(value = "project_progress"  )
 	private String projectProgress;
+
+	/**
+	 * 流程状态
+	 */
+	@TableField(value = "dict_wf_state"  )
+	private String dictWfState;
+
+	/**
+	 * 备注
+	 */
+	@TableField(value = "remark"  )
+	private String remark;
 
 	/**
 	 * 

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="/layui/css/layui.css">
+  <link rel="stylesheet" href="/css/custom.form.css">
+  <style>
+		element.style { width: 180px; }
+		.layui-form-label.layui-required:after{
+	        content:"*";
+	        color:red;
+	        position: absolute;
+	        top:10px;
+	        left:24px;
+	    }
+  </style>
+</head>
+<body>
+<!-- 新增修改的DIV页面-begin,默认hidden -->
+<div class="panel panel-default operation" hidden>
+  <div class="panel-heading title"></div>
+<div class="layui-card-body">
+<form class="layui-form " action="" lay-filter="info" style="width: 700px;margin-top: 10px">
+      <input name="id" id="id" hidden/>
+        <div class="layui-form-item"   >
+      <label class="layui-form-label layui-required " >底稿标题</label>
+      <div class="layui-input-block">
+		<input type="draftName" name="draftName"  id="draftName"  lay-verify="required|draftName" lay-max="256"   placeholder="请输入底稿标题"  autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label layui-required " >项目名称</label>
+      <div class="layui-input-block">
+		<input type="refProjectCode" name="refProjectCode"  id="refProjectCode"  lay-verify="required|refProjectCode" lay-max="256"   placeholder="请输入项目名称"  autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label layui-required " >底稿类型</label>
+      <div class="layui-input-block">
+		<input type="refDraftType" name="refDraftType"  id="refDraftType"  lay-verify="required|refDraftType" lay-max="64"   placeholder="请输入底稿类型"  autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label layui-required " >底稿描述</label>
+      <div class="layui-input-block">
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="draftDesc"  id="draftDesc"></textarea>
+  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >客户述求</label>
+      <div class="layui-input-block">
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="customerReq"  id="customerReq"></textarea>
+  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >底稿输出时间</label>
+      <div class="layui-input-block">
+	<input type="draftTime" name="draftTime"  id="draftTime" lay-verify=" date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >底稿输出责任人(承做)</label>
+      <div class="layui-input-block">
+		<input type="text" name="draftBy"  id="draftBy"  placeholder="请输入底稿输出责任人(承做)" autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >底稿客户联系人(对接)</label>
+      <div class="layui-input-block">
+		<input type="text" name="draftCustomerPerson"  id="draftCustomerPerson"  placeholder="请输入底稿客户联系人(对接)" autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >底稿交付所时间</label>
+      <div class="layui-input-block">
+		<input type="text" name="draftGivenTime"  id="draftGivenTime"  placeholder="请输入底稿交付所时间" autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >底稿完成天数</label>
+      <div class="layui-input-block">
+		<input type="text" name="draftFinashDays"  id="draftFinashDays"  placeholder="请输入底稿完成天数" autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >底稿文件名称</label>
+      <div class="layui-input-block">
+		<input type="text" name="refFilename"  id="refFilename"  placeholder="请输入底稿文件名称" autocomplete="off" class="layui-input">
+	  </div>
+ </div>
+      <div class="layui-form-item"   >
+      <label class="layui-form-label  " >备注</label>
+      <div class="layui-input-block">
+	    <textarea placeholder="请输入内容" class="layui-textarea" name="remark"  id="remark"></textarea>
+  </div>
+ </div>
+  	<div class="layui-form-item">
+  <div class="layui-input-block">
+    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">保存</button>
+    <button  class="layui-btn layui-btn-primary" id="btn_cancel">返回</button>
+  </div>
+</div>
+</form>
+</div>
+</div>
+<!-- 新增修改的DIV页面-end -->
+
+<!-- 查询列表的DIV页面-start -->
+<div class="table_div">
+  <div id="searchParam"  shiro:hasPermission="pjProjectDraft:list">
+    <div class="layui-form-item">
+      <div class="layui-input-inline">
+    <input type="draftName" name="draftNameCondition"  id="draftNameCondition" class="layui-input"  autocomplete="off" placeholder="请输入底稿标题">
+      </div>
+      <div class="layui-input-inline">
+    <input type="refProjectCode" name="refProjectCodeCondition"  id="refProjectCodeCondition" class="layui-input"  autocomplete="off" placeholder="请输入项目名称">
+      </div>
+      <div class="layui-input-inline">
+    <input type="refDraftType" name="refDraftTypeCondition"  id="refDraftTypeCondition" class="layui-input"  autocomplete="off" placeholder="请输入底稿类型">
+      </div>
+      <div class="layui-input-inline">
+    <input type="draftDesc" name="draftDescCondition"  id="draftDescCondition" class="layui-input"  autocomplete="off" placeholder="请输入底稿描述">
+      </div>
+      <div class="layui-input-inline ">
+        <button class="layui-btn" onclick="search()"  id="search">查询</button>
+        <button class="layui-btn"   id="export">导出全部</button>
+      </div>
+    </div>
+  </div>
+  <!-- 渲染列表，上面的是工具栏 -->
+  <table class="layui-table" id="showTable" lay-filter="showTable" ></table>
+</div>
+<!-- 查询列表的DIV页面-end -->
+<script type="text/html" id="toolbar">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add"  shiro:hasPermission="pjProjectDraft:add">添加</button>
+    <button class="layui-btn layui-btn-sm" lay-event="batchDeleted" shiro:hasPermission="pjProjectDraft:delete">删除</button>
+  </div>
+</script>
+<script type="text/html" id="tool">
+  <a class="layui-btn layui-btn-xs" lay-event="edit" shiro:hasPermission="pjProjectDraft:update">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" shiro:hasPermission="pjProjectDraft:delete">删除</a>
+  <a class="layui-btn layui-btn-xs" lay-event="file" shiro:hasPermission="bizCustomerTest:update">附件</a>
+</script>
+
+</body>
+</html>
+<script src="/layui/layui.all.js"></script>
+<script src="/layui-ext/tableSelect.js"></script>
+<script src="/js/core.util.js"></script>
+<script src="/js/jquery.js"></script>
+<script>
+  //获取token
+  var token = CoreUtil.getData("access_token");
+  //地址栏转义token中的#号
+  var tokenQuery = token==null?"":token.replace("#", "%23");
+  var tableIns1;
+  var table = layui.table;
+  var form = layui.form;
+  var layer = layui.layer;
+  var layedit = layui.layedit;
+  var $ = jQuery = layui.jquery;
+  var laydate = layui.laydate;
+  var numberInput = layui.numberInput;
+  var tableSelect = layui.tableSelect;
+  //定义lay全局对象
+
+  layui.config({
+        base: '/layui-ext/'
+    }).extend({
+        treetable: 'treetable-lay/treetable',
+        iconPicker: 'icon/iconPicker',
+        numberInput: 'numberInput/js/index'
+    }).use(['numberInput','table', 'layer', 'laydate' ,'form', 'layedit'], function () {
+	numberInput = layui.numberInput;
+	
+    //加载table
+    tableIns1 = table.render({
+      elem: '#showTable'
+      , contentType: 'application/json'
+      , headers: {"authorization": token}
+      , page: true //开启分页
+      , url: '/pjProjectDraft/listBySelect' //数据接口
+      , method: 'POST'
+      ,size: 'sm' //小尺寸的表格
+      , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+	        return {
+	          "code": res.code, //解析接口状态
+	          "msg": res.msg, //解析提示文本
+	          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+	          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+	        }
+      }
+      , cols: [
+        [
+          {type: 'checkbox', fixed: 'left'},  
+          {field: 'id', title: '底稿ID', sort: true ,hide:true }, 
+          {field: 'draftName', title: '底稿标题', sort: true }, 
+          {field: 'refProjectCode', title: '项目名称', sort: true }, 
+          {field: 'refDraftType', title: '底稿类型', sort: true }, 
+          {field: 'draftDesc', title: '底稿描述', sort: true }, 
+          {field: 'customerReq', title: '客户述求', sort: true ,hide:true }, 
+          {field: 'draftTime', title: '底稿输出时间', sort: true ,hide:true }, 
+          {field: 'draftBy', title: '底稿输出责任人(承做)', sort: true ,hide:true }, 
+          {field: 'draftCustomerPerson', title: '底稿客户联系人(对接)', sort: true ,hide:true }, 
+          {field: 'draftGivenTime', title: '底稿交付所时间', sort: true ,hide:true }, 
+          {field: 'draftFinashDays', title: '底稿完成天数', sort: true ,hide:true }, 
+          {field: 'refFilename', title: '底稿文件名称', sort: true ,hide:true }, 
+          {field: 'remark', title: '备注', sort: true ,hide:true }, 
+	          {width: 160, toolbar: "#tool", title: '操作'}
+        ]
+      ]
+      , toolbar: '#toolbar'
+    });
+
+
+//遍历列，并渲染各种表单组件
+	tableSelect.render({
+		elem: '#refProjectCode',
+		checkedKey: 'id',
+		table: {
+			url: '/pjProjectDraft/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' },
+					{ field: 'cusname', title: '标题' },
+					{ field: 'fullname', title: '名称' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.cusname);
+				$("#refId").val(item.id);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	tableSelect.render({
+		elem: '#refDraftType',
+		checkedKey: 'id',
+		table: {
+			url: '/pjProjectDraft/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' },
+					{ field: 'cusname', title: '标题' },
+					{ field: 'fullname', title: '名称' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.cusname);
+				$("#refId").val(item.id);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+ 	//日期
+	laydate.render({
+	    elem: '#draftTime'
+	    ,type: 'datetime'
+    });
+	numberInput.render("#draftFinashDays", {
+	    autoSelcet: false,
+	    max: 10000000000,
+	    min: 0,
+		step: 1,
+	    precision: 0
+	});
+	tableSelect.render({
+		elem: '#refFilename',
+		checkedKey: 'id',
+		table: {
+			url: '/pjProjectDraft/listByPage?authorization='+tokenQuery,
+			method: 'POST',
+			contentType: 'application/json',
+			 parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+		        return {
+		          "code": res.code, //解析接口状态
+		          "msg": res.msg, //解析提示文本
+		          "count": CoreUtil.isEmpty(res.data) ? 0 : res.data.total, //解析数据长度
+		          "data": CoreUtil.isEmpty(res.data) ? null : res.data.records //解析数据列表
+		        }
+		      },
+			cols: [
+				[
+					{ type: 'radio' },
+					{ field: 'id', title: 'ID' },
+					{ field: 'cusname', title: '标题' },
+					{ field: 'fullname', title: '名称' }
+				]
+			]
+		},
+		done: function (elem, data) {
+			var NEWJSON = []
+			layui.each(data.data, function (index, item) {
+				NEWJSON.push(item.cusname);
+				$("#refId").val(item.id);
+				console.log('info');  
+			})
+			elem.val(NEWJSON.join(","))
+		}
+	});
+	
+    //表头工具
+    table.on('toolbar(showTable)', function(obj){
+      switch(obj.event){
+        case 'batchDeleted':
+          var checkStatus = table.checkStatus(obj.config.id);
+          var data = checkStatus.data;
+          if(data.length==0){
+            layer.msg("请选择要批量删除的列");
+          }else {
+            var ids = [];
+            $(data).each(function (index,item) {
+              ids.push(item.id);
+            });
+            tipDialog(ids);
+          }
+          break;
+        case 'add':
+          $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("新增");
+          $(".operation input[name=id]").val("");
+          $(".operation input[name=draftName]").val("");
+          $(".operation input[name=refProjectCode]").val("");
+          $(".operation input[name=refDraftType]").val("");
+          $(".operation input[name=draftDesc]").val("");
+          $(".operation input[name=customerReq]").val("");
+          $(".operation input[name=draftTime]").val("");
+          $(".operation input[name=draftBy]").val("");
+          $(".operation input[name=draftCustomerPerson]").val("");
+          $(".operation input[name=draftGivenTime]").val("");
+          $(".operation input[name=draftFinashDays]").val("");
+          $(".operation input[name=refFilename]").val("");
+          $(".operation input[name=remark]").val("");
+	          break;
+      };
+    });
+    //列操作
+    table.on('tool(showTable)',function (obj) {
+      var data = obj.data;
+      switch (obj.event) {
+        case 'del':
+          var ids=[];
+          ids.push(data.id);
+          tipDialog(ids);
+          break;
+        case 'edit':
+          $(".table_div").hide();
+          $(".operation").show();
+          $(".title").html("编辑");
+          $(".operation input[name=id]").val(data.id);
+          $(".operation input[name=draftName]").val(data.draftName);
+          $(".operation input[name=refProjectCode]").val(data.refProjectCode);
+          $(".operation input[name=refDraftType]").val(data.refDraftType);
+          $(".operation input[name=draftDesc]").val(data.draftDesc);
+          $(".operation input[name=customerReq]").val(data.customerReq);
+          $(".operation input[name=draftTime]").val(data.draftTime);
+          $(".operation input[name=draftBy]").val(data.draftBy);
+          $(".operation input[name=draftCustomerPerson]").val(data.draftCustomerPerson);
+          $(".operation input[name=draftGivenTime]").val(data.draftGivenTime);
+          $(".operation input[name=draftFinashDays]").val(data.draftFinashDays);
+          $(".operation input[name=refFilename]").val(data.refFilename);
+          $(".operation input[name=remark]").val(data.remark);
+			  form.render();
+          break;
+        case 'file':
+          CoreUtil.setData("bizcustomertest_rowdata",data);
+          var index = layer.open({
+              title: '上传附件',
+              type: 2,
+              shade: 0.2,
+              maxmin:true,
+              shadeClose: true,
+              area: ['80%', '80%'],
+              content: '/index/sysFilesByUser',
+          });
+          $(window).on("resize", function () {
+              layer.full(index);
+          });
+          return false;
+      }
+    });
+
+    //导出
+    $('#export').on('click', function () {
+      //原先分页limit
+      var exportParams = {
+        limit: 10000,
+        key: $("#key").val()
+      };
+      CoreUtil.sendPost("/pjProjectDraft/listByPage", exportParams, function (res) {
+        //初始化渲染数据
+        if (res.data != null && res.data.records != null) {
+          table.exportFile(tableIns1.config.id, res.data.records, 'xls');
+        }
+      });
+    });
+
+    //删除
+    var tipDialog=function (ids) {
+      layer.open({
+        content: "确定要删除么?",
+        yes: function(index, layero){
+          layer.close(index); //如果设定了yes回调，需进行手工关闭
+          CoreUtil.sendDelete("/pjProjectDraft/delete",ids,function (res) {
+            layer.msg(res.msg, {time:1000},function () {
+              search();
+            });
+          });
+        }
+      });
+    };
+
+    //返回
+    $("#btn_cancel").click(function() {
+      $(".table_div").show();
+      $(".operation").hide();
+      return false;
+    });
+
+    //监听保存
+    form.on('submit(submit)', function(data){
+      if(data.field.id===undefined || data.field.id===null || data.field.id===""){
+        CoreUtil.sendPost("/pjProjectDraft/add",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          search();
+        });
+      }else {
+        CoreUtil.sendPut("/pjProjectDraft/update",data.field,function (res) {
+          $(".table_div").show();
+          $(".operation").hide();
+          search();
+        });
+      }
+      return false;
+    });
+  });
+
+  //执行查询
+  function search() {
+    //这里以搜索为例
+    tableIns1.reload({
+      where: { //设定异步数据接口的额外参数，任意设
+        '1':'1'
+        //,key: $("#key").val()
+		,draftName: $("#draftNameCondition").val()
+		,refProjectCode: $("#refProjectCodeCondition").val()
+		,refDraftType: $("#refDraftTypeCondition").val()
+		,draftDesc: $("#draftDescCondition").val()
+      }
+      ,page: {
+        curr: 1 //重新从第 1 页开始
+      }
+    });
+  };
+  
+  //根据数据库字段长度及是否必填属性生成校验表单字段长度
+  //lay-verify="required|account" lay-min="6" 
+  // https://blog.csdn.net/m0_48373030/article/details/108783184
+    form.verify({
+draftName: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿标题不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refProjectCode: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '项目名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refDraftType: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿类型不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftDesc: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿描述不能大于'+max+'个字符的长度！';
+            }
+        }  ,  customerReq: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '客户述求不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿输出时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftBy: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿输出责任人(承做)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftCustomerPerson: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿客户联系人(对接)不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftGivenTime: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿交付所时间不能大于'+max+'个字符的长度！';
+            }
+        }  ,  draftFinashDays: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿完成天数不能大于'+max+'个字符的长度！';
+            }
+        }  ,  refFilename: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '底稿文件名称不能大于'+max+'个字符的长度！';
+            }
+        }  ,  remark: function(value, item){
+            var max = item.getAttribute('lay-max');
+            if(value.length > max){
+                return '备注不能大于'+max+'个字符的长度！';
+            }
+        }  ,  	    });
+</script>

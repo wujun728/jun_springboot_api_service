@@ -155,7 +155,7 @@
   //获取token
   var token = CoreUtil.getData("access_token");
   //地址栏转义token中的#号
-  var tokenQuery = token.replace("#", "%23");
+  var tokenQuery = token==null?"":token.replace("#", "%23");
   var tableIns1;
   var table = layui.table;
   var form = layui.form;
@@ -182,7 +182,7 @@
       , contentType: 'application/json'
       , headers: {"authorization": token}
       , page: true //开启分页
-      , url: '/pjProjectPlan/listByPage' //数据接口
+      , url: '/pjProjectPlan/listBySelect' //数据接口
       , method: 'POST'
       ,size: 'sm' //小尺寸的表格
       , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据

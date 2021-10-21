@@ -17,7 +17,7 @@ import lombok.Data;
  *
  * @author wujun
  * @email wujun728@mail.com
- * @date 2021-10-11 13:34:51
+ * @date 2021-10-20 16:28:53
  */
 @Data
 @TableName("pj_project_plan")
@@ -120,12 +120,6 @@ public class PjProjectPlanEntity extends BaseEntity implements Serializable {
 	 */
 	@TableField(value = "update_id" , fill = FieldFill.INSERT_UPDATE  )
 	private String updateId;
-
-	/**
-	 * 
-	 */
-	@TableField(value = "deleted" , fill = FieldFill.INSERT  )
-	private Integer deleted;
 
 
 }
