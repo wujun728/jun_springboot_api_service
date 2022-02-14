@@ -12,8 +12,6 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatis的API接口服�
 - 接口地址：localhost:8080/api/public/company/list
 - session超时，30分；
 
-
-
 ### 使用框架如下：
 * 核心框架：spring boot 2.1.6
 * 持久层框架：mybatis
