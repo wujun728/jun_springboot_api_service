@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * 3、加个注解，用来查询当前等路人的多个角色（并集）， 根据角色数据范围， 获取绑定的部门id， 查关联的用户id
  * 4、在查某个模块的list或page的时候，手动queryWrapper.in(createId, 关联的用户id)
  *
- * @author wenbin
+ * @author wujun
  */
 @Aspect
 @Component

@@ -97,7 +97,7 @@
       }
       , cols: [
         [
-          {type: 'checkbox', fixed: 'left'},
+          {type: 'checkbox', fixed: 'left'}, //{type:'radio'}
 #foreach($column in $columns)
           {field: '${column.attrname}', title: '${column.comments}', sort: true},
 #end

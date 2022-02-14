@@ -4,7 +4,7 @@ package com.company.project.common.exception.code;
 /**
  * 错误码
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

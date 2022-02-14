@@ -7,7 +7,7 @@ import com.company.project.vo.req.RolePermissionOperationReqVO;
 /**
  * 角色权限关联
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

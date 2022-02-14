@@ -13,7 +13,7 @@ import java.util.Date;
 /**
  * 字典管理
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */

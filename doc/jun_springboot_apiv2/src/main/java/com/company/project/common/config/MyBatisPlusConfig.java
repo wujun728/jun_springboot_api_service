@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * mybatis plus config
  *
- * @author wenbin
+ * @author wujun
  * @version V1.0
  * @date 2020年3月18日
  */
