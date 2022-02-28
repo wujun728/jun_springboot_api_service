@@ -10,6 +10,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+
 //import com.jun.plugin.system.common.comfig.FileUploadProperties;
 
 import javax.annotation.Resource;
@@ -31,10 +33,10 @@ public class ShiroConfig {
 //    @Resource
 //    private FileUploadProperties fileUploadProperties;
 
-//    @Bean(name = "shiroDialect")
-//    public ShiroDialect shiroDialect() {
-//        return new ShiroDialect();
-//    }
+    @Bean(name = "shiroDialect")
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
 
     @Bean
     public CustomHashedCredentialsMatcher customHashedCredentialsMatcher() {
