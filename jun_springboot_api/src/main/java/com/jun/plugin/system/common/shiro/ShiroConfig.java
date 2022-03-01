@@ -1,14 +1,23 @@
 package com.jun.plugin.system.common.shiro;
 
+import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
+import org.apache.shiro.mgt.DefaultSubjectDAO;
+
 //import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+
+import com.jun.plugin.system.common.shiro.cache.CustomCacheManager;
+import com.jun.plugin.system.common.shiro.jwt.JwtFilter;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
@@ -74,6 +83,8 @@ public class ShiroConfig {
         LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
         //用来校验token
         filtersMap.put("token", new CustomAccessControlFilter());
+        // JWT过滤      
+        // filtersMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
@@ -113,6 +124,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/lib/**", "anon");
         filterChainDefinitionMap.put("/component/**", "anon");
         filterChainDefinitionMap.put("/**", "token,authc");
+        
+        // 所有请求通过我们自己的JWTFilter
+        filterChainDefinitionMap.put("/**", "jwt");
         shiroFilterFactoryBean.setLoginUrl("/login.html");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
@@ -131,6 +145,55 @@ public class ShiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
+    //******************************************************************************************************
+    //******************************************************************************************************
+    
+    /**
+     * 配置使用自定义Realm，关闭Shiro自带的session
+     * 详情见文档 http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
+     * @param userRealm
+     * @return org.apache.shiro.web.mgt.DefaultWebSecurityManager
+     * @author dolyw.com
+     * @date 2018/8/31 10:55
+     */
+//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @Bean("securityManager")
+//    public DefaultWebSecurityManager defaultWebSecurityManager(UserRealm userRealm) {
+//        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager();
+//        // 使用自定义Realm
+//        defaultWebSecurityManager.setRealm(userRealm);
+//        // 关闭Shiro自带的session
+//        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
+//        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
+//        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
+//        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
+//        defaultWebSecurityManager.setSubjectDAO(subjectDAO);
+//        // 设置自定义Cache缓存
+//        defaultWebSecurityManager.setCacheManager(new CustomCacheManager());
+//        return defaultWebSecurityManager;
+//    }
+    
+    /**
+     * 下面的代码是添加注解支持
+     */
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        // 强制使用cglib，防止重复代理和可能引起代理出错的问题，https://zhuanlan.zhihu.com/p/29161098
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
+
+    @Bean
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+    
+    
+    
+    
+    
 
 }
 
