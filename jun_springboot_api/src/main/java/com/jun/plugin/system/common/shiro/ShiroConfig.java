@@ -84,7 +84,7 @@ public class ShiroConfig {
         //用来校验token
         filtersMap.put("token", new CustomAccessControlFilter());
         // JWT过滤      
-        // filtersMap.put("jwt", new JwtFilter());
+//      filtersMap.put("jwt", new JwtFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
@@ -126,7 +126,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/**", "token,authc");
         
         // 所有请求通过我们自己的JWTFilter
-        filterChainDefinitionMap.put("/**", "jwt");
+//        filterChainDefinitionMap.put("/**", "jwt");
         shiroFilterFactoryBean.setLoginUrl("/login.html");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
