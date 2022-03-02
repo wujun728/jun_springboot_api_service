@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 @EnableConfigurationProperties(FileUploadProperties.class)
-public class ResourcesConfig implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
 	
   @Resource
   private FileUploadProperties fileUploadProperties;

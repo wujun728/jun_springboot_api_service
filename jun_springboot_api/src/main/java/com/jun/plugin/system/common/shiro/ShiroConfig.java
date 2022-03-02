@@ -88,6 +88,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filtersMap);
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // 配置不会被拦截的链接 顺序判断
+        filterChainDefinitionMap.put("/WebMvcConfigurer", "anon");
         filterChainDefinitionMap.put("/*.html", "anon");
         filterChainDefinitionMap.put("/sys/user/token", "anon");
         filterChainDefinitionMap.put("/sys/user/login", "anon");

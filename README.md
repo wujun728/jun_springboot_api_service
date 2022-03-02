@@ -1,20 +1,20 @@
 # jun_api_service
 
 ## 简介
-JUN SpringBoot API Service 是一个基于Spring Boot & MyBatis的API接口服务项目，
-项目使用Spring boot2.0+shiro+redis+mybatis架构，可以适用 前后端分离项目后台或者APP接口后台，使用了Shiro-Redis实现分布式Session共享
+JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Redis  的API接口服务项目，
+项目使用Spring boot2.0+shiro+redis+mybatisplus+JWT 架构，可以适用 前后端分离项目后台或者APP接口后台，使用了Shiro-Redis-JWT实现分布式Session共享
 基于当前项目，可快速构建中小型API、RESTful API接口，项目含有代码生成器，单表标接口一键生成
 该项目已经有过多个真实项目的实践，稳定、简单、快速，让码农脱离重复劳动，专注于业务代码的编写，减少加班。
 
 ###
 - Swagger地址：http://localhost:8080/swagger-ui.html
 - 登录地址：localhost:8080/api/user/login?username=admin&password=admin
-- 接口地址：localhost:8080/api/public/company/list
+- 接口地址：http://127.0.0.1:8080/public/json
 - session超时，30分；
 
 ### 使用框架如下：
 * 核心框架：spring boot 2.1.6
-* 持久层框架：mybatis
+* 持久层框架：mybatisplus
 * 数据库连接池：alibaba druid
 * 安全框架：apache shiro
 * 缓存框架：redis(自定义 RedisTemplate 序列化)

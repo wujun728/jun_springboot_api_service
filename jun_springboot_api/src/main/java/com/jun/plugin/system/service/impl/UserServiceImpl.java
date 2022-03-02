@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jun.plugin.system.common.exception.BusinessException;
 import com.jun.plugin.system.common.exception.code.BaseResponseCode;
+import com.jun.plugin.system.common.util.JwtUtil;
 import com.jun.plugin.system.common.utils.PasswordUtils;
 import com.jun.plugin.system.entity.SysDept;
 import com.jun.plugin.system.entity.SysRole;
@@ -97,7 +98,7 @@ public class UserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impleme
         }
         String token = httpSessionService.createTokenAndUser(sysUser, roleService.getRoleNames(sysUser.getId()), permissionService.getPermissionsByUserId(sysUser.getId()));
         respVO.setAccessToken(token);
-
+        respVO.setJwtToken(JwtUtil.sign(vo.getUsername()));
         return respVO;
     }
 

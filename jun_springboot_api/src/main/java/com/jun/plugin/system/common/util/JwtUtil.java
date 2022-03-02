@@ -15,6 +15,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.jun.plugin.system.common.exception.BusinessException;
 import com.jun.plugin.system.common.util.common.Base64ConvertUtil;
+import com.jun.plugin.system.common.utils.Constant;
 
 /**
  * JAVA-JWT工具类
@@ -59,7 +60,7 @@ public class JwtUtil {
     public static boolean verify(String token) {
         try {
             // 帐号加JWT私钥解密
-            String secret = getClaim(token, "account") + Base64ConvertUtil.decode(encryptJWTKey);
+            String secret = getClaim(token, Constant.ACCOUNT) + Base64ConvertUtil.decode(encryptJWTKey);
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm).build();
             verifier.verify(token);
@@ -105,7 +106,7 @@ public class JwtUtil {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             // 附带account帐号信息
             return JWT.create()
-                    .withClaim("account", account)
+                    .withClaim(Constant.ACCOUNT, account)
                     .withClaim("currentTimeMillis", currentTimeMillis)
                     .withExpiresAt(date)
                     .sign(algorithm);
@@ -113,5 +114,30 @@ public class JwtUtil {
             logger.error("JWTToken加密出现UnsupportedEncodingException异常:{}", e.getMessage());
             throw new BusinessException("JWTToken加密出现UnsupportedEncodingException异常:" + e.getMessage());
         }
+    }
+    /**
+     * 生成签名
+     * @param account 帐号
+     * @return java.lang.String 返回加密的Token
+     * @author Wang926454
+     * @date 2018/8/31 9:07
+     */
+    public static String sign(String account) {
+    	try {
+    		// 帐号加JWT私钥加密
+    		String secret = account + Base64ConvertUtil.decode(encryptJWTKey);
+    		// 此处过期时间是以毫秒为单位，所以乘以1000
+    		Date date = new Date(System.currentTimeMillis() + Long.parseLong(accessTokenExpireTime) * 1000);
+    		Algorithm algorithm = Algorithm.HMAC256(secret);
+    		// 附带account帐号信息
+    		return JWT.create()
+    				.withClaim(Constant.ACCOUNT, account)
+    				.withClaim("currentTimeMillis", String.valueOf(System.currentTimeMillis()))
+    				.withExpiresAt(date)
+    				.sign(algorithm);
+    	} catch (UnsupportedEncodingException e) {
+    		logger.error("JWTToken加密出现UnsupportedEncodingException异常:{}", e.getMessage());
+    		throw new BusinessException("JWTToken加密出现UnsupportedEncodingException异常:" + e.getMessage());
+    	}
     }
 }
