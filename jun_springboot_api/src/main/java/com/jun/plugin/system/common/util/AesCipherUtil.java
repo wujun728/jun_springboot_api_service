@@ -3,6 +3,7 @@ package com.jun.plugin.system.common.util;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
 import java.security.SecureRandom;
 import java.security.Security;
 
@@ -58,7 +59,8 @@ public class AesCipherUtil {
      */
     public static String enCrypto(String str) {
         try {
-            Security.addProvider(new com.sun.crypto.provider.SunJCE());
+//            Security.addProvider(Provider.Service);
+//            Security.addProvider(new com.sun.crypto.provider.SunJCE());
             // 实例化支持AES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)
             // KeyGenerator 提供对称密钥生成器的功能，支持各种算法
             KeyGenerator keygen = KeyGenerator.getInstance("AES");
@@ -101,7 +103,7 @@ public class AesCipherUtil {
      */
     public static String deCrypto(String str) {
         try {
-            Security.addProvider(new com.sun.crypto.provider.SunJCE());
+//            Security.addProvider(new com.sun.crypto.provider.SunJCE());
             // 实例化支持AES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)
             // KeyGenerator 提供对称密钥生成器的功能，支持各种算法
             KeyGenerator keygen = KeyGenerator.getInstance("AES");
