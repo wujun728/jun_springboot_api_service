@@ -1,0 +1,118 @@
+var curData=[{
+        "name": "1月",
+        "value": 0.00,
+        "startDate": "2021-01-01",
+        "endDate": "2021-01-31"
+    }, {
+        "name": "2月",
+        "value": 0.00,
+        "startDate": "2021-02-01",
+        "endDate": "2021-02-28"
+    }, {
+        "name": "3月",
+        "value": 355300.00,
+        "startDate": "2021-03-01",
+        "endDate": "2021-03-31"
+    }, {
+        "name": "4月",
+        "value": -0.12,
+        "startDate": "2021-04-01",
+        "endDate": "2021-04-30"
+    }, {
+        "name": "5月",
+        "value": -100.00,
+        "startDate": "2021-05-01",
+        "endDate": "2021-05-31"
+    }, {
+        "name": "6月",
+        "value": 0.00,
+        "startDate": "2021-06-01",
+        "endDate": "2021-06-30"
+    }, {
+        "name": "7月",
+        "value": 0.00,
+        "startDate": "2021-07-01",
+        "endDate": "2021-07-31"
+    }, {
+        "name": "8月",
+        "value": 0.00,
+        "startDate": "2021-08-01",
+        "endDate": "2021-08-31"
+    }, {
+        "name": "9月",
+        "value": 143800.00,
+        "startDate": "2021-09-01",
+        "endDate": "2021-09-30"
+    }, {
+        "name": "10月",
+        "value": -78.50,
+        "startDate": "2021-10-01",
+        "endDate": "2021-10-31"
+    }, {
+        "name": "11月",
+        "value": 1946.39,
+        "startDate": "2021-11-01",
+        "endDate": "2021-11-30"
+    }, {
+        "name": "12月",
+        "value": 10.50,
+        "startDate": "2021-12-01",
+        "endDate": "2021-12-31"
+    }, {
+        "name": "12月",
+        "value": 10.50,
+        "startDate": "2021-12-01",
+        "endDate": "2021-12-31"
+    }]
+var rangeData=[{
+        "name": "1月",
+        "value": null
+    }, {
+        "name": "2月",
+        "value": 0.00
+    }, {
+        "name": "3月",
+        "value": 0.00
+    }, {
+        "name": "4月",
+        "value": 355300.00
+    }, {
+        "name": "5月",
+        "value": -0.12
+    }, {
+        "name": "6月",
+        "value": -100.00
+    }, {
+        "name": "7月",
+        "value": 0.00
+    }, {
+        "name": "8月",
+        "value": 0.00
+    }, {
+        "name": "9月",
+        "value": 0.00
+    }, {
+        "name": "10月",
+        "value": 143800.00
+    }, {
+        "name": "11月",
+        "value": -78.50
+    }, {
+        "name": "12月",
+        "value": 1946.39
+    }, {
+        "name": "12月",
+        "value": 1946.39
+    }]
+var sameData=[]
+var result = SELECT
+    a.name,
+    a.value cur,
+    b.value same,
+    c.value range,
+    round((((a.value - ifnull(b.value,0))::double / (is_null(b.value) || b.value == 0 ? 1 : b.value)::double)  * 100),2) sameRate,
+    round((((a.value - ifnull(c.value,0))::double / (is_null(c.value) || c.value == 0 ? 1 : c.value)::double)  * 100),2) rangeRate
+FROM curData a
+LEFT JOIN rangeData c ON a.name = c.name
+LEFT JOIN sameData b ON a.name = b.name
+return result

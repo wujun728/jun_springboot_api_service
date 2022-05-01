@@ -1,0 +1,78 @@
+<html>
+<head>
+    <title>SQL文本列表</title>
+    <script src="/static/statics/libs/jquery-1.7.2.js"></script>
+    <link rel="stylesheet" href="/static/statics/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/statics/plugins/layui/css/layui.css" media="all">
+    <script src="/static/statics/plugins/layer/layer.js"></script>
+    <script src="/static/statics/plugins/layui/layui.js"></script>
+    <script src="/static/statics/plugins/ztree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="/static/statics/plugins/ztree/css/metroStyle/metroStyle.css">
+    <script src="/static/common/js/pageGrid1.js"></script>
+    <script src="/static/common/js/tplTool.js"></script>
+    <script src="/static/common/js/editGrid.js"></script>
+    <script src="/static/common/js/whole/cyLayer.js"></script>
+    <script src="/static/common/js/whole/common.js"></script>
+    <script src="/static/common/js/whole/utils.js"></script>
+    <script src="/static/common/js/whole/monitor.js"></script>
+    <link rel="stylesheet" href="/static/common/css/cyStyle.css">
+    <link rel="stylesheet" href="/static/common/css/cyType.css">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="title" id="title" placeholder="请输入标题" class="layui-input">
+        </div>
+        <label class="layui-form-label">sql内容:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="sqlText" id="sqlText" placeholder="请输入sql内容" class="layui-input">
+        </div>
+        <div class="layui-input-normal">
+            <button class="layui-btn search-btn" table-id="SqlTextList" lay-submit="" lay-filter="search">
+                <i class="fa fa-search">&nbsp;</i>查询
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary"><i class="fa fa-refresh">&nbsp;</i>重置</button>
+        </div>
+    </div>
+</form>
+<div class="layui-form nowrap">
+   <table class="layui-table" id="SqlTextList" cyType="pageGrid"
+           cyProps="url:'/dbSource/getSqlTextList',checkbox:'false',pageColor:'#2991d9'">
+        <thead>
+        <tr>
+            <th width="5%" param="{name:'id',isPrimary:'true',hide:'false'}">id</th>
+            <th width="10%" param="{name:'title'}">标题</th>
+            <th width="10%"  param="{name:'sqlCreateUser'}">创建人</th>
+            <th width="10%"  param="{name:'sqlCreateDate'}">创建时间</th>
+            <th width="10%" param="{operate:'true',buttons:'Render.viewSql,Render.delete'}">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    var Render = {
+        delete:function(rowdata){
+            var btn=' <button  onclick="deleteOne(\''+"删除SQL语句"+'\', \''+"/dbSource/sqlController/delsqlText/"+rowdata.id+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-sm  layui-btn-danger ">删除</button>';
+            return btn;
+        },
+        viewSql:function(rowdata){
+            var str = rowdata.sqlText;
+            str=str.replace(/\'/g,"’");
+            str=str.replace(/\"/g,"”");
+            str=str.replace(/</g,"《").replace(/>/g,"》");
+            str=str.replace(/\r/g,"&nbsp;");
+            str=str.replace(/\n/g,"<br />");
+            str=str.trim();
+            var btn=' <button  onclick="openViewText(\''+"查看SQL"+'\',\''+str+'\')" class="layui-btn layui-btn-sm  layui-btn-normal ">SQL</button>';
+            return btn;
+        },
+    };
+    layui.use(['form'], function(){
+        var form = layui.form;
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+return current_timestamp() / 1000 / 200

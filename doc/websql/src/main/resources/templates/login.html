@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WEBSQL管理系统</title>
+    <link rel="stylesheet" href="/static/statics/plugins/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/static/statics/css/login.css" media="all" />
+</head>
+<body>
+<video class="video-player" preload="auto" autoplay="autoplay" loop="loop" data-height="1080"
+        data-width="1920" height="1080" width="1920" muted="true">
+    <source src="/statics/login/login1.mp4" muted="true" type="video/mp4">
+</video>
+
+<div class="video_mask"></div>
+<div class="login">
+    <h1>WEBSQL</h1>
+    <form class="layui-form"><div class="layui-form-item">
+            <input class="layui-input" name="userName" id="userName" placeholder="用户名" value="" lay-verify="required"  lay-verType="tips" type="text" autocomplete="off">
+        </div>
+        <div class="layui-form-item">
+            <input class="layui-input" name="password" id="password" placeholder="密码" value=""  lay-verify="required"   lay-verType="tips"  type="password" autocomplete="off">
+        </div><div class="layui-form-item form_code">
+            <input class="layui-input" style="width: 140px;" name="captcha" id="captchaCode" placeholder="验证码" lay-verify="required"   lay-verType="tips"  type="text" autocomplete="off">
+            <div class="code"><img id="captcha"  src="/login/captcha" width="116" height="36" onclick="refreshCode(this)"></div>
+        </div>
+        <button class="layui-btn login_btn"  id="loginBtn">登录</button>
+    </form>
+</div>
+<script src="/static/statics/libs/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/static/statics/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="/static/common/js/whole/cyLayer.js"></script>
+
+</body>
+<script>
+    layui.use(['form','table','element'], function(){
+        $("#loginBtn").click(function () {
+            var userName = $("#userName").val();
+            var password = $("#password").val();
+            var captcha = $("#captchaCode").val();
+            if(userName ==null || userName==""){
+                Msg.error("账号不能为空!");
+                return false;
+            }
+            if(password ==null || password==""){
+                Msg.error("密码不能为空!");
+                return false;
+            }
+            if(captcha ==null || captcha==""){
+                Msg.error("验证码不能为空!");
+                return false;
+            }
+            var params = {'userName':userName,'password':password,'captcha':captcha};
+            $.ajax({
+                type:'POST',
+                url:"/login",
+                data:params,
+                cache:false,
+                async:true,
+                dataType:"json",
+                success:function(data){
+                    if(data.logins=="2"){
+                        Msg.error(data.msg);
+                    }else{
+                        Msg.success("登录成功！");
+                        location.href="/index";
+                    }
+                },
+                error:function (data) {
+                    Msg.error("登录异常!");
+                }
+            });
+            return false;
+        });
+
+    });
+    function refreshCode(){
+        var captcha = document.getElementById("captcha");
+        captcha.src = "/login/captcha?t=" + new Date().getTime();
+    }
+</script>
+</html>

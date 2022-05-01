@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: ${dbapi.cluster.gateway.name}
+  cloud:
+    gateway:
+      routes:
+        - id: api_route
+          uri: lb://${dbapi.cluster.api.name}
+          predicates:
+            - Path=/${dbapi.api.context}/**
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: '*'
+            allowed-methods: '*'
+            allowed-headers: "*"
+logging:
+  config: classpath:logback-gateway.xml
+
+#################################### please modify config below #####################################
+
+server:
+  port: 8525

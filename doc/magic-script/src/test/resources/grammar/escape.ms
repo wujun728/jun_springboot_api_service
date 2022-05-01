@@ -1,0 +1,14 @@
+System.out.print('\r\n');
+System.out.println('\\');
+System.out.println('\'');
+System.out.println('\"');
+System.out.println('\\\\');
+System.out.println('\\\\\"');
+System.out.println('\\\\\'');
+System.out.print("\r\n");
+System.out.println("\\");
+System.out.println("\'");
+System.out.println("\"");
+System.out.println("\\\\");
+System.out.println("\\\\\"");
+System.out.println("\\\\\'");

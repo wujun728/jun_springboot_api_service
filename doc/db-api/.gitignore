@@ -1,0 +1,6 @@
+**/target/
+**/logs/
+**/*.iml
+.idea/
+**/dist/
+dbapi-controller/src/main/resources/static/

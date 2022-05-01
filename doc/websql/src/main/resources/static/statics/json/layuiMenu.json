@@ -1,0 +1,139 @@
+{
+  "menuList": [
+    {
+      "children": null,
+      "icon": "fa fa-tasks",
+      "list": [
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "数据源列表",
+          "type": 1,
+          "url": "dbSource/sourceController/page"
+        }
+      ],
+      "name": "数据源管理",
+      "type": 0,
+      "url": null
+    },
+    {
+      "children": null,
+      "icon": "fa fa-bookmark-o",
+      "list": [
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "SQL窗口",
+          "type": 1,
+          "url": "dbSource/sqlExecute/sqlPage"
+        },
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "SQL列表",
+          "type": 1,
+          "url": "dbSource/sqlController/sqlTextPage"
+        }
+      ],
+      "name": "SQL管理",
+      "type": 0,
+      "url": null
+    },
+    {
+      "children": null,
+      "icon": "fa fa-database",
+      "list": [
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "新增作业任务",
+          "type": 1,
+          "url": "timing/addPage"
+        },
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "作业任务列表",
+          "type": 1,
+          "url": "timing/timList"
+        },
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "作业执行记录",
+          "type": 1,
+          "url": "timing/history"
+        }
+      ],
+      "name": "作业管理",
+      "type": 0,
+      "url": null
+    },
+    {
+      "children": null,
+      "icon": "fa fa-file-o",
+      "list": [
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "执行脚本记录",
+          "type": 1,
+          "url": "dbSource/log/logPage"
+        },
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "登录系统记录",
+          "type": 1,
+          "url": "/userlogPage"
+        }
+      ],
+      "name": "日志管理",
+      "type": 0,
+      "url": null
+    },
+    {
+      "children": null,
+      "icon": "fa fa-cog",
+      "name": "系统管理",
+      "type": 0,
+      "list": [
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "系统设置",
+          "type": 1,
+          "url": "/getSysSetUpPage"
+        },
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "数据库管理",
+          "type": 1,
+          "url": "/h2-console"
+        },
+        {
+          "children": null,
+          "icon": "",
+          "list": null,
+          "name": "连接池管理",
+          "type": 1,
+          "url": "/druid"
+        }
+      ],
+      "url": ""
+    }
+
+  ],
+  "code": 0
+}

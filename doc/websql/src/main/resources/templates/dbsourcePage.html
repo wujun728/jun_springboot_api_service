@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>数据源列表</title>
+    <script src="/static/statics/libs/jquery-1.7.2.js"></script>
+    <link rel="stylesheet" href="/static/statics/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/statics/plugins/layui/css/layui.css" media="all">
+    <script src="/static/statics/plugins/layer/layer.js"></script>
+    <script src="/static/statics/plugins/layui/layui.js"></script>
+    <script src="/static/statics/plugins/ztree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="/static/statics/plugins/ztree/css/metroStyle/metroStyle.css">
+    <script src="/static/common/js/pageGrid1.js"></script>
+    <script src="/static/common/js/tplTool.js"></script>
+    <script src="/static/common/js/editGrid.js"></script>
+    <script src="/static/common/js/whole/cyLayer.js"></script>
+    <script src="/static/common/js/whole/common.js"></script>
+    <script src="/static/common/js/whole/utils.js"></script>
+    <script src="/static/common/js/whole/monitor.js"></script>
+    <link rel="stylesheet" href="/static/common/css/cyStyle.css">
+    <link rel="stylesheet" href="/static/common/css/cyType.css">
+</head>
+<body>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">连接名:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dbname" id="dbname" placeholder="请输入连接名" class="layui-input">
+        </div>
+        <label class="layui-form-label">登录账号:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dbaccount" id="dbaccount" placeholder="请输入登录账号" class="layui-input">
+        </div>
+        <label class="layui-form-label">连接地址:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="dburl" id="dburl" placeholder="请输入连接地址" class="layui-input">
+        </div>
+        <div class="layui-input-normal">
+            <button class="layui-btn search-btn" table-id="pageGrid" lay-submit="" lay-filter="search">
+                <i class="fa fa-search"> </i>查询
+            </button>
+            <button type="reset" class="layui-btn layui-btn-primary"><i class="fa fa-refresh">&nbsp;</i>重置</button>
+        </div>
+    </div>
+</form>
+<div class="layui-btn-group">
+    <button class="layui-btn" onclick="Page.open('添加数据源','dbSource/sourceController/addSourcePage')">
+        <i class="fa fa-plus">&nbsp;</i>增加
+    </button>
+</div>
+<div class="layui-form nowrap">
+   <table class="layui-table" id="pageGrid" cyType="pageGrid"  lay-filter="pageGrid" table-id="pageGrid"
+           cyProps="url:'/dbSource/dbsourceList',checkbox:'false',pageColor:'#2991d9'">
+        <thead>
+        <tr>
+            <th width="5%" param="{name:'id',isPrimary:'true',hide:'false'}">id</th>
+            <th width="10%" param="{name:'dbname'}">连接名</th>
+            <th  param="{name:'dburl',width:'20px'}">连接地址</th>
+            <th width="5%" param="{name:'dbaccount'}">登录账号</th>
+            <th width="5%" param="{name:'dbpass'}">登录密码</th>
+            <th width="5%" param="{name:'driverClass'}">驱动地址</th>
+            <th width="5%" param="{name:'dbtestUrl'}">测试连接</th>
+            <th width="5%" param="{name:'dbstate',codeName:'state'}">状态</th>
+            <th width="10%" param="{operate:'true',buttons:'Render.delete'}">
+                操作
+            </th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    var Render = {
+        delete:function(rowdata,renderData){
+            var btn=' <button  onclick="deleteOne(\''+"删除数据源"+'\', \''+"/dbSource/sourceController/delDbSource/"+rowdata.id+'\',\''+rowdata.id+'\')" class="layui-btn layui-btn-mini layui-btn-danger ">删除</button>';
+            return btn;
+        }
+    };
+    layui.use(['form','table'], function(){
+        var form = layui.form;
+    });
+    </script>
+</body>
+</html>

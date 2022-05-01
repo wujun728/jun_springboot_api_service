@@ -1,0 +1,86 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>基本资料</title>
+    <script src="/static/statics/libs/jquery-1.7.2.js"></script>
+    <link rel="stylesheet" href="/static/statics/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/statics/plugins/layui/css/layui.css" media="all">
+    <script src="/static/statics/plugins/layer/layer.js"></script>
+    <script src="/static/statics/plugins/layui/layui.js"></script>
+    <script src="/static/statics/plugins/ztree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="/static/statics/plugins/ztree/css/metroStyle/metroStyle.css">
+    <link rel="stylesheet" href="/static/common/css/cyStyle.css">
+    <link rel="stylesheet" href="/static/common/css/cyType.css">
+    <script src="/static/common/js/whole/cyLayer.js"></script>
+    <script src="/static/common/js/whole/common.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+
+<div class="menus" style="margin:5px;">
+    <form class="layui-form layui-form-pane" id="addFrom">
+        <div class="layui-form-item">
+            <label class="layui-form-label" pane>登录账号</label>
+            <div class="layui-input-inline" style="width: 500px;">
+                <input type="hidden" th:value="${users.userId}" name="userId"/>
+                <input th:value="${users.userName}" readonly type="text" name="userName" required  lay-verify="required" placeholder="请输入登录账号" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" pane>用户昵称</label>
+            <div class="layui-input-inline" style="width: 500px;">
+                <input th:value="${users.name}"  type="text" name="name" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" pane>用户邮箱</label>
+            <div class="layui-input-inline" style="width: 500px;">
+                <input th:value="${users.email}"  type="text" name="email" required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" pane>新密码</label>
+            <div class="layui-input-inline" style="width: 500px;">
+                <input type="text" name="password" required  lay-verify="required" placeholder="如需修改密码请输入新密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" id="submitData" lay-submit >立即保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form','table','element'], function(){
+         form = layui.form;
+         table = layui.table;
+         element = layui.element;
+        $("#submitData").click(function () {
+            var indexLod =  Loading.open(2,true);
+            var url = "/userController/updateUsers";
+            var params = $('#addFrom').serialize();
+            $.ajax({
+                type:'POST',
+                url:url,
+                data:params,
+                dataType:"json",
+                success:function(data){
+                    Loading.close(indexLod);
+                    if(data.code==1){
+                        layer.msg("修改成功,请重新登录！", {icon: 1});
+                    }else{
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                },
+                error:function (data) {
+                    Loading.close(indexLod);
+                    Msg.error(data.responseText);
+                }
+            });
+            return false;
+        });
+    });
+    </script>
+</body>
+</html>
