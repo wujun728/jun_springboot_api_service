@@ -1,4 +1,4 @@
-# jun_api_service
+# jun_springboot_api_service
 
 ## 简介
 JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Redis  的API接口服务项目，
