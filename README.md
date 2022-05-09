@@ -35,7 +35,6 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 - swagger接口清单
 ![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/3.png) 
 
-
  ### 特征&提供
 - 最佳实践的项目结构、配置文件、精简的POM
 - 统一响应结果封装及生成工具
@@ -51,6 +50,7 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 - 其中Controller模板默认提供POST和RESTful两套，根据需求在```CodeGenerator.genController(tableName)```方法中自己选择，默认使用POST模板。
 - 代码模板可根据实际项目的需求来扩展，由于每个公司业务都不太一样，所以只提供了一些比较基础、通用的模板，**主要是提供一个思路**来减少重复代码的编写，我在实际项目的使用中，其实根据公司业务的抽象编写了大量的模板。另外，使用模板也有助于保持团队代码风格的统一
  
+
 ### 快速开始
 1. 下载项目
 2. 对```test```包内的代码生成器```CodeGenerator```进行配置，主要是JDBC，因为要根据表名来生成代码
