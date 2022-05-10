@@ -35,6 +35,7 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 - swagger接口清单
 ![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/3.png) 
 
+
  ### 特征&提供
 - 最佳实践的项目结构、配置文件、精简的POM
 - 统一响应结果封装及生成工具
@@ -59,6 +60,7 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 4. 根据业务在基础代码上进行扩展
 5. 对开发环境配置文件```application-dev.properties```进行配置，启动项目！
  
+
 ### 开发建议
 - 表名，建议使用小写，多个单词使用下划线拼接
 - Model内成员变量建议与表字段数量对应，如需扩展成员变量（比如连表查询）建议创建DTO，否则需在扩展的成员变量上加```@Transient```注解，详情见[通用Mapper插件文档说明](https://mapperhelper.github.io/docs/2.use/)
