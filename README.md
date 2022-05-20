@@ -11,7 +11,7 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 - Swagger地址：http://localhost:8080/swagger-ui.html
 - 登录地址：localhost:8080/api/user/login?username=admin&password=admin
 - 接口地址：http://127.0.0.1:8080/public/json
-- session超时，30分；
+- session超时，30分；111
 
 ### 使用框架如下：
 * 核心框架：spring boot 2.1.6
@@ -68,4 +68,4 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 - 需要工具类的话建议先从```apache-commons-*```和```guava```中找，实在没有再造轮子或引入类库，尽量精简项目
 - 开发规范建议遵循阿里巴巴Java开发手册（[最新版下载](https://github.com/alibaba/p3c))
 - 建议在公司内部使用[SpringFox-Swagger2](https://github.com/springfox/springfox) 、[RAP](https://github.com/thx/RAP)等开源项目来编写、管理API文档
-
+111
