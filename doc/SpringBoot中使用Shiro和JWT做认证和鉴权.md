@@ -35,7 +35,6 @@
 这里使用了shiro的web starter。jwt是用的auth0的工具包，其实自己实现也比较简单，我们这里就不自己重新造轮子了。
 
 
-
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
