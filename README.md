@@ -7,7 +7,6 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 该项目已经有过多个真实项目的实践，稳定、简单、快速，让码农脱离重复劳动，专注于业务代码的编写，减少加班。
 
 ###
-
 - Swagger地址：http://localhost:8080/swagger-ui.html
 - 登录地址：localhost:8080/api/user/login?username=admin&password=admin
 - 接口地址：http://127.0.0.1:8080/public/json
@@ -34,7 +33,6 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 ![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/2.png) 
 - swagger接口清单
 ![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/3.png) 
-
 
  ### 特征&提供
 - 最佳实践的项目结构、配置文件、精简的POM
