@@ -59,7 +59,6 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 4. 根据业务在基础代码上进行扩展
 5. 对开发环境配置文件```application-dev.properties```进行配置，启动项目！
  
-
 ### 开发建议
 - 表名，建议使用小写，多个单词使用下划线拼接
 - Model内成员变量建议与表字段数量对应，如需扩展成员变量（比如连表查询）建议创建DTO，否则需在扩展的成员变量上加```@Transient```注解，详情见[通用Mapper插件文档说明](https://mapperhelper.github.io/docs/2.use/)
