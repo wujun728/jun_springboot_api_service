@@ -1,0 +1,37 @@
+<%! <sql id="queryInfoById"> %>
+select * from micro_test where 1=1 
+<% if(paramArray[0].get("id")!=null){ %>		
+	and id = #{paramArray[0].id} 			
+<% 	} %>
+<%! </sql> %>
+
+<%! <sql id="queryInfosByPage"> %>
+select * from micro_test 
+<%! </sql> %>
+
+<%! <sql id="insertInfo"> %>
+insert into micro_test(
+<% if(paramArray[0].get("id")!=null){ %>
+id,
+<% 	} %>
+meta_key) values( 
+<% if(paramArray[0].get("id")!=null){ %>		
+	#{paramArray[0].id} ,			
+<% 	} %>
+
+#{paramArray[0].get("meta_key")}	
+	)
+<%! </sql> %>
+ 
+<%! <sql id="updateInfo"> %>
+update micro_test set  
+			
+<% if(paramArray[0].get("meta_key")!=null){%>
+,meta_key=#{paramArray[0].get("meta_key")}	
+<% } %>	
+<% if(paramArray[0].get("meta_name")!=null){%>
+,meta_name=#{paramArray[0].get("meta_name")}	
+<% } %>	
+
+where id=#{paramArray[0].get("id")}
+<%! </sql> %>

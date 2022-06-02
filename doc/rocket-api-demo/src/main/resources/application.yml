@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: rocket-api
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dataway2?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: dataway2
+    password: '$1$9dfGldi8%^'
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    mongodb:
+      host: 127.0.0.1
+      database: dataway2
+      username: dataway2
+      password: '$1$9dfGldi8%^'
+      port: 27017
+  thymeleaf:
+    cache: false
+    check-template: true
+    check-template-location: true
+    enabled: true
+    encoding: utf-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+  resources:
+    cache:
+      period: 0h
+  rocket-api:
+    service-title: 数据开放平台
+    sql-model:
+      find-one-suffix: /first
+      pager-suffix: /page
+      count-suffix: /count
+
+logging:
+  level:
+    com.github.alenfive.rocketapi: debug
+
+server:
+  port: 8081
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+

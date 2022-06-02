@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {
+      "name": "wauil.groovy.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "Whether to enable the Groovy Script Endpoint."
+    }
+  ]
+}

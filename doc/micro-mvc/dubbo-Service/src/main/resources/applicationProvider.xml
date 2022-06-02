@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"  
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd  
+        ">  
+  
+    <!-- Application name -->  
+    <dubbo:application name="hello-world-app" />  
+  
+    <!-- registry address, used for service to register itself -->  
+    <dubbo:registry address="zookeeper://10.9.20.202:2181" />  
+  
+    <!-- expose this service through dubbo protocol, through port 20880 -->  
+    <!--  
+    <dubbo:protocol name="dubbo" port="20880" />  
+      
+    <dubbo:protocol name="dubbo" port="9090" server="netty"  
+        client="netty" codec="dubbo" serialization="hessian2" charset="UTF-8"  
+        threadpool="fixed" threads="100" queues="0" iothreads="9" buffer="8192"  
+        accepts="1000" payload="8388608" />  
+        -->  
+    <!-- Service interface   Concurrent Control  -->  
+    <dubbo:service interface="com.demo.dubbo.service.IProcessData"  
+        ref="processDataImpl" executes="10" />      
+ 
+  
+    <!-- Default Protocol -->  
+    <!--  
+    <dubbo:protocol server="netty" />  
+    -->  
+  
+    <!-- designate implementation -->  
+    <!-- <bean id="processDataImpl" class="com.demo.dubbo.service.impl.ProcessDataImpl" />  --> 
+  
+  	<bean class="com.nh.micro.service.GroovyBeanScannerConfigurer">
+		<property name="scanPath" value="com.demo.dubbo.service"></property>
+	</bean>
+
+	<bean id="microInjectSpringPlugin" class="com.nh.micro.rule.engine.context.MicroInjectSpringPlugin"
+		lazy-init="false"></bean>	
+ 	<bean id="groovyLoadUtil" class="com.nh.micro.rule.engine.core.GroovyLoadUtil"
+		lazy-init="false">
+		<property name="pluginList">
+			<list>
+				<ref bean="microInjectSpringPlugin" />
+			</list>
+		</property>
+	</bean> 
+
+
+	<!-- 配置微服务全局变量（非必须配置） -->
+ 	<bean class="com.nh.micro.rule.engine.context.MicroContextHolder"
+		lazy-init="false">
+		<property name="contextMap">
+			<map>
+			</map>
+		</property>
+	</bean> 
+
+	<!-- 配置微服务运行时插件（非必须配置） -->
+ 	<bean class="com.nh.micro.rule.engine.core.GroovyAopChain"
+		init-method="init">
+		<property name="handlerList">
+			<list>
+			</list>
+		</property>
+	</bean> 
+
+
+	<!-- 启动时加载groovy -->
+
+ 	<bean id="groovyInitUtil" class="com.nh.micro.rule.engine.core.GroovyInitUtil"
+		init-method="initGroovyAndThread" lazy-init="false" >			
+		<property name="fileList">
+			<list>
+				<bean class="com.nh.micro.rule.engine.core.GFileBean">
+					<property name="ruleStamp" value="true"></property>
+					<property name="jarFileFlag" value="true"></property>
+					<property name="dirFlag" value="true"></property>
+					<property name="rulePath" value="/groovy/"></property>
+				</bean>
+		
+			</list>
+		</property>
+	</bean> 	
+	
+</beans>    

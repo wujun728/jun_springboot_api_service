@@ -1,0 +1,2 @@
+${AnsiColor.BRIGHT_YELLOW}
+一个Demo

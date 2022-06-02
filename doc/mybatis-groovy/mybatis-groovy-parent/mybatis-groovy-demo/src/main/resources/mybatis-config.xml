@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"/>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING" />
+    </settings>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--
+    Registering a Mapper
+    If the UserMapper has a corresponding MyBatis XML mapper file in the same classpath location as the mapper interface,
+    it will be parsed automatically by the MapperFactoryBean.
+    There is no need to specify the mapper in a MyBatis configuration file
+    unless the mapper XML files are in a different classpath location.
+    See the SqlSessionFactoryBean's configLocation property for more information.
+    Reference: http://www.mybatis.org/spring/mappers.html
+     -->
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+</configuration>

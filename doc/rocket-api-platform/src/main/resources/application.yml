@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: rocket-api-platform
+  jackson:
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    format:
+      dateTime: yyyy-MM-dd HH:mm:ss
+  resources:
+    cache:
+      period: 1h
+  rocket-api:
+    config-enabled: true
+  datasource:
+
+    url: jdbc:mysql://172.17.17.205:3306/rocket-api?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+#    url: jdbc:sqlserver://172.17.17.203:1433;DatabaseName=master
+#    username: sa
+#    password: 'dERCkgRUGCygEGg9'
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+#    url: jdbc:postgresql://172.17.17.205:5432/postgres
+#    username: postgres
+#    password: 123456
+#    driver-class-name: org.postgresql.Driver
+
+
+
+
+
+
+
+logging:
+  level:
+    com.github.alenfive.rocketapi: debug
+
+server:
+  compression:
+    enabled: true

@@ -1,0 +1,19 @@
+### springboot接口动态执行groovy脚本
+
+> 展示如何通过动态groovy脚本直接调用spring context中注册的bean的方法，方便项目测试，但正式项目中请对脚本运行接口做好权限控制
+
+1. 打包：项目根目录运行: mvn clean install ,在target目录下生产可执行jar包：groovy-script-example-1.0.0.jar
+2. 运行: 以jar包所在目录运行为例： java -jar groovy-script-example-1.0.0.jar, 默认使用8080端口(可自行修改springboot配置文件定义端口号)
+3. 脚本执行：
+    + url: [http://${ip}:8080/groovy/script/execute](http://localhost:8080/groovy/script/execute)
+    + method: post
+    + bodytype: Text
+    + body: groovy脚本
+
+4. 示例groovy脚本：
+
+        import com.caojiulu.groovy.script.domain.Privilege;
+	String u =  "Hello " + entity.getUsername() + "."+ Privilege.aa
+	Random r = new Random();
+	u = u +r.nextInt();
+	u;

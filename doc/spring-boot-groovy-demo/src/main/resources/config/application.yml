@@ -1,0 +1,23 @@
+spring:
+    application:
+        name: groovy-demo-server
+    devtools:
+        restart:
+            enabled: true
+        livereload:
+            enabled: false # we use gulp + BrowserSync for livereload
+    jackson:
+        serialization.indent_output: true
+    cloud:
+      gateway:
+        discovery:
+          locator:
+            enabled: true
+server:
+    port: 9000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

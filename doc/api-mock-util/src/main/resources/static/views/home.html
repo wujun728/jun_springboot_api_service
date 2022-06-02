@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Api Mock 工具</title>
+    <link rel="stylesheet" href="../lib/layui/css/layui.css" media="all"/>
+    <script src="../lib/jquery.js"></script>
+    <!--前端使用的layui-->
+    <script src="../lib/layui/layui.js"></script>
+    <style>
+        .center{
+            text-align: center;
+            margin: auto;
+        }
+
+        .form_center{
+            text-align: center;
+            margin: auto;
+            padding: 10px 10px 10px 10px;
+        }
+
+        .layui-footer{position:fixed;left:0;right:0;bottom:0;height:44px;line-height:44px;padding:0 15px;background-color:#eee;text-align: center;}
+    </style>
+</head>
+<body>
+<div class="center">
+    <h1>Api Mock 工具</h1>
+    <h6>v1.02</h6>
+</div>
+<div class="form_center">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">接口序号:</label>
+            <div class="layui-input-block">
+                <select name="index" lay-verify="required" lay-filter="selectIndex">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">api:</label>
+            <div class="layui-input-block">
+                <input id="api" type="text" name="api" required  lay-verify="required" placeholder="请输入调用接口,例如:/test.do" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">请求方式:</label>
+            <div class="layui-input-block">
+                <select name="requestMethod" lay-verify="required" lay-filter="selectRequestMethod">
+                    <option value=""></option>
+                    <option value="get">Get</option>
+                    <option value="post">Post</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">返回报文:</label>
+            <div class="layui-input-block">
+                <textarea id="msg" name="msg" placeholder="请输入返回报文" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="registerForm">注册</button>
+                <button class="layui-btn" lay-submit lay-filter="unregisterForm">注销</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="layui-footer">
+    <p>copyright @2017-2018 gameloft9 　　
+        <a href="http://blog.csdn.net/gameloft9" class="layui-btn layui-btn-danger layui-btn-small">博客地址</a>
+    </p>
+</div>
+<script>
+    layui.use(['layer', 'form'], function(){
+        var layer = layui.layer
+            ,form = layui.form;
+
+        var request = {
+            api:"",
+            index:"",
+            requestMethod:"",
+            msg:""
+        };
+
+        //监听提交
+        form.on('submit(registerForm)', function(data){
+            request.api = $("#api").val();
+            request.msg = $("#msg").val();
+            console.log("请求参数:");
+            console.log(request);
+
+            $.ajax({
+                url: "/registerApi.do",
+                type: "POST",
+                data: request,
+                success: function (data) {
+                    console.log(data);
+                    if(data.code === '0000'){
+                        layer.msg("注册成功");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+
+            return false;
+        });
+
+        form.on('submit(unregisterForm)', function(data){
+            request.api = $("#api").val();
+            request.msg = $("#msg").val();
+            console.log("请求参数:");
+            console.log(request);
+
+            $.ajax({
+                url: "/unregisterApi.do",
+                type: "POST",
+                data: request,
+                success: function (data) {
+                    console.log(data);
+                    if(data.code === '0000'){
+                        layer.msg("注销成功");
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+
+            return false;
+        });
+
+        /**
+         * 监控select选择
+         * */
+        form.on('select(selectIndex)', function(data){
+            request.index = data.value;
+
+            $.ajax({
+                url: "/getApiInfoByIndex.do",
+                type: "POST",
+                data: {"index":request.index},
+                success: function (data) {
+                    console.log(data);
+                    if(data.code === '0000'){
+                        if(!$.isEmptyObject(data.data)){
+                            var apiInfo = data.data;
+                            layer.open({
+                                title: '警告'
+                                ,content: '该接口序号已被占用，请先注销。api:'+apiInfo.api+"，requestMethod:"+apiInfo.requestMethod
+                            });
+                        }
+                    }else{
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+        });
+
+        form.on('select(selectRequestMethod)', function(data){
+            request.requestMethod = data.value;
+        });
+    });
+
+</script>
+</body>
+</html>
