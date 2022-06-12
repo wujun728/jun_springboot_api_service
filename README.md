@@ -1,7 +1,7 @@
 # jun_springboot_api_service 
 
 ## 简介
-JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Redis  的API接口服务项目，
+JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Redis & Groovy脚本 的API接口服务项目，
 项目使用Spring boot2.0+shiro+redis+mybatisplus+JWT 架构，可以适用 前后端分离项目后台或者APP接口后台，使用了Shiro-Redis-JWT实现分布式Session共享
 基于当前项目，可快速构建中小型API、RESTful API接口，项目含有代码生成器，单表标接口一键生成
 该项目已经有过多个真实项目的实践，稳定、简单、快速，让码农脱离重复劳动，专注于业务代码的编写，减少加班。
