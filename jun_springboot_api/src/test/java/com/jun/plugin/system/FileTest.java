@@ -11,10 +11,9 @@ import com.google.common.collect.Lists;
 public class FileTest {
 
 	public static void main(String[] args) throws IOException {
-		String filePath = "D:/hj.txt";
+		String filePath = "D:/m.txt";
 		List<String> lines = FileUtils.readLines(new File(filePath));
 		List<String> linesNew = Lists.newArrayList();
-//		System.err.println(lines.size());
 		for(int i = 0; i < lines.size(); i ++) {
 			String str = lines.get(i);
 			String oldStr = str;
