@@ -15,8 +15,8 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 
 ### 使用框架如下：
 * 核心框架：spring boot 2.1.6
-* 持久层框架：mybatisplus
-* 数据库连接池：alibaba druid
+* 持久层框架：mybatisplus 3.4
+* 数据库连接池：alibaba druid 2
 * 安全框架：apache shiro
 * 缓存框架：redis(自定义 RedisTemplate 序列化)
 * 日志框架：logback
