@@ -11,7 +11,7 @@ import com.google.common.collect.Lists;
 public class FileTest {
 
 	public static void main(String[] args) throws IOException {
-		String filePath = "D:\\Documents\\Desktop\\tg.txt";
+		String filePath = "D:\\Documents\\Desktop\\nai.txt";
 //		String filePath = "D:\\Documents\\Desktop\\hou.txt";
 //		String filePath = "D:\\Documents\\Desktop\\av1.txt";
 		List<String> lines = FileUtils.readLines(new File(filePath));
