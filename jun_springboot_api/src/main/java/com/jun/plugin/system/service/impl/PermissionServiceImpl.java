@@ -44,8 +44,8 @@ public class PermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysP
     private RolePermissionService rolePermissionService;
     @Resource
     private SysPermissionMapper sysPermissionMapper;
-//    @Resource
-//    private HttpSessionService httpSessionService;
+    @Resource
+    private HttpSessionService httpSessionService;
 
     /**
      * 根据用户查询拥有的权限
