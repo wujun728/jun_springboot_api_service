@@ -11,9 +11,8 @@ import com.google.common.collect.Lists;
 public class FileTest {
 
 	public static void main(String[] args) throws IOException {
-		String filePath = "‪D:\\Documents\\Desktop\\202207\\s_白.txt";
-//		String filePath = "D:\\Documents\\Desktop\\hou.txt";
-//		String filePath = "D:\\Documents\\Desktop\\av1.txt";
+//		String filePath = "‪D:\\202207\\s1.txt";
+		String filePath = "D:\\Documents\\Desktop\\u_橘子芒果酱N.txt";
 		List<String> lines = FileUtils.readLines(new File(filePath));
 		List<String> linesNew = Lists.newArrayList();
 		for(int i = 0; i < lines.size(); i ++) {
