@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -14,6 +15,7 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 import org.dom4j.QName;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -60,7 +62,7 @@ public class JsonXmlUtil {
     }
 	
 	
-	public static String jsonToXml(Object json, String rootKey) {
+	public static String jsonToXml(Object json, String rootKey) throws Exception {
 	    Document document = DocumentHelper.createDocument();
 	    //设置根节点和命名空间
 	    QName qName = new QName(rootKey);
@@ -70,12 +72,12 @@ public class JsonXmlUtil {
 
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    try {
-	        JSONObject jsonObject = new JsonParser().parse(objectMapper.writeValueAsString(json)).getAsJsonObject();
+	    	JsonElement jsonObject = new JsonParser().parse(objectMapper.writeValueAsString(json)).getAsJsonObject();
 	        toXml(jsonObject, document.getRootElement(), null);
 	        return document.asXML();
 	    } catch (Exception e) {
-	        log.error(e.getMessage());
-	        throw new AppException(e.getMessage());
+//	        log.error(e.getMessage());
+	        throw new Exception(e.getMessage());
 	    }
 	}
 

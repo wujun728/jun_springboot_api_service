@@ -105,6 +105,12 @@
     <artifactId>gson</artifactId>
     <version>2.9.0</version>
 </dependency>
+		<!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus -->
+<dependency>
+    <groupId>com.baomidou</groupId>
+    <artifactId>mybatis-plus</artifactId>
+    <version>3.5.2</version>
+</dependency>
 		
 		
 		
