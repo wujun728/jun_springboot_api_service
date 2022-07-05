@@ -26,6 +26,7 @@ JUN SpringBoot API Service 是一个基于Spring Boot & MyBatisPlus & JWT  &  Re
 * MyBatis PageHelper分页插件（[查看官方中文文档](https://pagehelper.github.io/)）
 * 其他略 
 
+
 ### 功能截图：
 - 一键生成表接口测试
 ![](https://github.com/wujun728/jun_api_service/blob/main/jun_springboot_api/doc/images/1.png) 
