@@ -12,7 +12,7 @@ public class FileTest {
 
 	public static void main(String[] args) throws IOException {
 //		String filePath = "‪D:\\202207\\s1.txt";
-		String filePath = "D:\\Documents\\Desktop\\u_孔雀240.txt";
+		String filePath = "D:\\Documents\\Desktop\\s_嫩.txt";
 		
 		List<String> lines = FileUtils.readLines(new File(filePath));
 		List<String> linesNew = Lists.newArrayList();
