@@ -14,14 +14,15 @@ import java.util.List;
 public class GroovyClassLoaderApp2 {
  
     private static GroovyClassLoader groovyClassLoader = null;
-    private static GroovyClassLoader groovyClassLoader11 = null;
+//    private static GroovyClassLoader groovyClassLoader11 = null;
  
     public static void initGroovyClassLoader() {
         CompilerConfiguration config = new CompilerConfiguration();
         config.setSourceEncoding("UTF-8");
         // 设置该GroovyClassLoader的父ClassLoader为当前线程的加载器(默认)
-        groovyClassLoader = new GroovyClassLoader(Thread.currentThread().getContextClassLoader(), config);
-        groovyClassLoader11 = new GroovyClassLoader(Thread.currentThread().getContextClassLoader(), config);
+//        groovyClassLoader = new GroovyClassLoader(Thread.currentThread().getContextClassLoader(), config);
+//        groovyClassLoader11 = new GroovyClassLoader(Thread.currentThread().getContextClassLoader(), config);
+        GroovyAutoBuildClassUtils groovyClassLoader = new GroovyAutoBuildClassUtils();
     }
  
  
@@ -35,12 +36,13 @@ public class GroovyClassLoaderApp2 {
      * 通过文件路径加载groovy
      * @return
      */
-    private static boolean loadFile(){
+    @SuppressWarnings("unchecked")
+	private static boolean loadFile(){
         initGroovyClassLoader();
         try {
             List<String> result;
             // 获得TestGroovy加载后的class
-            Class<?> groovyClass11 = groovyClassLoader11.parseClass(" package com.jun.plugin.groovy;\r\n"
+            Class<?> groovyClass11 = groovyClassLoader.parseClass(" package com.jun.plugin.groovy;\r\n"
             		+ "\r\n"
             		+ "import java.io.Serializable;\r\n"
             		+ "\r\n"
@@ -97,6 +99,7 @@ public class GroovyClassLoaderApp2 {
         }
         return false;
     }
+    
     
     
     /**
