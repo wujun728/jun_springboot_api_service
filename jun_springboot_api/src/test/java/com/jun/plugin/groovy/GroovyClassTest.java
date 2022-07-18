@@ -58,8 +58,6 @@ public class GroovyClassTest {
 	} 
 	
 	
-	
-	
 	public static void Testmain(String[] args) throws NoSuchMethodException, IllegalAccessException, InstantiationException {
 		   //字符串转java
 		   //groovy提供了一种将字符串文本代码直接转换成Java Class对象的功能
