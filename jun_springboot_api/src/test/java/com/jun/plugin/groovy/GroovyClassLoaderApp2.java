@@ -2,6 +2,12 @@ package com.jun.plugin.groovy;
 
 import groovy.lang.GroovyClassLoader;
 import groovy.lang.GroovyObject;
+
+import org.apache.ibatis.reflection.DefaultReflectorFactory;
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
+import org.apache.ibatis.reflection.factory.ObjectFactory;
+import org.apache.ibatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import org.codehaus.groovy.control.CompilerConfiguration;
  
 import java.io.File;
@@ -13,7 +19,7 @@ import java.util.List;
  */
 public class GroovyClassLoaderApp2 {
  
-    private static GroovyClassLoader groovyClassLoader = null;
+//    private static GroovyClassLoader groovyClassLoader = null;
 //    private static GroovyClassLoader groovyClassLoader11 = null;
  
     public static void initGroovyClassLoader() {
@@ -22,7 +28,7 @@ public class GroovyClassLoaderApp2 {
         // 设置该GroovyClassLoader的父ClassLoader为当前线程的加载器(默认)
 //        groovyClassLoader = new GroovyClassLoader(Thread.currentThread().getContextClassLoader(), config);
 //        groovyClassLoader11 = new GroovyClassLoader(Thread.currentThread().getContextClassLoader(), config);
-        GroovyAutoBuildClassUtils groovyClassLoader = new GroovyAutoBuildClassUtils();
+        
     }
  
  
@@ -38,11 +44,12 @@ public class GroovyClassLoaderApp2 {
      */
     @SuppressWarnings("unchecked")
 	private static boolean loadFile(){
-        initGroovyClassLoader();
+//        initGroovyClassLoader();
+    	GroovyAutoBuildClassUtils groovyClassLoader = new GroovyAutoBuildClassUtils();
         try {
             List<String> result;
             // 获得TestGroovy加载后的class
-            Class<?> groovyClass11 = groovyClassLoader.parseClass(" package com.jun.plugin.groovy;\r\n"
+            Class<?> groovyClass11 = groovyClassLoader.buildClass("test2"," package com.jun.plugin.groovy;\r\n"
             		+ "\r\n"
             		+ "import java.io.Serializable;\r\n"
             		+ "\r\n"
@@ -59,7 +66,7 @@ public class GroovyClassLoaderApp2 {
             		+ "	}\r\n"
             		+ "}\r\n"
             		+ " ");
-            Class<?> groovyClass = groovyClassLoader.parseClass(" package com.jun.plugin.groovy;\r\n"
+            Class<?> groovyClass = groovyClassLoader.buildClass("test2"," package com.jun.plugin.groovy;\r\n"
             		+ "\r\n"
             		+ "import com.alibaba.fastjson.JSON\r\n"
             		+ "import com.alibaba.fastjson.TypeReference\r\n"
@@ -82,13 +89,15 @@ public class GroovyClassLoaderApp2 {
             		+ "		System.out.println(\"年龄是:\" + p.getMsg());\r\n"
             		+ "	}\r\n"
             		+ " \r\n"
-            		+ "} ","TestGroovy");
+            		+ "} ");
             // 获得TestGroovy的实例
             GroovyObject groovyObject = (GroovyObject) groovyClass.newInstance();
-            GroovyObject groovyObject11 = (GroovyObject) groovyClass11.newInstance();
+            GroovyObject param = (GroovyObject) groovyClass11.newInstance();
+            MetaObject obj = MetaObject.forObject(param,new DefaultObjectFactory(),new DefaultObjectWrapperFactory(), new DefaultReflectorFactory());
+            obj.setValue("msg", "66666666666");
             // 反射调用printArgs方法得到返回值
             //Object methodResult = groovyObject.invokeMethod("printArgs", new Object[] {"chy", "zjj", "xxx"});
-            Object methodResult = groovyObject.invokeMethod("sayHello", new Object[] {groovyObject11});
+            Object methodResult = groovyObject.invokeMethod("sayHello", new Object[] {param});
             if (methodResult != null) {
                 result =(List<String>) methodResult;
                 result.stream().forEach(System.out::println);
