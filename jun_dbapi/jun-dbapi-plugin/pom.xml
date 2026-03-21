@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.gitee.freakchicken.dbapi</groupId>
+    <artifactId>jun-dbapi-plugins</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <name>jun-dbapi-plugins</name>
+    <description>DBApi Plugin Collection</description>
+
+    <modules>
+        <module>advanced-tree-format-plugin</module>
+        <module>aes-param-decrypt-plugin</module>
+        <module>amis-global-transform-plugin</module>
+        <module>camel-rename-plugin</module>
+        <module>data-extract-plugin</module>
+        <module>date-format-plugin</module>
+        <module>dingtalk-alarm-plugin</module>
+        <module>email-alarm-plugin</module>
+        <module>encrypt-plugin</module>
+        <module>feishu-alarm-plugin</module>
+        <module>memory-cache-plugin</module>
+        <module>pagination-plugin</module>
+        <module>sign-plugin</module>
+        <module>single-value-extract-plugin</module>
+        <module>string-concat-plugin</module>
+        <module>tree-format-plugin</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <dbapi.plugin.version>2.3.1</dbapi.plugin.version>
+        <fastjson.version>1.2.62</fastjson.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.gitee.freakchicken.dbapi</groupId>
+                <artifactId>dbapi-plugin</artifactId>
+                <version>${dbapi.plugin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.8</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.gitee.freakchicken.dbapi</groupId>
+            <artifactId>dbapi-plugin</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>plugin.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.1.2</version>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>copy-dependencies</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                                <excludeScope>provided</excludeScope>
+                                <includeScope>runtime</includeScope>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -11,9 +11,7 @@ import com.gitee.freakchicken.dbapi.util.SqlEngineUtil;
 import io.github.wujun728.sql.SqlMeta;
 import com.gitee.freakchicken.dbapi.common.ResponseDto;
 import com.gitee.freakchicken.dbapi.common.ApiConfig;
-import com.gitee.freakchicken.dbapi.plugin.CachePlugin;
-import com.gitee.freakchicken.dbapi.plugin.TransformPlugin;
-import com.gitee.freakchicken.dbapi.plugin.PluginManager;
+import com.gitee.freakchicken.dbapi.plugin.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,9 +126,10 @@ public class ApiInterceptor implements HandlerInterceptor {
     }
 
     public ResponseDto process(String path, HttpServletRequest request, HttpServletResponse response) {
+        ApiConfig config = null;
         try {
             // 校验接口是否存在
-            ApiConfig config = apiConfigService.getConfig(path);
+            config = apiConfigService.getConfig(path);
             if (config == null) {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 return ResponseDto.fail("该接口不存在！！");
@@ -152,17 +151,13 @@ public class ApiInterceptor implements HandlerInterceptor {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             return ResponseDto.fail("token过期，私有接口禁止访问！！");
                         } else {
-                            // log.info("token存在且有效");
                             List<String> authGroups = tokenService.getAuthGroups(token.getId());
-                            if (checkAuth(authGroups, config.getGroupId())) {
-
-                            } else {
+                            if (!checkAuth(authGroups, config.getGroupId())) {
                                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                                 return ResponseDto.fail("该token无权访问此接口");
                             }
                         }
                     }
-
                 }
             }
 
@@ -174,42 +169,74 @@ public class ApiInterceptor implements HandlerInterceptor {
 
             Map<String, Object> sqlParam = apiService.getSqlParam(request, config);
 
-            //从缓存获取数据
+            // 1. 参数校验（ParameterValidator）
+            if (StringUtils.isNoneBlank(config.getParameterValidator())) {
+                try {
+                    ParameterValidator validator = PluginManager.getParameterValidator(config.getParameterValidator());
+                    boolean valid = validator.validate(sqlParam, config, null, config.getParameterValidatorParams());
+                    if (!valid) {
+                        return ResponseDto.fail("参数校验不通过");
+                    }
+                } catch (Exception e) {
+                    log.error("参数校验失败", e);
+                    return ResponseDto.fail("参数校验失败：" + e.getMessage());
+                }
+            }
+
+            // 2. 参数预处理（ParamProcessPlugin）
+            if (StringUtils.isNoneBlank(config.getParamProcessPlugin())) {
+                try {
+                    ParamProcessPlugin paramProcessPlugin = PluginManager.getParamProcessPlugin(config.getParamProcessPlugin());
+                    paramProcessPlugin.process(sqlParam, config, config.getParamProcessPluginParams());
+                } catch (Exception e) {
+                    log.error("参数预处理失败", e);
+                    return ResponseDto.fail("参数预处理失败：" + e.getMessage());
+                }
+            }
+
+            // 3. 从缓存获取数据
             if (StringUtils.isNoneBlank(config.getCachePlugin())) {
                 try {
                     CachePlugin cachePlugin = PluginManager.getCachePlugin(config.getCachePlugin());
-                    Object o = cachePlugin.get(config, sqlParam);
+                    Object o = cachePlugin.get(config, sqlParam, config.getCachePluginParams());
                     if (o != null) {
-                        return ResponseDto.apiSuccess(o); //如果缓存有数据直接返回
+                        ResponseDto cachedResponse = ResponseDto.apiSuccess(o);
+                        // 缓存命中也执行全局转换
+                        return applyGlobalTransform(config, cachedResponse);
                     }
                 } catch (Exception e) {
                     log.error("获取缓存失败", e);
                 }
             }
 
+            // 4. 执行SQL
             String sql = config.getSql();
             SqlMeta sqlMeta = SqlEngineUtil.getEngine().parse(sql, sqlParam);
             ResponseDto responseDto = JdbcUtil.executeSql(datasource, sqlMeta.getSql(), sqlMeta.getJdbcParamValues());
 
-            //数据转换
+            // 5. 数据转换（TransformPlugin）
             if (StringUtils.isNoneBlank(config.getTransformPlugin()) && responseDto.isSuccess()) {
-                List<JSONObject> data = (List<JSONObject>) (responseDto.getData());
-                TransformPlugin transformPlugin = PluginManager.getTransformPlugin(config.getTransformPlugin());
-                Object transform = transformPlugin.transform(data);
-                responseDto.setData(transform);
-
+                try {
+                    TransformPlugin transformPlugin = PluginManager.getTransformPlugin(config.getTransformPlugin());
+                    Object transform = transformPlugin.transform(responseDto.getData(), config.getTransformPluginParams());
+                    responseDto.setData(transform);
+                } catch (Exception e) {
+                    log.error("数据转换失败", e);
+                }
             }
 
-            //设置缓存
+            // 6. 设置缓存
             if (StringUtils.isNoneBlank(config.getCachePlugin()) && responseDto.isSuccess()) {
-                //缓存设置失败不影响主逻辑
                 try {
                     CachePlugin cachePlugin = PluginManager.getCachePlugin(config.getCachePlugin());
-                    cachePlugin.set(config, sqlParam, responseDto.getData());
+                    cachePlugin.set(config, sqlParam, responseDto.getData(), config.getCachePluginParams());
                 } catch (Exception e) {
                     log.error("缓存设置失败", e);
                 }
             }
+
+            // 7. 全局响应转换（GlobalTransformPlugin）
+            responseDto = applyGlobalTransform(config, responseDto);
 
             if (!responseDto.isSuccess()) {
                 response.setStatus(500);
@@ -217,9 +244,39 @@ public class ApiInterceptor implements HandlerInterceptor {
             return responseDto;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            // 8. 异常时告警（AlarmPlugin）
+            if (config != null && StringUtils.isNoneBlank(config.getAlarmPlugin())) {
+                try {
+                    AlarmPlugin alarmPlugin = PluginManager.getAlarmPlugin(config.getAlarmPlugin());
+                    alarmPlugin.alarm(e, config, request, config.getAlarmPluginParams());
+                } catch (Exception ae) {
+                    log.error("告警插件执行失败", ae);
+                }
+            }
             ResponseDto fail = ResponseDto.fail(e.getMessage() == null ? e.toString() : e.getMessage());
             return fail;
         }
+    }
+
+    private ResponseDto applyGlobalTransform(ApiConfig config, ResponseDto responseDto) {
+        if (StringUtils.isNoneBlank(config.getGlobalTransformPlugin())) {
+            try {
+                GlobalTransformPlugin globalPlugin = PluginManager.getGlobalTransformPlugin(config.getGlobalTransformPlugin());
+                Object transformed = globalPlugin.transform(responseDto, config.getGlobalTransformPluginParams());
+                if (transformed instanceof ResponseDto) {
+                    return (ResponseDto) transformed;
+                }
+                // 如果全局转换返回的不是ResponseDto，则包装为成功的ResponseDto
+                ResponseDto newDto = new ResponseDto();
+                newDto.setSuccess(responseDto.isSuccess());
+                newDto.setMsg(responseDto.getMsg());
+                newDto.setData(transformed);
+                return newDto;
+            } catch (Exception e) {
+                log.error("全局响应转换失败", e);
+            }
+        }
+        return responseDto;
     }
 
     public boolean checkAuth(List<String> authGroups, String group) {

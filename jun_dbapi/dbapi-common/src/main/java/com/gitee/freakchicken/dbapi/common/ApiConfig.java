@@ -64,6 +64,30 @@ public class ApiConfig {
     @TableField(value = "transform_plugin_params")
     String transformPluginParams;
 
+    @TableField(value = "alarm_plugin")
+    String alarmPlugin;
+
+    @TableField(value = "alarm_plugin_params")
+    String alarmPluginParams;
+
+    @TableField(value = "global_transform_plugin")
+    String globalTransformPlugin;
+
+    @TableField(value = "global_transform_plugin_params")
+    String globalTransformPluginParams;
+
+    @TableField(value = "param_process_plugin")
+    String paramProcessPlugin;
+
+    @TableField(value = "param_process_plugin_params")
+    String paramProcessPluginParams;
+
+    @TableField(value = "parameter_validator")
+    String parameterValidator;
+
+    @TableField(value = "parameter_validator_params")
+    String parameterValidatorParams;
+
     @TableField(value = "create_time")
     String createTime;
 

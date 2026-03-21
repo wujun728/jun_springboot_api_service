@@ -74,10 +74,10 @@ public class ApiConfigService {
             apiConfig.setUpdateTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             apiConfigMapper.updateById(apiConfig);
             //清除所有缓存
-            if (StringUtils.isNoneBlank(apiConfig.getCachePlugin())) {
+            if (StringUtils.isNoneBlank(oldConfig.getCachePlugin())) {
                 try {
                     CachePlugin cachePlugin = PluginManager.getCachePlugin(oldConfig.getCachePlugin());
-                    cachePlugin.clean(oldConfig);
+                    cachePlugin.clean(oldConfig, oldConfig.getCachePluginParams());
                     log.debug("update api config, then clean cache");
                 } catch (Exception e) {
                     log.error("clean cache failed when update api", e);
@@ -97,7 +97,7 @@ public class ApiConfigService {
         if (StringUtils.isNoneBlank(apiConfig.getCachePlugin())) {
             try {
                 CachePlugin cachePlugin = PluginManager.getCachePlugin(apiConfig.getCachePlugin());
-                cachePlugin.clean(apiConfig);
+                cachePlugin.clean(apiConfig, apiConfig.getCachePluginParams());
                 log.debug("delete api then clean cache");
             } catch (Exception e) {
                 log.error("clean cache failed when delete api", e);
@@ -160,7 +160,7 @@ public class ApiConfigService {
         if (StringUtils.isNoneBlank(apiConfig.getCachePlugin())) {
             try {
                 CachePlugin cachePlugin = PluginManager.getCachePlugin(apiConfig.getCachePlugin());
-                cachePlugin.clean(apiConfig);
+                cachePlugin.clean(apiConfig, apiConfig.getCachePluginParams());
                 log.debug("offline api then clean cache");
             } catch (Exception e) {
                 log.error("clean cache error", e);

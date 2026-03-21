@@ -134,3 +134,43 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
 **Step5，在POSTMAN中通过PATH，再次调用这个类，执行结果集返回的数据是最新编译的**
 
 ![img_2.png](doc/java4.png)
+
+---
+
+## 更新记录
+
+### 2026-03-21 jun_dbapi 插件系统升级（v2.3.1 → v4.0插件兼容）
+
+**概述：** 将 `dbapi/` 目录下16个v4.0插件搬迁到 `jun_dbapi/jun-dbapi-plugin/` 目录下，每个插件作为独立Maven子模块，可单独编译成JAR包。同时升级 `jun_dbapi` (v2.3.1) 的插件框架以兼容v4.0的6种插件接口。
+
+**修改内容：**
+
+1. **升级插件框架接口 (`dbapi-plugin` 模块)**
+   - 新增 `BasePlugin` 接口（`getName()`, `getDescription()`, `getParamDescription()`）
+   - 新增4个插件抽象类：`AlarmPlugin`（告警）、`GlobalTransformPlugin`（全局转换）、`ParamProcessPlugin`（参数处理）、`ParameterValidator`（参数校验）
+   - 升级 `CachePlugin` 和 `TransformPlugin` 签名，支持 `localPluginParam` 参数
+   - 重写 `PluginManager`，从 `Class.forName` 改为 Java SPI (`ServiceLoader`) 加载6种插件
+
+2. **更新数据模型 (`dbapi-common` 模块)**
+   - `ApiConfig` 新增8个插件字段（alarm/globalTransform/paramProcess/parameterValidator 的 Plugin 和 Params）
+   - `ResponseDto` 新增 `getSuccess()` 方法兼容v4.0插件调用
+
+3. **更新数据库Schema (`dbapi-assembly/sql/`)**
+   - MySQL 和 SQLite DDL 文件 `api_config` 表新增8个插件字段
+
+4. **新建 `jun-dbapi-plugin` 多模块项目（16个独立JAR插件）**
+   - 数据转换插件：advanced-tree-format, camel-rename, date-format, encrypt, single-value-extract, tree-format
+   - 全局转换插件：amis-global-transform, data-extract
+   - 参数处理插件：aes-param-decrypt, pagination, string-concat
+   - 告警插件：dingtalk-alarm, email-alarm, feishu-alarm
+   - 缓存插件：memory-cache（基于Caffeine）
+   - 参数校验插件：sign（MD5签名校验）
+
+5. **更新后端逻辑 (`dbapi-core` 模块)**
+   - 新增 `PluginInitializer`（`@PostConstruct` 初始化插件）
+   - 新增 `PluginController`（`GET /plugin/all` 返回已加载插件列表）
+   - 重写 `ApiInterceptor` 执行管线：参数校验 → 参数处理 → 缓存查询 → SQL执行 → 数据转换 → 缓存写入 → 全局转换 → 异常告警
+
+6. **更新前端UI (`dbapi-ui`)**
+   - `common.vue` 支持6种插件类型的下拉选择器+参数输入框（从 `/plugin/all` 动态加载）
+   - `add.vue` / `edit.vue` 表单提交包含12个插件字段

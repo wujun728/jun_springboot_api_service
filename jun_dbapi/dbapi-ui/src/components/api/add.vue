@@ -22,7 +22,6 @@ export default {
 
     save() {
       const detail = this.$refs.apiAdd.detail
-      // debugger
       let p = {
         name: detail.name,
         path: detail.path,
@@ -30,13 +29,22 @@ export default {
         groupId: detail.groupId,
         previlege: detail.previlege,
         cachePlugin: detail.cachePlugin,
+        cachePluginParams: detail.cachePluginParams,
         transformPlugin: detail.transformPlugin,
+        transformPluginParams: detail.transformPluginParams,
+        alarmPlugin: detail.alarmPlugin,
+        alarmPluginParams: detail.alarmPluginParams,
+        globalTransformPlugin: detail.globalTransformPlugin,
+        globalTransformPluginParams: detail.globalTransformPluginParams,
+        paramProcessPlugin: detail.paramProcessPlugin,
+        paramProcessPluginParams: detail.paramProcessPluginParams,
+        parameterValidator: detail.parameterValidator,
+        parameterValidatorParams: detail.parameterValidatorParams,
         datasourceId: this.$refs.apiAdd.$refs.sqlCode.datasourceId,
         sql: this.$refs.apiAdd.$refs.sqlCode.codemirror.getValue().trim(),
         params: JSON.stringify(detail.params)
       }
 
-      // console.log(detail)
       if (p.sql == null || p.datasourceId == null || p.name == null
           || p.path == null || p.groupId == null) {
         this.$message.error("必填项未填")

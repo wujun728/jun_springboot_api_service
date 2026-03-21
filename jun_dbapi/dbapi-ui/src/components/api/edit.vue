@@ -27,14 +27,23 @@ export default {
         groupId: detail.groupId,
         previlege: detail.previlege,
         cachePlugin: detail.cachePlugin,
+        cachePluginParams: detail.cachePluginParams,
         transformPlugin: detail.transformPlugin,
+        transformPluginParams: detail.transformPluginParams,
+        alarmPlugin: detail.alarmPlugin,
+        alarmPluginParams: detail.alarmPluginParams,
+        globalTransformPlugin: detail.globalTransformPlugin,
+        globalTransformPluginParams: detail.globalTransformPluginParams,
+        paramProcessPlugin: detail.paramProcessPlugin,
+        paramProcessPluginParams: detail.paramProcessPluginParams,
+        parameterValidator: detail.parameterValidator,
+        parameterValidatorParams: detail.parameterValidatorParams,
         datasourceId: this.$refs.apiEditCommon.$refs.sqlCode.datasourceId,
         sql: this.$refs.apiEditCommon.$refs.sqlCode.codemirror.getValue().trim(),
         params: JSON.stringify(detail.params),
         id: this.$route.query.id
       }
 
-      // console.log(detail)
       if (p.sql == null || p.datasourceId == null || p.name == null
           || p.path == null || p.groupId == null) {
         this.$message.error("必填项未填")

@@ -23,7 +23,6 @@
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
           </el-select>
           <el-input v-model="item.note" placeholder="参数说明" style="width:400px;margin-right:5px"></el-input>
-          <!--          <el-cascader  v-model="item.type" separator=" > " :options="options"></el-cascader>-->
 
           <el-button @click="deleteRow(index)" circle type="danger" icon="el-icon-delete" size="mini"
                      v-if="$route.path != '/api/detail'"></el-button>
@@ -48,23 +47,106 @@
         </el-tooltip>
       </el-form-item>
 
-      <el-form-item label="数据转换">
-        <div style="width: 400px;display: inline-block">
-          <el-input v-model="detail.transformPlugin" placeholder="填写数据转换插件java类名" clearable></el-input>
+      <el-form-item label="缓存插件">
+        <div style="display: flex; align-items: center;">
+          <el-select v-model="detail.cachePlugin" placeholder="选择缓存插件" clearable style="width: 350px;">
+            <el-option v-for="item in pluginList.cachePlugins" :key="item.className"
+                       :label="item.name" :value="item.className">
+              <span>{{ item.name }}</span>
+              <span style="color: #8492a6; font-size: 12px; margin-left: 10px;">{{ item.className }}</span>
+            </el-option>
+          </el-select>
+          <el-input v-model="detail.cachePluginParams" placeholder="插件参数" style="width: 350px; margin-left: 10px;" clearable></el-input>
+          <el-tooltip v-if="getPluginParamDesc('cachePlugins', detail.cachePlugin)" placement="top-start" effect="dark">
+            <div slot="content">{{ getPluginParamDesc('cachePlugins', detail.cachePlugin) }}</div>
+            <i class="el-icon-info tip"></i>
+          </el-tooltip>
         </div>
-        <el-tooltip placement="top-start" effect="dark">
-          <div slot="content">填写表示开启数据转换功能，不填写表示不转换。转换逻辑是自定义插件中编写的逻辑</div>
-          <i class="el-icon-info tip"></i>
-        </el-tooltip>
       </el-form-item>
-      <el-form-item label="缓存">
-        <div style="width: 400px;display: inline-block">
-          <el-input v-model="detail.cachePlugin" placeholder="填写缓存插件java类名" clearable></el-input>
+
+      <el-form-item label="数据转换插件">
+        <div style="display: flex; align-items: center;">
+          <el-select v-model="detail.transformPlugin" placeholder="选择数据转换插件" clearable style="width: 350px;">
+            <el-option v-for="item in pluginList.transformPlugins" :key="item.className"
+                       :label="item.name" :value="item.className">
+              <span>{{ item.name }}</span>
+              <span style="color: #8492a6; font-size: 12px; margin-left: 10px;">{{ item.className }}</span>
+            </el-option>
+          </el-select>
+          <el-input v-model="detail.transformPluginParams" placeholder="插件参数" style="width: 350px; margin-left: 10px;" clearable></el-input>
+          <el-tooltip v-if="getPluginParamDesc('transformPlugins', detail.transformPlugin)" placement="top-start" effect="dark">
+            <div slot="content">{{ getPluginParamDesc('transformPlugins', detail.transformPlugin) }}</div>
+            <i class="el-icon-info tip"></i>
+          </el-tooltip>
         </div>
-        <el-tooltip placement="top-start" effect="dark">
-          <div slot="content">填写表示对结果数据开启缓存，不填写表示不开启缓存</div>
-          <i class="el-icon-info tip"></i>
-        </el-tooltip>
+      </el-form-item>
+
+      <el-form-item label="全局转换插件">
+        <div style="display: flex; align-items: center;">
+          <el-select v-model="detail.globalTransformPlugin" placeholder="选择全局转换插件" clearable style="width: 350px;">
+            <el-option v-for="item in pluginList.globalTransformPlugins" :key="item.className"
+                       :label="item.name" :value="item.className">
+              <span>{{ item.name }}</span>
+              <span style="color: #8492a6; font-size: 12px; margin-left: 10px;">{{ item.className }}</span>
+            </el-option>
+          </el-select>
+          <el-input v-model="detail.globalTransformPluginParams" placeholder="插件参数" style="width: 350px; margin-left: 10px;" clearable></el-input>
+          <el-tooltip v-if="getPluginParamDesc('globalTransformPlugins', detail.globalTransformPlugin)" placement="top-start" effect="dark">
+            <div slot="content">{{ getPluginParamDesc('globalTransformPlugins', detail.globalTransformPlugin) }}</div>
+            <i class="el-icon-info tip"></i>
+          </el-tooltip>
+        </div>
+      </el-form-item>
+
+      <el-form-item label="参数处理插件">
+        <div style="display: flex; align-items: center;">
+          <el-select v-model="detail.paramProcessPlugin" placeholder="选择参数处理插件" clearable style="width: 350px;">
+            <el-option v-for="item in pluginList.paramProcessPlugins" :key="item.className"
+                       :label="item.name" :value="item.className">
+              <span>{{ item.name }}</span>
+              <span style="color: #8492a6; font-size: 12px; margin-left: 10px;">{{ item.className }}</span>
+            </el-option>
+          </el-select>
+          <el-input v-model="detail.paramProcessPluginParams" placeholder="插件参数" style="width: 350px; margin-left: 10px;" clearable></el-input>
+          <el-tooltip v-if="getPluginParamDesc('paramProcessPlugins', detail.paramProcessPlugin)" placement="top-start" effect="dark">
+            <div slot="content">{{ getPluginParamDesc('paramProcessPlugins', detail.paramProcessPlugin) }}</div>
+            <i class="el-icon-info tip"></i>
+          </el-tooltip>
+        </div>
+      </el-form-item>
+
+      <el-form-item label="参数校验插件">
+        <div style="display: flex; align-items: center;">
+          <el-select v-model="detail.parameterValidator" placeholder="选择参数校验插件" clearable style="width: 350px;">
+            <el-option v-for="item in pluginList.parameterValidators" :key="item.className"
+                       :label="item.name" :value="item.className">
+              <span>{{ item.name }}</span>
+              <span style="color: #8492a6; font-size: 12px; margin-left: 10px;">{{ item.className }}</span>
+            </el-option>
+          </el-select>
+          <el-input v-model="detail.parameterValidatorParams" placeholder="插件参数" style="width: 350px; margin-left: 10px;" clearable></el-input>
+          <el-tooltip v-if="getPluginParamDesc('parameterValidators', detail.parameterValidator)" placement="top-start" effect="dark">
+            <div slot="content">{{ getPluginParamDesc('parameterValidators', detail.parameterValidator) }}</div>
+            <i class="el-icon-info tip"></i>
+          </el-tooltip>
+        </div>
+      </el-form-item>
+
+      <el-form-item label="告警插件">
+        <div style="display: flex; align-items: center;">
+          <el-select v-model="detail.alarmPlugin" placeholder="选择告警插件" clearable style="width: 350px;">
+            <el-option v-for="item in pluginList.alarmPlugins" :key="item.className"
+                       :label="item.name" :value="item.className">
+              <span>{{ item.name }}</span>
+              <span style="color: #8492a6; font-size: 12px; margin-left: 10px;">{{ item.className }}</span>
+            </el-option>
+          </el-select>
+          <el-input v-model="detail.alarmPluginParams" placeholder="插件参数" style="width: 350px; margin-left: 10px;" clearable></el-input>
+          <el-tooltip v-if="getPluginParamDesc('alarmPlugins', detail.alarmPlugin)" placement="top-start" effect="dark">
+            <div slot="content">{{ getPluginParamDesc('alarmPlugins', detail.alarmPlugin) }}</div>
+            <i class="el-icon-info tip"></i>
+          </el-tooltip>
+        </div>
       </el-form-item>
 
 
@@ -92,8 +174,26 @@ export default {
         params: [],
         groupId: null,
         previlege: 0,//访问权限
+        cachePlugin: null,
+        cachePluginParams: null,
         transformPlugin: null,
-        cachePlugin: null
+        transformPluginParams: null,
+        alarmPlugin: null,
+        alarmPluginParams: null,
+        globalTransformPlugin: null,
+        globalTransformPluginParams: null,
+        paramProcessPlugin: null,
+        paramProcessPluginParams: null,
+        parameterValidator: null,
+        parameterValidatorParams: null
+      },
+      pluginList: {
+        cachePlugins: [],
+        transformPlugins: [],
+        globalTransformPlugins: [],
+        alarmPlugins: [],
+        paramProcessPlugins: [],
+        parameterValidators: []
       },
       options: [
         {label: 'string', value: 'string'},
@@ -119,7 +219,6 @@ export default {
       this.detail.params.push({name: null, type: null})
     },
     deleteRow(index) {
-      debugger
       this.detail.params.splice(index, 1)
     },
 
@@ -133,7 +232,6 @@ export default {
           cb([])
         }
       }).catch((error) => {
-        // this.$message.error("失败")
         cb([])
       })
     },
@@ -154,17 +252,21 @@ export default {
         this.detail.groupId = response.data.groupId
         this.detail.params = JSON.parse(response.data.params)
         this.detail.cachePlugin = response.data.cachePlugin
+        this.detail.cachePluginParams = response.data.cachePluginParams
         this.detail.transformPlugin = response.data.transformPlugin
+        this.detail.transformPluginParams = response.data.transformPluginParams
+        this.detail.alarmPlugin = response.data.alarmPlugin
+        this.detail.alarmPluginParams = response.data.alarmPluginParams
+        this.detail.globalTransformPlugin = response.data.globalTransformPlugin
+        this.detail.globalTransformPluginParams = response.data.globalTransformPluginParams
+        this.detail.paramProcessPlugin = response.data.paramProcessPlugin
+        this.detail.paramProcessPluginParams = response.data.paramProcessPluginParams
+        this.detail.parameterValidator = response.data.parameterValidator
+        this.detail.parameterValidatorParams = response.data.parameterValidatorParams
 
-
-        console.log(this.$refs.sqlCode.datasourceId, response.data.datasourceId)
         this.$refs.sqlCode.datasourceId = response.data.datasourceId
         this.$refs.sqlCode.codemirror.setValue(response.data.sql)
       })
-
-      /*   .catch((error) => {
-       this.$message.error("")
-     })*/
     },
 
     getAllGroups() {
@@ -172,10 +274,25 @@ export default {
         this.groups = response.data
       }).catch((error) => {
       })
+    },
+
+    loadPlugins() {
+      this.axios.get("/plugin/all").then((response) => {
+        this.pluginList = response.data
+      }).catch((error) => {
+        console.error("加载插件列表失败", error)
+      })
+    },
+
+    getPluginParamDesc(pluginType, className) {
+      if (!className || !this.pluginList[pluginType]) return null
+      const plugin = this.pluginList[pluginType].find(p => p.className === className)
+      return plugin ? plugin.paramDescription : null
     }
   },
   created() {
     this.getAddress()
+    this.loadPlugins()
     if (this.id != undefined)
       this.getDetail(this.id)
 

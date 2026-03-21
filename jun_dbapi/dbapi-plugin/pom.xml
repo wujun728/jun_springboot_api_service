@@ -23,9 +23,7 @@
         <dependency>
             <groupId>com.gitee.freakchicken.dbapi</groupId>
             <artifactId>dbapi-common</artifactId>
-            <!--            <scope>compile</scope>-->
         </dependency>
-
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -52,6 +50,18 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

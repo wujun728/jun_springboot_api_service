@@ -14,8 +14,16 @@ CREATE TABLE "api_config"
     "group_id"                integer,
     "cache_plugin"            TEXT,
     "cache_plugin_params"     TEXT,
-    "transform_plugin"        TEXT,
-    "transform_plugin_params" TEXT,
+    "transform_plugin"                TEXT,
+    "transform_plugin_params"         TEXT,
+    "alarm_plugin"                    TEXT,
+    "alarm_plugin_params"             TEXT,
+    "global_transform_plugin"         TEXT,
+    "global_transform_plugin_params"  TEXT,
+    "param_process_plugin"            TEXT,
+    "param_process_plugin_params"     TEXT,
+    "parameter_validator"             TEXT,
+    "parameter_validator_params"      TEXT,
     UNIQUE ("path") ON CONFLICT ABORT
 );
 

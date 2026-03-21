@@ -11,6 +11,7 @@
         <module>dbapi-ui</module>
         <module>dbapi-common</module>
         <module>dbapi-plugin</module>
+        <module>jun-dbapi-plugin</module>
         <module>dbapi-core</module>
         <module>dbapi-assembly</module>
     </modules>
