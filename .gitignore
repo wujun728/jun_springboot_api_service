@@ -26,6 +26,8 @@ doc2
 doc3
 *.zip
 *.rar
+*.jar
+*.MF
 *bak
 log
 logs
