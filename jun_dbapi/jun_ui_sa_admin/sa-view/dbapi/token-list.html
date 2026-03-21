@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">Token 管理</div>
+
+            <!-- 使用说明 -->
+            <el-alert title="私有 API 需要在请求 Header 中添加 Authorization 字段，值为对应的 Token" type="info"
+                :closable="false" show-icon style="margin: 10px 0;"></el-alert>
+
+            <div style="padding-bottom: 10px;">
+                <el-button type="primary" size="small" icon="el-icon-plus" @click="showAdd">新增 Token</el-button>
+            </div>
+
+            <el-table :data="tokenList" border stripe size="small">
+                <el-table-column type="index" label="#" width="50"></el-table-column>
+                <el-table-column label="Token" prop="token" min-width="280" show-overflow-tooltip></el-table-column>
+                <el-table-column label="描述" prop="note" min-width="150"></el-table-column>
+                <el-table-column label="创建时间" width="160">
+                    <template slot-scope="s">{{ formatDate(s.row.createTime) }}</template>
+                </el-table-column>
+                <el-table-column label="过期时间" width="160">
+                    <template slot-scope="s">
+                        <span v-if="s.row.expire">
+                            {{ formatDate(s.row.expire) }}
+                            <el-tag v-if="isExpired(s.row.expire)" type="danger" size="mini" style="margin-left: 5px;">已过期</el-tag>
+                        </span>
+                        <span v-else style="color: #67C23A;">永不过期</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="操作" width="220" fixed="right">
+                    <template slot-scope="s">
+                        <el-button size="mini" type="primary" @click="showAuth(s.row)">授权</el-button>
+                        <el-button size="mini" type="danger" @click="deleteToken(s.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+
+        <!-- 新增 Token 对话框 -->
+        <el-dialog title="新增 Token" :visible.sync="addDialogVisible" width="500px">
+            <el-form label-width="100px">
+                <el-form-item label="Token 值">
+                    <el-input v-model="newToken.token" placeholder="Token 值">
+                        <el-button slot="append" @click="generateToken">自动生成</el-button>
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="描述">
+                    <el-input v-model="newToken.note" placeholder="描述信息"></el-input>
+                </el-form-item>
+                <el-form-item label="过期时间">
+                    <el-date-picker v-model="newToken.expire" type="datetime" placeholder="不选则永不过期"
+                        value-format="timestamp" style="width: 100%;"></el-date-picker>
+                </el-form-item>
+            </el-form>
+            <div slot="footer">
+                <el-button @click="addDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="addToken">确定</el-button>
+            </div>
+        </el-dialog>
+
+        <!-- 授权对话框 -->
+        <el-dialog title="Token 授权 - 选择可访问的 API 分组" :visible.sync="authDialogVisible" width="500px">
+            <el-checkbox-group v-model="authGroupIds">
+                <el-checkbox v-for="g in groupList" :key="g.id" :label="g.id" style="display: block; margin: 10px 0;">
+                    {{ g.name }}
+                </el-checkbox>
+            </el-checkbox-group>
+            <div v-if="groupList.length === 0" style="color: #999;">暂无分组，请先创建 API 分组</div>
+            <div slot="footer">
+                <el-button @click="authDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="saveAuth">保存授权</el-button>
+            </div>
+        </el-dialog>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                tokenList: [],
+                groupList: [],
+                addDialogVisible: false,
+                newToken: { token: '', note: '', expire: null },
+                authDialogVisible: false,
+                authTokenId: null,
+                authGroupIds: []
+            },
+            mounted: function() {
+                this.loadTokens();
+                this.loadGroups();
+            },
+            methods: {
+                formatDate: function(ts) { return dbapi.formatDate(ts); },
+                isExpired: function(expire) {
+                    return expire && expire < new Date().getTime();
+                },
+                loadTokens: function() {
+                    var me = this;
+                    dbapi.ajax('/token/getAll', function(res) {
+                        me.tokenList = res.data || res || [];
+                    });
+                },
+                loadGroups: function() {
+                    var me = this;
+                    dbapi.ajax('/group/getAll/', function(res) {
+                        me.groupList = res.data || res || [];
+                    });
+                },
+                showAdd: function() {
+                    this.newToken = { token: '', note: '', expire: null };
+                    this.addDialogVisible = true;
+                },
+                generateToken: function() {
+                    var me = this;
+                    dbapi.ajax('/token/generate/', function(res) {
+                        me.newToken.token = (typeof res === 'string') ? res : (res.data || res.msg || '');
+                    });
+                },
+                addToken: function() {
+                    var me = this;
+                    if (!this.newToken.token) return this.$message.warning('请输入或生成 Token');
+                    dbapi.ajax('/token/add/', {
+                        token: this.newToken.token,
+                        note: this.newToken.note,
+                        expire: this.newToken.expire || ''
+                    }, function(res) {
+                        me.$message.success('添加成功');
+                        me.addDialogVisible = false;
+                        me.loadTokens();
+                    });
+                },
+                deleteToken: function(row) {
+                    var me = this;
+                    this.$confirm('确定删除此 Token？', '提示', { type: 'warning' }).then(function() {
+                        dbapi.ajax('/token/delete/' + row.id, function(res) {
+                            me.$message.success('删除成功');
+                            me.loadTokens();
+                        });
+                    }).catch(function() {});
+                },
+                showAuth: function(row) {
+                    var me = this;
+                    this.authTokenId = row.id;
+                    this.authGroupIds = [];
+                    dbapi.ajax('/token/getAuthGroups/' + row.id, function(res) {
+                        var data = res.data || res || [];
+                        me.authGroupIds = data.map(function(id) { return id + ''; });
+                        me.authDialogVisible = true;
+                    });
+                },
+                saveAuth: function() {
+                    var me = this;
+                    dbapi.ajax('/token/auth/', {
+                        tokenId: this.authTokenId,
+                        groupIds: this.authGroupIds.join(',')
+                    }, function(res) {
+                        me.$message.success('授权成功');
+                        me.authDialogVisible = false;
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

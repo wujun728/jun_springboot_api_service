@@ -65,30 +65,27 @@
 		<script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
 		<script src="https://www.layuicdn.com/layer-v3.1.1/layer.js"></script>
 		<script src="static/sa.js"></script>
+		<script src="static/dbapi.js"></script>
 		<script type="text/javascript">
-			
-			// 你所有要改的代码全在这里   ↓↓↓↓↓ 
-			
-			// 所有参考属性  
-			var page_title = 'Sa-Admin 登录';		// 页面标题 
-			var key = 'admin';						// 默认的账号
-			var password = 'admin';					// 默认的password  
-			var logo = 'sa-frame/admin-logo.png';	// logo地址，为空字符串则不显示 
-			
-			// 点击登录按钮 
+
+			// DBApi 登录配置
+			var page_title = 'DBApi 登录';
+			var key = 'admin';
+			var password = 'admin';
+			var logo = 'sa-frame/admin-logo.png';
+
+			// 点击登录按钮
 			document.querySelector(".login-button").onclick = function() {
-				// 1、取值 
-				var p = {
-					key: $('[name=key]').val(),
-					password: $('[name=password]').val()
+				var username = $('[name=key]').val();
+				var pwd = $('[name=password]').val();
+				if(username == '' || pwd == ''){
+					return layer.msg('请输入账号和密码');
 				}
-				// 2、判断
-				if(p.key == '' || p.password == ''){
-					return layer.msg('请输入任意内容即可');
-				}
-				// 3、请求后台
-				sa.ajax2('/acc/doLogin', p, function(res) {
-					sa.msg('登录成功，欢迎你：' + p.key);
+				dbapi.ajax('/user/login', {username: username, password: pwd}, function(res) {
+					// 登录成功，token 在 res.msg 中
+					dbapi.setToken(res.msg);
+					localStorage.setItem('dbapi_username', username);
+					layer.msg('登录成功');
 					setTimeout(function () {
 						if(parent == window){
 							location.href = "index.html";
@@ -97,10 +94,9 @@
 							parent.location.reload();
 						}
 					}, 500);
-				})
+				});
 			}
-			// 你所有要改的代码全在这里   ↑↑↑↑↑	
-			
+
 		</script>
 		<script type="text/javascript">
 			// 替换属性 

@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+请始终使用使用中文与我对话，输入中文，返回中文。
+
 本文件为 Claude Code (claude.ai/code) 在此仓库中工作时提供指导。
 
 ## 仓库概述
@@ -500,3 +502,6 @@ spring.datasource.password=password
 - **jun-groovy-api-starter Maven 中央仓库：** https://central.sonatype.com/artifact/io.github.wujun728/jun-groovy-api-spring-boot-starter
 - **Orange SQL 引擎：** https://gitee.com/freakchicken/orange
 - **DBApi 插件示例：** https://gitee.com/freakchicken/dbapi-plugin-demo
+
+
+### 每次修改都记录修改的内容到 README.md 文件中。
