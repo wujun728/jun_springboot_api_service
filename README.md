@@ -249,3 +249,11 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：type.substring(6, type.length()-1) 未检查字符串长度，短字符串（如 "Array" 或 "Array<"）会导致 StringIndexOutOfBoundsException
     - 修复：增加 startsWith("Array<")、endsWith(">") 和 length>=8 三重检查；不符合格式的降级为"数组"
     - 影响文件：ApiConfigService.java
+22. **修复 DataSourceController 文件上传校验 (T020)**
+    - 问题：DataSourceController 文件上传无大小和类型校验
+    - 修复：添加10MB文件大小限制、.json扩展名校验、Content-Type校验、JSON反序列化异常捕获
+    - 影响文件：DataSourceController.java
+23. **修复 ApiConfigController 文件上传校验 (T021)**
+    - 问题：ApiConfigController 的 /import 和 /importGroup 端点无文件大小和类型校验，返回 void 无法返回错误信息
+    - 修复：添加统一校验方法（10MB大小限制、.json扩展名、Content-Type校验）；返回类型改为 ResponseDto；增加 JSON 解析异常捕获
+    - 影响文件：ApiConfigController.java

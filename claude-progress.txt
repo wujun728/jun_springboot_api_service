@@ -174,3 +174,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: cf6b827
 - 下一步建议: 继续修复 T021 及后续任务
+
+### Session #20 - T021 (2026-04-02)
+- 实现了: 修复 ApiConfigController 文件上传校验
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/controller/ApiConfigController.java
+- 修复内容: /import 和 /importGroup 端点添加统一校验方法 validateUploadFile（10MB大小限制、.json扩展名、Content-Type校验）；返回类型从 void 改为 ResponseDto；增加 JSON 解析异常捕获和空内容检查
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 14246bb
+- 下一步建议: 继续修复 T022 及后续任务
