@@ -182,3 +182,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 14246bb
 - 下一步建议: 继续修复 T022 及后续任务
+
+### Session #21 - T022 (2026-04-02)
+- 实现了: 修复 ApiInterceptor IDOR 漏洞
+- 修改的文件: ApiInterceptor.java (数据源权限校验), ApiConfigMapper.java (新增 countByDatasourceAndGroups 查询)
+- 修复内容: 私有接口访问时，在获取数据源后增加权限校验——验证该数据源被 token 授权组内的 API 引用，未授权返回 403
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: d740a97
+- 下一步建议: 继续修复 T023 及后续任务
