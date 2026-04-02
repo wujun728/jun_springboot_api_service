@@ -16,3 +16,11 @@
 - 创建了 task_list.json（共 33 个修复任务）
 - 创建了 init.sh / init.bat
 - 状态: 规划完成
+
+### Session #1 - T001 (2026-04-02)
+- 实现了: 修复 JdbcUtil SQL 注入漏洞
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JdbcUtil.java
+- 修复内容: 添加 validateTableName 白名单校验（正则+长度限制），默认分支增加反引号转义
+- 自测结果: 通过（编译成功，白名单正则可拦截特殊字符表名）
+- Git 提交: 180ae07
+- 下一步建议: 继续修复 T002 及后续 CRITICAL/HIGH 级别任务
