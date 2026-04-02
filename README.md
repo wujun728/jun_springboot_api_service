@@ -201,3 +201,8 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：EncrypDES.java 使用已破解的 DES 算法，且密钥每次实例化随机生成，重启后无法解密
     - 修复：算法改为 AES/GCM/NoPadding (256-bit)；密钥从配置文件 dbapi.encrypt.key 加载（Base64 编码 32 字节）；GCM 模式自带认证，每次加密生成随机 IV
     - 影响文件：EncrypDES.java, EncryptConfig.java(新增), application.properties
+
+12. **替换 MD5 密码哈希为 BCrypt (T010)**
+    - 问题：密码以明文存储在数据库中，MD5.java 提供的无盐 MD5 哈希同样不安全，易被彩虹表攻击
+    - 修复：引入 spring-security-crypto 的 BCryptPasswordEncoder；登录验证改为 Java 层 BCrypt 校验；重置密码存储 BCrypt 哈希；旧明文密码登录成功后自动迁移为 BCrypt
+    - 影响文件：PasswordUtil.java(新增), UserService.java, UserMapper.java, dbapi-core/pom.xml

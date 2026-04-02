@@ -88,3 +88,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 3adc42e
 - 下一步建议: 继续修复 T010 及后续任务；生产部署时用 `openssl rand -base64 32` 生成强密钥替换默认值
+
+### Session #8 - T010 (2026-04-02)
+- 实现了: 替换 MD5 密码哈希为 BCrypt
+- 修改的文件: PasswordUtil.java (新增), UserService.java, UserMapper.java, dbapi-core/pom.xml
+- 修复内容: 密码存储从明文改为 BCrypt 哈希；登录验证从 SQL 比对改为 Java 层 BCrypt 验证；旧明文密码登录成功后自动迁移为 BCrypt；resetPassword 存储 BCrypt 哈希
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 2778f39
+- 下一步建议: 继续修复 T011 及后续任务；首次升级部署后，admin 用户需登录一次触发密码自动迁移
