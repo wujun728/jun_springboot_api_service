@@ -56,3 +56,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 128a690
 - 下一步建议: 继续修复 T006 及后续任务；生产部署时需替换 application.properties 中的默认 JWT 密钥
+
+### Session #4 - T006 (2026-04-02)
+- 实现了: 修复 Cache.status 线程安全问题
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/Cache.java
+- 修复内容: 将 status 字段从未初始化的 HashMap 声明改为 ConcurrentHashMap 实例，确保多线程并发读写安全
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 1c1ca54
+- 下一步建议: 继续修复 T007 及后续任务

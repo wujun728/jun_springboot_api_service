@@ -181,3 +181,8 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
    - 新增 `JwtConfig` 组件在启动时注入密钥到 `JwtUtils`
    - 修改 `JwtUtils.createToken()`/`verifyToken()` 不再接收外部 secret 参数
    - 影响文件：JwtUtils.java, JwtConfig.java(新增), JwtAuthenticationInterceptor.java, UserController.java, application.properties
+
+8. **修复 Cache.status 线程安全问题 (T006)**
+   - 问题：Cache.java 中 status 字段是普通 Map 声明且未初始化，多线程并发读写无同步保护
+   - 修复：将 status 字段类型改为 ConcurrentHashMap 并直接初始化，确保线程安全
+   - 影响文件：Cache.java
