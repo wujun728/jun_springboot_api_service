@@ -73,7 +73,7 @@ public class JwtUtils {
         try {
             audience = JWT.decode(token).getAudience().get(0);
         } catch (JWTDecodeException j) {
-
+            log.warn("Failed to decode JWT token: {}", j.getMessage());
         }
         return audience;
     }
