@@ -107,12 +107,44 @@ public class DataSourceController {
     }
 
 
+    private static final long MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // 10MB
+
     @RequestMapping(value = "/import", produces = "application/json;charset=UTF-8")
-    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseDto uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+
+        // 文件大小校验
+        if (file.isEmpty()) {
+            return ResponseDto.fail("上传文件不能为空");
+        }
+        if (file.getSize() > MAX_UPLOAD_SIZE) {
+            return ResponseDto.fail("上传文件大小不能超过10MB");
+        }
+
+        // 文件类型校验：仅允许 JSON 文件
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || !originalFilename.toLowerCase().endsWith(".json")) {
+            return ResponseDto.fail("仅支持 .json 格式的文件");
+        }
+        String contentType = file.getContentType();
+        if (contentType != null && !contentType.contains("json") && !contentType.equals("application/octet-stream")) {
+            return ResponseDto.fail("文件内容类型不合法，仅支持 JSON");
+        }
 
         String s = IOUtils.toString(file.getInputStream(), "utf-8");
-        List<DataSource> list = JSON.parseArray(s, DataSource.class);
-        dataSourceService.insertBatch(list);
 
+        // 内容校验：确保是合法的 JSON 数组
+        List<DataSource> list;
+        try {
+            list = JSON.parseArray(s, DataSource.class);
+        } catch (Exception e) {
+            log.warn("导入数据源文件反序列化失败: {}", e.getMessage());
+            return ResponseDto.fail("文件内容不是合法的 JSON 数组");
+        }
+        if (list == null || list.isEmpty()) {
+            return ResponseDto.fail("文件中未包含有效的数据源配置");
+        }
+
+        dataSourceService.insertBatch(list);
+        return ResponseDto.successWithMsg("成功导入 " + list.size() + " 个数据源");
     }
 }
