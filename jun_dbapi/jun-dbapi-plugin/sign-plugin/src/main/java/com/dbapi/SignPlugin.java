@@ -57,7 +57,11 @@ public class SignPlugin extends ParameterValidator {
             if (tsObj instanceof Long) {
                 timestamp = (Long) tsObj;
             } else {
-                timestamp = Long.parseLong(tsObj.toString());
+                try {
+                    timestamp = Long.parseLong(tsObj.toString());
+                } catch (NumberFormatException e) {
+                    throw new RuntimeException("签名插件：时间戳参数'" + timestampField + "'格式非法，期望数字，实际值：" + tsObj);
+                }
             }
             if (Math.abs(System.currentTimeMillis() - timestamp) > expireMs) {
                 throw new RuntimeException("签名插件：请求已过期");
