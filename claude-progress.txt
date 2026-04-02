@@ -104,3 +104,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: e97183c
 - 下一步建议: 继续修复 T012 及后续任务
+
+### Session #10 - T012 (2026-04-02)
+- 实现了: 修复 JwtUtils 空 catch 块
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JwtUtils.java
+- 修复内容: getAudience() 方法中 JWTDecodeException 空 catch 块改为 log.warn 记录异常信息；返回 null 在调用方 JwtAuthenticationInterceptor 中会触发 NumberFormatException 拒绝请求
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 7cd44ec
+- 下一步建议: 继续修复 T013 及后续任务

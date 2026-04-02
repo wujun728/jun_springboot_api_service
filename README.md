@@ -206,3 +206,13 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：密码以明文存储在数据库中，MD5.java 提供的无盐 MD5 哈希同样不安全，易被彩虹表攻击
     - 修复：引入 spring-security-crypto 的 BCryptPasswordEncoder；登录验证改为 Java 层 BCrypt 校验；重置密码存储 BCrypt 哈希；旧明文密码登录成功后自动迁移为 BCrypt
     - 影响文件：PasswordUtil.java(新增), UserService.java, UserMapper.java, dbapi-core/pom.xml
+
+13. **修复 HttpUtil 资源泄漏 (T011)**
+    - 问题：HttpUtil 中 HttpClient 和 Response 在异常路径下可能未正确关闭
+    - 修复：改用 try-with-resources 确保资源自动释放
+    - 影响文件：HttpUtil.java
+
+14. **修复 JwtUtils 空 catch 块 (T012)**
+    - 问题：getAudience() 方法中 JWTDecodeException 被静默吞没，无效令牌解码失败时无任何日志记录
+    - 修复：空 catch 块改为 log.warn 记录异常信息，便于排查无效令牌问题
+    - 影响文件：JwtUtils.java
