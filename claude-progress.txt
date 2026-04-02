@@ -29,3 +29,11 @@
 - 自测结果: 通过 — 目录已创建，README.md 含 11 个子文档的结构规划
 - Git 提交: 24a8314
 - 下一步建议: 开始 T002，收集各子项目的基本信息用于编写文档内容
+
+### Session #2 - T002 (2026-04-02)
+- 实现了: 收集 jun_api_service 模块信息
+- 修改的文件: docs/project-description/jun_api_service_module_info.md (新建)
+- 自测结果: 通过 — 已阅读 pom.xml、application.yml、全部 Java 源码，提取技术栈(SpringBoot 2.5.14, Groovy 2.4.7, MyBatis-Plus 3.5.3.1 等)、依赖版本、功能列表(18项)
+- Git 提交: 9e43847
+- 注意: jun_api_service 源码实际位于 doc1/jun_api_service/ 目录下
+- 下一步建议: 开始 T003，收集 jun_dbapi 模块信息
