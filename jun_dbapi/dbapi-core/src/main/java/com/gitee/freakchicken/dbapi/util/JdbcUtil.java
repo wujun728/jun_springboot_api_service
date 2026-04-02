@@ -12,9 +12,26 @@ import lombok.extern.slf4j.Slf4j;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Slf4j
 public class JdbcUtil {
+
+    private static final Pattern VALID_TABLE_NAME = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_.]*$");
+
+    private static String validateTableName(String table) {
+        if (table == null || table.trim().isEmpty()) {
+            throw new IllegalArgumentException("表名不能为空");
+        }
+        String trimmed = table.trim();
+        if (!VALID_TABLE_NAME.matcher(trimmed).matches()) {
+            throw new IllegalArgumentException("非法表名: " + trimmed);
+        }
+        if (trimmed.length() > 128) {
+            throw new IllegalArgumentException("表名长度超过限制: " + trimmed);
+        }
+        return trimmed;
+    }
 
     public static ResultSet query(String sql, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -121,13 +138,14 @@ public class JdbcUtil {
         List<JSONObject> list = new ArrayList<>();
         PreparedStatement pst = null;
         try {
+            String validTable = validateTableName(table);
             String sql;
             switch (type) {
                 case "POSTGRESQL":
-                    sql = "select * from \"" + table + "\" where 1=2";
+                    sql = "select * from \"" + validTable + "\" where 1=2";
                     break;
                 default:
-                    sql = "select * from " + table + " where 1=2";
+                    sql = "select * from `" + validTable + "` where 1=2";
             }
             log.info(sql);
             pst = conn.prepareStatement(sql);
