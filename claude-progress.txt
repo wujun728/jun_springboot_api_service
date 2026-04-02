@@ -214,3 +214,10 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 8a8cb8a
 - 下一步建议: 继续修复剩余任务
+
+### Session #25 - T024 (2026-04-02)
+- 实现了: 替换 e.printStackTrace() 为 slf4j log.error()
+- 修改的文件: JdbcUtil.java (5处), DataSourceController.java (2处), ApiConfigController.java (6处), JwtAuthenticationInterceptor.java (1处), ApiInterceptor.java (1处)
+- 自测结果: 通过（grep printStackTrace 返回零结果，mvn compile 成功）
+- Git 提交: 1a5f91f
+- 下一步建议: 继续修复剩余任务
