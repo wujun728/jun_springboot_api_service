@@ -59,7 +59,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             }
 
             // 验证 token
-            boolean b = JwtUtils.verifyToken(token, user.getPassword());
+            boolean b = JwtUtils.verifyToken(token);
             if (b) {
                 return true;
             } else {
