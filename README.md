@@ -196,3 +196,8 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：JWT 密钥缺乏强度校验，可能使用过短或默认密钥
     - 修复：JwtUtils.setSecret 增加最小 32 字符长度校验；JwtConfig 启动时验证密钥非空、长度足够，使用默认密钥时输出警告
     - 影响文件：JwtUtils.java, JwtConfig.java
+
+11. **替换 DES 加密为 AES-256-GCM (T009)**
+    - 问题：EncrypDES.java 使用已破解的 DES 算法，且密钥每次实例化随机生成，重启后无法解密
+    - 修复：算法改为 AES/GCM/NoPadding (256-bit)；密钥从配置文件 dbapi.encrypt.key 加载（Base64 编码 32 字节）；GCM 模式自带认证，每次加密生成随机 IV
+    - 影响文件：EncrypDES.java, EncryptConfig.java(新增), application.properties

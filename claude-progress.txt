@@ -80,3 +80,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 8410ca6
 - 下一步建议: 继续修复 T009 及后续任务
+
+### Session #7 - T009 (2026-04-02)
+- 实现了: 替换 DES 加密为 AES-256-GCM
+- 修改的文件: EncrypDES.java (重写为 AES-256-GCM), EncryptConfig.java (新增，Spring 密钥注入), application.properties (新增 dbapi.encrypt.key)
+- 修复内容: DES 算法替换为 AES/GCM/NoPadding；密钥从配置文件加载而非每次随机生成；GCM 模式自带认证，每次加密生成随机 12 字节 IV
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 3adc42e
+- 下一步建议: 继续修复 T010 及后续任务；生产部署时用 `openssl rand -base64 32` 生成强密钥替换默认值
