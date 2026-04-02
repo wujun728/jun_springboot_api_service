@@ -166,3 +166,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 960990e
 - 下一步建议: 继续修复 T020 及后续任务
+
+### Session #19 - T020 (2026-04-02)
+- 实现了: 修复 DataSourceController 文件上传校验
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/controller/DataSourceController.java
+- 修复内容: 添加10MB文件大小限制、.json扩展名校验、Content-Type校验、JSON反序列化异常捕获；返回值从void改为ResponseDto
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: cf6b827
+- 下一步建议: 继续修复 T021 及后续任务
