@@ -174,3 +174,10 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
 6. **更新前端UI (`dbapi-ui`)**
    - `common.vue` 支持6种插件类型的下拉选择器+参数输入框（从 `/plugin/all` 动态加载）
    - `add.vue` / `edit.vue` 表单提交包含12个插件字段
+
+7. **修复 JWT 密钥安全漏洞 (T005)**
+   - 问题：JWT 签名使用用户密码作为 HMAC secret，攻击者知道密码即可伪造令牌
+   - 修复：新增 `dbapi.jwt.secret` 配置项，使用独立的强随机密钥签名/验证 JWT
+   - 新增 `JwtConfig` 组件在启动时注入密钥到 `JwtUtils`
+   - 修改 `JwtUtils.createToken()`/`verifyToken()` 不再接收外部 secret 参数
+   - 影响文件：JwtUtils.java, JwtConfig.java(新增), JwtAuthenticationInterceptor.java, UserController.java, application.properties
