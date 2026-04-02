@@ -241,3 +241,7 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：PaginationPlugin 的 pageNo 和 pageSize 无正数校验，负值或零值导致 SQL OFFSET 为负
     - 修复：解析后增加 >= 1 校验，非法值抛出包含参数名和当前值的错误信息
     - 影响文件：PaginationPlugin.java
+20. **修复 PaginationPlugin NPE 风险 (T018)**
+    - 问题：类型转换链中 Integer.parseInt() 对非数字字符串抛出 NumberFormatException 未捕获，dbapi 版本不支持 String 类型参数且错误信息引用了错误的对象
+    - 修复：parseInt 增加 NumberFormatException 捕获并返回有意义错误信息；dbapi 版本同步支持 String 类型
+    - 影响文件：PaginationPlugin.java

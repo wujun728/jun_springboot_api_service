@@ -150,3 +150,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: b2e9e3d
 - 下一步建议: 继续修复 T018 及后续任务
+
+### Session #17 - T018 (2026-04-02)
+- 实现了: 修复 PaginationPlugin NPE 风险
+- 修改的文件: PaginationPlugin.java (jun-dbapi-plugin 和 dbapi/pagination-plugin-1.0.0.src 两处)
+- 修复内容: 类型转换链中 Integer.parseInt() 增加 NumberFormatException 捕获，非数字字符串参数返回有意义错误信息；dbapi 版本同步支持 String 类型参数
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 016f35c
+- 下一步建议: 继续修复 T019 及后续任务
