@@ -75,6 +75,9 @@ public class PoolManager {
 
     public static DruidPooledConnection getPooledConnection(DataSource ds) throws SQLException {
         DruidDataSource pool = PoolManager.getJdbcConnectionPool(ds);
+        if (pool == null) {
+            throw new SQLException("无法获取数据源连接池，数据源ID: " + ds.getId() + "，名称: " + ds.getName());
+        }
         DruidPooledConnection connection = pool.getConnection();
 //        log.info("获取连接成功");
         return connection;
