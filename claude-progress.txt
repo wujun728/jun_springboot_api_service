@@ -281,5 +281,5 @@
   - mvn test: BUILD SUCCESS（49 tests, 0 failures, 0 errors）
     - JdbcUtilTest: 24 tests passed
     - SecurityTest: 25 tests passed
-- Git 提交: 见下方
+- Git 提交: 1371f8d
 - 下一步建议: 所有 33 个任务已完成，项目可进入发布准备阶段
