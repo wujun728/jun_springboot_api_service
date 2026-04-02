@@ -96,3 +96,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 2778f39
 - 下一步建议: 继续修复 T011 及后续任务；首次升级部署后，admin 用户需登录一次触发密码自动迁移
+
+### Session #9 - T011 (2026-04-02)
+- 实现了: 修复 HttpUtil 资源泄漏
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/HttpUtil.java
+- 修复内容: 将 HttpClient 和 Response 从手动 finally 关闭改为 try-with-resources，确保异常时资源也能正确释放；移除未使用的 StatusLine/IOException import
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: e97183c
+- 下一步建议: 继续修复 T012 及后续任务
