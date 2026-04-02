@@ -135,3 +135,10 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: d515430
 - 下一步建议: 继续修复 T016 及后续任务
+
+### Session #15 - T016 (2026-04-02)
+- 实现了: 修复 JdbcUtil finally 块连接关闭 NPE
+- 修改的文件: JdbcUtil.java (getAllTables 增加 ResultSet null 检查和关闭; executeSql 将 Statement/ResultSet 提到 try 外部，finally 中按 RS→Stmt→Conn 顺序关闭)
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: f48d3a8
+- 下一步建议: 继续修复 T017 及后续任务

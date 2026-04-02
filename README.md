@@ -216,3 +216,23 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：getAudience() 方法中 JWTDecodeException 被静默吞没，无效令牌解码失败时无任何日志记录
     - 修复：空 catch 块改为 log.warn 记录异常信息，便于排查无效令牌问题
     - 影响文件：JwtUtils.java
+
+15. **修复 UUIDUtil 弱 ID 生成 (T013)**
+    - 问题：RandomStringUtils.random(8) 生成的短随机串碰撞风险高且可预测
+    - 修复：替换为 UUID.randomUUID() 生成 32 位不可预测的唯一标识
+    - 影响文件：UUIDUtil.java
+
+16. **修复 IPUtil 重复条件判断 (T014)**
+    - 问题：getOriginIp() 方法中存在冗余的 null/empty 检查
+    - 修复：移除重复的内层 if 判断
+    - 影响文件：IPUtil.java
+
+17. **修复 ApiService 类型转换异常 (T015)**
+    - 问题：Double.valueOf/Long.valueOf 未捕获 NumberFormatException，非法参数导致 500 错误
+    - 修复：4 处类型转换加 try-catch，ApiInterceptor 捕获 IllegalArgumentException 返回 400
+    - 影响文件：ApiService.java, ApiInterceptor.java
+
+18. **修复 JdbcUtil finally 块连接关闭 NPE (T016)**
+    - 问题：getAllTables 中 ResultSet 未在 finally 关闭；executeSql 中 Statement/ResultSet 未在 finally 关闭，异常时资源泄漏
+    - 修复：所有 finally 块中对 ResultSet、Statement、Connection 均做 null 检查后关闭，关闭顺序为 ResultSet→Statement→Connection
+    - 影响文件：JdbcUtil.java
