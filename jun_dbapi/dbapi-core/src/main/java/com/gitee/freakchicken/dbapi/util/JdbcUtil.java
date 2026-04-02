@@ -33,10 +33,25 @@ public class JdbcUtil {
         return trimmed;
     }
 
-    public static ResultSet query(String sql, Connection connection) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        return resultSet;
+    public static List<JSONObject> query(String sql, Connection connection) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            List<String> columns = new ArrayList<>();
+            for (int i = 1; i <= columnCount; i++) {
+                columns.add(metaData.getColumnLabel(i));
+            }
+            List<JSONObject> list = new ArrayList<>();
+            while (rs.next()) {
+                JSONObject jo = new JSONObject();
+                for (String col : columns) {
+                    jo.put(col, rs.getObject(col));
+                }
+                list.add(jo);
+            }
+            return list;
+        }
     }
 
     public static Connection getConnection(DataSource ds) throws SQLException, ClassNotFoundException {
