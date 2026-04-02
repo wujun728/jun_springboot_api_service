@@ -264,3 +264,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 3944bef
 - 下一步建议: 继续处理剩余任务
+
+### Session #31 - T030 (2026-04-02)
+- 实现了: 移除 IPUtil 多余的 throws IOException
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/IPUtil.java
+- 修复内容: getOriginIp() 方法体内无 IOException 抛出，移除方法签名中的 throws IOException 声明及未使用的 import java.io.IOException
+- 自测结果: 通过（mvn compile 成功，调用方 ApiInterceptor 无需修改）
+- Git 提交: 682e253
+- 下一步建议: 继续处理剩余任务
