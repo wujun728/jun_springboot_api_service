@@ -245,3 +245,7 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：类型转换链中 Integer.parseInt() 对非数字字符串抛出 NumberFormatException 未捕获，dbapi 版本不支持 String 类型参数且错误信息引用了错误的对象
     - 修复：parseInt 增加 NumberFormatException 捕获并返回有意义错误信息；dbapi 版本同步支持 String 类型
     - 影响文件：PaginationPlugin.java
+21. **修复 ApiConfigService substring 越界 (T019)**
+    - 问题：type.substring(6, type.length()-1) 未检查字符串长度，短字符串（如 "Array" 或 "Array<"）会导致 StringIndexOutOfBoundsException
+    - 修复：增加 startsWith("Array<")、endsWith(">") 和 length>=8 三重检查；不符合格式的降级为"数组"
+    - 影响文件：ApiConfigService.java

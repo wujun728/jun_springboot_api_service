@@ -158,3 +158,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 016f35c
 - 下一步建议: 继续修复 T019 及后续任务
+
+### Session #18 - T019 (2026-04-02)
+- 实现了: 修复 ApiConfigService substring 越界
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/service/ApiConfigService.java
+- 修复内容: type.substring(6, type.length()-1) 前增加 startsWith("Array<")、endsWith(">") 和 length>=8 三重检查；不符合 Array<X> 格式但以 Array 开头的降级为"数组"
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 960990e
+- 下一步建议: 继续修复 T020 及后续任务
