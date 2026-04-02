@@ -194,23 +194,68 @@ public class ApiConfigController {
         }
     }
 
+    private static final long MAX_UPLOAD_SIZE = 10 * 1024 * 1024; // 10MB
+    private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList(".json");
+    private static final List<String> ALLOWED_CONTENT_TYPES = Arrays.asList(
+            "application/json", "application/octet-stream");
+
+    private ResponseDto validateUploadFile(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            return ResponseDto.fail("上传文件不能为空");
+        }
+        if (file.getSize() > MAX_UPLOAD_SIZE) {
+            return ResponseDto.fail("文件大小超过限制（最大10MB）");
+        }
+        String originalFilename = file.getOriginalFilename();
+        if (originalFilename == null || ALLOWED_EXTENSIONS.stream().noneMatch(ext -> originalFilename.toLowerCase().endsWith(ext))) {
+            return ResponseDto.fail("仅支持 .json 格式的文件");
+        }
+        String contentType = file.getContentType();
+        if (contentType != null && !ALLOWED_CONTENT_TYPES.contains(contentType)) {
+            return ResponseDto.fail("不支持的文件类型: " + contentType);
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/import", produces = "application/json;charset=UTF-8")
-    public void uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-
-        String s = IOUtils.toString(file.getInputStream(), "utf-8");
-        List<ApiConfig> configs = JSON.parseArray(s, ApiConfig.class);
-        configs.stream().forEach(t -> t.setStatus(0));
-        apiConfigService.insertBatch(configs);
-
+    public ResponseDto uploadFile(@RequestParam("file") MultipartFile file) {
+        ResponseDto validation = validateUploadFile(file);
+        if (validation != null) {
+            return validation;
+        }
+        try {
+            String s = IOUtils.toString(file.getInputStream(), "utf-8");
+            List<ApiConfig> configs = JSON.parseArray(s, ApiConfig.class);
+            if (configs == null || configs.isEmpty()) {
+                return ResponseDto.fail("文件内容为空或格式不正确");
+            }
+            configs.stream().forEach(t -> t.setStatus(0));
+            apiConfigService.insertBatch(configs);
+            return ResponseDto.successWithMsg("导入成功，共 " + configs.size() + " 条API配置");
+        } catch (Exception e) {
+            log.error("导入API配置失败", e);
+            return ResponseDto.fail("导入失败: " + e.getMessage());
+        }
     }
 
     @RequestMapping(value = "/importGroup", produces = "application/json;charset=UTF-8")
-    public void importGroup(@RequestParam("file") MultipartFile file) throws IOException {
-
-        String s = IOUtils.toString(file.getInputStream(), "utf-8");
-        List<Group> configs = JSON.parseArray(s, Group.class);
-        groupService.insertBatch(configs);
-
+    public ResponseDto importGroup(@RequestParam("file") MultipartFile file) {
+        ResponseDto validation = validateUploadFile(file);
+        if (validation != null) {
+            return validation;
+        }
+        try {
+            String s = IOUtils.toString(file.getInputStream(), "utf-8");
+            List<Group> configs = JSON.parseArray(s, Group.class);
+            if (configs == null || configs.isEmpty()) {
+                return ResponseDto.fail("文件内容为空或格式不正确");
+            }
+            groupService.insertBatch(configs);
+            return ResponseDto.successWithMsg("导入成功，共 " + configs.size() + " 条分组配置");
+        } catch (Exception e) {
+            log.error("导入分组配置失败", e);
+            return ResponseDto.fail("导入失败: " + e.getMessage());
+        }
     }
 
     @RequestMapping("/sql/execute")
