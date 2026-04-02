@@ -18,6 +18,9 @@ public class DateFormatPlugin extends TransformPlugin {
     @Override
     @SuppressWarnings("unchecked")
     public Object transform(Object data, String localPluginParam) {
+        if (!(data instanceof List)) {
+            throw new IllegalArgumentException("DateFormatPlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+        }
         List<JSONObject> list = (List<JSONObject>) data;
 
         String format = "yyyy-MM-dd HH:mm:ss";

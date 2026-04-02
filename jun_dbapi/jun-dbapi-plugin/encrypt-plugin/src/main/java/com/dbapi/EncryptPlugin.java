@@ -17,6 +17,9 @@ public class EncryptPlugin extends TransformPlugin {
     @Override
     @SuppressWarnings("unchecked")
     public Object transform(Object data, String localPluginParam) {
+        if (!(data instanceof List)) {
+            throw new IllegalArgumentException("EncryptPlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+        }
         List<JSONObject> list = (List<JSONObject>) data;
 
         String algorithm = "md5";

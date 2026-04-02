@@ -15,6 +15,9 @@ public class AdvancedTreeFormatPlugin extends TransformPlugin {
     @Override
     @SuppressWarnings("unchecked")
     public Object transform(Object data, String param) {
+        if (!(data instanceof List)) {
+            throw new IllegalArgumentException("AdvancedTreeFormatPlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+        }
         List source = (List) data;
         List<GroupingParam> groupingParams = JSON.parseArray(param, GroupingParam.class);
         List list = CustomeTreeUtils.groupData(source, groupingParams, new ArrayList());

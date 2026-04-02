@@ -13,6 +13,9 @@
 /*    */ 
 /*    */   public Object transform(Object data, String localPluginParam)
 /*    */   {
+/* 18 */     if (!(data instanceof List)) {
+/*    */       throw new IllegalArgumentException("SingleValueExtractPlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+/*    */     }
 /* 18 */     List list = (List)data;
 /* 19 */     if (list.size() == 1) {
 /* 20 */       JSONObject rowData = (JSONObject)list.get(0);

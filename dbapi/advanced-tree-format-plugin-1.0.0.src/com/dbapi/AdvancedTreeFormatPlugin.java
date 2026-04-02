@@ -15,6 +15,9 @@
 /*    */ 
 /*    */   public Object transform(Object data, String param)
 /*    */   {
+/* 20 */     if (!(data instanceof List)) {
+/*    */       throw new IllegalArgumentException("AdvancedTreeFormatPlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+/*    */     }
 /* 20 */     List source = (List)data;
 /* 21 */     List groupingParams = JSON.parseArray(param, GroupingParam.class);
 /* 22 */     List list = CustomeTreeUtils.groupData(source, groupingParams, new ArrayList());

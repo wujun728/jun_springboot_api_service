@@ -16,6 +16,9 @@ public class CamelRenamePlugin extends TransformPlugin {
     @Override
     @SuppressWarnings("unchecked")
     public Object transform(Object data, String localPluginParam) {
+        if (!(data instanceof List)) {
+            throw new IllegalArgumentException("CamelRenamePlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+        }
         List<JSONObject> list = (List<JSONObject>) data;
         List<JSONObject> result = new ArrayList<>();
         for (JSONObject row : list) {

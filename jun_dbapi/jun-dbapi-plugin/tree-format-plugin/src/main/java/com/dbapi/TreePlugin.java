@@ -26,6 +26,9 @@ public class TreePlugin extends TransformPlugin {
                 treeUtil.setParentIdField(jsonObject.getString("parentIdField"));
             }
         }
+        if (!(data instanceof List)) {
+            throw new IllegalArgumentException("TreePlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+        }
         List<JSONObject> list = (List<JSONObject>) data;
         List<JSONObject> jsonObjects = treeUtil.listToTree(list);
         return jsonObjects;

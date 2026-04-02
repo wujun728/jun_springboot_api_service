@@ -24,6 +24,9 @@
 /* 25 */         treeUtil.setIdField(jsonObject.getString("parentIdField"));
 /*    */       }
 /*    */     }
+/* 28 */     if (!(data instanceof List)) {
+/*    */       throw new IllegalArgumentException("TreePlugin expects List data, but got: " + (data == null ? "null" : data.getClass().getName()));
+/*    */     }
 /* 28 */     List list = (List)data;
 /* 29 */     List jsonObjects = treeUtil.listToTree(list);
 /* 30 */     return jsonObjects;
