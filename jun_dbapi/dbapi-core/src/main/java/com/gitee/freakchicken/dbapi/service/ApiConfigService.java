@@ -191,8 +191,10 @@ public class ApiConfigService {
                     JSONObject jsonObject = array.getJSONObject(i);
                     String name = jsonObject.getString("name");
                     String type = jsonObject.getString("type");
-                    if (type.startsWith("Array")) {
+                    if (type.startsWith("Array<") && type.endsWith(">") && type.length() >= 8) {
                         type = type.substring(6, type.length() - 1) + "数组";
+                    } else if (type.startsWith("Array")) {
+                        type = "数组";
                     }
                     String note = jsonObject.getString("note");
                     buffer.append("|").append(name).append("|").append(type).append("|").append(note).append("|\n");
