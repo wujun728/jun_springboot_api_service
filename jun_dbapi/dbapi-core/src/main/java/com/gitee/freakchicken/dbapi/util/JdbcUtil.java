@@ -152,6 +152,7 @@ public class JdbcUtil {
     public static List<JSONObject> getRDBMSColumnProperties(Connection conn, String type, String table) {
         List<JSONObject> list = new ArrayList<>();
         PreparedStatement pst = null;
+        ResultSet rs = null;
         try {
             String validTable = validateTableName(table);
             String sql;
@@ -164,7 +165,8 @@ public class JdbcUtil {
             }
             log.info(sql);
             pst = conn.prepareStatement(sql);
-            ResultSetMetaData rsd = pst.executeQuery().getMetaData();
+            rs = pst.executeQuery();
+            ResultSetMetaData rsd = rs.getMetaData();
 
             for (int i = 0; i < rsd.getColumnCount(); i++) {
                 JSONObject jsonObject = new JSONObject();
@@ -185,6 +187,8 @@ public class JdbcUtil {
             return null;
         } finally {
             try {
+                if (rs != null)
+                    rs.close();
                 if (pst != null)
                     pst.close();
                 if (conn != null)
