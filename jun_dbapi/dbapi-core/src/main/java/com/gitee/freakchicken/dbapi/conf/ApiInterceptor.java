@@ -2,6 +2,7 @@ package com.gitee.freakchicken.dbapi.conf;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.gitee.freakchicken.dbapi.dao.ApiConfigMapper;
 import com.gitee.freakchicken.dbapi.domain.DataSource;
 import com.gitee.freakchicken.dbapi.domain.Token;
 import com.gitee.freakchicken.dbapi.service.*;
@@ -102,6 +103,8 @@ public class ApiInterceptor implements HandlerInterceptor {
     TokenService tokenService;
     @Autowired
     IPService ipService;
+    @Autowired
+    ApiConfigMapper apiConfigMapper;
 
     public boolean checkIP(String originIp) {
         Map<String, String> map = ipService.detail();
@@ -135,6 +138,7 @@ public class ApiInterceptor implements HandlerInterceptor {
                 return ResponseDto.fail("该接口不存在！！");
             }
             // 如果是私有接口，校验权限
+            List<String> authGroups = null;
             if (config.getPrevilege() == 0) {
                 String tokenStr = request.getHeader("Authorization");
                 log.debug(tokenStr);
@@ -151,7 +155,7 @@ public class ApiInterceptor implements HandlerInterceptor {
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             return ResponseDto.fail("token过期，私有接口禁止访问！！");
                         } else {
-                            List<String> authGroups = tokenService.getAuthGroups(token.getId());
+                            authGroups = tokenService.getAuthGroups(token.getId());
                             if (!checkAuth(authGroups, config.getGroupId())) {
                                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                                 return ResponseDto.fail("该token无权访问此接口");
@@ -165,6 +169,16 @@ public class ApiInterceptor implements HandlerInterceptor {
             if (datasource == null) {
                 response.setStatus(500);
                 return ResponseDto.fail("数据源不存在！！");
+            }
+
+            // 数据源权限校验：私有接口需验证数据源属于 token 授权的组
+            if (config.getPrevilege() == 0 && authGroups != null) {
+                int count = apiConfigMapper.countByDatasourceAndGroups(config.getDatasourceId(), authGroups);
+                if (count == 0) {
+                    log.warn("数据源权限校验失败: datasourceId={}, authGroups={}", config.getDatasourceId(), authGroups);
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    return ResponseDto.fail("无权访问该数据源");
+                }
             }
 
             Map<String, Object> sqlParam;

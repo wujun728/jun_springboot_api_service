@@ -34,6 +34,14 @@ public interface ApiConfigMapper extends BaseMapper<ApiConfig> {
     @Select("select count(1) from api_config where datasource_id = #{id}")
     int countByDatasoure(String id);
 
+    @Select("<script>" +
+            "select count(1) from api_config where datasource_id = #{datasourceId} and group_id in " +
+            "<foreach collection='groupIds' item='gid' open='(' separator=',' close=')'>" +
+            "#{gid}" +
+            "</foreach>" +
+            "</script>")
+    int countByDatasourceAndGroups(@Param("datasourceId") String datasourceId, @Param("groupIds") List<String> groupIds);
+
     @Select("select count(1) from api_config where group_id = #{id}")
     int selectCountByGroup(String id);
 
