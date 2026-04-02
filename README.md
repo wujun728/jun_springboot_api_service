@@ -186,3 +186,8 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
    - 问题：Cache.java 中 status 字段是普通 Map 声明且未初始化，多线程并发读写无同步保护
    - 修复：将 status 字段类型改为 ConcurrentHashMap 并直接初始化，确保线程安全
    - 影响文件：Cache.java
+
+9. **修复 IPService 竞态条件 (T007)**
+   - 问题：IPService.detail() 中对 Cache.status 的 check-then-act 模式无同步保护，多线程可同时进入初始化块导致重复查询
+   - 修复：Cache.status 加 volatile 关键字保证可见性；detail() 方法使用 double-checked locking 防止并发重复初始化
+   - 影响文件：Cache.java, IPService.java
