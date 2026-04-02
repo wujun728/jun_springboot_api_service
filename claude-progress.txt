@@ -64,3 +64,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 1c1ca54
 - 下一步建议: 继续修复 T007 及后续任务
+
+### Session #5 - T007 (2026-04-02)
+- 实现了: 修复 IPService 竞态条件
+- 修改的文件: Cache.java (加 volatile), IPService.java (加 double-checked locking)
+- 修复内容: Cache.status 加 volatile 关键字保证多线程可见性；IPService.detail() 中对 Cache.status 的 check-then-act 模式使用 double-checked locking 加锁保护，防止并发重复初始化
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: e2c6d11
+- 下一步建议: 继续修复 T008 及后续任务
