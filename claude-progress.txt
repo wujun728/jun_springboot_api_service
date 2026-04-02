@@ -24,3 +24,11 @@
 - 自测结果: 通过（编译成功，白名单正则可拦截特殊字符表名）
 - Git 提交: 180ae07
 - 下一步建议: 继续修复 T002 及后续 CRITICAL/HIGH 级别任务
+
+### Session #2 - T002 (2026-04-02)
+- 实现了: 修复 JdbcUtil.query() 资源泄漏
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JdbcUtil.java
+- 修复内容: 将 query() 从返回 ResultSet 重构为返回 List<JSONObject>，使用 try-with-resources 确保 PreparedStatement 和 ResultSet 正确关闭
+- 自测结果: 通过（mvn compile 成功，无调用方需要同步修改）
+- Git 提交: 650a3e9
+- 下一步建议: 继续修复 T003 及后续任务
