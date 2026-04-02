@@ -1,0 +1,24 @@
+# my-project - 进度跟踪
+
+## 项目概述
+为 jun_api_service 仓库（包含三个独立低代码 API 生成平台）生成完整的项目描述 Markdown 文档。
+文档涵盖项目总览、各子项目详述、构建部署指南、API使用指南、架构设计等。
+
+## 架构决策
+- 文档输出目录：docs/project-description/
+- 主文档 + 多个子文档的结构，通过主文档导航
+- 使用 Markdown 格式，兼容 GitHub/Gitee 渲染
+- 文档语言：中文
+
+## 会话记录
+
+### Session #1 - 规划 (2026-04-02)
+- 创建了 task_list.json（共 35 个任务）
+- 创建了 init.sh / init.bat
+- 状态: 规划完成
+
+### 任务分布
+- setup: 5 个（信息收集）
+- functional: 25 个（文档编写）
+- integration: 4 个（整合检查）
+- testing: 1 个（最终验证）
