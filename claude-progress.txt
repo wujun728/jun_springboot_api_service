@@ -142,3 +142,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: f48d3a8
 - 下一步建议: 继续修复 T017 及后续任务
+
+### Session #16 - T017 (2026-04-02)
+- 实现了: 修复分页插件参数校验
+- 修改的文件: PaginationPlugin.java (jun-dbapi-plugin 和 dbapi/pagination-plugin-1.0.0.src 两处)
+- 修复内容: pageNo 和 pageSize 解析后增加 >= 1 校验，非法值抛出包含参数名和当前值的 RuntimeException
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: b2e9e3d
+- 下一步建议: 继续修复 T018 及后续任务
