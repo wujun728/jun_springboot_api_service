@@ -206,3 +206,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: dbb9edc
 - 下一步建议: 继续修复 T023 及后续任务
+
+### Session #24 - T023 (2026-04-02)
+- 实现了: 优化 TreeUtil O(n²) 算法为 O(n)
+- 修改的文件: jun_dbapi/jun-dbapi-plugin/tree-format-plugin/src/main/java/com/dbapi/TreeUtil.java, dbapi/tree-format-plugin-1.0.0.src/com/dbapi/TreeUtil.java
+- 修复内容: 将递归嵌套循环 findChildren O(n²) 改为两遍遍历：第一遍用 HashMap 建立 id→node 索引，第二遍通过 Map.get() O(1) 查找父节点并挂载子节点
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 8a8cb8a
+- 下一步建议: 继续修复剩余任务
