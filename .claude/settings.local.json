@@ -4,7 +4,13 @@
       "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\")",
       "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\\\\sa-frame\")",
       "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\\\\static\")",
-      "Bash(nginx.exe -s reload)"
+      "Bash(nginx.exe -s reload)",
+      "Bash(python test_log_format.py)",
+      "Bash(python main.py --status)",
+      "Bash(python long-running-agent/main.py --status)",
+      "Bash(python long-running-agent/main.py --report)",
+      "Bash(python test_model_provider.py)",
+      "Bash(python test_all.py)"
     ]
   }
 }

@@ -73,7 +73,24 @@ def format_report(report):
         lines.append('  已完成的任务:')
         for t in report['tasks']:
             if t['status'] == 'passed':
+                # 计算任务耗时
+                duration_str = '未知'
+                if t.get('started_at') and t.get('completed_at'):
+                    from datetime import datetime
+                    try:
+                        start = datetime.fromisoformat(t['started_at'])
+                        end = datetime.fromisoformat(t['completed_at'])
+                        duration = (end - start).total_seconds()
+                        duration_str = f"{duration:.2f}秒"
+                    except (ValueError, TypeError):
+                        pass
+
+                # 获取评估结果
+                score = t.get('evaluation', {}).get('score', 0) if t.get('evaluation') else 0
+                passed_str = '通过' if t['status'] == 'passed' else '未通过'
+
                 lines.append(f"    + [{t['id']}] {t['title']}")
+                lines.append(f"      状态: {passed_str} | 得分: {score} | 耗时: {duration_str}")
     if report['skipped'] > 0:
         lines.append('  已跳过的任务 (失败超过重试上限):')
         for t in report['tasks']:
@@ -175,6 +192,12 @@ def main():
             print(f"  剩余: {task_mgr.pending_count()} 个任务")
             print(f"{'='*60}\n")
 
+            # 记录任务开始时间
+            from datetime import datetime
+            task_start_time = datetime.now()
+            start_time_str = task_start_time.strftime('%Y-%m-%d %H:%M:%S')
+            print(f"  开始时间: {start_time_str}")
+
             # Worker 执行
             logger.event('worker_start', {
                 'task_id': task_id, 'session': session, 'attempt': attempt
@@ -201,6 +224,14 @@ def main():
                     'checks': [],
                 })
                 task_mgr.save()
+
+                # 计算任务耗时
+                task_end_time = datetime.now()
+                end_time_str = task_end_time.strftime('%Y-%m-%d %H:%M:%S')
+                duration = (task_end_time - task_start_time).total_seconds()
+                print(f"  结束时间: {end_time_str}")
+                print(f"  任务耗时: {duration:.2f}秒")
+
                 time.sleep(config.cooldown_seconds)
                 continue
 
@@ -218,6 +249,14 @@ def main():
                 'passed': passed,
                 'score': score,
             })
+
+            # 计算任务耗时
+            task_end_time = datetime.now()
+            end_time_str = task_end_time.strftime('%Y-%m-%d %H:%M:%S')
+            duration = (task_end_time - task_start_time).total_seconds()
+
+            print(f"  结束时间: {end_time_str}")
+            print(f"  任务耗时: {duration:.2f}秒")
 
             if passed:
                 task_mgr.mark_passed(task_id, eval_result)

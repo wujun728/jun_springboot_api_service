@@ -177,6 +177,31 @@ class TaskManager:
             bar = '#' * bar_len + '.' * (20 - bar_len)
             lines.append(f"  {c:<18} {done}/{tot:<4} [{bar}]")
 
+        # 添加已完成任务的详细信息
+        if passed > 0:
+            lines.append('')
+            lines.append('  已完成任务详情:')
+            for t in self.tasks:
+                if t['status'] == 'passed':
+                    # 计算任务耗时
+                    duration_str = '未知'
+                    if t.get('started_at') and t.get('completed_at'):
+                        try:
+                            start = datetime.fromisoformat(t['started_at'])
+                            end = datetime.fromisoformat(t['completed_at'])
+                            duration = (end - start).total_seconds()
+                            duration_str = f"{duration:.2f}秒"
+                        except (ValueError, TypeError):
+                            pass
+
+                    # 获取评估结果
+                    score = t.get('evaluation', {}).get('score', 0) if t.get('evaluation') else 0
+                    passed_str = '✓'
+
+                    title = t.get('title', t.get('description', ''))[:50]
+                    lines.append(f"    {passed_str} [{t['id']}] {title}")
+                    lines.append(f"      得分: {score}/100 | 耗时: {duration_str}")
+
         return '\n'.join(lines)
 
     def generate_report(self) -> dict:
@@ -191,6 +216,9 @@ class TaskManager:
                     'title': t.get('title', t.get('description', '')),
                     'status': t['status'],
                     'attempts': t.get('attempts', 0),
+                    'started_at': t.get('started_at'),
+                    'completed_at': t.get('completed_at'),
+                    'evaluation': t.get('evaluation'),
                 }
                 for t in self.tasks
             ]

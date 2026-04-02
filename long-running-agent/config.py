@@ -23,6 +23,7 @@ class Config:
 
         # 智能体参数
         agent = data.get('agent', {})
+        self.model_provider = agent.get('model_provider', 'claude')  # 模型提供者: claude, qodercli
         self.model = agent.get('model', 'opus')
         self.planner_max_turns = agent.get('planner_max_turns', 200)
         self.worker_max_turns = agent.get('worker_max_turns', 150)
@@ -30,6 +31,12 @@ class Config:
         self.max_sessions = agent.get('max_sessions', 50)
         self.cooldown_seconds = agent.get('cooldown_seconds', 5)
         self.task_timeout_seconds = agent.get('task_timeout_seconds', 600)
+
+        # 模型提供者特定配置
+        self.qoder_config = agent.get('qoder_config', {})
+        self.deepseek_config = agent.get('deepseek_config', {})
+        self.glm_config = agent.get('glm_config', {})
+        self.doubao_config = agent.get('doubao_config', {})
 
         # 重试
         retry = data.get('retry', {})

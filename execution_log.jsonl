@@ -16,3 +16,129 @@
 {"ts": "2026-04-02T15:58:10", "event": "eval_start", "data": {"task_id": "T003"}}
 {"ts": "2026-04-02T15:58:54", "event": "eval_done", "data": {"task_id": "T003", "passed": true, "score": 95}}
 {"ts": "2026-04-02T15:58:59", "event": "worker_start", "data": {"task_id": "T004", "session": 2, "attempt": 1}}
+{"ts": "2026-04-02T16:01:03", "event": "worker_done", "data": {"task_id": "T004", "success": true}}
+{"ts": "2026-04-02T16:01:03", "event": "eval_start", "data": {"task_id": "T004"}}
+{"ts": "2026-04-02T16:01:34", "event": "eval_done", "data": {"task_id": "T004", "passed": true, "score": 90}}
+{"ts": "2026-04-02T16:01:39", "event": "worker_start", "data": {"task_id": "T005", "session": 3, "attempt": 1}}
+{"ts": "2026-04-02T16:05:39", "event": "worker_done", "data": {"task_id": "T005", "success": true}}
+{"ts": "2026-04-02T16:05:39", "event": "eval_start", "data": {"task_id": "T005"}}
+{"ts": "2026-04-02T16:06:17", "event": "eval_done", "data": {"task_id": "T005", "passed": true, "score": 88}}
+{"ts": "2026-04-02T16:06:22", "event": "worker_start", "data": {"task_id": "T006", "session": 4, "attempt": 1}}
+{"ts": "2026-04-02T16:08:19", "event": "worker_done", "data": {"task_id": "T006", "success": true}}
+{"ts": "2026-04-02T16:08:19", "event": "eval_start", "data": {"task_id": "T006"}}
+{"ts": "2026-04-02T16:09:03", "event": "eval_done", "data": {"task_id": "T006", "passed": true, "score": 95}}
+{"ts": "2026-04-02T16:09:08", "event": "worker_start", "data": {"task_id": "T007", "session": 5, "attempt": 1}}
+{"ts": "2026-04-02T16:11:57", "event": "worker_done", "data": {"task_id": "T007", "success": true}}
+{"ts": "2026-04-02T16:11:57", "event": "eval_start", "data": {"task_id": "T007"}}
+{"ts": "2026-04-02T16:12:37", "event": "eval_done", "data": {"task_id": "T007", "passed": true, "score": 92}}
+{"ts": "2026-04-02T16:12:42", "event": "worker_start", "data": {"task_id": "T008", "session": 6, "attempt": 1}}
+{"ts": "2026-04-02T16:17:04", "event": "worker_done", "data": {"task_id": "T008", "success": true}}
+{"ts": "2026-04-02T16:17:04", "event": "eval_start", "data": {"task_id": "T008"}}
+{"ts": "2026-04-02T16:18:29", "event": "eval_done", "data": {"task_id": "T008", "passed": true, "score": 90}}
+{"ts": "2026-04-02T16:18:34", "event": "worker_start", "data": {"task_id": "T009", "session": 7, "attempt": 1}}
+{"ts": "2026-04-02T16:25:29", "event": "worker_done", "data": {"task_id": "T009", "success": true}}
+{"ts": "2026-04-02T16:25:29", "event": "eval_start", "data": {"task_id": "T009"}}
+{"ts": "2026-04-02T16:26:39", "event": "eval_done", "data": {"task_id": "T009", "passed": true, "score": 88}}
+{"ts": "2026-04-02T16:26:44", "event": "worker_start", "data": {"task_id": "T010", "session": 8, "attempt": 1}}
+{"ts": "2026-04-02T16:30:14", "event": "worker_done", "data": {"task_id": "T010", "success": true}}
+{"ts": "2026-04-02T16:30:14", "event": "eval_start", "data": {"task_id": "T010"}}
+{"ts": "2026-04-02T16:31:16", "event": "eval_done", "data": {"task_id": "T010", "passed": true, "score": 88}}
+{"ts": "2026-04-02T16:31:21", "event": "worker_start", "data": {"task_id": "T011", "session": 9, "attempt": 1}}
+{"ts": "2026-04-02T16:33:15", "event": "worker_done", "data": {"task_id": "T011", "success": true}}
+{"ts": "2026-04-02T16:33:15", "event": "eval_start", "data": {"task_id": "T011"}}
+{"ts": "2026-04-02T16:33:56", "event": "eval_done", "data": {"task_id": "T011", "passed": true, "score": 95}}
+{"ts": "2026-04-02T16:34:01", "event": "worker_start", "data": {"task_id": "T012", "session": 10, "attempt": 1}}
+{"ts": "2026-04-02T16:36:22", "event": "worker_done", "data": {"task_id": "T012", "success": true}}
+{"ts": "2026-04-02T16:36:22", "event": "eval_start", "data": {"task_id": "T012"}}
+{"ts": "2026-04-02T16:37:12", "event": "warn", "data": {"message": "无法解析 Evaluator 输出，默认为失败"}}
+{"ts": "2026-04-02T16:37:12", "event": "eval_done", "data": {"task_id": "T012", "passed": false, "score": 0}}
+{"ts": "2026-04-02T16:37:17", "event": "worker_start", "data": {"task_id": "T012", "session": 11, "attempt": 2}}
+{"ts": "2026-04-02T16:38:15", "event": "worker_done", "data": {"task_id": "T012", "success": true}}
+{"ts": "2026-04-02T16:38:15", "event": "eval_start", "data": {"task_id": "T012"}}
+{"ts": "2026-04-02T16:39:03", "event": "eval_done", "data": {"task_id": "T012", "passed": true, "score": 82}}
+{"ts": "2026-04-02T16:39:08", "event": "worker_start", "data": {"task_id": "T013", "session": 12, "attempt": 1}}
+{"ts": "2026-04-02T16:41:23", "event": "worker_done", "data": {"task_id": "T013", "success": true}}
+{"ts": "2026-04-02T16:41:23", "event": "eval_start", "data": {"task_id": "T013"}}
+{"ts": "2026-04-02T16:42:10", "event": "eval_done", "data": {"task_id": "T013", "passed": true, "score": 95}}
+{"ts": "2026-04-02T16:42:15", "event": "worker_start", "data": {"task_id": "T014", "session": 13, "attempt": 1}}
+{"ts": "2026-04-02T16:43:57", "event": "worker_done", "data": {"task_id": "T014", "success": true}}
+{"ts": "2026-04-02T16:43:57", "event": "eval_start", "data": {"task_id": "T014"}}
+{"ts": "2026-04-02T16:44:27", "event": "eval_done", "data": {"task_id": "T014", "passed": true, "score": 92}}
+{"ts": "2026-04-02T16:44:32", "event": "worker_start", "data": {"task_id": "T015", "session": 14, "attempt": 1}}
+{"ts": "2026-04-02T16:47:37", "event": "worker_done", "data": {"task_id": "T015", "success": true}}
+{"ts": "2026-04-02T16:47:37", "event": "eval_start", "data": {"task_id": "T015"}}
+{"ts": "2026-04-02T16:48:19", "event": "eval_done", "data": {"task_id": "T015", "passed": true, "score": 92}}
+{"ts": "2026-04-02T16:48:24", "event": "worker_start", "data": {"task_id": "T016", "session": 15, "attempt": 1}}
+{"ts": "2026-04-02T16:51:47", "event": "worker_done", "data": {"task_id": "T016", "success": true}}
+{"ts": "2026-04-02T16:51:47", "event": "eval_start", "data": {"task_id": "T016"}}
+{"ts": "2026-04-02T16:53:16", "event": "eval_done", "data": {"task_id": "T016", "passed": true, "score": 95}}
+{"ts": "2026-04-02T16:53:21", "event": "worker_start", "data": {"task_id": "T017", "session": 16, "attempt": 1}}
+{"ts": "2026-04-02T16:55:41", "event": "worker_done", "data": {"task_id": "T017", "success": true}}
+{"ts": "2026-04-02T16:55:41", "event": "eval_start", "data": {"task_id": "T017"}}
+{"ts": "2026-04-02T16:56:13", "event": "eval_done", "data": {"task_id": "T017", "passed": true, "score": 95}}
+{"ts": "2026-04-02T16:56:18", "event": "worker_start", "data": {"task_id": "T018", "session": 17, "attempt": 1}}
+{"ts": "2026-04-02T16:58:47", "event": "worker_done", "data": {"task_id": "T018", "success": true}}
+{"ts": "2026-04-02T16:58:47", "event": "eval_start", "data": {"task_id": "T018"}}
+{"ts": "2026-04-02T16:59:21", "event": "eval_done", "data": {"task_id": "T018", "passed": true, "score": 90}}
+{"ts": "2026-04-02T16:59:26", "event": "worker_start", "data": {"task_id": "T019", "session": 18, "attempt": 1}}
+{"ts": "2026-04-02T17:01:59", "event": "worker_done", "data": {"task_id": "T019", "success": true}}
+{"ts": "2026-04-02T17:01:59", "event": "eval_start", "data": {"task_id": "T019"}}
+{"ts": "2026-04-02T17:02:29", "event": "eval_done", "data": {"task_id": "T019", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:02:34", "event": "worker_start", "data": {"task_id": "T020", "session": 19, "attempt": 1}}
+{"ts": "2026-04-02T17:05:32", "event": "worker_done", "data": {"task_id": "T020", "success": true}}
+{"ts": "2026-04-02T17:05:32", "event": "eval_start", "data": {"task_id": "T020"}}
+{"ts": "2026-04-02T17:06:05", "event": "eval_done", "data": {"task_id": "T020", "passed": true, "score": 90}}
+{"ts": "2026-04-02T17:06:10", "event": "worker_start", "data": {"task_id": "T021", "session": 20, "attempt": 1}}
+{"ts": "2026-04-02T17:08:37", "event": "worker_done", "data": {"task_id": "T021", "success": true}}
+{"ts": "2026-04-02T17:08:37", "event": "eval_start", "data": {"task_id": "T021"}}
+{"ts": "2026-04-02T17:09:38", "event": "eval_done", "data": {"task_id": "T021", "passed": true, "score": 85}}
+{"ts": "2026-04-02T17:09:43", "event": "worker_start", "data": {"task_id": "T022", "session": 21, "attempt": 1}}
+{"ts": "2026-04-02T17:15:32", "event": "worker_done", "data": {"task_id": "T022", "success": true}}
+{"ts": "2026-04-02T17:15:32", "event": "eval_start", "data": {"task_id": "T022"}}
+{"ts": "2026-04-02T17:16:11", "event": "eval_done", "data": {"task_id": "T022", "passed": true, "score": 85}}
+{"ts": "2026-04-02T17:16:16", "event": "worker_start", "data": {"task_id": "T026", "session": 22, "attempt": 1}}
+{"ts": "2026-04-02T17:18:45", "event": "worker_done", "data": {"task_id": "T026", "success": true}}
+{"ts": "2026-04-02T17:18:45", "event": "eval_start", "data": {"task_id": "T026"}}
+{"ts": "2026-04-02T17:19:16", "event": "eval_done", "data": {"task_id": "T026", "passed": true, "score": 92}}
+{"ts": "2026-04-02T17:19:21", "event": "worker_start", "data": {"task_id": "T027", "session": 23, "attempt": 1}}
+{"ts": "2026-04-02T17:22:13", "event": "worker_done", "data": {"task_id": "T027", "success": true}}
+{"ts": "2026-04-02T17:22:13", "event": "eval_start", "data": {"task_id": "T027"}}
+{"ts": "2026-04-02T17:22:44", "event": "eval_done", "data": {"task_id": "T027", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:22:49", "event": "worker_start", "data": {"task_id": "T023", "session": 24, "attempt": 1}}
+{"ts": "2026-04-02T17:24:56", "event": "worker_done", "data": {"task_id": "T023", "success": true}}
+{"ts": "2026-04-02T17:24:56", "event": "eval_start", "data": {"task_id": "T023"}}
+{"ts": "2026-04-02T17:25:23", "event": "eval_done", "data": {"task_id": "T023", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:25:28", "event": "worker_start", "data": {"task_id": "T024", "session": 25, "attempt": 1}}
+{"ts": "2026-04-02T17:27:33", "event": "worker_done", "data": {"task_id": "T024", "success": true}}
+{"ts": "2026-04-02T17:27:33", "event": "eval_start", "data": {"task_id": "T024"}}
+{"ts": "2026-04-02T17:28:22", "event": "eval_done", "data": {"task_id": "T024", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:28:27", "event": "worker_start", "data": {"task_id": "T028", "session": 26, "attempt": 1}}
+{"ts": "2026-04-02T17:31:39", "event": "worker_done", "data": {"task_id": "T028", "success": true}}
+{"ts": "2026-04-02T17:31:39", "event": "eval_start", "data": {"task_id": "T028"}}
+{"ts": "2026-04-02T17:32:11", "event": "eval_done", "data": {"task_id": "T028", "passed": true, "score": 90}}
+{"ts": "2026-04-02T17:32:16", "event": "worker_start", "data": {"task_id": "T029", "session": 27, "attempt": 1}}
+{"ts": "2026-04-02T17:34:15", "event": "worker_done", "data": {"task_id": "T029", "success": true}}
+{"ts": "2026-04-02T17:34:15", "event": "eval_start", "data": {"task_id": "T029"}}
+{"ts": "2026-04-02T17:34:49", "event": "eval_done", "data": {"task_id": "T029", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:34:54", "event": "worker_start", "data": {"task_id": "T031", "session": 28, "attempt": 1}}
+{"ts": "2026-04-02T17:38:30", "event": "worker_done", "data": {"task_id": "T031", "success": true}}
+{"ts": "2026-04-02T17:38:30", "event": "eval_start", "data": {"task_id": "T031"}}
+{"ts": "2026-04-02T17:39:22", "event": "eval_done", "data": {"task_id": "T031", "passed": true, "score": 92}}
+{"ts": "2026-04-02T17:39:27", "event": "worker_start", "data": {"task_id": "T032", "session": 29, "attempt": 1}}
+{"ts": "2026-04-02T17:42:56", "event": "worker_done", "data": {"task_id": "T032", "success": true}}
+{"ts": "2026-04-02T17:42:56", "event": "eval_start", "data": {"task_id": "T032"}}
+{"ts": "2026-04-02T17:43:42", "event": "eval_done", "data": {"task_id": "T032", "passed": true, "score": 90}}
+{"ts": "2026-04-02T17:43:47", "event": "worker_start", "data": {"task_id": "T025", "session": 30, "attempt": 1}}
+{"ts": "2026-04-02T17:45:07", "event": "worker_done", "data": {"task_id": "T025", "success": true}}
+{"ts": "2026-04-02T17:45:07", "event": "eval_start", "data": {"task_id": "T025"}}
+{"ts": "2026-04-02T17:45:45", "event": "eval_done", "data": {"task_id": "T025", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:45:50", "event": "worker_start", "data": {"task_id": "T030", "session": 31, "attempt": 1}}
+{"ts": "2026-04-02T17:47:49", "event": "worker_done", "data": {"task_id": "T030", "success": true}}
+{"ts": "2026-04-02T17:47:49", "event": "eval_start", "data": {"task_id": "T030"}}
+{"ts": "2026-04-02T17:48:24", "event": "eval_done", "data": {"task_id": "T030", "passed": true, "score": 95}}
+{"ts": "2026-04-02T17:48:29", "event": "worker_start", "data": {"task_id": "T033", "session": 32, "attempt": 1}}
+{"ts": "2026-04-02T17:50:45", "event": "worker_done", "data": {"task_id": "T033", "success": true}}
+{"ts": "2026-04-02T17:50:45", "event": "eval_start", "data": {"task_id": "T033"}}
+{"ts": "2026-04-02T17:57:45", "event": "eval_done", "data": {"task_id": "T033", "passed": true, "score": 85}}
+{"ts": "2026-04-02T17:57:50", "event": "all_done", "data": {"passed": 33, "skipped": 0}}
+{"ts": "2026-04-02T17:57:50", "event": "session_end", "data": {"total": 33, "passed": 33, "skipped": 0, "pending": 0, "tasks": [{"id": "T001", "title": "修复 JdbcUtil SQL 注入漏洞", "status": "passed", "attempts": 1}, {"id": "T002", "title": "修复 JdbcUtil.query() 资源泄漏", "status": "passed", "attempts": 1}, {"id": "T003", "title": "修复 getRDBMSColumnProperties ResultSet 泄漏", "status": "passed", "attempts": 2}, {"id": "T004", "title": "修复 PoolManager NPE 风险", "status": "passed", "attempts": 1}, {"id": "T005", "title": "修复 JWT 使用密码作为密钥的问题", "status": "passed", "attempts": 1}, {"id": "T006", "title": "修复 Cache.status 线程安全问题", "status": "passed", "attempts": 1}, {"id": "T007", "title": "修复 IPService 竞态条件", "status": "passed", "attempts": 1}, {"id": "T008", "title": "修复 JwtUtils 弱密钥问题", "status": "passed", "attempts": 1}, {"id": "T009", "title": "替换 DES 加密为 AES", "status": "passed", "attempts": 1}, {"id": "T010", "title": "替换 MD5 密码哈希为 BCrypt", "status": "passed", "attempts": 1}, {"id": "T011", "title": "修复 HttpUtil 资源泄漏", "status": "passed", "attempts": 1}, {"id": "T012", "title": "修复 JwtUtils 空 catch 块", "status": "passed", "attempts": 2}, {"id": "T013", "title": "修复 UUIDUtil 弱 ID 生成", "status": "passed", "attempts": 1}, {"id": "T014", "title": "修复 IPUtil 重复条件判断", "status": "passed", "attempts": 1}, {"id": "T015", "title": "修复 ApiService 类型转换异常", "status": "passed", "attempts": 1}, {"id": "T016", "title": "修复 JdbcUtil finally 块连接关闭 NPE", "status": "passed", "attempts": 1}, {"id": "T017", "title": "修复分页插件参数校验", "status": "passed", "attempts": 1}, {"id": "T018", "title": "修复 PaginationPlugin NPE 风险", "status": "passed", "attempts": 1}, {"id": "T019", "title": "修复 ApiConfigService substring 越界", "status": "passed", "attempts": 1}, {"id": "T020", "title": "修复 DataSourceController 文件上传校验", "status": "passed", "attempts": 1}, {"id": "T021", "title": "修复 ApiConfigController 文件上传校验", "status": "passed", "attempts": 1}, {"id": "T022", "title": "修复 ApiInterceptor IDOR 漏洞", "status": "passed", "attempts": 1}, {"id": "T023", "title": "优化 TreeUtil O(n²) 算法", "status": "passed", "attempts": 1}, {"id": "T024", "title": "替换 e.printStackTrace() 为日志框架", "status": "passed", "attempts": 1}, {"id": "T025", "title": "修复 IPUtil 不必要的类型转换", "status": "passed", "attempts": 1}, {"id": "T026", "title": "修复 SignPlugin NumberFormatException", "status": "passed", "attempts": 1}, {"id": "T027", "title": "修复 HttpUtil 缺少超时配置", "status": "passed", "attempts": 1}, {"id": "T028", "title": "修复插件中的未检查类型转换", "status": "passed", "attempts": 1}, {"id": "T029", "title": "修复 PluginConf InputStream 泄漏", "status": "passed", "attempts": 1}, {"id": "T030", "title": "移除 IPUtil 多余的 throws IOException", "status": "passed", "attempts": 1}, {"id": "T031", "title": "为 JdbcUtil 编写单元测试", "status": "passed", "attempts": 1}, {"id": "T032", "title": "为安全相关修复编写测试", "status": "passed", "attempts": 1}, {"id": "T033", "title": "全量编译和冒烟测试", "status": "passed", "attempts": 1}]}}

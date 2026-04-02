@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
-"""Claude CLI 调用封装 — 驱动 Planner/Worker/Evaluator"""
+"""AI 模型调用封装 — 驱动 Planner/Worker/Evaluator"""
 import json
 import os
 import re
-import subprocess
 
 from config import Config
 from prompt_renderer import render_prompt, build_variables
 from logger import ExecutionLogger
+from model_provider import create_model_provider
 
 
 class AgentRunner:
-    """封装对 claude CLI 的调用"""
+    """封装对 AI 模型的调用（支持 Claude、Qoder 等）"""
 
     def __init__(self, config: Config, logger: ExecutionLogger):
         self.config = config
         self.logger = logger
         self.prompts_dir = os.path.join(config.framework_dir, 'prompts')
         os.makedirs(config.log_dir_path, exist_ok=True)
+
+        # 创建模型提供者
+        self.model_provider = create_model_provider(config, logger)
 
     # ---- Planner ----
 
@@ -28,7 +31,7 @@ class AgentRunner:
             os.path.join(self.prompts_dir, 'planner.md'), variables
         )
         log_file = os.path.join(self.config.log_dir_path, 'planner.log')
-        self._run_claude(prompt, self.config.planner_max_turns, log_file)
+        self._run_model(prompt, self.config.planner_max_turns, log_file)
 
     # ---- Worker ----
 
@@ -60,7 +63,7 @@ class AgentRunner:
             self.config.log_dir_path,
             f"worker-{task['id']}-s{session}.log"
         )
-        return self._run_claude(prompt, self.config.worker_max_turns, log_file)
+        return self._run_model(prompt, self.config.worker_max_turns, log_file)
 
     # ---- Evaluator ----
 
@@ -80,7 +83,7 @@ class AgentRunner:
         log_file = os.path.join(
             self.config.log_dir_path, f"eval-{task['id']}.log"
         )
-        result = self._run_claude(prompt, self.config.evaluator_max_turns, log_file)
+        result = self._run_model(prompt, self.config.evaluator_max_turns, log_file)
         return self._parse_evaluation(result, log_file)
 
     def _parse_evaluation(self, result: dict, log_file: str) -> dict:
@@ -129,53 +132,6 @@ class AgentRunner:
 
     # ---- 底层调用 ----
 
-    def _run_claude(self, prompt: str, max_turns: int, log_file: str) -> dict:
-        """调用 claude CLI 并返回结果"""
-        cmd = [
-            'claude', '-p',
-            '--model', self.config.model,
-            '--output-format', 'json',
-            '--dangerously-skip-permissions',
-        ]
-        try:
-            proc = subprocess.run(
-                cmd,
-                input=prompt,
-                capture_output=True,
-                text=True,
-                encoding='utf-8',
-                errors='replace',
-                timeout=self.config.task_timeout_seconds,
-                cwd=self.config.work_directory,
-                shell=(os.name == 'nt'),  # Windows 需要 shell=True 来找到 .cmd
-            )
-            raw_output = proc.stdout or ''
-            # 保存完整输出
-            with open(log_file, 'w', encoding='utf-8') as f:
-                f.write(raw_output)
-                if proc.stderr:
-                    f.write('\n--- STDERR ---\n')
-                    f.write(proc.stderr)
-
-            # 尝试从 JSON 输出中提取 result 字段
-            output_text = raw_output
-            try:
-                json_resp = json.loads(raw_output)
-                output_text = json_resp.get('result', raw_output)
-            except (json.JSONDecodeError, TypeError):
-                pass
-
-            return {
-                'success': proc.returncode == 0,
-                'output': output_text,
-                'exit_code': proc.returncode,
-            }
-        except subprocess.TimeoutExpired:
-            self.logger.error(f"Claude CLI 超时 ({self.config.task_timeout_seconds}s)")
-            return {'success': False, 'output': '', 'error': 'timeout'}
-        except FileNotFoundError:
-            self.logger.error("claude 命令未找到，请确认 Claude Code CLI 已安装")
-            return {'success': False, 'output': '', 'error': 'claude_not_found'}
-        except Exception as e:
-            self.logger.error(f"调用 Claude CLI 异常: {e}")
-            return {'success': False, 'output': '', 'error': str(e)}
+    def _run_model(self, prompt: str, max_turns: int, log_file: str) -> dict:
+        """调用 AI 模型并返回结果"""
+        return self.model_provider.invoke(prompt, max_turns, log_file)
