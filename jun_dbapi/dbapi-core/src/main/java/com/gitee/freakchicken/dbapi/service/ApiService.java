@@ -39,12 +39,20 @@ public class ApiService {
                     if (values.length > 0) {
                         switch (type) {
                             case "Array<double>":
-                                List<Double> collect = list.stream().map(value -> Double.valueOf(value)).collect(Collectors.toList());
-                                map.put(name, collect);
+                                try {
+                                    List<Double> collect = list.stream().map(value -> Double.valueOf(value)).collect(Collectors.toList());
+                                    map.put(name, collect);
+                                } catch (NumberFormatException e) {
+                                    throw new IllegalArgumentException("参数 '" + name + "' 包含非法的浮点数值", e);
+                                }
                                 break;
                             case "Array<bigint>":
-                                List<Long> longs = list.stream().map(value -> Long.valueOf(value)).collect(Collectors.toList());
-                                map.put(name, longs);
+                                try {
+                                    List<Long> longs = list.stream().map(value -> Long.valueOf(value)).collect(Collectors.toList());
+                                    map.put(name, longs);
+                                } catch (NumberFormatException e) {
+                                    throw new IllegalArgumentException("参数 '" + name + "' 包含非法的整数值", e);
+                                }
                                 break;
                             case "Array<string>":
                             case "Array<date>":
@@ -64,12 +72,20 @@ public class ApiService {
 
                     switch (type) {
                         case "double":
-                            Double v = Double.valueOf(value);
-                            map.put(name, v);
+                            try {
+                                Double v = Double.valueOf(value);
+                                map.put(name, v);
+                            } catch (NumberFormatException e) {
+                                throw new IllegalArgumentException("参数 '" + name + "' 的值 '" + value + "' 不是合法的浮点数", e);
+                            }
                             break;
                         case "bigint":
-                            Long longV = Long.valueOf(value);
-                            map.put(name, longV);
+                            try {
+                                Long longV = Long.valueOf(value);
+                                map.put(name, longV);
+                            } catch (NumberFormatException e) {
+                                throw new IllegalArgumentException("参数 '" + name + "' 的值 '" + value + "' 不是合法的整数", e);
+                            }
                             break;
                         case "string":
                         case "date":

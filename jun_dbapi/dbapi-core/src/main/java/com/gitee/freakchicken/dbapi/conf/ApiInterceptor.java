@@ -167,7 +167,14 @@ public class ApiInterceptor implements HandlerInterceptor {
                 return ResponseDto.fail("数据源不存在！！");
             }
 
-            Map<String, Object> sqlParam = apiService.getSqlParam(request, config);
+            Map<String, Object> sqlParam;
+            try {
+                sqlParam = apiService.getSqlParam(request, config);
+            } catch (IllegalArgumentException e) {
+                log.warn("请求参数类型转换失败: {}", e.getMessage());
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                return ResponseDto.fail(e.getMessage());
+            }
 
             // 1. 参数校验（ParameterValidator）
             if (StringUtils.isNoneBlank(config.getParameterValidator())) {
