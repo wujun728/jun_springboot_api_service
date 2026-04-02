@@ -132,7 +132,7 @@ class AgentRunner:
     def _run_claude(self, prompt: str, max_turns: int, log_file: str) -> dict:
         """调用 claude CLI 并返回结果"""
         cmd = [
-            'claude', '-p', prompt,
+            'claude', '-p',
             '--model', self.config.model,
             '--output-format', 'json',
             '--dangerously-skip-permissions',
@@ -140,6 +140,7 @@ class AgentRunner:
         try:
             proc = subprocess.run(
                 cmd,
+                input=prompt,
                 capture_output=True,
                 text=True,
                 encoding='utf-8',
