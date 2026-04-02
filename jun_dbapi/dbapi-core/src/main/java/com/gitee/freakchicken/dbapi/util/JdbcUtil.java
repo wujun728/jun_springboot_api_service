@@ -96,6 +96,7 @@ public class JdbcUtil {
     public static List<String> getAllTables(Connection conn, String type) {
         List<String> list = new ArrayList<>();
         PreparedStatement pst = null;
+        ResultSet resultSet = null;
         try {
             String sql;
             switch (type) {
@@ -119,7 +120,7 @@ public class JdbcUtil {
             }
 
             pst = conn.prepareStatement(sql);
-            ResultSet resultSet = pst.executeQuery();
+            resultSet = pst.executeQuery();
 
             while (resultSet.next()) {
                 String s = resultSet.getString(1);
@@ -131,6 +132,8 @@ public class JdbcUtil {
             return null;
         } finally {
             try {
+                if (resultSet != null)
+                    resultSet.close();
                 if (pst != null)
                     pst.close();
                 if (conn != null)
@@ -203,10 +206,12 @@ public class JdbcUtil {
         log.debug(sql);
         log.debug(JSON.toJSONString(jdbcParamValues));
         DruidPooledConnection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
         try {
 
             connection = PoolManager.getPooledConnection(datasource);
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             //参数注入
             for (int i = 1; i <= jdbcParamValues.size(); i++) {
                 statement.setObject(i, jdbcParamValues.get(i - 1));
@@ -214,20 +219,21 @@ public class JdbcUtil {
 
             boolean hasResultSet = statement.execute();
             if (hasResultSet) {
-                ResultSet rs = statement.getResultSet();
-                int columnCount = rs.getMetaData().getColumnCount();
+                rs = statement.getResultSet();
+                final ResultSet resultSet = rs;
+                int columnCount = resultSet.getMetaData().getColumnCount();
 
                 List<String> columns = new ArrayList<>();
                 for (int i = 1; i <= columnCount; i++) {
-                    String columnName = rs.getMetaData().getColumnLabel(i);
+                    String columnName = resultSet.getMetaData().getColumnLabel(i);
                     columns.add(columnName);
                 }
                 List<JSONObject> list = new ArrayList<>();
-                while (rs.next()) {
+                while (resultSet.next()) {
                     JSONObject jo = new JSONObject();
                     columns.stream().forEach(t -> {
                         try {
-                            Object value = rs.getObject(t);
+                            Object value = resultSet.getObject(t);
                             jo.put(t, value);
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
@@ -245,6 +251,10 @@ public class JdbcUtil {
             return ResponseDto.fail(e.getMessage());
         } finally {
             try {
+                if (rs != null)
+                    rs.close();
+                if (statement != null)
+                    statement.close();
                 if (connection != null)
                     connection.close();
             } catch (SQLException throwables) {
