@@ -48,3 +48,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 5538ac9
 - 下一步建议: 继续修复 T005 及后续任务
+
+### Session #3 - T005 (2026-04-02)
+- 实现了: 修复 JWT 使用密码作为密钥的问题
+- 修改的文件: JwtUtils.java, JwtConfig.java(新增), JwtAuthenticationInterceptor.java, UserController.java, application.properties
+- 修复内容: JWT 签名从使用用户密码改为使用独立配置的强密钥(dbapi.jwt.secret)，通过 JwtConfig 组件在启动时注入 JwtUtils 静态字段
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 128a690
+- 下一步建议: 继续修复 T006 及后续任务；生产部署时需替换 application.properties 中的默认 JWT 密钥
