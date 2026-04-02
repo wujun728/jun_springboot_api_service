@@ -112,3 +112,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 7cd44ec
 - 下一步建议: 继续修复 T013 及后续任务
+
+### Session #12 - T013 (2026-04-02)
+- 实现了: 修复 UUIDUtil 弱 ID 生成
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/UUIDUtil.java
+- 修复内容: 将 RandomStringUtils.random(8) 替换为 UUID.randomUUID().toString().replace("-","")，消除碰撞风险和可预测性
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 9e63f9a
+- 下一步建议: 继续修复 T014 及后续任务
