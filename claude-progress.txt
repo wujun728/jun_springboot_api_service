@@ -128,3 +128,10 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: d5789c2
 - 下一步建议: 继续修复 T015 及后续任务
+
+### Session #14 - T015 (2026-04-02)
+- 实现了: 修复 ApiService 类型转换异常
+- 修改的文件: ApiService.java (4处 Double.valueOf/Long.valueOf 加 try-catch), ApiInterceptor.java (getSqlParam 调用处捕获 IllegalArgumentException 返回 400)
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: d515430
+- 下一步建议: 继续修复 T016 及后续任务
