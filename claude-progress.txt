@@ -245,3 +245,15 @@
 - 自测结果: 通过（24 tests, 0 failures, 0 errors）
 - Git 提交: d457170
 - 下一步建议: 继续修复剩余任务
+
+### Session #29 - T032 (2026-04-02)
+- 实现了: 为安全相关修复编写测试
+- 修改的文件: jun_dbapi/dbapi-core/src/test/java/com/gitee/freakchicken/dbapi/util/SecurityTest.java (新增)
+- 测试覆盖: 25 个测试用例，覆盖：
+  - JWT: 创建/验证、伪造 token 拒绝、篡改检测、垃圾输入、弱密钥拒绝、空密钥拒绝、最小长度校验、未初始化异常
+  - BCrypt 密码: 哈希/验证、唯一盐值、旧版明文兼容、null 处理、弱密码保护
+  - AES-256-GCM: 加解密往返、随机 IV 不同密文、篡改检测(GCM tag)、密钥校验(null/空/长度)、有效密钥、空字符串
+  - UUID: 格式(32位hex)、唯一性(10000次)、无连字符
+- 自测结果: 通过（25 tests, 0 failures, 0 errors）
+- Git 提交: c6c5b6a
+- 下一步建议: 继续修复剩余任务
