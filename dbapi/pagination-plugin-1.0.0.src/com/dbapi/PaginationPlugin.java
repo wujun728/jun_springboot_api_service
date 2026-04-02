@@ -60,7 +60,11 @@
 /* 59 */     else if ((pageNoObj instanceof Integer))
 /* 60 */       pageNo = (Integer)pageNoObj;
 /*    */     else {
-/* 62 */       throw new RuntimeException("分页插件：参数" + pageNofield + "类型（" + pageNofield.getClass().getName() + "）不支持");
+/*    */       try {
+/* 62 */         pageNo = Integer.parseInt(pageNoObj.toString());
+/*    */       } catch (NumberFormatException e) {
+/*    */         throw new RuntimeException("分页插件：参数" + pageNofield + "的值（" + pageNoObj + "）无法转换为整数");
+/*    */       }
 /*    */     }
 /*    */     if (pageNo.intValue() < 1) {
 /*    */       throw new RuntimeException("分页插件：参数" + pageNofield + "必须为正整数，当前值：" + pageNo);
@@ -76,7 +80,11 @@
 /* 72 */     else if ((pageSizeObj instanceof Integer))
 /* 73 */       pageSize = (Integer)pageSizeObj;
 /*    */     else {
-/* 75 */       throw new RuntimeException("分页插件：参数" + pageSizeField + "类型（" + pageSizeField.getClass().getName() + "）不支持");
+/*    */       try {
+/* 75 */         pageSize = Integer.parseInt(pageSizeObj.toString());
+/*    */       } catch (NumberFormatException e) {
+/*    */         throw new RuntimeException("分页插件：参数" + pageSizeField + "的值（" + pageSizeObj + "）无法转换为整数");
+/*    */       }
 /*    */     }
 /*    */     if (pageSize.intValue() < 1) {
 /*    */       throw new RuntimeException("分页插件：参数" + pageSizeField + "必须为正整数，当前值：" + pageSize);

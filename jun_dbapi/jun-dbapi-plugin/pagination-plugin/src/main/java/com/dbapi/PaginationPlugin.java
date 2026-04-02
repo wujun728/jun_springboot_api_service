@@ -58,7 +58,11 @@ public class PaginationPlugin extends ParamProcessPlugin {
         } else if (pageNoObj instanceof Integer) {
             pageNo = (Integer) pageNoObj;
         } else {
-            pageNo = Integer.parseInt(pageNoObj.toString());
+            try {
+                pageNo = Integer.parseInt(pageNoObj.toString());
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("分页插件：参数" + pageNofield + "的值（" + pageNoObj + "）无法转换为整数");
+            }
         }
         if (pageNo < 1) {
             throw new RuntimeException("分页插件：参数" + pageNofield + "必须为正整数，当前值：" + pageNo);
@@ -74,7 +78,11 @@ public class PaginationPlugin extends ParamProcessPlugin {
         } else if (pageSizeObj instanceof Integer) {
             pageSize = (Integer) pageSizeObj;
         } else {
-            pageSize = Integer.parseInt(pageSizeObj.toString());
+            try {
+                pageSize = Integer.parseInt(pageSizeObj.toString());
+            } catch (NumberFormatException e) {
+                throw new RuntimeException("分页插件：参数" + pageSizeField + "的值（" + pageSizeObj + "）无法转换为整数");
+            }
         }
         if (pageSize < 1) {
             throw new RuntimeException("分页插件：参数" + pageSizeField + "必须为正整数，当前值：" + pageSize);
