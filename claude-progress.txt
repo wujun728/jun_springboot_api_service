@@ -120,3 +120,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 9e63f9a
 - 下一步建议: 继续修复 T014 及后续任务
+
+### Session #13 - T014 (2026-04-02)
+- 实现了: 修复 IPUtil 重复条件判断
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/IPUtil.java
+- 修复内容: getOriginIp() 方法第46-48行存在重复的 null/empty 检查（外层和内层第一个 if 条件完全相同），移除冗余的内层 if，使第一个 fallback 直接获取 Proxy-Client-IP header
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: d5789c2
+- 下一步建议: 继续修复 T015 及后续任务
