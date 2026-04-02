@@ -79,8 +79,9 @@ npm install -g @anthropic-ai/claude-code
 # 进入你的项目目录（框架会在这里工作）
 cd /path/to/your/project
 
+python ./long-running-agent/main.py --task "分析目录 D:\workspace_github_v2\20平台能力层\jun_api_service\jun_dbapi ，下面的代码，找打有问题的bug。"
 # 启动（使用默认配置）
-python /path/to/long-running-agent/main.py --task "你的任务描述"
+python /path/to/long-running-agent/main.py --task "分析目录 D:\workspace_github_v2\20平台能力层\jun_api_service\jun_dbapi ，下面的代码，找打有问题的bug。"
 
 # 启动（指定配置文件）
 python /path/to/long-running-agent/main.py --task "你的任务描述" --config /path/to/config.json

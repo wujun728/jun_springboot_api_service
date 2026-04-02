@@ -15,16 +15,38 @@
         "检查 JdbcUtil.java 中所有 SQL 拼接处已使用参数化查询或白名单校验",
         "尝试传入含特殊字符的表名，确认被拦截"
       ],
-      "status": "pending",
+      "status": "passed",
       "priority": 1,
       "dependencies": [],
-      "attempts": 0,
+      "attempts": 1,
       "max_attempts": 3,
       "result": null,
-      "evaluation": null,
+      "evaluation": {
+        "task_id": "T001",
+        "passed": true,
+        "score": 90,
+        "checks": [
+          {
+            "step": "检查 JdbcUtil.java 中所有 SQL 拼接处已使用参数化查询或白名单校验",
+            "passed": true,
+            "detail": "JdbcUtil.java 中唯一的表名拼接位于 getRDBMSColumnProperties 方法（第145/148行），已通过 validateTableName() 进行白名单正则校验（^[a-zA-Z_][a-zA-Z0-9_.]*$），且增加了空值检查和长度限制（128字符）。其他 SQL 执行方法（executeSql、query）均使用 PreparedStatement 参数化查询，无拼接风险。"
+          },
+          {
+            "step": "尝试传入含特殊字符的表名，确认被拦截",
+            "passed": true,
+            "detail": "通过 Python 模拟正则校验，测试了11种攻击载荷（SQL注入、引号逃逸、反引号、空格、空字符串、数字开头等），全部被正确拦截。合法表名（users、my_table、schema.table）正常通过。validateTableName 在匹配失败时抛出 IllegalArgumentException，有效阻止注入。"
+          }
+        ],
+        "feedback": "",
+        "suggestions": [
+          "jun_dbapi_spring_boot_starter 中也存在一个 JdbcUtil.java，虽然当前没有表名拼接问题，但建议统一安全模式，避免后续开发引入类似漏洞",
+          "正则 ^[a-zA-Z_][a-zA-Z0-9_.]*$ 允许点号（.），可匹配 schema.table 格式，但也允许连续点号如 'a..b'，建议考虑更严格的点号规则",
+          "validateTableName 方法为 private，如果其他类未来也需要表名校验，建议提取为公共工具方法"
+        ]
+      },
       "error_history": [],
-      "started_at": null,
-      "completed_at": null
+      "started_at": "2026-04-02T15:48:26",
+      "completed_at": "2026-04-02T15:51:15"
     },
     {
       "id": "T002",
@@ -35,16 +57,37 @@
         "确认 query() 方法使用 try-with-resources 或在调用方正确关闭",
         "运行 mvn compile 无错误"
       ],
-      "status": "pending",
+      "status": "passed",
       "priority": 1,
       "dependencies": [],
-      "attempts": 0,
+      "attempts": 1,
       "max_attempts": 3,
       "result": null,
-      "evaluation": null,
+      "evaluation": {
+        "task_id": "T002",
+        "passed": true,
+        "score": 90,
+        "checks": [
+          {
+            "step": "确认 query() 方法使用 try-with-resources 或在调用方正确关闭",
+            "passed": true,
+            "detail": "query() 方法（第36-55行）已重构：返回类型从 ResultSet 改为 List<JSONObject>，使用 try-with-resources 同时管理 PreparedStatement 和 ResultSet，资源在方法内部完全关闭。全项目 grep 'JdbcUtil.query(' 无 Java 调用方，不存在兼容性问题。"
+          },
+          {
+            "step": "运行 mvn compile 无错误",
+            "passed": true,
+            "detail": "mvn compile -q 执行成功，仅有前端 webpack 的 bundle size warning，无 Java 编译错误。"
+          }
+        ],
+        "feedback": "",
+        "suggestions": [
+          "query() 方法当前无调用方（grep 结果为空），属于死代码。建议确认是否有运行时反射调用或后续使用计划，否则可考虑标记 @Deprecated 或移除。",
+          "同文件中 executeSql()（第205行）存在类似的 PreparedStatement 未用 try-with-resources 关闭的问题，建议后续修复。"
+        ]
+      },
       "error_history": [],
-      "started_at": null,
-      "completed_at": null
+      "started_at": "2026-04-02T15:51:20",
+      "completed_at": "2026-04-02T15:55:25"
     },
     {
       "id": "T003",
@@ -55,16 +98,36 @@
         "确认 ResultSet 被赋值给变量并在 finally 块中关闭",
         "运行 mvn compile 无错误"
       ],
-      "status": "pending",
+      "status": "passed",
       "priority": 1,
       "dependencies": [],
-      "attempts": 0,
+      "attempts": 2,
       "max_attempts": 3,
       "result": null,
-      "evaluation": null,
+      "evaluation": {
+        "task_id": "T003",
+        "passed": true,
+        "score": 95,
+        "checks": [
+          {
+            "step": "确认 ResultSet 被赋值给变量并在 finally 块中关闭",
+            "passed": true,
+            "detail": "ResultSet 已赋值给变量 rs（第155行），在 finally 块中通过 if (rs != null) rs.close() 正确关闭（第190-191行），且关闭顺序正确：rs → pst → conn。"
+          },
+          {
+            "step": "运行 mvn compile 无错误",
+            "passed": true,
+            "detail": "mvn compile 成功完成，无编译错误。"
+          }
+        ],
+        "feedback": "",
+        "suggestions": [
+          "finally 块中 rs.close() 未使用花括号包裹 if 体（单行风格），与项目中 pst/conn 的关闭风格一致，但建议统一使用花括号以提高可维护性。"
+        ]
+      },
       "error_history": [],
-      "started_at": null,
-      "completed_at": null
+      "started_at": "2026-04-02T15:57:53",
+      "completed_at": "2026-04-02T15:58:54"
     },
     {
       "id": "T004",
@@ -75,15 +138,15 @@
         "确认 getPooledConnection 方法中对 pool 进行了 null 检查",
         "null 时抛出有意义的异常而非 NPE"
       ],
-      "status": "pending",
+      "status": "in_progress",
       "priority": 1,
       "dependencies": [],
-      "attempts": 0,
+      "attempts": 1,
       "max_attempts": 3,
       "result": null,
       "evaluation": null,
       "error_history": [],
-      "started_at": null,
+      "started_at": "2026-04-02T15:58:59",
       "completed_at": null
     },
     {
@@ -137,7 +200,9 @@
       ],
       "status": "pending",
       "priority": 2,
-      "dependencies": ["T006"],
+      "dependencies": [
+        "T006"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -157,7 +222,9 @@
       ],
       "status": "pending",
       "priority": 2,
-      "dependencies": ["T005"],
+      "dependencies": [
+        "T005"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -318,7 +385,10 @@
       ],
       "status": "pending",
       "priority": 3,
-      "dependencies": ["T002", "T003"],
+      "dependencies": [
+        "T002",
+        "T003"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -358,7 +428,9 @@
       ],
       "status": "pending",
       "priority": 3,
-      "dependencies": ["T017"],
+      "dependencies": [
+        "T017"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -538,7 +610,9 @@
       ],
       "status": "pending",
       "priority": 3,
-      "dependencies": ["T011"],
+      "dependencies": [
+        "T011"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -618,7 +692,12 @@
       ],
       "status": "pending",
       "priority": 4,
-      "dependencies": ["T001", "T002", "T003", "T016"],
+      "dependencies": [
+        "T001",
+        "T002",
+        "T003",
+        "T016"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -638,7 +717,14 @@
       ],
       "status": "pending",
       "priority": 4,
-      "dependencies": ["T005", "T008", "T009", "T010", "T012", "T013"],
+      "dependencies": [
+        "T005",
+        "T008",
+        "T009",
+        "T010",
+        "T012",
+        "T013"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,
@@ -659,7 +745,40 @@
       ],
       "status": "pending",
       "priority": 5,
-      "dependencies": ["T001", "T002", "T003", "T004", "T005", "T006", "T007", "T008", "T009", "T010", "T011", "T012", "T013", "T014", "T015", "T016", "T017", "T018", "T019", "T020", "T021", "T022", "T023", "T024", "T025", "T026", "T027", "T028", "T029", "T030", "T031", "T032"],
+      "dependencies": [
+        "T001",
+        "T002",
+        "T003",
+        "T004",
+        "T005",
+        "T006",
+        "T007",
+        "T008",
+        "T009",
+        "T010",
+        "T011",
+        "T012",
+        "T013",
+        "T014",
+        "T015",
+        "T016",
+        "T017",
+        "T018",
+        "T019",
+        "T020",
+        "T021",
+        "T022",
+        "T023",
+        "T024",
+        "T025",
+        "T026",
+        "T027",
+        "T028",
+        "T029",
+        "T030",
+        "T031",
+        "T032"
+      ],
       "attempts": 0,
       "max_attempts": 3,
       "result": null,

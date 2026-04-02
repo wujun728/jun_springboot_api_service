@@ -1,1 +1,18 @@
-{"ts": "2026-04-02T15:15:22", "event": "planner_start", "data": {"task": "生成项目描述的md文档"}}
+{"ts": "2026-04-02T15:43:25", "event": "planner_start", "data": {"task": "分析目录 D:\\workspace_github_v2\\20平台能力层\\jun_api_service\\jun_dbapi ，下面的代码，找打有问题的bug。"}}
+{"ts": "2026-04-02T15:48:26", "event": "planner_done", "data": {"tasks_count": 33}}
+{"ts": "2026-04-02T15:48:26", "event": "worker_start", "data": {"task_id": "T001", "session": 1, "attempt": 1}}
+{"ts": "2026-04-02T15:50:04", "event": "worker_done", "data": {"task_id": "T001", "success": true}}
+{"ts": "2026-04-02T15:50:04", "event": "eval_start", "data": {"task_id": "T001"}}
+{"ts": "2026-04-02T15:51:15", "event": "eval_done", "data": {"task_id": "T001", "passed": true, "score": 90}}
+{"ts": "2026-04-02T15:51:20", "event": "worker_start", "data": {"task_id": "T002", "session": 2, "attempt": 1}}
+{"ts": "2026-04-02T15:54:14", "event": "worker_done", "data": {"task_id": "T002", "success": true}}
+{"ts": "2026-04-02T15:54:14", "event": "eval_start", "data": {"task_id": "T002"}}
+{"ts": "2026-04-02T15:55:25", "event": "eval_done", "data": {"task_id": "T002", "passed": true, "score": 90}}
+{"ts": "2026-04-02T15:55:30", "event": "worker_start", "data": {"task_id": "T003", "session": 3, "attempt": 1}}
+{"ts": "2026-04-02T15:57:40", "event": "interrupted", "data": {"session": 3, "pending": 30}}
+{"ts": "2026-04-02T15:57:53", "event": "session_resume", "data": {"pending": 30, "passed": 2}}
+{"ts": "2026-04-02T15:57:53", "event": "worker_start", "data": {"task_id": "T003", "session": 1, "attempt": 2}}
+{"ts": "2026-04-02T15:58:10", "event": "worker_done", "data": {"task_id": "T003", "success": true}}
+{"ts": "2026-04-02T15:58:10", "event": "eval_start", "data": {"task_id": "T003"}}
+{"ts": "2026-04-02T15:58:54", "event": "eval_done", "data": {"task_id": "T003", "passed": true, "score": 95}}
+{"ts": "2026-04-02T15:58:59", "event": "worker_start", "data": {"task_id": "T004", "session": 2, "attempt": 1}}

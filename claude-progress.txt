@@ -32,3 +32,11 @@
 - 自测结果: 通过（mvn compile 成功，无调用方需要同步修改）
 - Git 提交: 650a3e9
 - 下一步建议: 继续修复 T003 及后续任务
+
+### Session #3 - T003 (2026-04-02)
+- 实现了: 修复 getRDBMSColumnProperties ResultSet 泄漏
+- 修改的文件: dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JdbcUtil.java
+- 修复内容: 将 pst.executeQuery().getMetaData() 拆分为先存储 ResultSet 到变量 rs，再获取 MetaData，并在 finally 块中关闭 rs
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 8133022
+- 下一步建议: 继续修复 T004 及后续任务
