@@ -70,7 +70,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("JWT认证拦截器异常", e);
             return false;
         } finally {
             if (writer != null) {

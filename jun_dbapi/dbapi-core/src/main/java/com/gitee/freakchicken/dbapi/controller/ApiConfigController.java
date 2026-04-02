@@ -137,13 +137,13 @@ public class ApiConfigController {
             os = response.getOutputStream();
             os.write(docs.getBytes("utf-8"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("导出API文档失败", e);
         } finally {
             try {
                 if (os != null)
                     os.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("关闭输出流失败", e);
             }
         }
     }
@@ -160,13 +160,13 @@ public class ApiConfigController {
             os = response.getOutputStream();
             os.write(s.getBytes("utf-8"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("下载API配置失败", e);
         } finally {
             try {
                 if (os != null)
                     os.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("关闭输出流失败", e);
             }
         }
     }
@@ -183,13 +183,13 @@ public class ApiConfigController {
             os = response.getOutputStream();
             os.write(s.getBytes("utf-8"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("下载分组配置失败", e);
         } finally {
             try {
                 if (os != null)
                     os.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("关闭输出流失败", e);
             }
         }
     }

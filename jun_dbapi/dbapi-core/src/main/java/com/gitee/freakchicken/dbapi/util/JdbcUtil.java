@@ -139,7 +139,7 @@ public class JdbcUtil {
                 if (conn != null)
                     conn.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("关闭数据库资源失败", e);
             }
         }
     }
@@ -197,7 +197,7 @@ public class JdbcUtil {
                 if (conn != null)
                     conn.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error("关闭数据库资源失败", e);
             }
         }
     }
@@ -236,7 +236,7 @@ public class JdbcUtil {
                             Object value = resultSet.getObject(t);
                             jo.put(t, value);
                         } catch (SQLException throwables) {
-                            throwables.printStackTrace();
+                            log.error("读取结果集字段失败", throwables);
                         }
                     });
                     list.add(jo);
@@ -247,7 +247,7 @@ public class JdbcUtil {
                 return ResponseDto.apiSuccess("sql修改数据行数： " + updateCount);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("执行SQL失败", e);
             return ResponseDto.fail(e.getMessage());
         } finally {
             try {
@@ -258,7 +258,7 @@ public class JdbcUtil {
                 if (connection != null)
                     connection.close();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                log.error("关闭数据库资源失败", throwables);
             }
         }
     }

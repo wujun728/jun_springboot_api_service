@@ -95,13 +95,13 @@ public class DataSourceController {
             os = response.getOutputStream();
             os.write(s.getBytes("utf-8"));
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("导出数据源失败", e);
         } finally {
             try {
                 if (os != null)
                     os.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("关闭输出流失败", e);
             }
         }
     }

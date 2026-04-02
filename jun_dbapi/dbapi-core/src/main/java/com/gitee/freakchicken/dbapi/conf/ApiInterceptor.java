@@ -83,7 +83,7 @@ public class ApiInterceptor implements HandlerInterceptor {
             return false;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("API拦截器处理异常", e);
             response.sendError(500);
             return false;
         } finally {
