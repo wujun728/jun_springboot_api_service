@@ -1,7 +1,7 @@
 package com.gitee.freakchicken.dbapi.util;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -37,8 +37,7 @@ public class IPUtil {
         return "";
     }
 
-    public final static String getOriginIp(HttpServletRequest request)
-            throws IOException {
+    public final static String getOriginIp(HttpServletRequest request) {
         // 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址
 
         String ip = request.getHeader("x-forwarded-for");
