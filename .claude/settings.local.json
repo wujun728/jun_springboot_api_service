@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\")",
+      "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\\\\sa-frame\")",
+      "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\\\\static\")",
+      "Bash(nginx.exe -s reload)"
+    ]
+  }
+}

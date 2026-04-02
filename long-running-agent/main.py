@@ -15,6 +15,15 @@ import os
 import sys
 import time
 
+# Windows 控制台 UTF-8 支持
+if os.name == 'nt':
+    os.environ.setdefault('PYTHONIOENCODING', 'utf-8')
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        pass
+
 from config import Config
 from task_manager import TaskManager
 from agent_runner import AgentRunner
