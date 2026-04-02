@@ -72,3 +72,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: e2c6d11
 - 下一步建议: 继续修复 T008 及后续任务
+
+### Session #6 - T008 (2026-04-02)
+- 实现了: 修复 JwtUtils 弱密钥问题 - 增加密钥强度校验
+- 修改的文件: JwtUtils.java (增加 setSecret 密钥长度校验), JwtConfig.java (增加启动时密钥校验和默认密钥警告)
+- 修复内容: T005 已将 JWT 从用户密码改为独立密钥；T008 进一步加固：setSecret 拒绝短于32字符的密钥，JwtConfig 启动时校验密钥非空/长度/是否为默认值
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 8410ca6
+- 下一步建议: 继续修复 T009 及后续任务

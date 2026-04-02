@@ -191,3 +191,8 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
    - 问题：IPService.detail() 中对 Cache.status 的 check-then-act 模式无同步保护，多线程可同时进入初始化块导致重复查询
    - 修复：Cache.status 加 volatile 关键字保证可见性；detail() 方法使用 double-checked locking 防止并发重复初始化
    - 影响文件：Cache.java, IPService.java
+
+10. **修复 JwtUtils 弱密钥问题 (T008)**
+    - 问题：JWT 密钥缺乏强度校验，可能使用过短或默认密钥
+    - 修复：JwtUtils.setSecret 增加最小 32 字符长度校验；JwtConfig 启动时验证密钥非空、长度足够，使用默认密钥时输出警告
+    - 影响文件：JwtUtils.java, JwtConfig.java
