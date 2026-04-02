@@ -16,10 +16,15 @@ public class JwtUtils {
 
     private static String secret;
 
+    private static final int MIN_SECRET_LENGTH = 32;
+
     /**
      * 由 JwtConfig 在应用启动时调用，注入配置的 JWT 密钥
      */
     public static void setSecret(String jwtSecret) {
+        if (jwtSecret == null || jwtSecret.length() < MIN_SECRET_LENGTH) {
+            throw new IllegalArgumentException("JWT secret must be at least " + MIN_SECRET_LENGTH + " characters");
+        }
         secret = jwtSecret;
     }
 
