@@ -237,3 +237,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 961a984
 - 下一步建议: 继续修复剩余任务
+
+### Session #28 - T031 (2026-04-02)
+- 实现了: 为 JdbcUtil 编写单元测试
+- 修改的文件: jun_dbapi/dbapi-core/pom.xml (添加 junit/mockito 依赖), jun_dbapi/dbapi-core/src/test/java/com/gitee/freakchicken/dbapi/util/JdbcUtilTest.java (新增)
+- 测试覆盖: 24 个测试用例，覆盖 query()、getAllTables()、getRDBMSColumnProperties()、validateTableName SQL 注入防护、资源关闭验证、异常路径
+- 自测结果: 通过（24 tests, 0 failures, 0 errors）
+- Git 提交: d457170
+- 下一步建议: 继续修复剩余任务

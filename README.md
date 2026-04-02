@@ -261,3 +261,7 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：TreePlugin、DateFormatPlugin 等多个插件的 transform() 方法直接将 data 强转为 List，无类型检查，可能 ClassCastException
     - 修复：在类型转换前增加 instanceof List 检查，类型不匹配时抛出包含实际类型信息的 IllegalArgumentException
     - 影响文件：TreePlugin.java, DateFormatPlugin.java, CamelRenamePlugin.java, SingleValueExtractPlugin.java, EncryptPlugin.java, AdvancedTreeFormatPlugin.java
+25. **为 JdbcUtil 编写单元测试 (T031)**
+    - 新增 24 个单元测试，覆盖 query()、getAllTables()、getRDBMSColumnProperties() 的正常和异常路径
+    - 测试场景：SQL 注入防护（validateTableName）、资源关闭验证（mock verify）、异常处理、多数据库类型支持
+    - 影响文件：JdbcUtilTest.java (新增), dbapi-core/pom.xml (添加 junit/mockito 测试依赖)
