@@ -62,7 +62,10 @@
 /*    */     else {
 /* 62 */       throw new RuntimeException("分页插件：参数" + pageNofield + "类型（" + pageNofield.getClass().getName() + "）不支持");
 /*    */     }
-/*    */ 
+/*    */     if (pageNo.intValue() < 1) {
+/*    */       throw new RuntimeException("分页插件：参数" + pageNofield + "必须为正整数，当前值：" + pageNo);
+/*    */     }
+/*    */
 /* 65 */     Object pageSizeObj = requestParam.get(pageSizeField);
 /* 66 */     if (pageSizeObj == null) {
 /* 67 */       throw new RuntimeException("分页插件：参数" + pageSizeField + "不能为空");
@@ -74,6 +77,9 @@
 /* 73 */       pageSize = (Integer)pageSizeObj;
 /*    */     else {
 /* 75 */       throw new RuntimeException("分页插件：参数" + pageSizeField + "类型（" + pageSizeField.getClass().getName() + "）不支持");
+/*    */     }
+/*    */     if (pageSize.intValue() < 1) {
+/*    */       throw new RuntimeException("分页插件：参数" + pageSizeField + "必须为正整数，当前值：" + pageSize);
 /*    */     }
 /* 77 */     Integer offset = Integer.valueOf((pageNo.intValue() - 1) * pageSize.intValue());
 /* 78 */     requestParam.put(offsetField, offset);

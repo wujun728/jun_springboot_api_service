@@ -60,6 +60,9 @@ public class PaginationPlugin extends ParamProcessPlugin {
         } else {
             pageNo = Integer.parseInt(pageNoObj.toString());
         }
+        if (pageNo < 1) {
+            throw new RuntimeException("分页插件：参数" + pageNofield + "必须为正整数，当前值：" + pageNo);
+        }
 
         Object pageSizeObj = requestParam.get(pageSizeField);
         if (pageSizeObj == null) {
@@ -72,6 +75,9 @@ public class PaginationPlugin extends ParamProcessPlugin {
             pageSize = (Integer) pageSizeObj;
         } else {
             pageSize = Integer.parseInt(pageSizeObj.toString());
+        }
+        if (pageSize < 1) {
+            throw new RuntimeException("分页插件：参数" + pageSizeField + "必须为正整数，当前值：" + pageSize);
         }
 
         Integer offset = (pageNo - 1) * pageSize;
