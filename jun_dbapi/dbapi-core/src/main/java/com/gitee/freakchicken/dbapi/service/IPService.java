@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class IPService {
 
+    private static final Object STATUS_LOCK = new Object();
+
     @Autowired
     IPMapper ipMapper;
 
@@ -33,26 +35,29 @@ public class IPService {
 
     public Map<String, String> detail() {
         if (Cache.status == null) {
-            log.info("sql 查询 ipRules");
-            List<Map<String, String>> ipRule = ipMapper.getIPRule();
-            Map<String, String> status = ipMapper.getStatus();
-            ipRule.stream().forEach(t -> {
-                String type = t.get("type");
-                String ip = t.get("ip");
-                if (type.equals("white")) {
-                    status.put("whiteIP", ip);
-                } else if (type.equals("black")) {
-                    status.put("blackIP", ip);
+            synchronized (STATUS_LOCK) {
+                if (Cache.status == null) {
+                    log.info("sql 查询 ipRules");
+                    List<Map<String, String>> ipRule = ipMapper.getIPRule();
+                    Map<String, String> status = ipMapper.getStatus();
+                    ipRule.stream().forEach(t -> {
+                        String type = t.get("type");
+                        String ip = t.get("ip");
+                        if (type.equals("white")) {
+                            status.put("whiteIP", ip);
+                        } else if (type.equals("black")) {
+                            status.put("blackIP", ip);
+                        }
+                    });
+                    // set cache
+                    Cache.status = status;
+                    log.info("set cache");
+                    return status;
                 }
-            });
-            // set cache
-            Cache.status = status;
-            log.info("set cache");
-            return status;
-        } else {
-            log.info("get from cache");
-            return Cache.status;
+            }
         }
+        log.info("get from cache");
+        return Cache.status;
     }
 
     public boolean check(String mode, String ipList, String originIp) {

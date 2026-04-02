@@ -4,5 +4,5 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Cache {
-    public static Map<String, String> status = new ConcurrentHashMap<>();
+    public static volatile Map<String, String> status = new ConcurrentHashMap<>();
 }
