@@ -198,3 +198,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 6f2346a
 - 下一步建议: 继续修复 T023 及后续任务
+
+### Session #23 - T027 (2026-04-02)
+- 实现了: 修复 HttpUtil 缺少超时配置
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/HttpUtil.java
+- 修复内容: 添加 RequestConfig 设置 connectTimeout、socketTimeout、connectionRequestTimeout 均为 30 秒；通过 httpPost.setConfig() 应用到请求
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: dbb9edc
+- 下一步建议: 继续修复 T023 及后续任务
