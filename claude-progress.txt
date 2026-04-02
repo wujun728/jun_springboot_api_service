@@ -40,3 +40,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: 8133022
 - 下一步建议: 继续修复 T004 及后续任务
+
+### Session #2 - T004 (2026-04-02)
+- 实现了: 修复 PoolManager NPE 风险
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/PoolManager.java
+- 修复内容: 在 getPooledConnection 方法中对 getJdbcConnectionPool 返回值增加 null 检查，null 时抛出包含数据源信息的 SQLException
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 5538ac9
+- 下一步建议: 继续修复 T005 及后续任务
