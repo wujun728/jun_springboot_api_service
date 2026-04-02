@@ -190,3 +190,11 @@
 - 自测结果: 通过（mvn compile 成功）
 - Git 提交: d740a97
 - 下一步建议: 继续修复 T023 及后续任务
+
+### Session #22 - T026 (2026-04-02)
+- 实现了: 修复 SignPlugin NumberFormatException
+- 修改的文件: jun-dbapi-plugin/sign-plugin/src/main/java/com/dbapi/SignPlugin.java
+- 修复内容: Long.parseLong(tsObj.toString()) 增加 NumberFormatException 捕获，非法时间戳返回包含字段名和实际值的错误信息
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 6f2346a
+- 下一步建议: 继续修复 T023 及后续任务
