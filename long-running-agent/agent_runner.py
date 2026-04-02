@@ -134,27 +134,39 @@ class AgentRunner:
         cmd = [
             'claude', '-p', prompt,
             '--model', self.config.model,
-            '--max-turns', str(max_turns),
             '--output-format', 'json',
+            '--dangerously-skip-permissions',
         ]
         try:
             proc = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',
                 timeout=self.config.task_timeout_seconds,
                 cwd=self.config.work_directory,
+                shell=(os.name == 'nt'),  # Windows 需要 shell=True 来找到 .cmd
             )
+            raw_output = proc.stdout or ''
             # 保存完整输出
             with open(log_file, 'w', encoding='utf-8') as f:
-                f.write(proc.stdout or '')
+                f.write(raw_output)
                 if proc.stderr:
                     f.write('\n--- STDERR ---\n')
                     f.write(proc.stderr)
 
+            # 尝试从 JSON 输出中提取 result 字段
+            output_text = raw_output
+            try:
+                json_resp = json.loads(raw_output)
+                output_text = json_resp.get('result', raw_output)
+            except (json.JSONDecodeError, TypeError):
+                pass
+
             return {
                 'success': proc.returncode == 0,
-                'output': proc.stdout or '',
+                'output': output_text,
                 'exit_code': proc.returncode,
             }
         except subprocess.TimeoutExpired:
