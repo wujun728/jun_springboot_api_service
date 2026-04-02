@@ -257,3 +257,7 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：ApiConfigController 的 /import 和 /importGroup 端点无文件大小和类型校验，返回 void 无法返回错误信息
     - 修复：添加统一校验方法（10MB大小限制、.json扩展名、Content-Type校验）；返回类型改为 ResponseDto；增加 JSON 解析异常捕获
     - 影响文件：ApiConfigController.java
+24. **修复插件中的未检查类型转换 (T028)**
+    - 问题：TreePlugin、DateFormatPlugin 等多个插件的 transform() 方法直接将 data 强转为 List，无类型检查，可能 ClassCastException
+    - 修复：在类型转换前增加 instanceof List 检查，类型不匹配时抛出包含实际类型信息的 IllegalArgumentException
+    - 影响文件：TreePlugin.java, DateFormatPlugin.java, CamelRenamePlugin.java, SingleValueExtractPlugin.java, EncryptPlugin.java, AdvancedTreeFormatPlugin.java

@@ -221,3 +221,11 @@
 - 自测结果: 通过（grep printStackTrace 返回零结果，mvn compile 成功）
 - Git 提交: 1a5f91f
 - 下一步建议: 继续修复剩余任务
+
+### Session #26 - T028 (2026-04-02)
+- 实现了: 修复插件中的未检查类型转换
+- 修改的文件: TreePlugin.java, DateFormatPlugin.java, CamelRenamePlugin.java, SingleValueExtractPlugin.java, EncryptPlugin.java, AdvancedTreeFormatPlugin.java (jun-dbapi-plugin 和 dbapi/ 共9个文件)
+- 修复内容: 在所有插件的 transform() 方法中，对 data 参数增加 instanceof List 检查，类型不匹配时抛出包含实际类型信息的 IllegalArgumentException
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: a6d63a5
+- 下一步建议: 继续修复剩余任务
