@@ -5,6 +5,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
@@ -21,11 +22,20 @@ import org.slf4j.LoggerFactory;
 public class HttpUtil {
     private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
+    private static final int TIMEOUT_MS = 30_000;
+
+    private static final RequestConfig REQUEST_CONFIG = RequestConfig.custom()
+            .setConnectTimeout(TIMEOUT_MS)
+            .setSocketTimeout(TIMEOUT_MS)
+            .setConnectionRequestTimeout(TIMEOUT_MS)
+            .build();
+
     public static JSONObject post(String url, String map) {
         JSONObject result = new JSONObject();
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             StringEntity entity = new StringEntity(map);
             HttpPost httpPost = new HttpPost(url);
+            httpPost.setConfig(REQUEST_CONFIG);
             httpPost.setEntity(entity);
 
             try (CloseableHttpResponse response = httpclient.execute(httpPost)) {
