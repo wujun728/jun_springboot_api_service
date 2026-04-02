@@ -257,3 +257,10 @@
 - 自测结果: 通过（25 tests, 0 failures, 0 errors）
 - Git 提交: c6c5b6a
 - 下一步建议: 继续修复剩余任务
+
+### Session #30 - T025 (2026-04-02)
+- 实现了: 修复 IPUtil 不必要的类型转换
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/IPUtil.java
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 3944bef
+- 下一步建议: 继续处理剩余任务
