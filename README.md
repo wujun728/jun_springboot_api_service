@@ -236,3 +236,8 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 问题：getAllTables 中 ResultSet 未在 finally 关闭；executeSql 中 Statement/ResultSet 未在 finally 关闭，异常时资源泄漏
     - 修复：所有 finally 块中对 ResultSet、Statement、Connection 均做 null 检查后关闭，关闭顺序为 ResultSet→Statement→Connection
     - 影响文件：JdbcUtil.java
+
+19. **修复分页插件参数校验 (T017)**
+    - 问题：PaginationPlugin 的 pageNo 和 pageSize 无正数校验，负值或零值导致 SQL OFFSET 为负
+    - 修复：解析后增加 >= 1 校验，非法值抛出包含参数名和当前值的错误信息
+    - 影响文件：PaginationPlugin.java
