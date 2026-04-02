@@ -10,11 +10,12 @@ public class PluginConf {
 
     static {
 
-        InputStream in = PluginConf.class.getClassLoader().getResourceAsStream("plugin.properties");
-        try {
-            p.load(in);
+        try (InputStream in = PluginConf.class.getClassLoader().getResourceAsStream("plugin.properties")) {
+            if (in != null) {
+                p.load(in);
+            }
         } catch (IOException e) {
-
+            // plugin.properties loading failed, properties will remain empty
         }
 
     }
