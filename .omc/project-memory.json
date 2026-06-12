@@ -1,0 +1,203 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1778691907636,
+  "projectRoot": "D:\\workspace_github\\jun_api_service_main",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Java",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pom.xml"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": "maven",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "dbapi": {
+      "path": "dbapi",
+      "purpose": null,
+      "fileCount": 32,
+      "lastAccessed": 1778691907584,
+      "keyFiles": [
+        "advanced-tree-format-plugin-1.0.0.jar",
+        "advanced-tree-format-plugin-1.0.0.src.zip",
+        "aes-param-decrypt-plugin-1.0.0.jar",
+        "aes-param-decrypt-plugin-1.0.0.src.zip",
+        "amis-global-trandform-plugin-1.0.0.jar"
+      ]
+    },
+    "doc": {
+      "path": "doc",
+      "purpose": null,
+      "fileCount": 10,
+      "lastAccessed": 1778691907585,
+      "keyFiles": [
+        "java1-1.png",
+        "java1.png",
+        "java2.png",
+        "java21.png",
+        "java3.png"
+      ]
+    },
+    "doc1": {
+      "path": "doc1",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1778691907586,
+      "keyFiles": []
+    },
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 0,
+      "lastAccessed": 1778691907587,
+      "keyFiles": []
+    },
+    "jun_dbapi": {
+      "path": "jun_dbapi",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1778691907588,
+      "keyFiles": [
+        "pom.xml",
+        "README.md"
+      ]
+    },
+    "jun_dbapi_plugin_demo": {
+      "path": "jun_dbapi_plugin_demo",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1778691907589,
+      "keyFiles": [
+        "LICENSE",
+        "pom.xml",
+        "readme.md"
+      ]
+    },
+    "jun_dbapi_spring_boot_starter": {
+      "path": "jun_dbapi_spring_boot_starter",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1778691907590,
+      "keyFiles": [
+        "LICENSE",
+        "pom.xml",
+        "readme.md"
+      ]
+    },
+    "jun_dbapi_spring_boot_starter_demo": {
+      "path": "jun_dbapi_spring_boot_starter_demo",
+      "purpose": null,
+      "fileCount": 3,
+      "lastAccessed": 1778691907591,
+      "keyFiles": [
+        "pom.xml",
+        "readme.md"
+      ]
+    },
+    "logs": {
+      "path": "logs",
+      "purpose": null,
+      "fileCount": 68,
+      "lastAccessed": 1778691907592,
+      "keyFiles": [
+        "eval-T001.log",
+        "eval-T002.log",
+        "eval-T003.log",
+        "eval-T004.log",
+        "eval-T005.log"
+      ]
+    },
+    "long-running-agent": {
+      "path": "long-running-agent",
+      "purpose": null,
+      "fileCount": 23,
+      "lastAccessed": 1778691907593,
+      "keyFiles": [
+        "agent_runner.py",
+        "Anthropic长时运行智能体的有效框架.md",
+        "CHANGELOG.md",
+        "config.deepseek.json",
+        "config.doubao.json"
+      ]
+    },
+    "doc1\\data": {
+      "path": "doc1\\data",
+      "purpose": "Data files",
+      "fileCount": 1,
+      "lastAccessed": 1778691907594,
+      "keyFiles": [
+        "database.mv.db"
+      ]
+    },
+    "jun_dbapi\\dist": {
+      "path": "jun_dbapi\\dist",
+      "purpose": "Distribution/build output",
+      "fileCount": 1,
+      "lastAccessed": 1778691907597,
+      "keyFiles": [
+        "DBApi-2.3.1-bin.tar.gz"
+      ]
+    },
+    "jun_dbapi_plugin_demo\\src": {
+      "path": "jun_dbapi_plugin_demo\\src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1778691907598,
+      "keyFiles": []
+    },
+    "jun_dbapi_spring_boot_starter\\src": {
+      "path": "jun_dbapi_spring_boot_starter\\src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1778691907599,
+      "keyFiles": []
+    },
+    "jun_dbapi_spring_boot_starter_demo\\src": {
+      "path": "jun_dbapi_spring_boot_starter_demo\\src",
+      "purpose": "Source code",
+      "fileCount": 0,
+      "lastAccessed": 1778691907600,
+      "keyFiles": []
+    },
+    "long-running-agent\\examples": {
+      "path": "long-running-agent\\examples",
+      "purpose": "Example code",
+      "fileCount": 0,
+      "lastAccessed": 1778691907602,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

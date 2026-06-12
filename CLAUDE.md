@@ -6,42 +6,84 @@
 
 ## 仓库概述
 
-本仓库包含**三个独立的低代码 API 生成平台**，各自针对不同的使用场景：
+**一句话：** 本仓库是围绕「把数据库 / 脚本快速变成 HTTP API」的**低代码 / 零代码 API 平台**单体仓库；**当前可构建、可运行的主工程是 `jun_dbapi`（DBApi v2.3.1 定制版）**。
 
-1. **jun_api_service** - 基于 Groovy 的动态 API 生成（低代码，支持 Groovy/SQL/Java）
-2. **jun_dbapi** (v2.3.1) - 零代码数据库 HTTP API 服务（仅 SQL，单机版）
-3. **dbapi/db-api-4.0** (v4.0.10) - DBApi 的高级集群版本（仅 SQL，分布式）
+**解决什么问题：** 让团队在不手写传统 Controller 的前提下，通过配置 SQL（及插件做转换、缓存、告警）快速对外提供 REST 接口。典型场景：BI 报表/数据大屏后端、前后端联调临时接口、企业数据资产 HTTP 化发布与统一管理。
 
-这三个项目都是**独立的**，没有直接的代码依赖关系。它们共享相似的概念（动态 SQL 执行、缓存、转换），但具有不同的架构和部署模式。
+根目录 `pom.xml` 当前**仅激活** `<module>jun_dbapi</module>`。下列能力在文档或其它仓库中有说明，但**本工作区目录中通常不存在完整源码**（修改前请先 `ls` 确认）：
+
+| 名称 | 说明 | 本仓库 |
+|------|------|--------|
+| **jun_dbapi** (v2.3.1) | 零代码 SQL → HTTP API（单机） | ✅ 主工程 |
+| **jun-groovy-api-spring-boot-starter** | Groovy/SQL/Java 动态 API Starter | 📄 见根 `README.md`；Starter 见 `jun_dbapi_spring_boot_starter` 等 |
+| **jun_api_service** | Groovy 动态 API 完整应用 | ❌ 未包含（路径见下文「关联生态」） |
+| **dbapi/db-api-4.0** | DBApi 集群版 (v4.0) | ❌ 未包含；对比任务见 `README_AI.md` |
+
+三者概念相近（动态 SQL、缓存、转换），架构与部署方式不同，**彼此无直接 Maven 依赖**。
 
 ---
 
-## 项目结构
+## 本仓库目录与职责
 
 ```
+jun_api_service_main/              # 本仓库根（groupId: io.github.wujun728）
+├── jun_dbapi/                     # ★ 主工程 DBApi 2.3.1
+│   ├── dbapi-core/                # Spring Boot 后端（端口 8520）
+│   ├── dbapi-ui/                  # 原 Vue 前端（需 Node 构建）
+│   ├── jun_ui_sa_admin/           # 新前端：静态页 + sa-admin，Nginx 部署
+│   ├── dbapi-plugin/              # 插件接口（Cache/Transform/Alarm 等）
+│   ├── jun-dbapi-plugin/          # 插件实现（从 dbapi/*.src 搬迁）
+│   ├── dbapi-common/
+│   └── dbapi-assembly/            # 打包、bin 脚本、sql 初始化
+├── dbapi/                         # 插件反编译/参考源码（*.src）
+├── jun_dbapi_spring_boot_starter/ # 将 DBApi 嵌入其它 Spring Boot 项目
+├── jun_dbapi_spring_boot_starter_demo/
+├── jun_dbapi_plugin_demo/
+├── long-running-agent/            # 长时运行 AI 智能体框架（与 DBApi 弱耦合）
+├── README.md                      # jun-groovy-api-starter 使用说明
+├── README_AI.md                   # 前端迁移、插件搬迁、4.0 对比等任务记录
+└── pom.xml                        # 父 POM，modules: jun_dbapi
+```
+
+**jun_dbapi 请求执行流程（简图）：**
+
+```
+管理端配置 SQL + 参数 → 元库 api_config
+        ↓
+HTTP 请求 → 缓存插件命中? → 是 → 返回 JSON
+        ↓ 否
+解析动态 SQL → 执行 JDBC → 转换/告警插件 → 写缓存 → 返回
+```
+
+**近期本仓库常见改动方向**（见 `README_AI.md`、git 状态）：`dbapi-ui` → `jun_ui_sa_admin` 前端迁移；`dbapi/*.src` → `jun-dbapi-plugin` 插件兼容搬迁；加密/密码工具类；CodeMirror SQL 编辑体验。
+
+---
+
+## 关联生态（可能不在本仓库）
+
+完整 **Groovy 动态 API 应用** 与 **DBApi 4.0 集群** 常在其它路径维护，本文件仍保留其构建/架构说明供对比与升级参考：
+
+```
+# 典型外部路径（勿假定已 clone 到本仓库）
 jun_api_service/
-├── jun_api_service/           # 基于 Groovy 的动态 API 平台
-│   ├── jun_api_online_groovy/ # 主 SpringBoot 应用
-│   ├── jun_api_online_groovy_ui/ # Vue.js 前端
-│   └── jun_layui_jfinal/      # 附加 UI 层
-├── jun_dbapi/                 # DBApi 2.3.1（零代码 SQL API）
-│   ├── dbapi-core/           # 后端服务
-│   ├── dbapi-ui/             # Vue.js 前端
-│   ├── dbapi-plugin/         # 插件系统（缓存和转换）
-│   ├── dbapi-common/         # 共享模型
-│   └── dbapi-assembly/       # 构建和部署产物
-└── dbapi/db-api-4.0/         # DBApi 4.0 集群版本
-    ├── dbapi-standalone/     # 单实例部署
-    ├── dbapi-cluster-gateway/ # API 网关
-    ├── dbapi-cluster-manager/ # 集群管理
-    └── dbapi-cluster-apiServer/ # 分布式 API 服务器
+├── jun_api_online_groovy/         # ApiServiceApplication，端口 8888
+├── jun_api_online_groovy_ui/
+└── jun_layui_jfinal/
+
+dbapi/db-api-4.0/
+├── dbapi-standalone/
+├── dbapi-cluster-gateway/
+├── dbapi-cluster-manager/
+└── dbapi-cluster-apiServer/
 ```
 
 ---
 
 ## 构建命令
 
-### jun_api_service (Groovy API 平台)
+### jun_api_service (Groovy API 平台) — 本仓库通常无此目录
+
+> 以下命令适用于**已单独 clone** 的 `jun_api_service` 仓库；在本 `jun_api_service_main` 中请先确认目录是否存在。
 
 ```bash
 # 进入项目根目录
@@ -63,23 +105,28 @@ mvn test
 **Swagger UI：** http://localhost:8888/swagger-ui.html
 **API 上下文：** `/api`
 
-### jun_dbapi (v2.3.1)
+### jun_dbapi (v2.3.1) — 本仓库默认构建目标
 
 ```bash
-# 进入 jun_dbapi 根目录
-cd jun_dbapi/
+# 从仓库根目录构建（推荐，与根 pom.xml 一致）
+cd jun_api_service_main/
+mvn clean package
 
-# 构建整个项目（包含 UI 构建）
+# 或仅进入 jun_dbapi
+cd jun_dbapi/
 mvn clean package
 
 # 仅运行后端（开发模式）
-cd dbapi-core/
+cd jun_dbapi/dbapi-core/
 mvn spring-boot:run
 
-# 仅运行前端（开发模式）
-cd dbapi-ui/
+# 原 Vue 前端（开发模式，需 Node）
+cd jun_dbapi/dbapi-ui/
 npm install
 npm run serve
+
+# 新前端 jun_ui_sa_admin：静态资源，由 Nginx 托管（无 npm build）
+# 示例：http://dbapi.localhost/ ，配置见 README_AI.md
 
 # 生产部署（tar.gz）
 # mvn package 后，使用 dbapi-assembly/bin/ 中的脚本
@@ -100,10 +147,12 @@ mvn -N versions:update-child-modules
 **前端端口（开发）：** 8521
 **默认凭据：** admin/admin
 
-### dbapi/db-api-4.0 (集群版本)
+### dbapi/db-api-4.0 (集群版本) — 本仓库通常无此目录
+
+> 集群版源码与 `jun_dbapi` 老版本对比说明见 `README_AI.md`。
 
 ```bash
-# 进入 db-api-4.0 根目录
+# 进入 db-api-4.0 根目录（需单独 clone）
 cd dbapi/db-api-4.0/
 
 # 构建整个集群系统
@@ -179,7 +228,7 @@ project:
 - SQLite（默认元数据库）或 MySQL
 - Orange 动态 SQL 引擎
 - EHCache 结果缓存
-- Vue.js 2.6.11 + Element-UI（前端）
+- 前端二选一：**dbapi-ui**（Vue 2.6 + Element-UI，需 Node）或 **jun_ui_sa_admin**（静态 HTML + sa-admin，Nginx）
 - 多数据库支持：MySQL、PostgreSQL、SQL Server、Oracle、Hive、Kylin、ClickHouse
 
 **插件系统：**
@@ -488,12 +537,17 @@ spring.datasource.password=password
 - 配置：`jun_api_service/jun_api_online_groovy/src/main/resources/application.yml`
 - Groovy 加载器：搜索 `GroovyDynamicLoader` 类
 
-### jun_dbapi
+### jun_dbapi（本仓库主路径）
 - 主应用程序：`jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/DBApiApplication.java`
 - 插件接口：`jun_dbapi/dbapi-plugin/src/main/java/com/gitee/freakchicken/dbapi/plugin/`
+- 插件实现：`jun_dbapi/jun-dbapi-plugin/`
+- 插件参考源码：`dbapi/*-plugin-1.0.0.src/`
 - 控制器：`jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/controller/`
-- 前端：`jun_dbapi/dbapi-ui/src/`
+- 原 Vue 前端：`jun_dbapi/dbapi-ui/src/`
+- 新静态前端：`jun_dbapi/jun_ui_sa_admin/`（`sa-view/dbapi/` 为业务页）
 - SQL 脚本：`jun_dbapi/dbapi-assembly/sql/`
+- Starter：`jun_dbapi_spring_boot_starter/`
+- 任务与迁移记录：`README_AI.md`
 
 ---
 
@@ -503,5 +557,11 @@ spring.datasource.password=password
 - **Orange SQL 引擎：** https://gitee.com/freakchicken/orange
 - **DBApi 插件示例：** https://gitee.com/freakchicken/dbapi-plugin-demo
 
+
+## 修改记录
+
+| 日期 | 说明 |
+|------|------|
+| 2026-05-19 | 补充「本仓库实际内容与定位」、目录树、执行流程；标明根 pom 仅构建 `jun_dbapi`；区分本仓库与 Groovy/4.0 外部生态；增加 `jun_ui_sa_admin`、插件与辅助工程说明 |
 
 ### 每次修改都记录修改的内容到 README.md 文件中。

@@ -265,3 +265,7 @@ c.g.w.e.g.core.bean.GroovyDynamicLoader  : 当前groovyInfo加载完成,classNam
     - 新增 24 个单元测试，覆盖 query()、getAllTables()、getRDBMSColumnProperties() 的正常和异常路径
     - 测试场景：SQL 注入防护（validateTableName）、资源关闭验证（mock verify）、异常处理、多数据库类型支持
     - 影响文件：JdbcUtilTest.java (新增), dbapi-core/pom.xml (添加 junit/mockito 测试依赖)
+26. **更新 CLAUDE.md 项目说明 (2026-05-19)**
+    - 补充本仓库实际目录、主工程 `jun_dbapi`、执行流程与关联生态（Groovy/4.0 通常不在本仓库）
+    - 标明 `jun_ui_sa_admin`、`jun-dbapi-plugin`、`dbapi/*.src` 等路径；根 pom 仅构建 `jun_dbapi`
+    - 影响文件：CLAUDE.md
