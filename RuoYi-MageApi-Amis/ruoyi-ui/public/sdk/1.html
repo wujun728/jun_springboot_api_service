@@ -1,0 +1,40 @@
+<meta charset="utf-8">
+<title>2.1.0</title>
+
+<script src="https://unpkg.com/vue@2.6.4/dist/vue.js"></script>
+<script src="./vue-amis-sdk.umd.min.js"></script>
+<link rel="stylesheet" href="./vue-amis-sdk.css">
+<link rel='stylesheet' href='https://unpkg.com/amis@2.1.0/sdk/cxd.css'>
+<link rel='stylesheet' href='https://unpkg.com/amis@2.1.0/sdk/ang.css'>
+<link rel='stylesheet' href='https://unpkg.com/amis-ui@2.1.0/lib/helper.css'>
+<link rel='stylesheet' href='https://unpkg.com/amis@2.1.0/sdk/sdk.css'>
+
+<div id="app">
+      <vue-amis-sdk
+        id='editorName'
+        theme='cxd'
+        className='is-fixed'
+        :preview='isPreview'
+        :isMobile='isMobile'
+        :value='schema'
+    />
+</div>
+
+<script>
+</script>
+<script>
+  new Vue({
+    el: '#app',
+    name: 'test',
+    components: {
+      VueAmisSdk: window.VueAmisSdk
+    },
+    data: function() {
+      return {
+        isPreview:false,
+        isMobile:false,
+        schema: {},
+      }
+    }
+  })
+</script>
