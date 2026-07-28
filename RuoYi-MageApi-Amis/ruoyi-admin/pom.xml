@@ -23,6 +23,48 @@
             <version>3.8.7</version>
         </dependency>
 
+        <!-- ruoyi-api 低代码扩展模块 -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-core</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-datasource</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-plugin</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-groovy</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-aggregate</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-mcp</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-openapi</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-api-version</artifactId>
+            <version>3.8.7</version>
+        </dependency>
+
         <!-- spring-boot-devtools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

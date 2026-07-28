@@ -1,0 +1,5 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "maven.executable.path": "D:\\Java\\apache-maven-3.9.8\\bin\\mvn.cmd",
+    "java.compile.nullAnalysis.mode": "automatic"
+}

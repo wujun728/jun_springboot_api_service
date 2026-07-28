@@ -148,8 +148,8 @@ export const dynamicRoutes = [
       }
     ]
   },
-  {
-    path: '/tool/gen-edit',
+{
+    path: '/tool/gen',
     component: Layout,
     hidden: true,
     permissions: ['tool:gen:edit'],
@@ -161,6 +161,60 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  // ==================== ruoyi-api 扩展路由 ====================
+  {
+    path: '/api',
+    component: Layout,
+    redirect: '/api/datasource',
+    name: 'Api',
+    meta: { title: 'API管理', icon: 'tree' },
+    children: [
+      {
+        path: 'datasource',
+        component: () => import('@/views/api/datasource/index'),
+        name: 'ApiDatasource',
+        meta: { title: '数据源管理', icon: 'list' }
+      },
+      {
+        path: 'plugin',
+        component: () => import('@/views/api/plugin/index'),
+        name: 'ApiPlugin',
+        meta: { title: '插件管理', icon: 'list' }
+      },
+      {
+        path: 'groovy',
+        component: () => import('@/views/api/groovy/index'),
+        name: 'ApiGroovy',
+        meta: { title: 'Groovy API', icon: 'list' }
+      },
+      {
+        path: 'aggregate',
+        component: () => import('@/views/api/aggregate/index'),
+        name: 'ApiAggregate',
+        meta: { title: '聚合API', icon: 'list' }
+      },
+      {
+        path: 'mcp',
+        component: () => import('@/views/api/mcp/index'),
+        name: 'ApiMcp',
+        meta: { title: 'MCP Server', icon: 'list' }
+      },
+      {
+        path: 'openapi',
+        component: () => import('@/views/api/openapi/index'),
+        name: 'ApiOpenapi',
+        meta: { title: '开放平台', icon: 'list' }
+      },
+      {
+        path: 'version',
+        component: () => import('@/views/api/version/index'),
+        name: 'ApiVersion',
+        meta: { title: '版本历史', icon: 'list' }
+      }
+    ]
+  }
+]
   }
 ]
 

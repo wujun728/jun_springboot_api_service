@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ruoyi</groupId>
+        <artifactId>ruoyi</artifactId>
+        <version>3.8.7</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ruoyi-api</artifactId>
+    <packaging>pom</packaging>
+    <description>API 低代码扩展模块聚合</description>
+
+    <modules>
+        <module>ruoyi-api-core</module>
+        <module>ruoyi-api-datasource</module>
+        <module>ruoyi-api-plugin</module>
+        <module>ruoyi-api-groovy</module>
+        <module>ruoyi-api-aggregate</module>
+        <module>ruoyi-api-mcp</module>
+        <module>ruoyi-api-openapi</module>
+        <module>ruoyi-api-version</module>
+    </modules>
+
+</project>
