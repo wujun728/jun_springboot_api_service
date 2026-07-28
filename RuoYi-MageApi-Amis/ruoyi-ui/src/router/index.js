@@ -212,8 +212,6 @@ export const dynamicRoutes = [
         name: 'ApiVersion',
         meta: { title: '版本历史', icon: 'list' }
       }
-    ]
-  }
 ]
   }
 ]
