@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<section class="catalog" id="repository" th:fragment="repository-section">
+    <div class="search"><input type="text" class="gwt-TextBox filter" onkeyup="searchApi(this)" placeholder="Search"></div>
+    <div class="tree-view">
+        <div class="one-drive local-drive">
+            <div class="drive-name"><i class="fa fa-caret-down"></i>
+                <div class="drive-name-label"><span th:text="${service}"></span><span class="api-counter" style="margin-left: 5px;color: #888;">[0]</span></div>
+                <div class="btn-group ctrls dropdown-primary">
+                    <a class="btn-mini dropdown-toggle" data-toggle="dropdown"><i class="sli-icon-options-vertical"></i></a>
+                    <ul class="pull-right dropdown-menu">
+
+                        <li class="dropdown-item" onclick="showCreateDirectory('','Create a directory')"><a><i class="fa fa-plus"></i><span class="gwt-InlineHTML">Add a directory</span></a></li>
+                        <li class="dropdown-item" onclick="showGlobalConfig()"><a><i class="fa fa-cogs"></i><span class="gwt-InlineHTML">Local Setting...</span></a></li>
+                        <li class="dropdown-item" onclick="loadApiList(true)"><a><i class="fa fa-refresh"></i><span class="gwt-InlineHTML">Rebuild API List</span></a></li>
+                        <li class="dropdown-item" onclick="apiPush()"><a><i class="fa fa-cloud-upload"></i><span class="gwt-InlineHTML">Doc Publishing</span></a></li>
+                        <li class="dropdown-item" onclick="showRemoteSync()"><a><i class="fa fa-upload"></i><span class="gwt-InlineHTML">Remote Release</span></a></li>
+                        <li class="dropdown-item" th:style="@{(${configEnabled} ? '' : 'display:none')} + ''" onclick="showYmlConfig()"><a><i class="fa fa-wrench"></i><span class="gwt-InlineHTML">Rocket-api.yml</span></a></li>
+                        <li class="dropdown-item" onclick="showDataSourceConfig()"><a><i class="fa fa-database"></i><span class="gwt-InlineHTML">Data Sources</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <ul class="authenticated">
+                <ul></ul>
+            </ul>
+        </div>
+    </div>
+    <div class="buttons" style="border-top: solid 1px #5d5d5d;">
+        <div class="btn-group dropup">
+            <a href="javascript:;" class="btn btn-small btn-link" title="Export data" onclick="showExport()">
+                <i class="icon-download-alt"></i> Export
+            </a>
+            <a href="javascript:;" class="btn dropdown-toggle btn-small btn-link" onclick="showImport()">
+                <i class="icon-upload-alt"></i> Import
+            </a>
+        </div>
+    </div>
+</section>
+</body>
+</html>
