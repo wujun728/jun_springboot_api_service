@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jun-api</artifactId>
+        <groupId>com.ruoyi</groupId>
+        <version>3.8.6</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jun-api-system</artifactId>
+    <description>系统服务API接口 - Feign客户端定义</description>
+    <dependencies>
+        <!-- OpenFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- LoadBalancer -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+        <!-- 公共核心 -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>jun-common-core</artifactId>
+        </dependency>
+        <!-- ruoyi-common for domain classes -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common</artifactId>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,52 @@
+# 网关服务配置
+server:
+  port: 8080
+
+spring:
+  application:
+    name: jun-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.yml
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # 认证服务
+        - id: jun-auth
+          uri: lb://jun-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+        # 系统模块
+        - id: jun-system
+          uri: lb://jun-system
+          predicates:
+            - Path=/system/**,/monitor/**,/common/**
+        # 代码生成
+        - id: jun-gen
+          uri: lb://jun-gen
+          predicates:
+            - Path=/tool/**
+        # 定时任务
+        - id: jun-job
+          uri: lb://jun-job
+          predicates:
+            - Path=/schedule/**
+    sentinel:
+      eager: true
+
+# Token配置
+token:
+  secret: abcdefghijklmnopqrstuvwxyz

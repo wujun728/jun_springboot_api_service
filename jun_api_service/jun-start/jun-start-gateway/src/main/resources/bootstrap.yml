@@ -1,0 +1,4 @@
+# 网关启动配置 - 配置继承自jun-gateway模块
+spring:
+  profiles:
+    active: dev

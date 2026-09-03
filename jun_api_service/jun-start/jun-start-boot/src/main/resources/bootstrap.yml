@@ -1,0 +1,12 @@
+# 单体模式启动配置 - Nacos服务发现和配置中心禁用
+spring:
+  application:
+    name: jun-boot
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+        instance-enabled: false
+      config:
+        enabled: false
+        refresh-enabled: false

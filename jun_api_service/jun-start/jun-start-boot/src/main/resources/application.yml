@@ -1,0 +1,89 @@
+# 单体模式配置 - 等同于原ruoyi-admin的配置
+# 项目相关配置
+ruoyi:
+  name: RuoYi
+  version: 3.8.6
+  copyrightYear: 2024
+  demoEnabled: true
+  profile: D:/ruoyi/uploadPath
+  addressEnabled: false
+  captchaType: math
+
+# 开发环境配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  tomcat:
+    uri-encoding: UTF-8
+    accept-count: 1000
+    threads:
+      max: 800
+      min-spare: 100
+
+# 日志配置
+logging:
+  level:
+    com.ruoyi: debug
+    org.springframework: warn
+
+# 用户配置
+user:
+  password:
+    maxRetryCount: 5
+    lockTime: 10
+
+# Spring配置
+spring:
+  profiles:
+    active: druid
+  messages:
+    basename: i18n/messages
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+  devtools:
+    restart:
+      enabled: true
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    password:
+    timeout: 10s
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+
+# Token配置
+token:
+  header: Authorization
+  secret: abcdefghijklmnopqrstuvwxyz
+  expireTime: 30
+
+# MyBatis Plus配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*Mapper.xml
+  type-aliases-package: com.ruoyi.**.domain
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: NOT_EMPTY
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true
+
+# Swagger配置
+swagger:
+  enabled: true
+  pathMapping: /dev-api
+
+# 防止XSS攻击
+xss:
+  enabled: true
+  excludes: /system/notice
+  urlPatterns: /system/*,/monitor/*,/tool/*

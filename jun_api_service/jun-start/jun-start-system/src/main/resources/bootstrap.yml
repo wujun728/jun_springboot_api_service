@@ -1,0 +1,18 @@
+# 系统微服务配置 - Nacos服务发现和配置中心启用
+server:
+  port: 9201
+
+spring:
+  application:
+    name: jun-system
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.yml
