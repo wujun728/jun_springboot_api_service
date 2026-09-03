@@ -1,0 +1,8 @@
+org.dromara.surpass.autoconfigure.ApplicationAutoConfiguration
+org.dromara.surpass.autoconfigure.DataSourceAutoConfiguration
+org.dromara.surpass.autoconfigure.MvcAutoConfiguration
+org.dromara.surpass.autoconfigure.MvcCorsAutoConfiguration
+org.dromara.surpass.autoconfigure.MvcDateTimeAutoConfiguration
+org.dromara.surpass.autoconfigure.MvcResourceAutoConfiguration
+org.dromara.surpass.autoconfigure.MvcRestrictHostAutoConfiguration
+org.dromara.surpass.autoconfigure.RedisAutoConfiguration

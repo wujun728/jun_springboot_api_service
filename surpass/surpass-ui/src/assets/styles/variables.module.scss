@@ -1,0 +1,86 @@
+:root {
+  --el-menu-item-height: 42px; /* 增加菜单项高度 */
+  --el-border-radius-base: 8px; /* 增加基础圆角 */
+  --el-border-radius-small: 6px;
+  --el-border-radius-round: 20px;
+}
+
+// 高级素雅配色方案
+// 主色调 - 深邃蓝灰，体现专业与稳重
+$primary: #2C3E50;
+$primary-light: #34495E;
+$primary-dark: #1A252F;
+
+// 辅助色调 - 温润中性色系
+$secondary: #7F8C8D;
+$tertiary: #95A5A6;
+
+// 功能色 - 低调而精准
+$success: #27AE60;
+$warning: #F39C12;
+$danger: #E74C3C;
+$info: #3498DB;
+
+// 素雅中性色系 - 营造高端商务氛围
+$gray-50: #F8F9FA;
+$gray-100: #F1F3F4;
+$gray-200: #E9ECEF;
+$gray-300: #DEE2E6;
+$gray-400: #CED4DA;
+$gray-500: #ADB5BD;
+$gray-600: #6C757D;
+$gray-700: #495057;
+$gray-800: #343A40;
+$gray-900: #212529;
+
+// 素雅商务菜单主题
+$base-menu-color: $gray-700;
+$base-menu-color-active: $primary;
+$base-menu-background: #FFFFFF;
+$base-logo-title-color: $gray-900;
+
+$base-menu-light-color: $gray-600;
+$base-menu-light-background: #FFFFFF;
+$base-logo-light-title-color: $gray-800;
+
+$base-sub-menu-background: #F8F9FA;
+$base-sub-menu-hover: #E9ECEF;
+
+// Element Plus 素雅主题色
+$--color-primary: $primary;
+$--color-success: $success;
+$--color-warning: $warning;
+$--color-danger: $danger;
+$--color-info: $info;
+
+// 布局尺寸
+$base-sidebar-width: 240px;
+$base-navbar-height: 72px;
+$base-tagview-height: 40px;
+$base-border-radius: 8px;
+$base-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$base-box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  menuColor: $base-menu-color;
+  menuLightColor: $base-menu-light-color;
+  menuColorActive: $base-menu-color-active;
+  menuBackground: $base-menu-background;
+  menuLightBackground: $base-menu-light-background;
+  subMenuBackground: $base-sub-menu-background;
+  subMenuHover: $base-sub-menu-hover;
+  sideBarWidth: $base-sidebar-width;
+  navBarHeight: $base-navbar-height;
+  tagViewHeight: $base-tagview-height;
+  logoTitleColor: $base-logo-title-color;
+  logoLightTitleColor: $base-logo-light-title-color;
+  primaryColor: $--color-primary;
+  successColor: $--color-success;
+  dangerColor: $--color-danger;
+  infoColor: $--color-info;
+  warningColor: $--color-warning;
+  borderRadius: $base-border-radius;
+  boxShadow: $base-box-shadow;
+  boxShadowLg: $base-box-shadow-lg;
+}

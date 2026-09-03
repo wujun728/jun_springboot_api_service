@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dromara.surpass.persistence.mapper.AppProxyRulesMapper">
+
+    <select id="pageList" parameterType="org.dromara.surpass.entity.app.dto.AppProxyRulesPageDto"
+            resultType="org.dromara.surpass.entity.app.AppProxyRules">
+        select
+        apr.*
+        from
+        surpass_app_proxy_rules apr
+        where apr.deleted = 'n'
+        <if test="proxyRuleId != null and proxyRuleId != ''">
+            and apr.proxy_rule_id = #{proxyRuleId}
+        </if>
+        <if test="appId != null and appId != ''">
+            and apr.app_id = #{appId}
+        </if>
+        <if test="protocolType != null and protocolType != ''">
+            and apr.protocol_type = #{protocolType}
+        </if>
+        <if test="status != null and status != ''">
+            and apr.status = #{status}
+        </if>
+        order by apr.created_date desc
+    </select>
+
+    <select id="getAll" parameterType="org.dromara.surpass.entity.app.AppProxyRules"
+            resultType="org.dromara.surpass.entity.app.AppProxyRules">
+        select
+        apr.*
+        from
+        surpass_app_proxy_rules apr
+        where apr.deleted = 'n'
+        <if test="proxyRuleId != null and proxyRuleId != ''">
+            and apr.proxy_rule_id = #{proxyRuleId}
+        </if>
+        <if test="appId != null and appId != ''">
+            and apr.app_id = #{appId}
+        </if>
+        <if test="protocolType != null and protocolType != ''">
+            and apr.protocol_type = #{protocolType}
+        </if>
+        <if test="status != null and status != ''">
+            and apr.status = #{status}
+        </if>
+        order by apr.created_date desc
+    </select>
+</mapper>

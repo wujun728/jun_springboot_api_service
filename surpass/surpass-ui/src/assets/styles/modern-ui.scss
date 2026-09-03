@@ -1,0 +1,402 @@
+// 现代化UI增强样式
+// 为Element Plus组件添加现代化设计
+
+// 现代化卡片样式
+.el-card {
+  border-radius: $base-border-radius !important;
+  border: 1px solid $gray-200 !important;
+  box-shadow: $base-box-shadow !important;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: $base-box-shadow-lg !important;
+    //transform: translateY(-2px);
+  }
+
+  .el-card__header {
+    border-bottom: 1px solid $gray-200 !important;
+    background-color: $gray-50;
+    padding: 16px 20px !important;
+    font-weight: 600;
+    color: $gray-800;
+  }
+
+  .el-card__body {
+    padding: 20px !important;
+  }
+}
+
+// 现代化按钮样式增强
+.el-button {
+  border-radius: $base-border-radius !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(44, 62, 80, 0.15);
+  }
+
+  // 主按钮
+  &.el-button--primary {
+    background: linear-gradient(135deg, $primary 0%, $primary-light 100%) !important;
+    border: none !important;
+    color: white !important;
+
+    &:hover {
+      background: linear-gradient(135deg, $primary-dark 0%, $primary 100%) !important;
+      box-shadow: 0 4px 12px rgba(44, 62, 80, 0.25);
+    }
+  }
+
+  &.is-link {
+    color: $primary;
+
+    &:hover {
+      color: $primary-dark;
+    }
+  }
+
+  // 成功按钮
+  &.el-button--success {
+    background: linear-gradient(135deg, $success 0%, #2ECC71 100%) !important;
+    border: none !important;
+    color: white !important;
+
+    &:hover {
+      background: linear-gradient(135deg, #219653 0%, $success 100%) !important;
+    }
+  }
+
+  // 警告按钮
+  &.el-button--warning {
+    background: linear-gradient(135deg, $warning 0%, #F1C40F 100%) !important;
+    border: none !important;
+    color: white !important;
+
+    &:hover {
+      background: linear-gradient(135deg, #D35400 0%, $warning 100%) !important;
+    }
+  }
+
+  // 危险按钮
+  &.el-button--danger {
+    background: linear-gradient(135deg, $danger 0%, #E67E22 100%) !important;
+    border: none !important;
+    color: white !important;
+
+    &:hover {
+      background: linear-gradient(135deg, #C0392B 0%, $danger 100%) !important;
+    }
+  }
+
+  // 信息按钮
+  &.el-button--info {
+    background: linear-gradient(135deg, $info 0%, #5D9CEC 100%) !important;
+    border: none !important;
+    color: white !important;
+
+    &:hover {
+      background: linear-gradient(135deg, #2980B9 0%, $info 100%) !important;
+    }
+  }
+}
+
+// 现代化表单样式
+.el-form {
+  .el-form-item {
+    margin-bottom: 20px;
+
+    .el-form-item__label {
+      font-weight: 500;
+      color: $gray-700;
+      margin-bottom: 6px;
+    }
+
+    .el-input,
+    .el-select,
+    .el-textarea {
+      .el-input__wrapper {
+        border-radius: $base-border-radius;
+        border: 1px solid $gray-300;
+        background-color: white;
+        transition: all 0.3s ease;
+        box-shadow: none;
+
+        &:hover {
+          border-color: $primary;
+          box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+
+        &.is-focus {
+          border-color: $primary;
+          box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// 现代化表格样式
+.el-table {
+  border-radius: $base-border-radius;
+  overflow: hidden;
+  border: 1px solid $gray-200;
+
+  .el-table__header {
+    th {
+      background-color: $gray-50 !important;
+      color: $gray-700;
+      font-weight: 600;
+      border-bottom: 1px solid $gray-200;
+    }
+  }
+
+  .el-table__body {
+    tr {
+      &:hover {
+        background-color: $gray-50 !important;
+      }
+
+      td {
+        border-bottom: 1px solid $gray-100;
+      }
+    }
+  }
+
+  .el-table__empty-block {
+    padding: 40px 0;
+  }
+}
+
+// 现代化分页样式
+.el-pagination {
+  .btn-prev,
+  .btn-next,
+  .el-pager li {
+    border-radius: $base-border-radius !important;
+    border: 1px solid $gray-300;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: $primary;
+      color: $primary;
+    }
+
+    &.active {
+      background-color: $primary !important;
+      border-color: $primary !important;
+      color: white !important;
+    }
+  }
+}
+
+// 现代化对话框样式
+.el-dialog {
+  border-radius: $base-border-radius !important;
+  overflow: hidden;
+
+  .el-dialog__header {
+    border-bottom: 1px solid $gray-200;
+    //background-color: $gray-50;
+
+    .el-dialog__title {
+      font-weight: 600;
+      color: $gray-800;
+    }
+  }
+
+  .el-dialog__body {
+    padding: 20px;
+  }
+
+  .el-dialog__footer {
+    //border-top: 1px solid $gray-200;
+    //padding: 16px 20px;
+    //background-color: $gray-50;
+  }
+}
+
+// 现代化标签页样式
+.el-tabs {
+  .el-tabs__header {
+    border-bottom: 1px solid $gray-200;
+
+    .el-tabs__nav-wrap::after {
+      background-color: $gray-200;
+    }
+
+    .el-tabs__item {
+      font-weight: 500;
+      color: $gray-600;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $primary;
+      }
+
+      &.is-active {
+        color: $primary;
+        font-weight: 600;
+      }
+    }
+
+    .el-tabs__active-bar {
+      background-color: $primary;
+    }
+  }
+}
+
+// 素雅消息提示
+.el-message {
+  border-radius: $base-border-radius !important;
+  box-shadow: $base-box-shadow-lg !important;
+  border: none !important;
+
+  .el-message__content, .el-message__icon {
+    color: white !important;
+  }
+
+  &.el-message--success {
+    background: linear-gradient(135deg, $success 0%, #2ECC71 100%) !important;
+  }
+
+
+  &.el-message--warning {
+    background: linear-gradient(135deg, $warning 0%, #F1C40F 100%) !important;
+  }
+
+  &.el-message--error {
+    background: linear-gradient(135deg, $danger 0%, #E67E22 100%) !important;
+  }
+
+  &.el-message--info {
+    background: linear-gradient(135deg, $info 0%, #5D9CEC 100%) !important;
+  }
+}
+
+// 现代化加载状态
+.el-loading-mask {
+  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.8);
+
+  .el-loading-spinner {
+    .circular {
+      .path {
+        stroke: $primary;
+      }
+    }
+  }
+}
+
+// 现代化进度条
+.el-progress {
+  .el-progress-bar {
+    .el-progress-bar__outer {
+      border-radius: 10px;
+      background-color: $gray-200;
+
+      .el-progress-bar__inner {
+        border-radius: 10px;
+        background: linear-gradient(90deg, $primary 0%, $primary-light 100%);
+        transition: width 0.6s ease;
+      }
+    }
+  }
+}
+
+// 素雅标签
+.el-tag {
+  border-radius: 16px !important;
+  font-weight: 500;
+  border: none !important;
+
+  &.el-tag--primary {
+    background: linear-gradient(135deg, $primary 0%, $primary-light 100%) !important;
+    color: white !important;
+  }
+
+  &.el-tag--success {
+    background: linear-gradient(135deg, $success 0%, #2ECC71 100%) !important;
+    color: white !important;
+  }
+
+  &.el-tag--warning {
+    background: linear-gradient(135deg, $warning 0%, #F1C40F 100%) !important;
+    color: white !important;
+  }
+
+  &.el-tag--danger {
+    background: linear-gradient(135deg, $danger 0%, #E67E22 100%) !important;
+    color: white !important;
+  }
+
+  &.el-tag--info {
+    background: linear-gradient(135deg, $info 0%, #5D9CEC 100%) !important;
+    color: white !important;
+  }
+}
+
+// 现代化下拉菜单
+.el-dropdown-menu {
+  border-radius: $base-border-radius !important;
+  border: 1px solid $gray-200 !important;
+  box-shadow: $base-box-shadow-lg !important;
+  padding: 8px 0 !important;
+
+  .el-dropdown-menu__item {
+    padding: 8px 16px !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: $gray-50 !important;
+      color: $primary !important;
+    }
+  }
+}
+
+// 现代化步骤条
+.el-steps {
+  .el-step {
+    .el-step__head {
+      .el-step__icon {
+        border: 2px solid $gray-300;
+        background-color: white;
+        color: $gray-500;
+
+        &.is-text {
+          border-radius: 50%;
+        }
+      }
+
+      &.is-process {
+        .el-step__icon {
+          border-color: $primary;
+          background-color: $primary;
+          color: white;
+        }
+      }
+
+      &.is-finish {
+        .el-step__icon {
+          border-color: $primary;
+          color: $primary;
+        }
+      }
+    }
+
+    .el-step__title {
+      font-weight: 500;
+      color: $gray-700;
+
+      &.is-process {
+        color: $primary;
+        font-weight: 600;
+      }
+
+      &.is-finish {
+        color: $primary;
+      }
+    }
+  }
+}

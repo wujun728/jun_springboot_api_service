@@ -1,0 +1,332 @@
+// 高级素雅商务风格样式
+// 基于深邃蓝灰色调的专业设计体系
+
+// 全局字体设置 - 优雅的商务字体
+body {
+  font-family: 'Helvetica Neue', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
+  color: $gray-800;
+  background-color: #f8f9fa;
+}
+
+// 标题样式 - 体现专业感
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: $gray-900;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.75rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.1rem; }
+h6 { font-size: 1rem; }
+
+// 文本链接样式
+a {
+  color: $primary;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: $primary-dark;
+    text-decoration: underline;
+  }
+}
+
+// 素雅卡片容器
+.elegant-container {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
+// 商务仪表板面板
+.dashboard-panel {
+  @extend .elegant-container;
+  padding: 24px;
+  margin-bottom: 24px;
+  
+  .panel-header {
+    border-bottom: 1px solid $gray-200;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    
+    h3 {
+      margin: 0;
+      color: $gray-900;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      
+      .header-icon {
+        color: $primary;
+        font-size: 1.2em;
+      }
+    }
+  }
+  
+  .panel-content {
+    .stat-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid $gray-100;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      .stat-label {
+        flex: 1;
+        color: $gray-600;
+        font-size: 0.95rem;
+      }
+      
+      .stat-value {
+        font-weight: 600;
+        color: $gray-900;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+// 素雅表格样式
+.elegant-table {
+  .el-table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    
+    th {
+      background: linear-gradient(to bottom, #f8f9fa 0%, #f1f3f4 100%);
+      color: $gray-700;
+      font-weight: 600;
+      border-bottom: 1px solid $gray-200;
+    }
+    
+    tr:hover {
+      background-color: rgba(44, 62, 80, 0.03);
+    }
+  }
+}
+
+// 商务导航栏
+.business-navbar {
+  background: white;
+  border-bottom: 1px solid $gray-200;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  
+  .navbar-brand {
+    color: $gray-900;
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  
+  .nav-item {
+    color: $gray-600;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &:hover, &.active {
+      color: $primary;
+    }
+  }
+}
+
+// 素雅侧边栏
+.elegant-sidebar {
+  background: white;
+  border-right: 1px solid $gray-200;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+  
+  .sidebar-item {
+    color: $gray-700;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: $gray-100;
+      color: $primary;
+    }
+    
+    &.active {
+      background: rgba(44, 62, 80, 0.1);
+      color: $primary;
+      border-left: 3px solid $primary;
+    }
+  }
+  
+  .submenu-item {
+    color: $gray-600;
+    
+    &:hover {
+      color: $primary;
+      background: $gray-50;
+    }
+  }
+}
+
+// 商务表单元素
+.business-form {
+  .form-section {
+    margin-bottom: 32px;
+    
+    .section-title {
+      color: $gray-800;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid $gray-200;
+    }
+  }
+  
+  .el-form-item {
+    margin-bottom: 24px;
+    
+    .el-form-item__label {
+      color: $gray-700;
+      font-weight: 500;
+    }
+  }
+}
+
+// 素雅统计数据展示
+.statistic-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 24px 0;
+  
+  .stat-card {
+    @extend .elegant-container;
+    padding: 20px;
+    text-align: center;
+    
+    .stat-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: $primary;
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $gray-900;
+      margin-bottom: 8px;
+    }
+    
+    .stat-label {
+      color: $gray-600;
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    
+    // 不同类型的状态卡片
+    &.success {
+      .stat-icon, .stat-number { color: $success; }
+    }
+    
+    &.warning {
+      .stat-icon, .stat-number { color: $warning; }
+    }
+    
+    &.danger {
+      .stat-icon, .stat-number { color: $danger; }
+    }
+    
+    &.info {
+      .stat-icon, .stat-number { color: $info; }
+    }
+  }
+}
+
+// 商务图表容器
+.business-chart {
+  @extend .elegant-container;
+  padding: 24px;
+  
+  .chart-header {
+    margin-bottom: 20px;
+    
+    h4 {
+      margin: 0;
+      color: $gray-800;
+      font-weight: 600;
+    }
+  }
+}
+
+// 素雅通知和提醒
+.elegant-alert {
+  border-radius: 8px;
+  border: none;
+  padding: 16px 20px;
+  
+  &.alert-primary {
+    background: linear-gradient(135deg, rgba($primary, 0.1) 0%, rgba($primary-light, 0.1) 100%);
+    color: $primary-dark;
+    border-left: 4px solid $primary;
+  }
+  
+  &.alert-success {
+    background: linear-gradient(135deg, rgba($success, 0.1) 0%, rgba(#2ECC71, 0.1) 100%);
+    color: #219653;
+    border-left: 4px solid $success;
+  }
+  
+  &.alert-warning {
+    background: linear-gradient(135deg, rgba($warning, 0.1) 0%, rgba(#F1C40F, 0.1) 100%);
+    color: #D35400;
+    border-left: 4px solid $warning;
+  }
+  
+  &.alert-danger {
+    background: linear-gradient(135deg, rgba($danger, 0.1) 0%, rgba(#E67E22, 0.1) 100%);
+    color: #C0392B;
+    border-left: 4px solid $danger;
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .statistic-display {
+    grid-template-columns: 1fr;
+  }
+  
+  .dashboard-panel {
+    padding: 16px;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+}
+
+// 打印样式优化
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .elegant-container {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  a {
+    color: black;
+    text-decoration: underline;
+  }
+}

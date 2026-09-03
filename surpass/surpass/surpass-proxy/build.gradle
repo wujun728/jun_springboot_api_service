@@ -1,0 +1,26 @@
+description = "surpass-proxy - API 代理核心模块"
+
+dependencies {
+    // HTTP Client - Apache HttpComponents 5
+    implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: "${httpcomponentscore5Version}"
+    implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5-h2', version: "${httpcomponentscore5Version}"
+    implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5', version: "${httpcomponentsclient5Version}"
+    implementation group: 'org.apache.httpcomponents.client5', name: 'httpclient5-fluent', version: "${httpcomponentsclient5Version}"
+
+    // JSON 处理
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: "${jacksonVersion}"
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: "${jacksonVersion}"
+
+    // JWT 支持
+    implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: "${nimbusjosejwtVersion}"
+
+    // 工具类
+    implementation group: 'org.dromara.hutool', name: 'hutool-all', version: "${dromaraHutoolVersion}"
+
+    // Lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: "${lombokVersion}"
+
+    // SLF4J
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: "${slf4jVersion}"
+}
