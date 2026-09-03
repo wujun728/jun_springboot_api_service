@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zapi</groupId>
+        <artifactId>zapi-allin-sys</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>allin-model</artifactId>
+    <packaging>pom</packaging>
+
+    <name>allin-model</name>
+    <description>业务模块</description>
+
+    <modules>
+        <module>allin-model-system</module>
+        <module>allin-model-notification</module>
+        <module>allin-model-dataset</module>
+        <module>allin-model-workflow</module>
+        <module>allin-model-onlyoffice</module>
+        <module>allin-model-form</module>
+        <module>allin-model-contract</module>
+        <module>allin-model-openapi</module>
+        <module>allin-model-workbench</module>
+        <module>allin-model-grid</module>
+        <module>allin-model-action-engine</module>
+    </modules>
+
+    <dependencies>
+        <!-- 依赖allin-common模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-common</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Starter Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- MyBatis Plus -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <!-- MySQL Driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+
+        <!-- FastJSON -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+    </dependencies>
+</project> 

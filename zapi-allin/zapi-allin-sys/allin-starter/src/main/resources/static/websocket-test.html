@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket测试</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .container { border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
+        .message-area { height: 300px; border: 1px solid #ccc; padding: 10px; overflow-y: auto; }
+        .btn { background-color: #007bff; color: white; border: none; padding: 8px 16px; cursor: pointer; margin-right: 10px; }
+        .status { padding: 10px; border-radius: 4px; margin-bottom: 10px; }
+        .status.connected { background-color: #d4edda; }
+        .status.disconnected { background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h1>WebSocket通知系统测试</h1>
+    
+    <div class="container">
+        <h3>连接状态</h3>
+        <div id="status" class="status disconnected">未连接</div>
+        <button class="btn" onclick="connect()">连接</button>
+        <button class="btn" onclick="disconnect()">断开</button>
+    </div>
+
+    <div class="container">
+        <h3>消息区域</h3>
+        <div id="messageArea" class="message-area"></div>
+        <input type="text" id="messageInput" placeholder="输入消息" style="width: 300px; margin-right: 10px;">
+        <button class="btn" onclick="sendMessage()">发送消息</button>
+    </div>
+
+    <div class="container">
+        <h3>测试功能</h3>
+        <button class="btn" onclick="testNotification()">测试通知</button>
+        <button class="btn" onclick="testBroadcast()">测试广播</button>
+    </div>
+
+    <script>
+        let stompClient = null;
+
+        function connect() {
+            const socket = new SockJS('/zapi-allin-sys/ws/notification');
+            stompClient = Stomp.over(socket);
+            
+            stompClient.connect({}, function (frame) {
+                document.getElementById('status').className = 'status connected';
+                document.getElementById('status').textContent = '已连接';
+                
+                stompClient.subscribe('/user/queue/notification', function (message) {
+                    addMessage('系统通知: ' + message.body);
+                });
+                
+                stompClient.subscribe('/topic/public', function (message) {
+                    addMessage('公共消息: ' + message.body);
+                });
+                
+                stompClient.subscribe('/topic/system', function (message) {
+                    addMessage('系统广播: ' + message.body);
+                });
+                
+            }, function (error) {
+                document.getElementById('status').className = 'status disconnected';
+                document.getElementById('status').textContent = '连接失败';
+            });
+        }
+
+        function disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+                document.getElementById('status').className = 'status disconnected';
+                document.getElementById('status').textContent = '已断开';
+            }
+        }
+
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            if (message && stompClient && stompClient.connected) {
+                stompClient.send("/app/chat", {}, message);
+                document.getElementById('messageInput').value = '';
+            }
+        }
+
+        function testNotification() {
+            fetch('/zapi-allin-sys/api/notification/realtime-message?userId=1&message=测试通知消息', {
+                method: 'POST'
+            }).then(response => response.json())
+            .then(data => {
+                addMessage('测试通知已发送');
+            });
+        }
+
+        function testBroadcast() {
+            fetch('/zapi-allin-sys/api/notification/broadcast?message=测试广播消息', {
+                method: 'POST'
+            }).then(response => response.json())
+            .then(data => {
+                addMessage('测试广播已发送');
+            });
+        }
+
+        function addMessage(content) {
+            const messageArea = document.getElementById('messageArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = '[' + new Date().toLocaleTimeString() + '] ' + content;
+            messageArea.appendChild(messageDiv);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        window.onload = function() {
+            connect();
+        };
+    </script>
+</body>
+</html> 

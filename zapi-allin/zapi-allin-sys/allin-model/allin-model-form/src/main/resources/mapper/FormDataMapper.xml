@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.form.mapper.FormDataMapper">
+
+    <!-- 批量插入动态表（entries 为单条也可复用） -->
+    <insert id="insertDynamic">
+        INSERT INTO ${tableName}
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <foreach collection="entries[0]" index="col" item="val">
+                `${col}`,
+            </foreach>
+        </trim>
+        VALUES
+        <foreach collection="entries" item="row" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <foreach collection="row" index="col" item="val">
+                    #{val},
+                </foreach>
+            </trim>
+        </foreach>
+    </insert>
+
+    <!-- 按主键更新，仅更新给定列 -->
+    <update id="updateByIdDynamic">
+        UPDATE ${tableName}
+        <set>
+            <foreach collection="entries" item="row">
+                <foreach collection="row" index="col" item="val">
+                    `${col}` = #{val},
+                </foreach>
+            </foreach>
+        </set>
+        WHERE id = #{id} AND is_deleted = 0
+    </update>
+
+    <!-- 旧的 AND-only 更新语句已移除，统一使用 DNF 版本 -->
+
+    <!-- 按 DNF 条件更新（OR 的多个 AND 组合） -->
+    <update id="updateByCriteriaGroupsDynamic">
+        UPDATE ${tableName}
+        <set>
+            <foreach collection="entries" item="row">
+                <foreach collection="row" index="col" item="val">
+                    `${col}` = #{val},
+                </foreach>
+            </foreach>
+        </set>
+        <where>
+            is_deleted = 0
+            <if test="criteriaGroups != null and criteriaGroups.size() > 0">
+                AND (
+                    <foreach collection="criteriaGroups" item="group" separator=" OR ">
+                        (
+                            <trim prefix="" prefixOverrides="AND">
+                                <foreach collection="group" item="pair">
+                                    <if test="pair.value != null and pair.value != ''">
+                                        AND `${pair.key}` = #{pair.value}
+                                    </if>
+                                </foreach>
+                            </trim>
+                        )
+                    </foreach>
+                )
+            </if>
+        </where>
+    </update>
+
+    <!-- 主键查询 -->
+    <select id="selectByIdDynamic" resultType="java.util.Map">
+        SELECT * FROM ${tableName} WHERE id = #{id} AND is_deleted = 0
+    </select>
+
+    <!-- 主键删除（逻辑删除） -->
+    <update id="deleteByIdDynamic">
+        UPDATE ${tableName} SET is_deleted = 1 WHERE id = #{id}
+    </update>
+
+    <!-- 条件分页查询（简单等值条件） -->
+    <select id="pageQueryDynamic" resultType="java.util.Map">
+        SELECT * FROM ${tableName}
+        <where>
+            is_deleted = 0
+            <foreach collection="criteria" item="pair">
+                <if test="pair.value != null and pair.value != ''">
+                    AND `${pair.key}` = #{pair.value}
+                </if>
+            </foreach>
+        </where>
+        LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <!-- 条件计数 -->
+    <select id="countQueryDynamic" resultType="long">
+        SELECT COUNT(1) FROM ${tableName}
+        <where>
+            is_deleted = 0
+            <foreach collection="criteria" item="pair">
+                <if test="pair.value != null and pair.value != ''">
+                    AND `${pair.key}` = #{pair.value}
+                </if>
+            </foreach>
+        </where>
+    </select>
+
+    <!-- 批量删除（逻辑删除） -->
+    <update id="batchDeleteByIds">
+        UPDATE ${tableName} SET is_deleted = 1
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 按 DNF 条件删除（OR 的多个 AND 组合） -->
+    <update id="deleteByCriteriaGroupsDynamic">
+        UPDATE ${tableName} SET is_deleted = 1
+        <where>
+            is_deleted = 0
+            <if test="criteriaGroups != null and criteriaGroups.size() > 0">
+                AND (
+                    <foreach collection="criteriaGroups" item="group" separator=" OR ">
+                        (
+                            <trim prefix="" prefixOverrides="AND">
+                                <foreach collection="group" item="pair">
+                                    <if test="pair.value != null and pair.value != ''">
+                                        AND `${pair.key}` = #{pair.value}
+                                    </if>
+                                </foreach>
+                            </trim>
+                        )
+                    </foreach>
+                )
+            </if>
+        </where>
+    </update>
+</mapper> 

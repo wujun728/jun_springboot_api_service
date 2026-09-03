@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.workflow.service.mapper.WfHistoryActivityMapper">
+
+    <!-- 结果集映射 -->
+    <resultMap id="BaseResultMap" type="com.zapi.workflow.service.model.entity.WfHistoryActivity">
+        <id column="id" property="id" />
+        <result column="process_instance_id" property="processInstanceId" />
+        <result column="node_id" property="nodeId" />
+        <result column="node_name" property="nodeName" />
+        <result column="node_type" property="nodeType" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="duration" property="duration" />
+        <result column="operator" property="operator" />
+        <result column="comment" property="comment" />
+    </resultMap>
+
+    <!-- 根据流程实例ID查询历史活动 -->
+    <select id="selectByProcessInstanceId" resultMap="BaseResultMap">
+        SELECT 
+            id, process_instance_id, node_id, node_name, node_type,
+            start_time, end_time, duration, operator, comment
+        FROM wf_history_activity 
+        WHERE process_instance_id = #{processInstanceId}
+        ORDER BY start_time ASC
+    </select>
+
+    <!-- 根据流程实例ID和节点ID查询历史活动 -->
+    <select id="selectByProcessInstanceIdAndNodeId" resultMap="BaseResultMap">
+        SELECT 
+            id, process_instance_id, node_id, node_name, node_type,
+            start_time, end_time, duration, operator, comment
+        FROM wf_history_activity 
+        WHERE process_instance_id = #{processInstanceId} 
+        AND node_id = #{nodeId}
+        ORDER BY start_time ASC
+    </select>
+
+    <!-- 查询流程实例的最新活动节点 -->
+    <select id="selectLatestByProcessInstanceId" resultMap="BaseResultMap">
+        SELECT 
+            id, process_instance_id, node_id, node_name, node_type,
+            start_time, end_time, duration, operator, comment
+        FROM wf_history_activity 
+        WHERE process_instance_id = #{processInstanceId}
+        ORDER BY start_time DESC 
+        LIMIT 1
+    </select>
+
+    <!-- 分页查询用户抄送记录（增强显示信息） -->
+    <select id="selectUserCcRecordsWithDisplayInfo" resultType="com.zapi.workflow.service.model.dto.CcDisplayDTO">
+        SELECT 
+            ha.id,
+            ha.process_instance_id AS processInstanceId,
+            ha.node_id AS nodeId,
+            ha.node_name AS nodeName,
+            ha.start_time AS ccTime,
+            ha.comment,
+            pi.process_def_id AS processDefId,
+            pi.process_key AS processKey,
+            pi.business_key AS businessKey,
+            pi.start_user AS startUser,
+            pi.start_time AS processStartTime,
+            pi.`status` AS processStatus,
+            pi.app_id AS appId,
+            pd.`name` AS processName,
+            pd.business_type AS businessType,
+            pd.system_form_key AS systemFormKey,
+            pd.business_form_id AS businessFormId
+        FROM wf_history_activity ha
+        INNER JOIN wf_process_instance pi ON ha.process_instance_id = pi.id
+        INNER JOIN wf_process_definition pd ON pi.process_def_id = pd.id
+        WHERE ha.node_type = 'CC'
+        AND ha.comment LIKE CONCAT('%接收人: ', #{ccUser}, '%')
+        ORDER BY ha.start_time DESC
+    </select>
+
+    <!-- 分页查询用户抄送记录（按应用ID过滤） -->
+    <select id="selectUserCcRecordsWithDisplayInfoByAppId" resultType="com.zapi.workflow.service.model.dto.CcDisplayDTO">
+        SELECT 
+            ha.id,
+            ha.process_instance_id AS processInstanceId,
+            ha.node_id AS nodeId,
+            ha.node_name AS nodeName,
+            ha.start_time AS ccTime,
+            ha.comment,
+            pi.process_def_id AS processDefId,
+            pi.process_key AS processKey,
+            pi.business_key AS businessKey,
+            pi.start_user AS startUser,
+            pi.start_time AS processStartTime,
+            pi.`status` AS processStatus,
+            pi.app_id AS appId,
+            pd.`name` AS processName,
+            pd.business_type AS businessType,
+            pd.system_form_key AS systemFormKey,
+            pd.business_form_id AS businessFormId
+        FROM wf_history_activity ha
+        INNER JOIN wf_process_instance pi ON ha.process_instance_id = pi.id
+        INNER JOIN wf_process_definition pd ON pi.process_def_id = pd.id
+        WHERE ha.node_type = 'CC'
+        AND ha.comment LIKE CONCAT('%接收人: ', #{ccUser}, '%')
+        AND pi.app_id = #{appId}
+        ORDER BY ha.start_time DESC
+    </select>
+
+    <!-- 分页查询用户抄送记录（只查询app_id为NULL的记录） -->
+    <select id="selectUserCcRecordsWithDisplayInfoWithNullAppId" resultType="com.zapi.workflow.service.model.dto.CcDisplayDTO">
+        SELECT 
+            ha.id,
+            ha.process_instance_id AS processInstanceId,
+            ha.node_id AS nodeId,
+            ha.node_name AS nodeName,
+            ha.start_time AS ccTime,
+            ha.comment,
+            pi.process_def_id AS processDefId,
+            pi.process_key AS processKey,
+            pi.business_key AS businessKey,
+            pi.start_user AS startUser,
+            pi.start_time AS processStartTime,
+            pi.`status` AS processStatus,
+            pi.app_id AS appId,
+            pd.`name` AS processName,
+            pd.business_type AS businessType,
+            pd.system_form_key AS systemFormKey,
+            pd.business_form_id AS businessFormId
+        FROM wf_history_activity ha
+        INNER JOIN wf_process_instance pi ON ha.process_instance_id = pi.id
+        INNER JOIN wf_process_definition pd ON pi.process_def_id = pd.id
+        WHERE ha.node_type = 'CC'
+        AND ha.comment LIKE CONCAT('%接收人: ', #{ccUser}, '%')
+        AND pi.app_id IS NULL
+        ORDER BY ha.start_time DESC
+    </select>
+
+    <!-- 分页查询用户已办任务（增强显示信息） -->
+    <select id="selectUserCompletedTasksWithDisplayInfo" resultType="com.zapi.workflow.service.model.dto.CompletedTaskDisplayDTO">
+        SELECT 
+            ha.id,
+            ha.process_instance_id AS processInstanceId,
+            ha.node_id AS nodeId,
+            ha.node_name AS nodeName,
+            ha.operator,
+            ha.start_time AS startTime,
+            ha.end_time AS endTime,
+            ha.duration,
+            ha.comment,
+            pi.process_def_id AS processDefId,
+            pi.process_key AS processKey,
+            pi.business_key AS businessKey,
+            pi.start_user AS startUser,
+            pi.start_time AS processStartTime,
+            pi.`status` AS processStatus,
+            pd.`name` AS processName,
+            pd.business_type AS businessType,
+            pd.system_form_key AS systemFormKey,
+            pd.business_form_id AS businessFormId,
+            pd.priority
+        FROM wf_history_activity ha
+        INNER JOIN wf_process_instance pi ON ha.process_instance_id = pi.id
+        INNER JOIN wf_process_definition pd ON pi.process_def_id = pd.id
+        WHERE ha.node_type = 'APPROVAL'
+        AND ha.end_time IS NOT NULL
+        AND ha.operator = #{operator}
+        AND (ha.comment IS NULL OR ha.comment NOT LIKE '%审批节点完成%')
+        ORDER BY ha.end_time DESC
+    </select>
+
+    <!-- 分页查询用户已办任务（按应用ID过滤） -->
+    <select id="selectUserCompletedTasksWithDisplayInfoByAppId" resultType="com.zapi.workflow.service.model.dto.CompletedTaskDisplayDTO">
+        SELECT 
+            ha.id,
+            ha.process_instance_id AS processInstanceId,
+            ha.node_id AS nodeId,
+            ha.node_name AS nodeName,
+            ha.operator,
+            ha.start_time AS startTime,
+            ha.end_time AS endTime,
+            ha.duration,
+            ha.comment,
+            pi.process_def_id AS processDefId,
+            pi.process_key AS processKey,
+            pi.business_key AS businessKey,
+            pi.start_user AS startUser,
+            pi.start_time AS processStartTime,
+            pi.`status` AS processStatus,
+            pd.`name` AS processName,
+            pd.business_type AS businessType,
+            pd.system_form_key AS systemFormKey,
+            pd.business_form_id AS businessFormId,
+            pd.priority
+        FROM wf_history_activity ha
+        INNER JOIN wf_process_instance pi ON ha.process_instance_id = pi.id
+        INNER JOIN wf_process_definition pd ON pi.process_def_id = pd.id
+        WHERE ha.node_type = 'APPROVAL'
+        AND ha.end_time IS NOT NULL
+        AND ha.operator = #{operator}
+        AND (ha.comment IS NULL OR ha.comment NOT LIKE '%审批节点完成%')
+        AND pi.app_id = #{appId}
+        ORDER BY ha.end_time DESC
+    </select>
+
+    <!-- 分页查询用户已办任务（只查询app_id为NULL的记录） -->
+    <select id="selectUserCompletedTasksWithDisplayInfoWithNullAppId" resultType="com.zapi.workflow.service.model.dto.CompletedTaskDisplayDTO">
+        SELECT 
+            ha.id,
+            ha.process_instance_id AS processInstanceId,
+            ha.node_id AS nodeId,
+            ha.node_name AS nodeName,
+            ha.operator,
+            ha.start_time AS startTime,
+            ha.end_time AS endTime,
+            ha.duration,
+            ha.comment,
+            pi.process_def_id AS processDefId,
+            pi.process_key AS processKey,
+            pi.business_key AS businessKey,
+            pi.start_user AS startUser,
+            pi.start_time AS processStartTime,
+            pi.`status` AS processStatus,
+            pd.`name` AS processName,
+            pd.business_type AS businessType,
+            pd.system_form_key AS systemFormKey,
+            pd.business_form_id AS businessFormId,
+            pd.priority
+        FROM wf_history_activity ha
+        INNER JOIN wf_process_instance pi ON ha.process_instance_id = pi.id
+        INNER JOIN wf_process_definition pd ON pi.process_def_id = pd.id
+        WHERE ha.node_type = 'APPROVAL'
+        AND ha.end_time IS NOT NULL
+        AND ha.operator = #{operator}
+        AND (ha.comment IS NULL OR ha.comment NOT LIKE '%审批节点完成%')
+        AND pi.app_id IS NULL
+        ORDER BY ha.end_time DESC
+    </select>
+
+</mapper>

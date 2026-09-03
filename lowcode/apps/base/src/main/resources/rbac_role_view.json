@@ -1,0 +1,292 @@
+{
+
+  "views": {
+    "base_role_views": {
+      "aside": [],
+      "body": [
+        {
+          "api": "/api/rpc/search?module=base&model=base_role",
+          "autoFillHeight": true,
+          "autoGenerateFilter": true,
+          "columns": [
+            {
+              "label": "",
+              "name": "userList",
+              "searchable": {
+                "label": "",
+                "name": "userList",
+                "type": "hidden"
+              },
+              "sortable": false,
+              "type": "hidden"
+            },
+            {
+              "label": "",
+              "name": "permissionsList",
+              "searchable": {
+                "label": "",
+                "name": "permissionsList",
+                "type": "hidden"
+              },
+              "sortable": false,
+              "type": "hidden"
+            },
+            {
+              "label": "角色编码",
+              "name": "roleKey",
+              "searchable": {
+                "label": "角色编码",
+                "name": "roleKey",
+                "type": "input-text"
+              },
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "角色名称",
+              "name": "roleName",
+              "searchable": {
+                "label": "角色名称",
+                "name": "roleName",
+                "type": "input-text"
+              },
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "是否管理员",
+              "name": "admin",
+              "searchable": {
+                "label": "是否管理员",
+                "name": "admin",
+                "type": "switch"
+              },
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "",
+              "name": "id",
+              "searchable": {
+                "label": "",
+                "name": "id",
+                "type": "input-number"
+              },
+              "sortable": false,
+              "type": "hidden"
+            },
+            {
+              "buttons": [
+                {
+                  "actionType": "dialog",
+                  "dialog": {
+                    "body": {
+                      "api": "/api/rpc/update?module=base&model=base_role",
+                      "body": [
+                        {
+                          "label": "角色编码",
+                          "name": "roleKey",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "角色名称",
+                          "name": "roleName",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "是否管理员",
+                          "name": "admin",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "switch"
+                        },
+                        {
+                          "label": "",
+                          "name": "id",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "hidden"
+                        },
+                        {
+                          "type": "input-tree",
+                          "name": "tree",
+                          "label": "权限",
+                          "iconField": "icon",
+                          "multiple": true,
+                          "initiallyOpen": false,
+                          "unfoldedLevel": 1,
+                          "source": {
+                            "method": "post",
+                            "url": "/api/rpc/service",
+                            "data": {
+                              "params": {
+                                "app": "base",
+                                "model": "base_role",
+                                "service": "listPermissions",
+                                "args": {
+                                  "roleId": "${id}"
+                                }
+                              }
+                            }
+                          },
+                          "options": [
+
+                          ]
+                        }
+                      ],
+                      "name": "sample-edit-form",
+                      "type": "form"
+                    },
+                    "name": "new",
+                    "title": "修改"
+                  },
+                  "icon": "fa fa-pencil",
+                  "label": "编辑",
+                  "primary": false,
+                  "type": "button"
+                },
+
+                {
+                  "actionType": "dialog",
+                  "dialog": {
+                    "body": {
+                      "body": [
+                        {
+                          "label": "角色编码",
+                          "name": "roleKey",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "角色名称",
+                          "name": "roleName",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "是否管理员",
+                          "name": "admin",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "",
+                          "name": "id",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "hidden"
+                        }
+                      ],
+                      "name": "sample-edit-form",
+                      "type": "form"
+                    },
+                    "name": "new",
+                    "title": "查看"
+                  },
+                  "icon": "fa fa-eye",
+                  "label": "查看",
+                  "primary": false,
+                  "type": "button"
+                },
+                {
+                  "actionType": "ajax",
+                  "api": "delete:/api/rpc/delete?module=base&model=base_role&id=$id",
+                  "confirmText": "您确认要删除?",
+                  "icon": "fa fa-times text-danger",
+                  "primary": false,
+                  "tooltip": "删除"
+                }
+              ],
+              "label": "操作",
+              "sortable": false,
+              "type": "operation"
+            }
+          ],
+          "draggable": true,
+          "filterTogglable": true,
+          "footerToolbar": [
+            "statistics",
+            {
+              "layout": "perPage,pager,go",
+              "type": "pagination"
+            }
+          ],
+          "keepItemSelectionOnPageChange": true,
+          "maxKeepItemSelectionLength": 11,
+          "perPage": 50,
+          "type": "crud"
+        }
+      ],
+      "title": "角色",
+      "toolbar": [
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": "/api/rpc/create?module=base&model=base_role",
+              "body": [
+                {
+                  "label": "角色编码",
+                  "name": "roleKey",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "角色名称",
+                  "name": "roleName",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "是否管理员",
+                  "name": "admin",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "switch"
+                },
+                {
+                  "label": "",
+                  "name": "id",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "hidden"
+                }
+              ],
+              "name": "sample-edit-form",
+              "type": "form"
+            },
+            "name": "new",
+            "title": "创建"
+          },
+          "label": "新增",
+          "primary": true,
+          "type": "button"
+        }
+      ],
+      "type": "page"
+    }
+  }
+
+
+}

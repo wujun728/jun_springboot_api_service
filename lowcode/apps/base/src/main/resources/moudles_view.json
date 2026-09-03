@@ -1,0 +1,222 @@
+{
+
+  "data": {},
+  "views": {
+    "base_meta_app_curd":{
+      "type": "page",
+      "aside": [],
+      "toolbar": [
+        {
+          "type": "button",
+          "actionType": "dialog",
+          "label": "新增",
+          "icon": "fa fa-plus pull-left",
+          "primary": true,
+          "dialog": {
+            "title": "新增应用",
+            "body": {
+              "type": "form",
+              "name": "sample-edit-form",
+              "api": {
+                "data": {
+                  "jsonrpc": "2.0",
+                  "params": {
+                    "app": "base",
+                    "model": "base_module",
+                    "service": "create",
+                    "tag": "master",
+                    "args": {
+                      "value": {
+                        "file": "${file}"
+                      }
+                    }
+                  }
+                },
+                "method": "post",
+                "url": "/api/rpc/service"
+              },
+              "body": [
+                {
+                  "type": "input-file",
+                  "name": "file",
+                  "label": "File",
+                  "accept": "*",
+                  "useChunk": false,
+                  "receiver": "/api/rpc/file/upload"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "body": [
+        {
+          "type": "crud",
+          "api": "/api/rpc/search",
+          "mode": "cards",
+          "defaultParams": {
+            "page": 1,
+            "perPage": 12,
+            "module": "base",
+            "model": "base_module"
+          },
+          "filter": {
+            "title": "条件搜索",
+            "submitText": "",
+            "body": [
+              {
+                "type": "input-text",
+                "name": "keywords",
+                "placeholder": "通过关键字搜索",
+                "addOn": {
+                  "label": "搜索",
+                  "type": "submit"
+                }
+              },
+              {
+                "type": "plain",
+                "text": "."
+              }
+            ]
+          },
+          "bulkActions": [
+            {
+              "label": "批量卸载",
+              "actionType": "ajax",
+              "api": "delete:/api/rpc/delete?module=base&model=base_module&id=${ids|raw}",
+              "confirmText": "确定要批量卸载?"
+            },
+            {
+              "label": "批量安装",
+              "actionType": "ajax",
+              "api": {
+                "method": "post",
+                "url": "/api/rpc/service",
+                "data": {
+                  "params": {
+                    "app": "base",
+                    "model": "base_module",
+                    "service": "install",
+                    "args": {
+                      "ids": "${ids}"
+                    }
+                  }
+                }
+              },
+              "confirmText": "确定要安装吗"
+            }
+
+          ],
+          "quickSaveApi": "/amis/api/sample/bulkUpdate",
+          "quickSaveItemApi": "/amis/api/sample/$id",
+          "draggable": true,
+          "card": {
+            "header": {
+              "avatarText": "${appName|substring:0:2|upperCase}",
+              "avatarTextBackground": [
+                "#FFB900",
+                "#D83B01",
+                "#B50E0E",
+                "#E81123",
+                "#B4009E",
+                "#5C2D91",
+                "#0078D7",
+                "#00B4FF",
+                "#008272"
+              ]
+            },
+            "actions": [
+              {
+                "type": "button",
+                "label": "查看",
+                "actionType": "dialog",
+                "dialog": {
+                  "title": "查看",
+                  "body": {
+                    "type": "form",
+                    "body": [
+                      {
+                        "type": "static",
+                        "name": "appName",
+                        "label": "应用名",
+                        "required": true
+                      },
+                      {
+                        "type": "divider"
+                      },
+                      {
+                        "type": "static",
+                        "name": "version",
+                        "label": "版本",
+                        "required": true
+                      },
+                      {
+                        "type": "divider"
+                      },
+                      {
+                        "type": "static",
+                        "name": "jarUrl",
+                        "label": "程序包",
+                        "required": true
+                      },
+                      {
+                        "type": "divider"
+                      },
+                      {
+                        "type": "static",
+                        "name": "type",
+                        "label": "类型"
+                      },
+                      {
+                        "type": "divider"
+                      }
+
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "button",
+                "label": "卸载",
+                "actionType": "ajax",
+                "confirmText": "您确认要卸载?",
+                "api": {
+                  "data": {
+                    "jsonrpc": "2.0",
+                    "params": {
+                      "app": "base",
+                      "model": "base_module",
+                      "service": "deleteById",
+                      "tag": "master",
+                      "args": {
+                        "idValue": "${id}"
+                      }
+                    }
+                  },
+                  "method": "post",
+                  "url": "/api/rpc/service"
+                }
+              }
+
+            ],
+            "body": [
+              {
+                "name": "appName",
+                "label": "名称",
+                "sortable": true
+              },
+              {
+                "name": "version",
+                "label": "版本"
+              },
+              {
+                "name": "jarUrl",
+                "label": "程序"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

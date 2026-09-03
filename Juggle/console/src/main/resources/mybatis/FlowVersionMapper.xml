@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.somta.juggle.console.infrastructure.mapper.flow.FlowVersionMapper" >
+
+<update id="deleteFlowVersionByFlowId" parameterType="java.lang.Long">
+	update t_flow_version set deleted=1 where flow_id=#{flowId}
+</update>
+
+<select id="queryLatestVersion" resultType="java.lang.String" parameterType="java.lang.String">
+	select MAX(v.flow_version) as flowVersion
+	from t_flow_info i inner join t_flow_version v on i.id = v.flow_id  where v.deleted = 0 and i.flow_key = #{flowKey}
+</select>
+
+<select id="queryFlowVersionInfoById" resultType="net.somta.juggle.console.domain.flow.version.view.FlowVersionInfoView" parameterType="java.lang.Long">
+	select v.id,
+	i.flow_key as flowKey,
+	i.flow_type as flowType,
+	i.flow_name as flowName,
+	v.flow_version as flowVersion,
+	v.flow_version_status as flowVersionStatus,
+	v.flow_content as flowContent,
+	v.inputs as inputs,
+	v.outputs as outputs,
+	v.variables as variables
+	from t_flow_info i left join t_flow_version v on i.id=v.flow_id
+	where v.deleted = 0 and v.id = #{flowVersionId}
+</select>
+
+<select id="queryFlowVersionInfoByKey" resultType="net.somta.juggle.console.domain.flow.version.view.FlowVersionInfoView" parameterType="net.somta.juggle.console.domain.flow.version.vo.FlowVersionQueryVO">
+	select v.id,
+	i.flow_key as flowKey,
+	i.flow_type as flowType,
+	i.flow_name as flowName,
+	v.flow_version as flowVersion,
+	v.flow_version_status as flowVersionStatus,
+    v.flow_content as flowContent,
+	v.inputs as inputs,
+    v.outputs as outputs,
+    v.variables as variables
+	from t_flow_info i left join t_flow_version v on i.id=v.flow_id
+	where 1=1 and v.deleted = 0
+	<if test="flowKey != null and flowKey != ''">
+		and i.flow_key = #{flowKey}
+	</if>
+	<if test="flowVersion != null and flowVersion != ''">
+		and v.flow_version = #{flowVersion}
+	</if>
+</select>
+
+<select id="queryFlowVersionList" resultType="net.somta.juggle.console.domain.flow.version.view.FlowVersionView" parameterType="net.somta.juggle.console.domain.flow.version.vo.FlowVersionQueryVO">
+	select v.id,
+	       i.flow_key as flowKey,
+	       i.flow_name as flowName,
+	       v.flow_version as flowVersion,
+	       v.flow_version_status as flowVersionStatus,
+	       v.flow_version_remark as flowVersionRemark
+	from t_flow_info i left join t_flow_version v on i.id=v.flow_id
+	where 1=1 and v.deleted = 0
+	<if test="flowId != null">
+		and flow_id = #{flowId}
+	</if>
+	<if test="flowVersionStatus != null">
+		and flow_version_status = #{flowVersionStatus}
+	</if>
+</select>
+
+</mapper>   

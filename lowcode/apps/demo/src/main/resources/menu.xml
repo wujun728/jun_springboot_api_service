@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <!-- 目录 -->
+    <menu id="menu_demo" name="demo" icon="/res/sie/snest/base/statics/img/modules.png" seq ="10"/>
+    <menu id="menu_demo_manage" name="demo管理" parent="menu_demo" seq ="10"/>
+    <menu id="menu_demo_many_one" name="多对一" module="demo" model="demo_many_one" parent="menu_demo_manage" view="grid,form" seq ="15"/>
+    <menu id="menu_demo_many_many" name="多对多" module="demo" model="demo_many_many" parent="menu_demo_manage" view="grid,form" seq ="15"/>
+    <menu id="menu_demo_one_many" name="一对多" module="demo" model="demo_one_many" parent="menu_demo_manage" view="grid,form" seq ="15"/>
+    <menu id="menu_demo_model" name="模板" module="demo" model="demo_model" parent="menu_demo_manage" view="grid,form" seq ="15"/>
+</data>

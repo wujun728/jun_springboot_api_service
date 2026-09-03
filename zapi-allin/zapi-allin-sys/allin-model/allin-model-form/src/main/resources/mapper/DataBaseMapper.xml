@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.form.mapper.DataBaseMapper">
+
+    <!--创建主表的 SQL 语句-->
+    <update id="createMainTable" parameterType="java.lang.String">
+        CREATE TABLE `${tableName}`  (
+         `id` bigint NOT NULL COMMENT '主键id',
+         `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+         `create_user` varchar(64)  DEFAULT NULL COMMENT '创建人',
+         `update_time` datetime  DEFAULT NULL COMMENT '修改时间',
+         `update_user` varchar(64)  DEFAULT NULL COMMENT '修改人',
+         `is_deleted` int  DEFAULT 0 COMMENT '删除标识',
+         PRIMARY KEY (`id`) USING BTREE
+        ) ENGINE = InnoDB  COMMENT = '${tableComment}' ROW_FORMAT = DYNAMIC;
+    </update>
+
+    <!--重命名表名 SQL 语句-->
+    <update id="alterTableName" parameterType="java.lang.String">
+        RENAME TABLE `${tableName}` TO `${newTableName}`;
+    </update>
+
+    <!--删除的 SQL 语句-->
+    <update id="dropTable" parameterType="java.lang.String">
+        DROP TABLE IF EXISTS `${tableName}`
+    </update>
+
+    <!--  查询当前使用的数据库  -->
+    <select id="selectCurrentDatabase" resultType="java.lang.String">
+        SELECT DATABASE()
+    </select>
+
+    <select id="checkTableNameIsExisted"  resultType="java.lang.Integer">
+        select 1 from information_schema.tables where table_schema=#{tableScheme}  and table_name=#{tableName} limit 1
+    </select>
+
+
+    <select id="checkColumnNameIsExisted"  resultType="java.lang.Integer">
+        select
+            1
+        from
+            information_schema.columns
+        where
+            table_schema =#{tableScheme}
+           and table_name=#{tableName}
+           and column_name=#{columnName}
+             limit 1;
+    </select>
+
+    <!-- 新增单个字段 -->
+    <update id="addColumn">
+        ALTER TABLE `${tableName}` ADD COLUMN `${columnName}` 
+        <choose>
+            <when test="columnLength != null and columnLength > 0">
+                ${columnType}(${columnLength})
+            </when>
+            <otherwise>
+                ${columnType}
+            </otherwise>
+        </choose>
+        <if test="isNullable != null and !isNullable">
+            NOT NULL
+        </if>
+        <!-- TEXT/BLOB/JSON/LONGTEXT 类型不能有默认值 -->
+        <if test="defaultValue != null and defaultValue != '' and columnType != 'text' and columnType != 'longtext' and columnType != 'blob' and columnType != 'json'">
+            DEFAULT #{defaultValue}
+        </if>
+        <if test="columnComment != null and columnComment != ''">
+            COMMENT #{columnComment}
+        </if>
+    </update>
+
+    <!-- 修改单个字段 -->
+    <update id="modifyColumn">
+        ALTER TABLE `${tableName}` MODIFY COLUMN `${columnName}` 
+        <choose>
+            <when test="columnLength != null and columnLength > 0">
+                ${columnType}(${columnLength})
+            </when>
+            <otherwise>
+                ${columnType}
+            </otherwise>
+        </choose>
+        <if test="isNullable != null and !isNullable">
+            NOT NULL
+        </if>
+        <!-- TEXT/BLOB/JSON/LONGTEXT 类型不能有默认值 -->
+        <if test="defaultValue != null and defaultValue != '' and columnType != 'text' and columnType != 'longtext' and columnType != 'blob' and columnType != 'json'">
+            DEFAULT #{defaultValue}
+        </if>
+        <if test="columnComment != null and columnComment != ''">
+            COMMENT #{columnComment}
+        </if>
+    </update>
+
+    <!-- 删除单个字段 -->
+    <update id="dropColumn">
+        ALTER TABLE `${tableName}` DROP COLUMN `${columnName}`
+    </update>
+
+    <!-- 批量新增表字段 -->
+    <update id="batchAddColumns">
+        <foreach collection="columns" item="column" separator=";">
+            ALTER TABLE `${tableName}` ADD COLUMN `${column.columnName}` 
+            <choose>
+                <when test="column.columnLength != null and column.columnLength > 0">
+                    ${column.columnType}(${column.columnLength})
+                </when>
+                <otherwise>
+                    ${column.columnType}
+                </otherwise>
+            </choose>
+            <if test="column.isNullable != null and !column.isNullable">
+                NOT NULL
+            </if>
+            <!-- TEXT/BLOB/JSON/LONGTEXT 类型不能有默认值 -->
+            <if test="column.defaultValue != null and column.defaultValue != '' and column.columnType != 'text' and column.columnType != 'longtext' and column.columnType != 'blob' and column.columnType != 'json'">
+                DEFAULT #{column.defaultValue}
+            </if>
+            <if test="column.columnComment != null and column.columnComment != ''">
+                COMMENT #{column.columnComment}
+            </if>
+        </foreach>
+    </update>
+
+    <!-- 批量修改表字段 -->
+    <update id="batchModifyColumns">
+        <foreach collection="columns" item="column" separator=";">
+            ALTER TABLE `${tableName}` MODIFY COLUMN `${column.columnName}` 
+            <choose>
+                <when test="column.columnLength != null and column.columnLength > 0">
+                    ${column.columnType}(${column.columnLength})
+                </when>
+                <otherwise>
+                    ${column.columnType}
+                </otherwise>
+            </choose>
+            <if test="column.isNullable != null and !column.isNullable">
+                NOT NULL
+            </if>
+            <!-- TEXT/BLOB/JSON/LONGTEXT 类型不能有默认值 -->
+            <if test="column.defaultValue != null and column.defaultValue != '' and column.columnType != 'text' and column.columnType != 'longtext' and column.columnType != 'blob' and column.columnType != 'json'">
+                DEFAULT #{column.defaultValue}
+            </if>
+            <if test="column.columnComment != null and column.columnComment != ''">
+                COMMENT #{column.columnComment}
+            </if>
+        </foreach>
+    </update>
+
+    <!-- 批量删除表字段 -->
+    <update id="batchDropColumns">
+        ALTER TABLE `${tableName}` 
+        <foreach collection="columnNames" item="columnName" separator=",">
+            DROP COLUMN `${columnName}`
+        </foreach>
+    </update>
+
+    <!-- 执行自定义 DDL 语句 -->
+    <update id="executeDDL">
+        ${ddlSql}
+    </update>
+
+    <!-- 批量执行 DDL 语句 -->
+    <update id="batchExecuteDDL">
+        <foreach collection="ddlSqlList" item="ddlSql" separator=";">
+            ${ddlSql}
+        </foreach>
+    </update>
+
+</mapper>
+

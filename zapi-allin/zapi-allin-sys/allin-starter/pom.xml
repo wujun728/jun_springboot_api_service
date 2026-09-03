@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zapi</groupId>
+        <artifactId>zapi-allin-sys</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>allin-starter</artifactId>
+    <packaging>jar</packaging>
+
+    <name>allin-starter</name>
+    <description>项目启动模块</description>
+
+    <dependencies>
+        <!-- 依赖allin-common模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-common</artifactId>
+        </dependency>
+
+        <!-- 依赖allin-model-system模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-system</artifactId>
+        </dependency>
+
+        <!-- 依赖allin-model-notification模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-notification</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-model-dataset模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-dataset</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-model-workflow-service模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-workflow-service</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-model-workflow-api模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-workflow-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-support-file -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-support-file</artifactId>
+        </dependency>
+
+        <!-- 依赖allin-model-onlyoffice模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-onlyoffice</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-support-redis模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-support-redis</artifactId>
+        </dependency>
+
+        <!-- 依赖allin-model-form模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-form</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-model-contract模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-contract</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-model-openapi模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-openapi</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <!-- 依赖allin-model-action-engine模块 -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-action-engine</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+
+
+        <!-- Spring Boot Starter Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.zapi.ZapiApplication</mainClass>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project> 

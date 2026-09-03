@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "77f1ee08-273e-4cb9-8f1d-6bfa6b3be5e6",
+		"name": "sie",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "重启",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication",
+						"value": "cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ceabcbd7fb42aad4d75f7b8e61b0dde420e7dfc13f99b2e137b6208e46aad29fb25c550e7b8713454bf625f1c4324f86afc905d92d9cc929f41b50b00f6c1e24617a2ec97359bc2f0f144a69f11827bee4a4766bdce442949fea46d5ec8cf943d8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\" : \"guid\",\r\n  \"jsonrpc\" : \"2.0\",\r\n  \"method\" : \"service\",\r\n  \"params\" : {\r\n    \"args\" : {\r\n      \"fileName\":\"95b582f4abf44abcb51a66ddbd4c54f4.jar\"\r\n    },\r\n    \"app\" : \"base\",\r\n    \"service\" : \"restart\",\r\n    \"context\" : {\r\n      \"uid\" : \"\",\r\n      \"lang\" : \"zh_CN\"\r\n    },\r\n    \"model\" : \"MetaApp\",\r\n    \"tag\" : \"master\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9998/rpc/service",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9998",
+					"path": [
+						"rpc",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "一对多删除",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ce53932676274d68774f8917fe4727ce9ce6683e2858afb96ca03b8606e818cfa01c1d75c85a082cae9eb7d462e020335c19e9828e04b993c4e7f53c523c0aee32770c24be96b1c42e865bf3ed6e7d60c41c20652e8bc535747caa3796208788fed7c1b16fe31682ff0dbdafbe4948b6a9ff2fb8d5ca1be6409bf907300756bc0dec9a1bc07e519e1f6ab2709dc261920f",
+						"type": "default"
+					},
+					{
+						"key": "userId",
+						"value": "02o8066r3uwow",
+						"type": "default"
+					},
+					{
+						"key": "fileName",
+						"value": "1.jpg",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"guid\",\r\n    \"jsonrpc\": \"2.0\",\r\n    \"method\": \"service\",\r\n    \"params\": {\r\n        \"args\": {\r\n            \"criteria\": [],\r\n            \"offset\": 0,\r\n            \"limit\":0,\r\n            \"order\":\"\"\r\n        },\r\n        \"context\": {\r\n            \"uid\": \"\",\r\n            \"lang\": \"zh_CN\",\r\n            \"useDisplayForModel\": true\r\n        },\r\n        \"model\": \"base_file\",\r\n        \"tag\": \"master\",\r\n        \"service\": \"download\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8061/file/newpreview?fileName= &userId = ",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8061",
+					"path": [
+						"file",
+						"newpreview"
+					],
+					"query": [
+						{
+							"key": "fileName",
+							"value": " "
+						},
+						{
+							"key": "userId ",
+							"value": " "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9998/mqProducer/send?msg=sssssssss",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9998",
+					"path": [
+						"mqProducer",
+						"send"
+					],
+					"query": [
+						{
+							"key": "msg",
+							"value": "sssssssss"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "上传",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication",
+						"value": "cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ceabcbd7fb42aad4d75f7b8e61b0dde420e7dfc13f99b2e137b6208e46aad29fb25c550e7b8713454bf625f1c4324f86afc905d92d9cc929f41b50b00f6c1e24617a2ec97359bc2f0f144a69f11827bee4a4766bdce442949fea46d5ec8cf943d8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/29662/Documents/d/imApi/base-1.0-SNAPSHOT.jar"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://42.193.146.14:9998/rpc/service/upload",
+					"protocol": "http",
+					"host": [
+						"42",
+						"193",
+						"146",
+						"14"
+					],
+					"port": "9998",
+					"path": [
+						"rpc",
+						"service",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "applist",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication",
+						"value": "cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ceabcbd7fb42aad4d75f7b8e61b0dde420e7dfc13f99b2e137b6208e46aad29fb25c550e7b8713454bf625f1c4324f86afc905d92d9cc929f41b50b00f6c1e24617a2ec97359bc2f0f144a69f11827bee4a4766bdce442949fea46d5ec8cf943d8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\" : \"guid\",\r\n  \"jsonrpc\" : \"2.0\",\r\n  \"method\" : \"service\",\r\n  \"params\" : {\r\n    \"args\" : {\r\n            \"model\":\"test\",\r\n            \"app\":\"base\"\r\n    },\r\n    \"app\" : \"base\",\r\n    \"service\" : \"loadView\",\r\n    \"context\" : {\r\n      \"uid\" : \"\",\r\n      \"lang\" : \"zh_CN\"\r\n    },\r\n    \"model\" : \"BaseEntity\",\r\n    \"tag\" : \"master\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9998/api/rpc/service",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9998",
+					"path": [
+						"api",
+						"rpc",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "开始",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication",
+						"value": "cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ceabcbd7fb42aad4d75f7b8e61b0dde420e7dfc13f99b2e137b6208e46aad29fb25c550e7b8713454bf625f1c4324f86afc905d92d9cc929f41b50b00f6c1e24617a2ec97359bc2f0f144a69f11827bee4a4766bdce442949fea46d5ec8cf943d8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\" : \"guid\",\r\n  \"jsonrpc\" : \"2.0\",\r\n  \"method\" : \"service\",\r\n  \"params\" : {\r\n    \"args\" : {\r\n    },\r\n    \"app\" : \"spider\",\r\n    \"service\" : \"start\",\r\n    \"context\" : {\r\n      \"uid\" : \"\",\r\n      \"lang\" : \"zh_CN\"\r\n    },\r\n    \"model\" : \"Spider\",\r\n    \"tag\" : \"master\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9998/api/rpc/service",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9998",
+					"path": [
+						"api",
+						"rpc",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication",
+						"value": "cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ceabcbd7fb42aad4d75f7b8e61b0dde420e7dfc13f99b2e137b6208e46aad29fb25c550e7b8713454bf625f1c4324f86afc905d92d9cc929f41b50b00f6c1e24617a2ec97359bc2f0f144a69f11827bee4a4766bdce442949fea46d5ec8cf943d8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\" : \"guid\",\r\n  \"jsonrpc\" : \"2.0\",\r\n  \"method\" : \"service\",\r\n  \"params\" : {\r\n    \"args\" : {\r\n        \"baseEntity\":{\r\n            \"appName\":\"base\",\r\n            \"entityName\":\"test\",\r\n            \"tableName\":\"test\",\r\n            \"displayName\":\"测试\"\r\n        }\r\n    },\r\n    \"app\" : \"base\",\r\n    \"service\" : \"create\",\r\n    \"context\" : {\r\n      \"uid\" : \"\",\r\n      \"lang\" : \"zh_CN\"\r\n    },\r\n    \"model\" : \"BaseEntity\",\r\n    \"tag\" : \"master\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9998/api/rpc/service",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9998",
+					"path": [
+						"api",
+						"rpc",
+						"service"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authentication",
+						"value": "cae26ebfc0a54a39b2e0da35633d19b6cd11cb19efe6457ce5c8305f32fe206a59763a247662f8ceabcbd7fb42aad4d75f7b8e61b0dde420e7dfc13f99b2e137b6208e46aad29fb25c550e7b8713454bf625f1c4324f86afc905d92d9cc929f41b50b00f6c1e24617a2ec97359bc2f0f144a69f11827bee4a4766bdce442949fea46d5ec8cf943d8",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\" : \"guid\",\r\n  \"jsonrpc\" : \"2.0\",\r\n  \"method\" : \"service\",\r\n  \"params\" : {\r\n    \"args\" : {\r\n        \"value\":{\r\n        }\r\n    },\r\n    \"app\" : \"base\",\r\n    \"service\" : \"create\",\r\n    \"context\" : {\r\n      \"uid\" : \"\",\r\n      \"lang\" : \"zh_CN\"\r\n    },\r\n    \"model\" : \"test\",\r\n    \"tag\" : \"master\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:9998/api/rpc/service",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "9998",
+					"path": [
+						"api",
+						"rpc",
+						"service"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

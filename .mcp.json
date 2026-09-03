@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "mysql": {
+      "command": "mcp-server-mysql",
+      "args": [],
+      "env": {
+        "MYSQL_HOST": "172.31.252.103",
+        "MYSQL_PORT": "3306",
+        "MYSQL_USER": "paas",
+        "MYSQL_PASS": "d_GsjDPDn3E_Jew",
+        "MYSQL_DB": "paas_env03_db1"
+      }
+    }
+  }
+}

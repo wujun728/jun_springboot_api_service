@@ -1,0 +1,66 @@
+{
+  "type": "form",
+  "title": "",
+  "body": [
+    {
+      "label": "登录名",
+      "type": "input-text",
+      "name": "login_name",
+      "required": true,
+      "visibleOn": "!this._logined",
+      "placeholder": "请输入用户名"
+    },
+    {
+      "type": "input-password",
+      "label": "密码",
+      "name": "password",
+      "id": "u:6d67561d4b38",
+      "required": true,
+      "visibleOn": "!this._logined"
+    },
+    {
+      "type": "checkboxes",
+      "label": "",
+      "name": "checkboxes",
+      "options": [
+        {
+          "label": "记住密码",
+          "value": "A"
+        },
+        {
+          "label": "选自动登录",
+          "value": "B"
+        }
+      ],
+      "id": "u:a56f72eb2a9f"
+    }
+  ],
+  "id": "u:cbe2b7997281",
+  "submitText": "登录",
+  "api": {
+    "method": "post",
+    "url": "/api/rpc/login",
+    "dataType": "json",
+    "adaptor": "",
+    "requestAdaptor": "document.cookie = '';\r\nreturn api;"
+  },
+  "messages": {
+    "fetchFailed": "",
+    "saveSuccess": "登录成功",
+    "saveFailed": "登录失败",
+    "fetchSuccess": ""
+  },
+  "mode": "horizontal",
+  "horizontal": {
+    "leftFixed": "",
+    "left": 2,
+    "right": 10
+  },
+  "redirect": "/",
+  "checkAll": false,
+  "reload": "",
+  "debug": false,
+  "affixFooter": false,
+  "visibleOn": "",
+  "panelClassName": "b-info"
+}

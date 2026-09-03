@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.workflow.service.mapper.WfCcRecordMapper">
+
+    <!-- 结果集映射 -->
+    <resultMap id="BaseResultMap" type="com.zapi.workflow.service.model.entity.WfCcRecord">
+        <id column="id" property="id" />
+        <result column="process_instance_id" property="processInstanceId" />
+        <result column="process_definition_id" property="processDefinitionId" />
+        <result column="node_id" property="nodeId" />
+        <result column="node_name" property="nodeName" />
+        <result column="cc_targets" property="ccTargets" />
+        <result column="cc_user_ids" property="ccUserIds" />
+        <result column="cc_user_names" property="ccUserNames" />
+        <result column="notify_type" property="notifyType" />
+        <result column="require_read" property="requireRead" />
+        <result column="cc_time" property="ccTime" />
+    </resultMap>
+
+    <!-- 分页查询用户抄送记录（按应用ID过滤） -->
+    <select id="selectUserCcRecordsByAppId" resultMap="BaseResultMap">
+        SELECT 
+            ccr.id,
+            ccr.process_instance_id,
+            ccr.process_definition_id,
+            ccr.node_id,
+            ccr.node_name,
+            ccr.cc_targets,
+            ccr.cc_user_ids,
+            ccr.cc_user_names,
+            ccr.notify_type,
+            ccr.require_read,
+            ccr.cc_time
+        FROM wf_cc_record ccr
+        INNER JOIN wf_process_instance pi ON ccr.process_instance_id = pi.id
+        WHERE JSON_CONTAINS(ccr.cc_user_ids, CONCAT('"', #{userId}, '"'))
+        AND pi.app_id = #{appId}
+        ORDER BY ccr.cc_time DESC
+    </select>
+
+    <!-- 分页查询用户抄送记录（只查询app_id为NULL的记录） -->
+    <select id="selectUserCcRecordsWithNullAppId" resultMap="BaseResultMap">
+        SELECT 
+            ccr.id,
+            ccr.process_instance_id,
+            ccr.process_definition_id,
+            ccr.node_id,
+            ccr.node_name,
+            ccr.cc_targets,
+            ccr.cc_user_ids,
+            ccr.cc_user_names,
+            ccr.notify_type,
+            ccr.require_read,
+            ccr.cc_time
+        FROM wf_cc_record ccr
+        INNER JOIN wf_process_instance pi ON ccr.process_instance_id = pi.id
+        WHERE JSON_CONTAINS(ccr.cc_user_ids, CONCAT('"', #{userId}, '"'))
+        AND pi.app_id IS NULL
+        ORDER BY ccr.cc_time DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.workflow.service.mapper.WfTaskMapper">
+
+    <!-- 分页查询用户任务 -->
+    <select id="selectUserTasks" resultType="com.zapi.workflow.service.model.entity.WfTask">
+        SELECT 
+            id,
+            process_instance_id,
+            node_id,
+            node_name,
+            assignee,
+            status,
+            priority,
+            variables,
+            create_time,
+            complete_time,
+            complete_user,
+            comment
+        FROM wf_task 
+        WHERE assignee = #{assignee}
+        <if test="status != null">
+            AND status = #{status}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 分页查询用户任务（按应用ID过滤） -->
+    <select id="selectUserTasksByAppId" resultType="com.zapi.workflow.service.model.entity.WfTask">
+        SELECT 
+            t.id,
+            t.process_instance_id,
+            t.node_id,
+            t.node_name,
+            t.assignee,
+            t.status,
+            t.priority,
+            t.variables,
+            t.create_time,
+            t.complete_time,
+            t.complete_user,
+            t.comment
+        FROM wf_task t
+        LEFT JOIN wf_process_instance pi ON t.process_instance_id = pi.id
+        WHERE t.assignee = #{assignee}
+        <if test="status != null">
+            AND t.status = #{status}
+        </if>
+        AND pi.app_id = #{appId}
+        ORDER BY t.create_time DESC
+    </select>
+
+    <!-- 分页查询用户任务（只查询 app_id 为 NULL 的任务） -->
+    <select id="selectUserTasksWithNullAppId" resultType="com.zapi.workflow.service.model.entity.WfTask">
+        SELECT 
+            t.id,
+            t.process_instance_id,
+            t.node_id,
+            t.node_name,
+            t.assignee,
+            t.status,
+            t.priority,
+            t.variables,
+            t.create_time,
+            t.complete_time,
+            t.complete_user,
+            t.comment
+        FROM wf_task t
+        LEFT JOIN wf_process_instance pi ON t.process_instance_id = pi.id
+        WHERE t.assignee = #{assignee}
+        <if test="status != null">
+            AND t.status = #{status}
+        </if>
+        AND pi.app_id IS NULL
+        ORDER BY t.create_time DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,171 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /zapi-allin-sys
+
+spring:
+  application:
+    name: zapi-allin-sys
+  # Redis配置
+  redis:
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器端口
+    port: 6379
+    # Redis服务器密码（如果有）
+    password: 123456
+    # 连接超时时间（毫秒）
+    timeout: 3000ms
+    # 数据库索引（0-15）
+    database: 0
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/zapi_allin?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: Zlz1121...
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+logging:
+  level:
+    com.zapi: debug
+    org.springframework.security: debug
+
+# Swagger配置
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
+# OnlyOffice Configuration
+onlyoffice:
+  # 注意：这里使用的是文档服务的根地址，不是welcome页面
+  #document-server-url: http://8.138.158.220:7086/
+  document-server-url: http://192.168.3.238:7086/
+  # 你的JWT密钥，请替换为上面获取到的真实密钥
+  # jwt-secret: Mm22arwSUSAvUneEhNR4OWKWlKdSeR6W
+  jwt-secret: HVym5Rdn4I5EbiZqnfYzFh5KsHqnan34
+  # 前端页面的地址，用于构建回调URL
+  frontend-url: http://localhost:5173
+  # 对 Docs Server 可达的后端基地址
+  external-base-url: http://192.168.3.108:8080/zapi-allin-sys
+  # Docs 若开启JWT（7.2+默认），这里也需要开启并生成token；若关闭，这里也设为false且不下发token
+  jwt-enabled: false
+
+# 文件服务配置
+zapi:
+  file:
+    # 存储类型（LOCAL-本地，OSS-阿里云OSS，FTP-FTP服务器）
+    storage-type: LOCAL
+    # 本地存储配置
+    local:
+      # 本地存储根路径
+      root-path: /Users/zhonglz/work/fileData/zapi-all/
+      # 文件访问URL前缀
+      url-prefix: /file/download/
+    # 文件上传配置
+    upload:
+      # 最大文件大小（MB）
+      max-file-size: 100
+      # 允许的文件类型
+      allowed-types:
+        - jpg
+        - jpeg
+        - png
+        - gif
+        - bmp
+        - webp
+        - doc
+        - docx
+        - xls
+        - xlsx
+        - ppt
+        - pptx
+        - pdf
+        - txt
+        - zip
+        - rar
+        - 7z
+        - tar
+        - gz
+      # 禁止的文件类型
+      forbidden-types:
+        - exe
+        - bat
+        - cmd
+        - com
+        - scr
+        - pif
+        - vbs
+        - js
+
+    # 文件转换配置
+    conversion:
+      # 是否启用文件转换功能
+      enabled: true
+      # 转换临时目录
+      temp-dir: ${java.io.tmpdir}/file-conversion
+      # 转换文件最大大小（MB）
+      max-file-size: 50
+      # 转换超时时间（秒）
+      timeout: 300
+      # 是否启用异步转换
+      async-conversion: false
+      # 转换任务保留时间（小时）
+      task-retention-hours: 24
+      # 支持的输入格式
+      supported-input-formats:
+        - doc
+        - docx
+        - pdf
+        - ofd
+      # 支持的输出格式
+      supported-output-formats:
+        - pdf
+        - docx
+        - ofd
+
+  notification:
+    # 站内信配置
+    station-message:
+      # 是否启用站内信
+      enabled: true
+      # 消息保留天数
+      retention-days: 90
+      # 最大消息长度
+      max-content-length: 1000
+    # 实时消息配置
+    real-time-message:
+      # 是否启用实时消息
+      enabled: true
+      # WebSocket端点
+      endpoint: /ws/notification
+      # 心跳间隔（秒）
+      heartbeat-interval: 30
+      # 连接超时时间（秒）
+      connection-timeout: 60
+# JWT配置
+jwt:
+  enabled: false

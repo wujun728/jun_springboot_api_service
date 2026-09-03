@@ -1,0 +1,146 @@
+# ====================================
+# 项目忽略文件配置
+# ====================================
+
+# ==== 操作系统文件 ====
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+*.tmp
+*.swp
+*.swo
+*~
+
+# ==== IDE 和编辑器文件 ====
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Visual Studio Code
+.vscode/
+
+# Eclipse
+.metadata
+.project
+.classpath
+.settings/
+bin/
+
+# NetBeans
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# ==== Java / Maven 项目 ====
+# Maven 构建输出
+**/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# Java 编译文件
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# ==== Node.js / 前端项目 ====
+# 依赖目录
+node_modules/
+jspm_packages/
+
+# 构建输出
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist/
+
+# 包管理器锁文件
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
+shrinkwrap.yaml
+
+# 前端缓存和临时文件
+.cache/
+.parcel-cache/
+.temp/
+.tmp/
+.eslintcache
+.stylelintcache
+
+# ==== 日志文件 ====
+*.log
+logs/
+log/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# ==== 测试和覆盖率 ====
+coverage/
+*.lcov
+.coverage
+.coverage.*
+.nyc_output/
+coverage-final.json
+
+# ==== 环境和配置文件 ====
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# ==== 备份和临时文件 ====
+*.bak
+*.backup
+*.orig
+*.rej
+*~
+.#*
+#*#
+
+# ==== 压缩和归档文件 ====
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+
+# ==== 特定项目忽略 ====
+# flyflow 项目特定忽略
+zapi-flow/**/target/
+flyflow/**/*.log
+
+# zapi-allin-sys 项目特定忽略
+zapi-allin-sys/**/target/
+zapi-allin-sys/**/*.log
+
+# flyflow-vue3 项目特定忽略
+flyflow-vue3/node_modules/
+flyflow-vue3/dist/
+
+# zapi-allin-web 项目特定忽略
+zapi-allin-web/node_modules/
+zapi-allin-web/dist/
+
+# flyflow-zhonglz 项目特定忽略 (看起来是个人分支)
+flyflow-zhonglz/**/target/
+flyflow-zhonglz/**/*.log

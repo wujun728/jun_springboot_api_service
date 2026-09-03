@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image" href="/logo3.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>知录Admin平台</title>
+
+    <!-- PDF.js 2.6.347 - 本地文件，稳定版本 -->
+    <script src="/pdf.min.js"></script>
+    <script>
+      if (typeof pdfjsLib !== 'undefined') {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+        console.log('PDF.js 2.6.347 本地加载成功');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.zapi</groupId>
+    <artifactId>zapi-allin-sys</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <name>zapi-allin-sys</name>
+    <description>ZAPI管理系统</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.18</version>
+        <relativePath/>
+    </parent>
+
+    <properties>
+        <java.version>8</java.version>
+        <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
+        <jwt.version>0.9.1</jwt.version>
+        <fastjson.version>2.0.32</fastjson.version>
+        <hutool.version>5.8.20</hutool.version>
+        <swagger.version>3.0.0</swagger.version>
+        <project.version>1.0.0</project.version>
+    </properties>
+
+    <modules>
+        <module>allin-common</module>
+        <module>allin-support</module>
+        <module>allin-model</module>
+        <module>allin-starter</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 内部模块依赖 -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-support-swagger</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-support-file</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- MyBatis Plus -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- JWT -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+            <!-- FastJSON -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!-- Hutool工具类 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <!-- Swagger -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!-- MySQL Driver -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.33</version>
+            </dependency>
+
+            <!-- allin-model-notification -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model-notification</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- allin-common -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- allin-model-dataset -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model-dataset</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- allin-model-workflow -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model-workflow</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- allin-model-workflow-api -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model-workflow-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- allin-model-workflow-service -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-model-workflow-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- allin-support-redis -->
+            <dependency>
+                <groupId>com.zapi</groupId>
+                <artifactId>allin-support-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- 只配置编译插件，不配置Spring Boot插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-J-Dfile.encoding=UTF-8</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project> 

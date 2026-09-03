@@ -1,0 +1,850 @@
+/**
+ * 全局样式入口文件
+ *
+ * 引入所有样式模块，定义全局样式和工具类
+ *
+ * @author ZAPI Team
+ * @version 3.0.0
+ */
+
+// ==================== 样式模块引入 ====================
+@use './element-plus.scss';
+@use './date-picker-fix.scss';
+@use './date-picker-override.scss';
+
+// ==================== 全局样式重置 ====================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ==================== 字体大小规范 ====================
+h1,
+.text-xl {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h2,
+.text-lg {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+h3,
+.text-md {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+h4,
+h5,
+h6,
+.text-base {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.text-sm {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.text-xs {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+// ==================== 文本处理 ====================
+// 防止文字挤压
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+b {
+  margin-bottom: 0.5em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  background: transparent;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 1em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+// ==================== 表格样式 ====================
+table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+td,
+th {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding: 8px 12px;
+  vertical-align: middle;
+}
+
+// ==================== 表单元素样式 ====================
+// 按钮文字处理 - 排除 Element Plus 按钮
+button:not(.el-button) {
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: ellipsis;
+}
+
+// 输入框文字处理 - 排除 Element Plus 输入框
+input:not(.el-input__inner),
+textarea {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+// ==================== 滚动条样式 ====================
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-color, rgba(99, 102, 241, 0.2));
+  border-radius: 3px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--scrollbar-thumb-hover-color, rgba(99, 102, 241, 0.3));
+  }
+}
+
+// ==================== 全局 CSS 变量 ====================
+:root {
+  // 主色调：基于 rgba(99, 102, 241, 0.1) 的柔和配色
+  --primary-color: #818cf8;
+  --primary-hover: #8b9aff;
+  --primary-light: rgba(99, 102, 241, 0.1);
+
+  // 辅助色
+  --secondary-color: #34d399;
+  --accent-color: #fbbf24;
+  --danger-color: #fb7185;
+  --success-color: #34d399;
+  --warning-color: #fbbf24;
+  --info-color: #94a3b8;
+
+  // 背景颜色 - 浅色主题
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafbff;
+  --bg-tertiary: rgba(99, 102, 241, 0.05);
+  --bg-card: #ffffff;
+
+  // 文本颜色 - 浅色主题
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  // 边框颜色
+  --border-color: rgba(99, 102, 241, 0.15);
+  --border-light: rgba(99, 102, 241, 0.1);
+
+  // 阴影效果
+  --shadow-sm: 0 1px 3px 0 rgba(99, 102, 241, 0.08);
+  --shadow-md: 0 4px 12px -2px rgba(99, 102, 241, 0.1);
+  --shadow-lg: 0 10px 20px -4px rgba(99, 102, 241, 0.12);
+  --shadow-xl: 0 20px 30px -6px rgba(99, 102, 241, 0.15);
+
+  // 渐变效果
+  --gradient-primary: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  --gradient-secondary: linear-gradient(135deg, rgba(52, 211, 153, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+  --gradient-accent: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+}
+
+// 深色主题
+[data-theme='dark'] {
+  // 背景颜色 - 深色主题
+  --bg-primary: #0f0f0f;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: rgba(99, 102, 241, 0.08);
+  --bg-card: #1e1e1e;
+
+  // 文本颜色 - 深色主题（提高对比度，使用更亮的颜色）
+  --text-primary: #f1f5f9;      // 从 #e2e8f0 提高到 #f1f5f9，更亮
+  --text-secondary: #cbd5e1;    // 从 #94a3b8 提高到 #cbd5e1，更亮
+  --text-muted: #94a3b8;        // 从 #64748b 提高到 #94a3b8，更亮
+
+  // 边框颜色 - 深色主题
+  --border-color: rgba(99, 102, 241, 0.2);
+  --border-light: rgba(99, 102, 241, 0.15);
+
+  // 阴影效果 - 深色主题
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 20px -4px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 30px -6px rgba(0, 0, 0, 0.6);
+
+  // 滚动条颜色 - 深色主题
+  --scrollbar-thumb-color: rgba(99, 102, 241, 0.4);
+  --scrollbar-thumb-hover-color: rgba(99, 102, 241, 0.6);
+
+  // ==================== 工作流组件深色主题 ====================
+
+  // 流程画布背景
+  .workflow-canvas,
+  .process-canvas,
+  .canvas-container {
+    background: #1a1a1a !important;
+
+    // 网格背景
+    background-image:
+      linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px) !important;
+  }
+
+  // 流程节点
+  .workflow-node,
+  .process-node,
+  .node-item {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.3) !important;
+    color: #e2e8f0 !important;
+
+    .node-header {
+      color: #ffffff !important;
+    }
+
+    .node-body,
+    .node-content {
+      background: #2a2a2a !important;
+      color: #e2e8f0 !important;
+    }
+
+    .node-description,
+    .node-meta {
+      color: #cbd5e1 !important;
+    }
+  }
+
+  // ==================== 流程设计器组件选择面板 ====================
+  // 左侧节点面板
+  .node-panel,
+  .component-panel {
+    background: #1e1e1e !important;
+
+    .panel-header,
+    .panel-title {
+      color: #f1f5f9 !important;
+      background: transparent !important;
+    }
+
+    .category-title {
+      color: #f1f5f9 !important;
+      border-left-color: var(--el-color-primary) !important;
+    }
+
+    .node-item,
+    .component-item {
+      background: #2a2a2a !important;
+      border-color: rgba(99, 102, 241, 0.2) !important;
+
+      &:hover {
+        border-color: var(--el-color-primary) !important;
+        background: #3a3a3a !important;
+      }
+
+      .item-name {
+        color: #f1f5f9 !important;
+      }
+
+      .item-description {
+        color: #94a3b8 !important;
+      }
+    }
+  }
+
+  // 右侧属性配置面板
+  .properties-panel,
+  .config-panel,
+  .right-panel {
+    background: #1e1e1e !important;
+
+    // 所有标题
+    h1, h2, h3, h4, h5, h6,
+    .panel-title,
+    .section-title,
+    .config-title,
+    .field-title {
+      color: #f1f5f9 !important;
+      background: transparent !important;
+    }
+
+    // 标签和描述
+    label,
+    .label,
+    .field-label {
+      color: #f1f5f9 !important;
+    }
+
+    .description,
+    .hint,
+    .tip {
+      color: #cbd5e1 !important;
+    }
+
+    // Tab 切换
+    .el-tabs {
+      .el-tabs__header {
+        background: transparent !important;
+        border-bottom-color: rgba(99, 102, 241, 0.2) !important;
+      }
+
+      .el-tabs__item {
+        color: #cbd5e1 !important;
+
+        &:hover {
+          color: #e2e8f0 !important;
+        }
+
+        &.is-active {
+          color: #ffffff !important;
+        }
+      }
+
+      .el-tabs__active-bar {
+        background-color: var(--el-color-primary) !important;
+      }
+    }
+
+    // 滚动条
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #1a1a1a !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.3) !important;
+      border-radius: 3px;
+
+      &:hover {
+        background: rgba(99, 102, 241, 0.5) !important;
+      }
+    }
+
+    // 配置项
+    .config-item,
+    .field-item {
+      background: #2a2a2a !important;
+      border-color: rgba(99, 102, 241, 0.2) !important;
+
+      .item-label {
+        color: #f1f5f9 !important;
+      }
+
+      .item-value {
+        color: #e2e8f0 !important;
+      }
+    }
+
+    // 数字输入器的按钮
+    .el-input-number {
+      .el-input-number__decrease,
+      .el-input-number__increase {
+        background-color: #2a2a2a !important;
+        color: #cbd5e1 !important;
+        border-color: rgba(99, 102, 241, 0.2) !important;
+
+        &:hover {
+          color: var(--el-color-primary) !important;
+        }
+      }
+    }
+  }
+
+  // 流程时间线
+  .timeline-item {
+    .timeline-title {
+      color: #f1f5f9 !important;
+    }
+
+    .timeline-action {
+      color: #cbd5e1 !important;
+    }
+
+    .timeline-time {
+      color: #94a3b8 !important;
+    }
+
+    .timeline-comment {
+      background: #2a2a2a !important;
+      color: #e2e8f0 !important;
+
+      .comment-label {
+        color: #cbd5e1 !important;
+      }
+
+      .comment-text {
+        color: #f1f5f9 !important;
+      }
+    }
+
+    .timeline-meta {
+      color: #94a3b8 !important;
+    }
+  }
+
+  // 流程进度图例
+  .legend-item {
+    color: #e2e8f0 !important;
+
+    .legend-color {
+      &.pending {
+        background: #4a4a4a !important;
+      }
+    }
+  }
+
+  // 空状态提示
+  .empty-hint,
+  .canvas-empty {
+    .empty-title {
+      color: #f1f5f9 !important;
+    }
+
+    .empty-description {
+      color: #94a3b8 !important;
+    }
+  }
+
+  // 节点分类标题
+  .category-title,
+  .section-title {
+    color: #f1f5f9 !important;
+  }
+
+  // 节点操作提示
+  .guide-content,
+  .operation-guide {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+
+    .guide-title {
+      color: #f1f5f9 !important;
+    }
+
+    .guide-description {
+      color: #cbd5e1 !important;
+    }
+  }
+
+  // 属性面板表单
+  .form-section,
+  .property-section {
+    .section-title {
+      color: #f1f5f9 !important;
+      border-bottom-color: rgba(99, 102, 241, 0.2) !important;
+    }
+
+    .section-description {
+      color: #94a3b8 !important;
+    }
+  }
+
+  // 条件构建器
+  .condition-builder,
+  .condition-item {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+    color: #e2e8f0 !important;
+  }
+
+  // 分支配置
+  .branch-item {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+
+    .branch-name {
+      color: #f1f5f9 !important;
+    }
+  }
+
+  // 审批人配置
+  .approver-config,
+  .receiver-config {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+
+    .config-title {
+      color: #f1f5f9 !important;
+    }
+
+    .config-description {
+      color: #94a3b8 !important;
+    }
+  }
+
+  // 用户/部门选择器
+  .user-selector,
+  .dept-selector {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+
+    .el-tree {
+      background: transparent !important;
+
+      .el-tree-node__content {
+        color: #e2e8f0 !important;
+
+        &:hover {
+          background: rgba(99, 102, 241, 0.15) !important;
+        }
+      }
+
+      .el-tree-node.is-current > .el-tree-node__content {
+        background: rgba(99, 102, 241, 0.2) !important;
+        color: #ffffff !important;
+      }
+    }
+  }
+
+  // 用户复选框组
+  .user-checkbox-group {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.2) !important;
+
+    .user-item {
+      color: #e2e8f0 !important;
+
+      &:hover {
+        background: rgba(99, 102, 241, 0.15) !important;
+      }
+
+      &.is-checked {
+        background: rgba(99, 102, 241, 0.2) !important;
+        color: #ffffff !important;
+      }
+    }
+  }
+
+  // 提示信息
+  .info-tip,
+  .hint-box {
+    background: #2a2a2a !important;
+    border-color: rgba(99, 102, 241, 0.3) !important;
+    color: #cbd5e1 !important;
+
+    .tag-type {
+      color: var(--el-color-primary) !important;
+    }
+  }
+
+  // 滚动条 - 工作流组件
+  .workflow-designer,
+  .process-designer,
+  .canvas-container {
+    &::-webkit-scrollbar-track {
+      background: #1a1a1a !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.3) !important;
+
+      &:hover {
+        background: rgba(99, 102, 241, 0.5) !important;
+      }
+    }
+  }
+
+  // 描述列表
+  .el-descriptions {
+    .el-descriptions__body {
+      background: #1e1e1e !important;
+    }
+
+    .el-descriptions-item__label {
+      color: #94a3b8 !important;
+    }
+
+    .el-descriptions-item__content {
+      color: #f1f5f9 !important;
+    }
+  }
+}
+
+// ==================== 动画定义 ====================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes glow {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
+  }
+}
+
+// ==================== 动画工具类 ====================
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+.glow {
+  animation: glow 2s infinite;
+}
+
+// ==================== 组件样式 ====================
+// 卡片样式
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--border-light);
+  }
+}
+
+// 按钮样式（自定义，非 Element Plus）
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &-primary {
+    background: var(--gradient-primary);
+    color: white;
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+  }
+
+  &-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+
+    &:hover {
+      background: var(--bg-secondary);
+      border-color: var(--border-light);
+    }
+  }
+
+  &-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+
+    &:hover {
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+  }
+}
+
+// 输入框样式（自定义，非 Element Plus）
+.input {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+}
+
+// ==================== 间距工具类 ====================
+// Margin 工具类
+.spacing-xs { margin: 4px; }
+.spacing-sm { margin: 8px; }
+.spacing-md { margin: 16px; }
+.spacing-lg { margin: 24px; }
+.spacing-xl { margin: 32px; }
+
+.spacing-t-xs { margin-top: 4px; }
+.spacing-t-sm { margin-top: 8px; }
+.spacing-t-md { margin-top: 16px; }
+.spacing-t-lg { margin-top: 24px; }
+.spacing-t-xl { margin-top: 32px; }
+
+.spacing-b-xs { margin-bottom: 4px; }
+.spacing-b-sm { margin-bottom: 8px; }
+.spacing-b-md { margin-bottom: 16px; }
+.spacing-b-lg { margin-bottom: 24px; }
+.spacing-b-xl { margin-bottom: 32px; }
+
+// Padding 工具类
+.padding-xs { padding: 4px; }
+.padding-sm { padding: 8px; }
+.padding-md { padding: 16px; }
+.padding-lg { padding: 24px; }
+.padding-xl { padding: 32px; }
+
+// ==================== 页面布局样式 ====================
+.page-container {
+  padding: 24px;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  background: transparent;
+}
+
+// 标题类：确保背景透明
+.section-title,
+.panel-header,
+.detail-header,
+.card-title,
+.dialog-title {
+  background: transparent;
+}
+
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+}
+
+.content-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+
+
+// ==================== Element Plus 样式覆盖 ====================
+.el-form-item .el-button {
+  margin-bottom: 0 !important;
+}
+
+// ==================== 响应式设计 ====================
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+
+  .btn {
+    padding: 10px 20px;
+  }
+
+  .pagination-wrapper {
+    padding: 16px;
+
+    :deep(.el-pagination) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+}

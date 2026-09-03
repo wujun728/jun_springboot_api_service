@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.form.mapper.FormTableInfoMapper">
+
+    <!-- 根据表单ID查询表信息 -->
+    <select id="selectByFormId" resultType="com.zapi.form.model.entity.FormTableInfo">
+        SELECT * FROM form_table_info WHERE form_id = #{formId}
+    </select>
+
+    <!-- 根据表名查询表信息 -->
+    <select id="selectByTableName" resultType="com.zapi.form.model.entity.FormTableInfo">
+        SELECT * FROM form_table_info WHERE table_name = #{tableName}
+    </select>
+
+    <!-- 根据表单ID删除表信息 -->
+    <delete id="deleteByFormId">
+        DELETE FROM form_table_info WHERE form_id = #{formId}
+    </delete>
+
+    <!-- 批量删除表信息 -->
+    <delete id="deleteByFormIds">
+        DELETE FROM form_table_info WHERE form_id IN
+        <foreach collection="formIds" item="formId" open="(" separator="," close=")">
+            #{formId}
+        </foreach>
+    </delete>
+
+    <!-- 检查表名是否存在 -->
+    <select id="checkTableNameExists" resultType="int">
+        SELECT COUNT(*) FROM form_table_info WHERE table_name = #{tableName}
+    </select>
+
+</mapper> 

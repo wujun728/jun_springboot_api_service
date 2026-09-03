@@ -1,0 +1,96 @@
+/**
+ * 日期选择器样式覆盖
+ * 
+ * 使用高优先级选择器覆盖 Element Plus 默认样式
+ * 确保日期选择器背景透明，符合小清新风格主题
+ * 
+ * @author ZAPI Team
+ * @version 3.0.0
+ */
+
+// ==================== 日期面板样式覆盖 ====================
+html body {
+  .el-picker-panel,
+  .el-date-picker__panel,
+  .el-date-range-picker__panel,
+  .el-date-picker__popper,
+  .el-date-range-picker__popper {
+    background: transparent !important;
+    border: 1px solid var(--el-border-color) !important;
+    box-shadow: var(--el-box-shadow-dark) !important;
+  }
+
+  // ==================== 日期表格样式覆盖 ====================
+  .el-date-table,
+  .el-month-table,
+  .el-year-table {
+    background: transparent !important;
+  }
+
+  // ==================== 日期单元格样式覆盖 ====================
+  .el-date-table td,
+  .el-month-table td,
+  .el-year-table td {
+    background: transparent !important;
+  }
+
+  .el-date-table .cell,
+  .el-month-table .cell,
+  .el-year-table .cell {
+    background: transparent !important;
+  }
+
+  // ==================== 日期面板头部和底部 ====================
+  .el-picker-panel__header,
+  .el-date-picker__header {
+    background: transparent !important;
+    border-bottom: 1px solid var(--el-border-color) !important;
+  }
+
+  .el-picker-panel__footer {
+    background: transparent !important;
+    border-top: 1px solid var(--el-border-color) !important;
+  }
+
+  // ==================== 日期范围选择器 ====================
+  .el-date-range-picker {
+    background: transparent !important;
+
+    .el-date-range-picker__content {
+      background: transparent !important;
+    }
+
+    .el-date-range-picker__header {
+      background: transparent !important;
+    }
+
+    .el-date-range-picker__body {
+      background: transparent !important;
+    }
+  }
+
+  .el-range-editor.el-input__wrapper {
+    background: transparent !important;
+  }
+
+  // ==================== 全局背景色覆盖 ====================
+  // 强制覆盖所有日期相关的背景色
+  .el-picker-panel *,
+  .el-date-picker__panel *,
+  .el-date-range-picker__panel * {
+    background-color: transparent !important;
+  }
+
+  // 特殊处理头部和底部
+  .el-picker-panel .el-picker-panel__header *,
+  .el-date-picker__panel .el-date-picker__header *,
+  .el-picker-panel .el-picker-panel__footer * {
+    background-color: transparent !important;
+  }
+}
+
+// ==================== 分页组件样式修复 ====================
+.el-pagination button.is-disabled,
+.el-pagination button:disabled {
+  background: transparent !important;
+}

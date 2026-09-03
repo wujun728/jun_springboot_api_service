@@ -1,0 +1,26 @@
+# OnlyOffice Configuration
+onlyoffice:
+  # 注意：这里使用的是文档服务的根地址，不是welcome页面
+  #document-server-url: http://8.138.158.220:7086/
+  document-server-url: http://192.168.3.238:7086/
+  # 你的JWT密钥，请替换为上面获取到的真实密钥
+  # jwt-secret: Mm22arwSUSAvUneEhNR4OWKWlKdSeR6W
+  jwt-secret: HVym5Rdn4I5EbiZqnfYzFh5KsHqnan34
+  # 前端页面的地址，用于构建回调URL
+  frontend-url: http://localhost:5173
+  # 对 Docs Server 可达的后端基地址
+  external-base-url: http://192.168.3.108:8080/zapi-allin-sys
+  # Docs 若开启JWT（7.2+默认），这里也需要开启并生成token；若关闭，这里也设为false且不下发token
+  jwt-enabled: false
+
+# 文件服务配置
+zapi:
+  file:
+    # 存储类型（LOCAL-本地，OSS-阿里云OSS，FTP-FTP服务器）
+    storage-type: LOCAL
+    # 本地存储配置
+    local:
+      # 本地存储根路径
+      root-path: /Users/zhonglz/work/
+
+

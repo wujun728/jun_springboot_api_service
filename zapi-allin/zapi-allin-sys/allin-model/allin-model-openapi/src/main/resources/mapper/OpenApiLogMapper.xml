@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.openapi.mapper.OpenApiLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.zapi.openapi.entity.OpenApiLog">
+        <id column="id" property="id"/>
+        <result column="config_id" property="configId"/>
+        <result column="app_id" property="appId"/>
+        <result column="call_type" property="callType"/>
+        <result column="request_url" property="requestUrl"/>
+        <result column="request_method" property="requestMethod"/>
+        <result column="request_params" property="requestParams"/>
+        <result column="response_data" property="responseData"/>
+        <result column="status" property="status"/>
+        <result column="error_msg" property="errorMsg"/>
+        <result column="sync_count" property="syncCount"/>
+        <result column="cost_time" property="costTime"/>
+        <result column="create_time" property="createTime"/>
+        <result column="client_ip" property="clientIp"/>
+        <result column="config_name" property="configName"/>
+        <result column="app_name" property="appName"/>
+    </resultMap>
+
+    <select id="selectPageWithNames" resultMap="BaseResultMap">
+        SELECT l.*, c.config_name, a.app_name
+        FROM open_api_log l
+        LEFT JOIN open_api_config c ON l.config_id = c.id
+        LEFT JOIN wb_application a ON l.app_id = a.id
+        <where>
+            <if test="appId != null">
+                AND l.app_id = #{appId}
+            </if>
+            <if test="configId != null">
+                AND l.config_id = #{configId}
+            </if>
+            <if test="callType != null">
+                AND l.call_type = #{callType}
+            </if>
+            <if test="status != null">
+                AND l.status = #{status}
+            </if>
+        </where>
+        ORDER BY l.create_time DESC
+    </select>
+
+</mapper>

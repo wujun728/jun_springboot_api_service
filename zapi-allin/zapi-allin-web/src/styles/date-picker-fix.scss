@@ -1,0 +1,69 @@
+/**
+ * 日期选择器样式修复
+ * 
+ * 修复日期选择器背景色显示问题，确保与小清新风格主题一致
+ * 
+ * @author ZAPI Team
+ * @version 3.0.0
+ */
+
+// ==================== 日期面板基础样式 ====================
+.el-picker-panel,
+.el-date-picker__panel,
+.el-date-range-picker__panel,
+.el-date-picker__popper,
+.el-date-range-picker__popper {
+  background: var(--el-bg-color-overlay) !important;
+  border: 1px solid var(--el-border-color) !important;
+  box-shadow: var(--el-box-shadow-dark) !important;
+}
+
+// ==================== 日期表格样式 ====================
+.el-date-table,
+.el-month-table,
+.el-year-table {
+  background: var(--el-bg-color-overlay) !important;
+}
+
+// ==================== 日期单元格样式 ====================
+.el-date-table td,
+.el-month-table td,
+.el-year-table td {
+  background: var(--el-bg-color-overlay) !important;
+}
+
+.el-date-table .cell,
+.el-month-table .cell,
+.el-year-table .cell {
+  background: transparent !important;
+  color: var(--el-text-color-primary) !important;
+}
+
+// ==================== 日期面板头部和底部 ====================
+.el-picker-panel__header,
+.el-date-picker__header {
+  background: var(--el-fill-color) !important;
+  border-bottom: 1px solid var(--el-border-color) !important;
+}
+
+.el-picker-panel__footer {
+  background: var(--el-fill-color) !important;
+  border-top: 1px solid var(--el-border-color) !important;
+}
+
+// ==================== 日期范围选择器 ====================
+.el-date-range-picker {
+  background: var(--el-bg-color-overlay) !important;
+
+  .el-date-range-picker__content {
+    background: var(--el-bg-color-overlay) !important;
+  }
+
+  .el-date-range-picker__header {
+    background: var(--el-fill-color) !important;
+  }
+
+  .el-date-range-picker__body {
+    background: var(--el-bg-color-overlay) !important;
+  }
+}

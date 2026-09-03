@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.mapper.MenuMapper">
+
+    <!-- 根据用户ID查询用户菜单列表 -->
+    <select id="selectMenusByUserId" resultType="com.zapi.entity.Menu">
+        SELECT DISTINCT m.*
+        FROM sys_menu m
+        WHERE m.status = 1 AND m.deleted = 0
+        ORDER BY m.sort ASC, m.create_time DESC
+    </select>
+
+    <!-- 根据角色ID查询角色菜单列表 -->
+    <select id="selectMenusByRoleId" resultType="com.zapi.entity.Menu">
+        SELECT DISTINCT m.*
+        FROM sys_menu m
+        WHERE m.status = 1 AND m.deleted = 0
+        ORDER BY m.sort ASC, m.create_time DESC
+    </select>
+
+    <!-- 查询所有菜单（树形结构） -->
+    <select id="selectMenuTree" resultType="com.zapi.entity.Menu">
+        SELECT *
+        FROM sys_menu
+        WHERE status = 1 AND deleted = 0
+        ORDER BY sort ASC, create_time DESC
+    </select>
+
+</mapper> 

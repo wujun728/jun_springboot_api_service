@@ -1,0 +1,51 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+.search-bar{
+  padding: 20px 0 0 20px;
+  margin-bottom: 12px;
+  background-color: var(--el-bg-color-overlay);
+  border-radius: 4px;
+  box-shadow: var(--el-box-shadow-light);
+}
+
+.page-header {
+  height: auto !important;
+  padding: 24px 20px 0 20px !important;
+}
+
+.page-body {
+  min-height: 0;
+  overflow: auto;
+}
+
+.table-container {
+  background-color: var(--el-bg-color-overlay);
+  border-radius: 4px;
+}
+
+.table-header{
+  background-color: #f0f0f0 !important;
+  .cell{
+    font-weight: 600;
+  }
+}
+.table-pagination {
+  padding: 12px 0;
+  display: flex;
+  flex-direction: row-reverse;
+}

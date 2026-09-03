@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.zapi</groupId>
+        <artifactId>allin-model</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>allin-model-workbench</artifactId>
+    <packaging>jar</packaging>
+
+    <name>allin-model-workbench</name>
+    <description>工作台模块</description>
+
+    <dependencies>
+        <!-- 依赖allin-common -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-common</artifactId>
+        </dependency>
+
+        <!-- 依赖allin-support-swagger -->
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-support-swagger</artifactId>
+        </dependency>
+
+        <!-- Spring Boot Starter Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-form</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zapi</groupId>
+            <artifactId>allin-model-grid</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+</project>

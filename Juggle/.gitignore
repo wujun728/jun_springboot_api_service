@@ -1,0 +1,44 @@
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+node_modules/
+
+### VS Code ###
+.vscode/
+
+
+###idea config###
+.svn/
+target/
+.idea/
+*.iml
+.mvn/
+mvnw
+mvnw.*
+build/
+dist/
+.flattened-pom.xml
+
+### sdk-nodejs ###
+esm/
+cjs/
+sdk/juggle-sdk-nodejs/types/

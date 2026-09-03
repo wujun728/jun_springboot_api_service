@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <menu id="menu_system" name="系统" seq="1100" icon="/res/sie/snest/base/statics/img/modules.png"/>
+    
+    <menu id="menu_config" name="系统配置1" module="base" model="base_sys_config" seq="10" view="sys_config_curd" parent="menu_system"/>
+    <menu id="menu_apps" name="应用管理"  view="meta_app_curd"  seq="20" parent="menu_system"/>
+    <menu id="menu_model" name="开发建模" seq="30" parent="menu_system"/> 
+    <menu id="menu_system_users" name="用户管理" seq="40" parent="menu_system"/>
+    
+    <menu id="menu_module" name="应用" module="base" model="base_module" view="base_meta_app_curd" seq="0" parent="menu_apps"/>
+    <menu id="menu_apps_store" name="应用商城" parent="menu_apps" seq="5" url="https://blog.csdn.net/"/>
+    
+    <menu id="menu_ir_ui_menu" name="菜单" module="base" model="base_ui_menu" view="base_menus_curd" seq="0" parent="menu_model"/>
+    <menu id="menu_ir_model" name="模型" module="base" model="base_entity" view="grid,form" seq="5" parent="menu_model"/>
+    <menu id="menu_ir_ui_view" name="视图" module="base" model="base_ui_view" view="ui_view_list" seq="6" parent="menu_model"/>
+    <menu id="menu_base_dict_data" name="字典数据" module="base" model="base_dict_data" view="dict_data_curd" seq="0" parent="menu_model"/>
+    <menu id="menu_enter_debug" name="进入调试模式" click="jwa.utils.cookie('ctx_debug', true);top.window.location.reload();" seq="8" parent="menu_model"/>
+
+    <menu id="menu_system_users_user" name="用户" seq="10" module="base" model="base_user" view="grid,form" parent="menu_system_users"/>
+    <menu id="menu_system_users_role" name="角色" seq="20" module="base" model="base_role" view="base_role_views" parent="menu_system_users"/>
+    <menu id="menu_system_users_permission" name="权限" seq="30" module="base" model="base_permissions" view="base_permissions_curd" parent="menu_system_users"/>
+
+    <menu id="menu_system_dept" name="部门" seq="30" module="base" model="base_dept" view="grid,form" parent="menu_system_users"/>
+
+    <menu id="menu_system_users_policy" name="密码策略" seq="40" module="base" model="rbac.policy" view="form" parent="menu_system_users"/>
+
+    <menu id="menu_system_res_lang" name="语言" seq="50" module="base" model="res.lang" view="grid,form" parent="menu_system_users"/>
+    <menu id="menu_system_res_company" name="公司" seq="60" module="base" model="res.company" view="form|edit" parent="menu_system_users"/>
+
+</data>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+    <record id="base_user_admin" model="base_user">
+        <field name="userName">admin</field>
+        <field name="password">admin</field>
+        <field name="nickName">管理员</field>
+    </record>
+    <record id="base_role_admin" model="base_role">
+        <field name="roleKey">admin</field>
+        <field name="roleName">admin</field>
+        <field name="admin">true</field>
+    </record>
+</data>

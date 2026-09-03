@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.openapi.mapper.OpenApiConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.zapi.openapi.entity.OpenApiConfig">
+        <id column="id" property="id"/>
+        <result column="app_id" property="appId"/>
+        <result column="config_name" property="configName"/>
+        <result column="call_type" property="callType"/>
+        <result column="data_type" property="dataType"/>
+        <result column="sync_mode" property="syncMode"/>
+        <result column="api_path" property="apiPath"/>
+        <result column="api_method" property="apiMethod"/>
+        <result column="remote_url" property="remoteUrl"/>
+        <result column="remote_method" property="remoteMethod"/>
+        <result column="request_headers" property="requestHeaders"/>
+        <result column="request_params" property="requestParams"/>
+        <result column="response_mapping" property="responseMapping"/>
+        <result column="increment_field" property="incrementField"/>
+        <result column="last_sync_time" property="lastSyncTime"/>
+        <result column="last_sync_value" property="lastSyncValue"/>
+        <result column="cron_expression" property="cronExpression"/>
+        <result column="auto_sync" property="autoSync"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="creator" property="creator"/>
+        <result column="updater" property="updater"/>
+        <result column="app_name" property="appName"/>
+    </resultMap>
+
+    <select id="selectPageWithAppName" resultMap="BaseResultMap">
+        SELECT c.*, a.app_name
+        FROM open_api_config c
+        LEFT JOIN wb_application a ON c.app_id = a.id
+        <where>
+            <if test="appId != null">
+                AND c.app_id = #{appId}
+            </if>
+            <if test="configName != null and configName != ''">
+                AND c.config_name LIKE CONCAT('%', #{configName}, '%')
+            </if>
+            <if test="callType != null">
+                AND c.call_type = #{callType}
+            </if>
+            <if test="dataType != null and dataType != ''">
+                AND c.data_type = #{dataType}
+            </if>
+            <if test="status != null">
+                AND c.status = #{status}
+            </if>
+        </where>
+        ORDER BY c.create_time DESC
+    </select>
+
+</mapper>

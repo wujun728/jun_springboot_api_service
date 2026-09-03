@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.form.mapper.FormColumnInfoMapper">
+    <!-- 批量插入字段信息 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO form_column_info (
+            id, form_id, column_name, column_type, form_type, is_sys_field,
+            column_comment, column_length, column_scale, is_nullable,
+            default_value, is_primary_key, is_auto_increment,
+            character_set, collation, extra
+        ) VALUES
+        <foreach collection="columns" item="column" separator=",">
+            (
+                #{column.id}, #{column.formId}, #{column.columnName}, #{column.columnType}, #{column.formType}, #{column.isSysField},
+                #{column.columnComment}, #{column.columnLength}, #{column.columnScale}, #{column.isNullable},
+                #{column.defaultValue}, #{column.isPrimaryKey}, #{column.isAutoIncrement},
+                #{column.characterSet}, #{column.collation}, #{column.extra}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据表单ID删除所有非系统字段 -->
+    <delete id="deleteNonSystemColumnsByFormId">
+        DELETE FROM form_column_info
+        WHERE form_id = #{formId} AND (is_sys_field = 0 OR is_sys_field IS NULL)
+    </delete>
+
+</mapper> 

@@ -1,0 +1,471 @@
+{
+  "views": {
+    "base_menus_curd": {
+      "body": [
+        {
+          "affixHeader": true,
+          "api": "get:/api/rpc/service?module=base&model=base_ui_menu&service=search2",
+          "bodyClassName": "panel-default",
+          "columns": [
+            {
+              "label": "菜单名称",
+              "name": "name",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "菜单路径",
+              "name": "url",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "模组",
+              "name": "module",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "模型",
+              "name": "model",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "图标",
+              "name": "icon",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "父",
+              "name": "parentId",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "视图",
+              "name": "view",
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "buttons": [
+                {
+                  "actionType": "dialog",
+                  "dialog": {
+                    "body": {
+                      "body": [
+                        {
+                          "label": "样式",
+                          "name": "css",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "模组",
+                          "name": "module",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "图标",
+                          "name": "icon",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "备注",
+                          "name": "remark",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "单击",
+                          "name": "click",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "菜单路径",
+                          "name": "url",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "父",
+                          "name": "parentId",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "序号",
+                          "name": "sequence",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "视图",
+                          "name": "view",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "菜单名称",
+                          "name": "name",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "模型",
+                          "name": "model",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "权限",
+                          "name": "perms",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "",
+                          "name": "id",
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "唯一",
+                          "name": "key",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "状态",
+                          "name": "status",
+                          "required": true,
+                          "sortable": false,
+                          "type": "static"
+                        }
+                      ],
+                      "name": "sample-edit-form",
+                      "type": "form"
+                    },
+                    "name": "new",
+                    "title": "查看"
+                  },
+                  "icon": "fa fa-eye",
+                  "label": "查看",
+                  "primary": false,
+                  "type": "button"
+                },
+                {
+                  "actionType": "dialog",
+                  "dialog": {
+                    "body": {
+                      "api": "/api/rpc/update?module=base&model=base_ui_menu",
+                      "body": [
+                        {
+                          "label": "样式",
+                          "name": "css",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "模组",
+                          "name": "module",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "图标",
+                          "name": "icon",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "备注",
+                          "name": "remark",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "单击",
+                          "name": "click",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "菜单路径",
+                          "name": "url",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "父",
+                          "name": "parentId",
+                          "required": true,
+                          "sortable": false,
+                          "type": "tree-select",
+                          "source": "/api/rpc/search?module=base&model=base_dict_type&page=1&perPage=100",
+                          "options": [
+                          ]
+                        },
+                        {
+                          "label": "序号",
+                          "name": "sequence",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "视图",
+                          "name": "view",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "菜单名称",
+                          "name": "name",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "模型",
+                          "name": "model",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "权限",
+                          "name": "perms",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "",
+                          "name": "id",
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "唯一",
+                          "name": "key",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "状态",
+                          "name": "status",
+                          "required": true,
+                          "sortable": false,
+                          "type": "input-text"
+                        }
+                      ],
+                      "name": "sample-edit-form",
+                      "type": "form"
+                    },
+                    "name": "new",
+                    "title": "更新"
+                  },
+                  "icon": "fa fa-pencil",
+                  "label": "编辑",
+                  "primary": false,
+                  "type": "button"
+                },
+                {
+                  "actionType": "ajax",
+                  "api": "delete:/api/rpc/delete?module=base&model=base_ui_menu&id=$id",
+                  "confirmText": "您确认要删除?",
+                  "icon": "fa fa-times text-danger",
+                  "primary": false,
+                  "tooltip": "删除"
+                }
+              ],
+              "label": "操作",
+              "sortable": false,
+              "type": "operation"
+            }
+          ],
+          "columnsTogglable": "auto",
+          "combineNum": 0,
+          "filter": {
+            "className": "m-b-sm",
+            "controls": [
+              {
+                "addOn": {
+                  "className": "btn-success",
+                  "label": "搜索",
+                  "type": "submit"
+                },
+                "name": "keywords",
+                "type": "text"
+              }
+            ],
+            "mode": "inline",
+            "wrapWithPanel": false
+          },
+          "footerClassName": "crud-table-footer",
+          "headerClassName": "crud-table-header",
+          "name": "sample",
+          "tableClassName": "table-db table-striped",
+          "toolbarClassName": "crud-table-toolbar",
+          "type": "crud"
+        }
+      ],
+      "name": "base_ui_menu",
+      "title": "",
+      "toolbar": [
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": "/api/rpc/create?module=base&model=base_ui_menu",
+              "body": [
+                {
+                  "label": "样式",
+                  "name": "css",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "模组",
+                  "name": "module",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "图标",
+                  "name": "icon",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "备注",
+                  "name": "remark",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "单击",
+                  "name": "click",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "菜单路径",
+                  "name": "url",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "父",
+                  "name": "parentId",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "序号",
+                  "name": "sequence",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "视图",
+                  "name": "view",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "菜单名称",
+                  "name": "name",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "模型",
+                  "name": "model",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "权限",
+                  "name": "perms",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "",
+                  "name": "id",
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "唯一",
+                  "name": "key",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "状态",
+                  "name": "status",
+                  "required": true,
+                  "sortable": false,
+                  "type": "input-text"
+                }
+              ],
+              "name": "sample-edit-form",
+              "type": "form"
+            },
+            "name": "new",
+            "title": "创建"
+          },
+          "label": "新增",
+          "primary": true,
+          "type": "button"
+        }
+      ],
+      "type": "page"
+    }
+  }
+}

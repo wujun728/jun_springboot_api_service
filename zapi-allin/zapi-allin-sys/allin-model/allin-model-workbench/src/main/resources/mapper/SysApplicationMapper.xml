@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zapi.workbench.mapper.WbApplicationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.zapi.workbench.entity.WbApplication">
+        <id column="id" property="id"/>
+        <result column="app_name" property="appName"/>
+        <result column="app_icon" property="appIcon"/>
+        <result column="auth_code" property="authCode"/>
+        <result column="auth_psw" property="authPsw"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="creator" property="creator"/>
+        <result column="updater" property="updater"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, app_name, app_icon, auth_code, auth_psw, status, 
+        create_time, update_time, creator, updater, remark
+    </sql>
+
+</mapper>

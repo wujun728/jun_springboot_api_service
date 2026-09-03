@@ -1,0 +1,331 @@
+{
+  "views": {
+    "ui_view_list": {
+      "aside": [],
+      "body": [
+        {
+          "api": "/api/rpc/search?module=base&model=base_ui_view",
+          "autoFillHeight": true,
+          "autoGenerateFilter": true,
+          "columns": [
+            {
+              "label": "视图名",
+              "name": "name",
+              "searchable": {
+                "label": "视图名",
+                "name": "name",
+                "type": "input-text"
+              },
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "",
+              "name": "updateTime",
+              "searchable": {
+                "label": "",
+                "name": "updateTime",
+                "type": "input-date"
+              },
+              "sortable": false,
+              "type": "text"
+            },
+            {
+              "label": "",
+              "name": "id",
+              "searchable": {
+                "label": "",
+                "name": "id",
+                "type": "input-number"
+              },
+              "sortable": false,
+              "type": "hidden"
+            },
+
+
+            {
+              "buttons": [
+                {
+                  "actionType": "dialog",
+                  "dialog": {
+                    "body": {
+                      "api": "/api/rpc/update?module=base&model=base_ui_view",
+                      "body": [
+                        {
+                          "label": "模式",
+                          "name": "mode",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "",
+                          "name": "createBy",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+
+                        {
+                          "label": "视图名",
+                          "name": "name",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "激活",
+                          "name": "active",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+                        {
+                          "label": "模型",
+                          "name": "model",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "input-text"
+                        },
+
+                        {
+                          "label": "内容",
+                          "name": "arch",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "json"
+                        }
+
+                      ],
+                      "name": "sample-edit-form",
+                      "type": "form"
+                    },
+                    "name": "new",
+                    "title": "修改"
+                  },
+                  "icon": "fa fa-pencil",
+                  "label": "编辑",
+                  "primary": false,
+                  "type": "button"
+                },
+                {
+                  "actionType": "dialog",
+                  "dialog": {
+                    "body": {
+                      "body": [
+                        {
+                          "label": "模式",
+                          "name": "mode",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+
+
+                        {
+                          "label": "视图名",
+                          "name": "name",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "激活",
+                          "name": "active",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+                        {
+                          "label": "模型",
+                          "name": "model",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "static"
+                        },
+
+                        {
+                          "label": "",
+                          "name": "id",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "hidden"
+                        },
+                        {
+                          "label": "内容",
+                          "name": "arch",
+                          "quickEdit": false,
+                          "required": false,
+                          "sortable": false,
+                          "type": "json"
+                        }
+
+                      ],
+                      "name": "sample-edit-form",
+                      "type": "form"
+                    },
+                    "name": "new",
+                    "title": "查看"
+                  },
+                  "icon": "fa fa-eye",
+                  "label": "查看",
+                  "primary": false,
+                  "type": "button"
+                },
+                {
+                  "actionType": "ajax",
+                  "api": "delete:/api/rpc/delete?module=base&model=base_ui_view&id=$id",
+                  "confirmText": "您确认要删除?",
+                  "icon": "fa fa-times text-danger",
+                  "primary": false,
+                  "tooltip": "删除"
+                }
+              ],
+              "label": "操作",
+              "sortable": false,
+              "type": "operation"
+            }
+          ],
+          "draggable": true,
+          "filterTogglable": true,
+          "footerToolbar": [
+            "statistics",
+            {
+              "layout": "perPage,pager,go",
+              "type": "pagination"
+            }
+          ],
+          "keepItemSelectionOnPageChange": true,
+          "maxKeepItemSelectionLength": 11,
+          "perPage": 50,
+          "type": "crud"
+        }
+      ],
+      "title": "",
+      "toolbar": [
+        {
+          "actionType": "dialog",
+          "dialog": {
+            "body": {
+              "api": "/api/rpc/create?module=base&model=base_ui_view",
+              "body": [
+                {
+                  "label": "模式",
+                  "name": "mode",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "",
+                  "name": "createBy",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "",
+                  "name": "createTime",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-date"
+                },
+                {
+                  "label": "",
+                  "name": "updateBy",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "视图名",
+                  "name": "name",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "激活",
+                  "name": "active",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "模型",
+                  "name": "model",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "label": "",
+                  "name": "updateTime",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-date"
+                },
+                {
+                  "label": "",
+                  "name": "id",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "hidden"
+                },
+                {
+                  "label": "内容",
+                  "name": "arch",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "textarea"
+                },
+                {
+                  "label": "唯一",
+                  "name": "key",
+                  "quickEdit": false,
+                  "required": false,
+                  "sortable": false,
+                  "type": "input-text"
+                },
+                {
+                  "tabs": [],
+                  "tabsMode": "card",
+                  "type": "tabs"
+                }
+              ],
+              "name": "sample-edit-form",
+              "type": "form"
+            },
+            "name": "new",
+            "title": "创建"
+          },
+          "label": "新增",
+          "primary": true,
+          "type": "button"
+        }
+      ],
+      "type": "page"
+    }
+  }
+}
