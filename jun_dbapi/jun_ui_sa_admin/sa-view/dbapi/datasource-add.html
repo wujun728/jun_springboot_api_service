@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">{{ isEdit ? '编辑数据源' : (isReadonly ? '数据源详情' : '新增数据源') }}</div>
+            <div style="max-width: 700px; padding-top: 20px;">
+                <el-form :model="form" label-width="120px" ref="form">
+                    <el-form-item label="数据源名称" required>
+                        <el-input v-model="form.name" placeholder="请输入名称" :disabled="isReadonly"></el-input>
+                    </el-form-item>
+                    <el-form-item label="数据库类型" required>
+                        <el-select v-model="form.type" placeholder="请选择" @change="onTypeChange" :disabled="isReadonly" style="width: 100%;">
+                            <el-option v-for="item in dbTypes" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="JDBC URL" required>
+                        <el-input v-model="form.url" placeholder="请输入 JDBC URL" :disabled="isReadonly"></el-input>
+                    </el-form-item>
+                    <el-form-item label="用户名">
+                        <el-input v-model="form.username" placeholder="请输入用户名" :disabled="isReadonly"></el-input>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-input v-model="form.password" placeholder="请输入密码" show-password :disabled="isReadonly"></el-input>
+                    </el-form-item>
+                    <el-form-item label="描述">
+                        <el-input type="textarea" v-model="form.note" :rows="3" placeholder="描述信息" :disabled="isReadonly"></el-input>
+                    </el-form-item>
+                    <el-form-item v-if="!isReadonly">
+                        <el-button type="warning" @click="testConnect">测试连接</el-button>
+                        <el-button type="primary" @click="submit">{{ isEdit ? '保存修改' : '确认添加' }}</el-button>
+                        <el-button @click="goBack">返回</el-button>
+                    </el-form-item>
+                    <el-form-item v-else>
+                        <el-button @click="goBack">返回</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                form: {
+                    name: '',
+                    type: 'mysql',
+                    url: 'jdbc:mysql://localhost:3306/db?useSSL=false&characterEncoding=UTF-8&serverTimezone=GMT%2B8',
+                    username: '',
+                    password: '',
+                    note: ''
+                },
+                dbTypes: dbapi.dbTypes,
+                isEdit: false,
+                isReadonly: false,
+                editId: null
+            },
+            mounted: function() {
+                var id = sa.p('id');
+                var readonly = sa.p('readonly');
+                if (id) {
+                    this.editId = id;
+                    this.isEdit = true;
+                    if (readonly === '1') {
+                        this.isReadonly = true;
+                        this.isEdit = false;
+                    }
+                    this.loadDetail(id);
+                }
+            },
+            methods: {
+                onTypeChange: function(val) {
+                    for (var i = 0; i < this.dbTypes.length; i++) {
+                        if (this.dbTypes[i].value === val) {
+                            this.form.url = this.dbTypes[i].url;
+                            break;
+                        }
+                    }
+                },
+                loadDetail: function(id) {
+                    var me = this;
+                    dbapi.ajax('/datasource/detail/' + id, function(res) {
+                        var data = res.data || res;
+                        me.form = {
+                            name: data.name || '',
+                            type: data.type || 'mysql',
+                            url: data.url || '',
+                            username: data.username || '',
+                            password: data.password || '',
+                            note: data.note || ''
+                        };
+                    });
+                },
+                testConnect: function() {
+                    dbapi.ajax('/datasource/connect', {
+                        url: this.form.url,
+                        username: this.form.username,
+                        password: this.form.password,
+                        type: this.form.type
+                    }, function(res) {
+                        ELEMENT.Message.success('连接成功');
+                    });
+                },
+                submit: function() {
+                    var me = this;
+                    if (!this.form.name) return this.$message.warning('请输入数据源名称');
+                    if (!this.form.url) return this.$message.warning('请输入 JDBC URL');
+
+                    var url = this.isEdit ? '/datasource/update' : '/datasource/add';
+                    var data = Object.assign({}, this.form);
+                    if (this.isEdit) data.id = this.editId;
+
+                    dbapi.ajax(url, data, function(res) {
+                        me.$message.success(me.isEdit ? '修改成功' : '添加成功');
+                        me.goBack();
+                    });
+                },
+                goBack: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'db-1-1', name: '数据源列表', url: 'sa-view/dbapi/datasource-list.html'});
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

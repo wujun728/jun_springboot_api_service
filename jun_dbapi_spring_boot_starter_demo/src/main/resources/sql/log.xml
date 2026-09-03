@@ -1,0 +1,8 @@
+<sqls>
+    <defaultDB>log_mysql</defaultDB>
+
+    <sql id="getAllLog">
+        select * from access_log
+    </sql>
+
+</sqls>

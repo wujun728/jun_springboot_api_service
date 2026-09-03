@@ -5,8 +5,22 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/dbapi/db-api-4.0/pom.xml" />
+        <option value="$PROJECT_DIR$/dbapi/dbapi-plugin-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/dbapi/dbapi-spring-boot-starter/pom.xml" />
+        <option value="$PROJECT_DIR$/dbapi/dbapi-spring-boot-starter-demo/pom.xml" />
+        <option value="$PROJECT_DIR$/jun_dbapi/pom.xml" />
+        <option value="$PROJECT_DIR$/jun_api_service/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/jun_api_service/jun_api_online_groovy/pom.xml" />
+        <option value="$PROJECT_DIR$/jun_api_service/pom.xml" />
+      </set>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
 </project>

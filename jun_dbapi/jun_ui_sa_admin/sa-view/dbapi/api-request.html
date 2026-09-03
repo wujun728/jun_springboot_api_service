@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+    <style>
+        .response-box { background: #f5f7fa; border: 1px solid #dcdfe6; border-radius: 4px; padding: 15px; margin-top: 10px; max-height: 400px; overflow: auto; }
+        .response-box pre { margin: 0; white-space: pre-wrap; word-break: break-all; font-size: 13px; font-family: Consolas, monospace; }
+    </style>
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">API 请求测试</div>
+            <div style="padding-top: 20px; max-width: 900px;">
+                <!-- API 信息 -->
+                <el-descriptions :column="2" border size="medium" style="margin-bottom: 20px;">
+                    <el-descriptions-item label="API 名称">{{ detail.name }}</el-descriptions-item>
+                    <el-descriptions-item label="完整 URL">
+                        <span style="color: #409EFF; word-break: break-all;">{{ fullUrl }}</span>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="访问权限">
+                        <el-tag :type="detail.previlege === 1 ? 'success' : 'warning'" size="small">
+                            {{ detail.previlege === 1 ? '公开' : '私有（需 Token）' }}
+                        </el-tag>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="状态">
+                        <el-tag :type="detail.status === 1 ? 'success' : 'info'" size="small">
+                            {{ detail.status === 1 ? '已上线' : '已下线' }}
+                        </el-tag>
+                    </el-descriptions-item>
+                </el-descriptions>
+
+                <!-- Token 输入（私有 API） -->
+                <el-form label-width="100px" v-if="detail.previlege === 0">
+                    <el-form-item label="Token">
+                        <el-input v-model="requestToken" placeholder="输入 Token 用于私有 API 访问"></el-input>
+                    </el-form-item>
+                </el-form>
+
+                <!-- 参数输入 -->
+                <div v-if="params.length > 0" style="margin-bottom: 15px;">
+                    <div style="font-weight: bold; margin-bottom: 10px;">请求参数</div>
+                    <div v-for="(param, index) in params" :key="index" style="margin-bottom: 8px;">
+                        <el-row :gutter="10">
+                            <el-col :span="4">
+                                <span style="line-height: 32px;">{{ param.name }}</span>
+                                <el-tag size="mini" style="margin-left: 5px;">{{ param.type }}</el-tag>
+                            </el-col>
+                            <el-col :span="16">
+                                <!-- 数组类型 -->
+                                <div v-if="param.type && param.type.startsWith('Array')">
+                                    <div v-for="(val, vi) in param.values" :key="vi" style="margin-bottom: 4px; display: flex; align-items: center;">
+                                        <el-input v-model="param.values[vi]" size="small" :placeholder="param.name + '[' + vi + ']'" style="flex: 1;"></el-input>
+                                        <el-button size="mini" type="danger" icon="el-icon-minus" circle style="margin-left: 5px;" @click="removeArrayItem(param, vi)"></el-button>
+                                    </div>
+                                    <el-button size="mini" icon="el-icon-plus" @click="addArrayItem(param)">添加</el-button>
+                                </div>
+                                <!-- 普通类型 -->
+                                <el-input v-else v-model="param.value" size="small" :placeholder="'输入 ' + param.name"></el-input>
+                            </el-col>
+                            <el-col :span="4">
+                                <span style="color: #909399; font-size: 12px; line-height: 32px;">{{ param.note }}</span>
+                            </el-col>
+                        </el-row>
+                    </div>
+                </div>
+
+                <el-button type="primary" icon="el-icon-s-promotion" @click="sendRequest" :loading="loading">发送请求</el-button>
+                <el-button @click="goBack">返回</el-button>
+
+                <!-- 响应结果 -->
+                <div v-if="responseData !== null" style="margin-top: 20px;">
+                    <div style="font-weight: bold; margin-bottom: 10px;">
+                        响应结果
+                        <el-radio-group v-model="viewMode" size="mini" style="margin-left: 15px;">
+                            <el-radio-button label="json">JSON</el-radio-button>
+                            <el-radio-button label="table" v-if="isArrayResult">表格</el-radio-button>
+                        </el-radio-group>
+                    </div>
+                    <!-- JSON 视图 -->
+                    <div class="response-box" v-if="viewMode === 'json'">
+                        <pre>{{ responseText }}</pre>
+                    </div>
+                    <!-- 表格视图 -->
+                    <div v-if="viewMode === 'table' && isArrayResult">
+                        <el-table :data="responseArray" border stripe size="mini" max-height="400">
+                            <el-table-column v-for="col in responseColumns" :key="col" :prop="col" :label="col" min-width="120" show-overflow-tooltip></el-table-column>
+                        </el-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                detail: {},
+                params: [],
+                requestToken: '',
+                ipPort: '',
+                loading: false,
+                responseData: null,
+                responseText: '',
+                responseArray: [],
+                responseColumns: [],
+                isArrayResult: false,
+                viewMode: 'json'
+            },
+            computed: {
+                fullUrl: function() {
+                    var base = this.ipPort ? ('http://' + this.ipPort) : (location.protocol + '//' + location.host);
+                    return base + '/api/' + (this.detail.path || '');
+                }
+            },
+            mounted: function() {
+                var id = sa.p('id');
+                if (id) {
+                    this.loadDetail(id);
+                    this.loadIPPort();
+                }
+            },
+            methods: {
+                loadDetail: function(id) {
+                    var me = this;
+                    dbapi.ajax('/apiConfig/detail/' + id, function(res) {
+                        me.detail = res.data || res;
+                        if (me.detail.params) {
+                            try {
+                                var parsed = JSON.parse(me.detail.params);
+                                me.params = parsed.map(function(p) {
+                                    var isArray = p.type && p.type.startsWith('Array');
+                                    return {
+                                        name: p.name,
+                                        type: p.type || 'string',
+                                        note: p.note || '',
+                                        value: '',
+                                        values: isArray ? [''] : []
+                                    };
+                                });
+                            } catch(e) {
+                                me.params = [];
+                            }
+                        }
+                    });
+                },
+                loadIPPort: function() {
+                    var me = this;
+                    dbapi.ajax('/apiConfig/getIPPort', function(res) {
+                        if (typeof res === 'string') {
+                            me.ipPort = res;
+                        } else if (res && res.data) {
+                            me.ipPort = res.data;
+                        }
+                    });
+                },
+                addArrayItem: function(param) {
+                    param.values.push('');
+                },
+                removeArrayItem: function(param, index) {
+                    param.values.splice(index, 1);
+                },
+                buildRequestData: function() {
+                    var data = {};
+                    for (var i = 0; i < this.params.length; i++) {
+                        var p = this.params[i];
+                        if (p.type && p.type.startsWith('Array')) {
+                            data[p.name] = p.values.filter(function(v) { return v !== ''; });
+                        } else {
+                            if (p.value !== '') data[p.name] = p.value;
+                        }
+                    }
+                    return data;
+                },
+                sendRequest: function() {
+                    var me = this;
+                    this.loading = true;
+                    this.responseData = null;
+
+                    var requestData = this.buildRequestData();
+                    var apiUrl = '/api/' + this.detail.path;
+
+                    $.ajax({
+                        url: dbapi.baseUrl + apiUrl,
+                        type: 'POST',
+                        data: requestData,
+                        dataType: 'json',
+                        beforeSend: function(xhr) {
+                            if (me.requestToken) {
+                                xhr.setRequestHeader('Authorization', me.requestToken);
+                            }
+                        },
+                        success: function(res) {
+                            me.loading = false;
+                            me.responseData = res;
+                            me.responseText = JSON.stringify(res, null, 2);
+
+                            var dataArr = (res && res.data) ? res.data : res;
+                            if (Array.isArray(dataArr) && dataArr.length > 0 && typeof dataArr[0] === 'object') {
+                                me.isArrayResult = true;
+                                me.responseArray = dataArr;
+                                me.responseColumns = Object.keys(dataArr[0]);
+                            } else {
+                                me.isArrayResult = false;
+                                me.responseArray = [];
+                                me.responseColumns = [];
+                            }
+                        },
+                        error: function(xhr) {
+                            me.loading = false;
+                            me.responseData = { error: true, status: xhr.status, message: xhr.statusText };
+                            me.responseText = JSON.stringify(me.responseData, null, 2);
+                            me.isArrayResult = false;
+                        }
+                    });
+                },
+                goBack: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'db-2-1', name: 'API列表', url: 'sa-view/dbapi/api-list.html'});
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">API 列表</div>
+            <!-- 搜索栏 -->
+            <el-form :inline="true" style="padding-top: 10px;">
+                <el-form-item>
+                    <el-input v-model="search.keyword" placeholder="搜索关键词" size="small" clearable style="width: 200px;"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-select v-model="search.field" size="small" style="width: 120px;">
+                        <el-option label="API名称" value="name"></el-option>
+                        <el-option label="API路径" value="path"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-select v-model="search.groupId" placeholder="全部分组" size="small" clearable style="width: 150px;">
+                        <el-option v-for="g in groupList" :key="g.id" :label="g.name" :value="g.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="small" icon="el-icon-search" @click="doSearch">搜索</el-button>
+                    <el-button size="small" @click="resetSearch">重置</el-button>
+                </el-form-item>
+            </el-form>
+            <!-- 操作栏 -->
+            <div style="padding-bottom: 10px;">
+                <el-button type="primary" size="small" icon="el-icon-plus" @click="goAdd">新增 API</el-button>
+                <el-button type="success" size="small" icon="el-icon-download" @click="exportConfig">导出 API</el-button>
+                <el-button type="success" size="small" icon="el-icon-download" @click="exportGroupConfig">导出分组</el-button>
+                <el-button type="info" size="small" icon="el-icon-document" @click="exportDocs">导出文档</el-button>
+                <el-button type="warning" size="small" icon="el-icon-upload2" @click="showImport('api')">导入 API</el-button>
+                <el-button type="warning" size="small" icon="el-icon-upload2" @click="showImport('group')">导入分组</el-button>
+            </div>
+            <!-- 表格 -->
+            <el-table :data="dataList" border stripe size="small">
+                <el-table-column type="index" label="#" width="50"></el-table-column>
+                <el-table-column label="名称" prop="name" min-width="150" show-overflow-tooltip></el-table-column>
+                <el-table-column label="路径" min-width="200" show-overflow-tooltip>
+                    <template slot-scope="s">
+                        <span style="color: #409EFF;">/api/{{ s.row.path }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="分组" width="120">
+                    <template slot-scope="s">{{ getGroupName(s.row.groupId) }}</template>
+                </el-table-column>
+                <el-table-column label="状态" width="80" align="center">
+                    <template slot-scope="s">
+                        <el-tag :type="s.row.status === 1 ? 'success' : 'info'" size="mini">
+                            {{ s.row.status === 1 ? '已上线' : '已下线' }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="权限" width="80" align="center">
+                    <template slot-scope="s">
+                        <el-tag :type="s.row.previlege === 1 ? 'success' : 'warning'" size="mini">
+                            {{ s.row.previlege === 1 ? '公开' : '私有' }}
+                        </el-tag>
+                    </template>
+                </el-table-column>
+                <el-table-column label="更新时间" width="160">
+                    <template slot-scope="s">{{ formatDate(s.row.updateTime) }}</template>
+                </el-table-column>
+                <el-table-column label="操作" width="380" fixed="right">
+                    <template slot-scope="s">
+                        <el-button size="mini" type="primary" @click="goEdit(s.row)">编辑</el-button>
+                        <el-button size="mini" type="info" @click="goDetail(s.row)">详情</el-button>
+                        <el-button size="mini" type="success" @click="goRequest(s.row)">测试</el-button>
+                        <el-button size="mini" :type="s.row.status === 1 ? 'warning' : 'success'"
+                            @click="toggleStatus(s.row)">{{ s.row.status === 1 ? '下线' : '上线' }}</el-button>
+                        <el-button size="mini" type="danger" @click="deleteItem(s.row)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </div>
+
+        <!-- 导入对话框 -->
+        <el-dialog :title="importTitle" :visible.sync="importVisible" width="450px">
+            <el-upload ref="upload" action="" :auto-upload="false" :on-change="onFileChange" :limit="1" accept=".json">
+                <el-button size="small" type="primary">选择文件</el-button>
+                <div slot="tip" class="el-upload__tip">选择 JSON 格式配置文件</div>
+            </el-upload>
+            <div slot="footer">
+                <el-button @click="importVisible = false">取消</el-button>
+                <el-button type="primary" @click="doImport">确定导入</el-button>
+            </div>
+        </el-dialog>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                dataList: [],
+                groupList: [],
+                search: { keyword: '', field: 'name', groupId: '' },
+                importVisible: false,
+                importType: 'api',
+                importTitle: '导入',
+                importFile: null
+            },
+            mounted: function() {
+                this.loadGroups();
+                this.loadData();
+            },
+            methods: {
+                formatDate: function(ts) { return dbapi.formatDate(ts); },
+                loadGroups: function() {
+                    var me = this;
+                    dbapi.ajax('/group/getAll/', function(res) {
+                        me.groupList = res.data || res || [];
+                    });
+                },
+                getGroupName: function(id) {
+                    for (var i = 0; i < this.groupList.length; i++) {
+                        if (this.groupList[i].id === id || this.groupList[i].id == id) return this.groupList[i].name;
+                    }
+                    return '';
+                },
+                loadData: function() {
+                    var me = this;
+                    dbapi.ajax('/apiConfig/getAll', function(res) {
+                        me.dataList = res.data || res || [];
+                    });
+                },
+                doSearch: function() {
+                    var me = this;
+                    if (!this.search.keyword && !this.search.groupId) {
+                        return this.loadData();
+                    }
+                    dbapi.ajax('/apiConfig/search', {
+                        keyword: this.search.keyword,
+                        field: this.search.field,
+                        groupId: this.search.groupId || ''
+                    }, function(res) {
+                        me.dataList = res.data || res || [];
+                    });
+                },
+                resetSearch: function() {
+                    this.search = { keyword: '', field: 'name', groupId: '' };
+                    this.loadData();
+                },
+                goAdd: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'api-add', name: '新增 API', url: 'sa-view/dbapi/api-add.html'});
+                    }
+                },
+                goEdit: function(row) {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'api-edit-' + row.id, name: '编辑 API', url: 'sa-view/dbapi/api-add.html?id=' + row.id});
+                    }
+                },
+                goDetail: function(row) {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'api-detail-' + row.id, name: 'API 详情', url: 'sa-view/dbapi/api-detail.html?id=' + row.id});
+                    }
+                },
+                goRequest: function(row) {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'api-req-' + row.id, name: '测试 API', url: 'sa-view/dbapi/api-request.html?id=' + row.id});
+                    }
+                },
+                toggleStatus: function(row) {
+                    var me = this;
+                    var url = row.status === 1 ? '/apiConfig/offline/' : '/apiConfig/online/';
+                    dbapi.ajax(url + row.id, function(res) {
+                        me.$message.success(row.status === 1 ? '已下线' : '已上线');
+                        me.loadData();
+                    });
+                },
+                deleteItem: function(row) {
+                    var me = this;
+                    this.$confirm('确定删除 API【' + row.name + '】？', '提示', { type: 'warning' }).then(function() {
+                        dbapi.ajax('/apiConfig/delete/' + row.id, function(res) {
+                            me.$message.success('删除成功');
+                            me.loadData();
+                        });
+                    }).catch(function() {});
+                },
+                exportConfig: function() {
+                    var ids = this.dataList.map(function(item) { return item.id; }).join(',');
+                    if (!ids) return this.$message.warning('暂无数据');
+                    dbapi.ajax('/apiConfig/downloadConfig?ids=' + ids, {}, function(blob) {
+                        dbapi.downloadBlob(blob, 'api-config-export.json');
+                    }, { responseType: 'blob' });
+                },
+                exportGroupConfig: function() {
+                    var ids = this.groupList.map(function(item) { return item.id; }).join(',');
+                    if (!ids) return this.$message.warning('暂无分组');
+                    dbapi.ajax('/apiConfig/downloadGroupConfig?ids=' + ids, {}, function(blob) {
+                        dbapi.downloadBlob(blob, 'api-group-export.json');
+                    }, { responseType: 'blob' });
+                },
+                exportDocs: function() {
+                    var ids = this.dataList.map(function(item) { return item.id; }).join(',');
+                    if (!ids) return this.$message.warning('暂无数据');
+                    dbapi.ajax('/apiConfig/apiDocs?ids=' + ids, {}, function(blob) {
+                        dbapi.downloadBlob(blob, 'api-docs.md');
+                    }, { responseType: 'blob' });
+                },
+                showImport: function(type) {
+                    this.importType = type;
+                    this.importTitle = type === 'api' ? '导入 API 配置' : '导入分组配置';
+                    this.importFile = null;
+                    this.importVisible = true;
+                },
+                onFileChange: function(file) {
+                    this.importFile = file.raw;
+                },
+                doImport: function() {
+                    if (!this.importFile) return this.$message.warning('请选择文件');
+                    var me = this;
+                    var formData = new FormData();
+                    formData.append('file', this.importFile);
+                    var url = this.importType === 'api' ? '/apiConfig/import' : '/apiConfig/importGroup';
+                    dbapi.upload(url, formData, function(res) {
+                        me.$message.success('导入成功');
+                        me.importVisible = false;
+                        me.loadData();
+                        me.loadGroups();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="../../static/kj/codemirror/codemirror.min.css">
+    <link rel="stylesheet" href="../../static/kj/codemirror/addon/hint/show-hint.css">
+    <link rel="stylesheet" href="../../static/kj/codemirror/theme/idea.css">
+    <style>
+        .CodeMirror { height: 250px; border: 1px solid #dcdfe6; font-size: 13px; }
+        .param-table { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">{{ isEdit ? '编辑 API' : '新增 API' }}</div>
+            <div style="padding-top: 20px;">
+                <el-form :model="form" label-width="120px" ref="form">
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-form-item label="API 名称" required>
+                                <el-input v-model="form.name" placeholder="请输入 API 名称"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="API 路径" required>
+                                <el-input v-model="form.path" placeholder="例如：user/list">
+                                    <template slot="prepend">/api/</template>
+                                </el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-form-item label="所属分组">
+                                <el-select v-model="form.groupId" placeholder="请选择分组" clearable style="width: 100%;">
+                                    <el-option v-for="g in groupList" :key="g.id" :label="g.name" :value="g.id"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="数据源" required>
+                                <el-select v-model="form.datasourceId" placeholder="请选择数据源" style="width: 100%;">
+                                    <el-option v-for="ds in datasourceList" :key="ds.id" :label="ds.name" :value="ds.id"></el-option>
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-form-item label="访问权限">
+                                <el-radio-group v-model="form.previlege">
+                                    <el-radio :label="0">私有（需 Token）</el-radio>
+                                    <el-radio :label="1">公开</el-radio>
+                                </el-radio-group>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="描述">
+                                <el-input v-model="form.note" placeholder="API 描述"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+
+                    <!-- SQL 编辑器 -->
+                    <el-form-item label="SQL 语句" required>
+                        <div class="sql-toolbar" style="margin-bottom: 5px;">
+                            <el-button size="mini" @click="insertTag('foreach')">foreach</el-button>
+                            <el-button size="mini" @click="insertTag('if')">if</el-button>
+                            <el-button size="mini" @click="insertTag('where')">where</el-button>
+                            <el-button size="mini" @click="insertTag('trim')">trim</el-button>
+                        </div>
+                        <div ref="sqlEditor"></div>
+                    </el-form-item>
+
+                    <!-- 请求参数 -->
+                    <el-form-item label="请求参数">
+                        <el-button size="mini" type="primary" @click="parseParams" style="margin-bottom: 5px;">自动解析参数</el-button>
+                        <el-button size="mini" @click="addParam" style="margin-bottom: 5px;">添加参数</el-button>
+                        <el-table :data="params" border size="mini" class="param-table">
+                            <el-table-column label="参数名" min-width="150">
+                                <template slot-scope="s">
+                                    <el-input v-model="s.row.name" size="mini" placeholder="参数名"></el-input>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="类型" width="160">
+                                <template slot-scope="s">
+                                    <el-select v-model="s.row.type" size="mini" style="width: 100%;">
+                                        <el-option v-for="t in paramTypes" :key="t" :label="t" :value="t"></el-option>
+                                    </el-select>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="描述" min-width="150">
+                                <template slot-scope="s">
+                                    <el-input v-model="s.row.note" size="mini" placeholder="描述"></el-input>
+                                </template>
+                            </el-table-column>
+                            <el-table-column label="操作" width="80" align="center">
+                                <template slot-scope="s">
+                                    <el-button size="mini" type="danger" icon="el-icon-delete" circle @click="removeParam(s.$index)"></el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                    </el-form-item>
+
+                    <!-- 插件配置 -->
+                    <el-row :gutter="20">
+                        <el-col :span="12">
+                            <el-form-item label="缓存插件">
+                                <el-input v-model="form.cachePlugin" placeholder="缓存插件类名（可选）"></el-input>
+                            </el-form-item>
+                        </el-col>
+                        <el-col :span="12">
+                            <el-form-item label="转换插件">
+                                <el-input v-model="form.transformPlugin" placeholder="转换插件类名（可选）"></el-input>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="submit">{{ isEdit ? '保存修改' : '确认添加' }}</el-button>
+                        <el-button @click="goBack">返回列表</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <!-- CodeMirror -->
+    <script src="../../static/kj/codemirror/codemirror.min.js"></script>
+    <script src="../../static/kj/codemirror/mode/sql.min.js"></script>
+    <script src="../../static/kj/codemirror/addon/hint/show-hint.js"></script>
+    <script src="../../static/kj/codemirror/addon/hint/sql-hint.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                form: {
+                    name: '',
+                    path: '',
+                    groupId: '',
+                    datasourceId: '',
+                    note: '',
+                    previlege: 0,
+                    cachePlugin: '',
+                    transformPlugin: ''
+                },
+                params: [],
+                paramTypes: dbapi.paramTypes,
+                groupList: [],
+                datasourceList: [],
+                isEdit: false,
+                editId: null,
+                editor: null
+            },
+            mounted: function() {
+                this.initEditor();
+                this.loadGroups();
+                this.loadDatasources();
+                var id = sa.p('id');
+                if (id) {
+                    this.editId = id;
+                    this.isEdit = true;
+                    this.loadDetail(id);
+                }
+            },
+            methods: {
+                initEditor: function() {
+                    var container = this.$refs.sqlEditor;
+                    if (window.CodeMirror) {
+                        this.editor = CodeMirror(container, {
+                            value: '',
+                            mode: 'text/x-sql',
+                            theme: 'idea',
+                            lineNumbers: true,
+                            lineWrapping: true,
+                            matchBrackets: true,
+                            extraKeys: { 'Ctrl-Space': 'autocomplete' },
+                            hintOptions: { completeSingle: false }
+                        });
+                    } else {
+                        var textarea = document.createElement('textarea');
+                        textarea.style.cssText = 'width:100%;height:250px;font-family:monospace;font-size:13px;padding:8px;border:1px solid #dcdfe6;';
+                        container.appendChild(textarea);
+                        this.editor = {
+                            getValue: function() { return textarea.value; },
+                            setValue: function(v) { textarea.value = v; },
+                            replaceSelection: function(text) {
+                                var start = textarea.selectionStart;
+                                var end = textarea.selectionEnd;
+                                textarea.value = textarea.value.substring(0, start) + text + textarea.value.substring(end);
+                            }
+                        };
+                    }
+                },
+                insertTag: function(type) {
+                    var templates = {
+                        'foreach': '<foreach open="(" close=")" collection="" separator="," item="item">#{item}</foreach>',
+                        'if': '<if test="">\n\n</if>',
+                        'where': '<where>\n\n</where>',
+                        'trim': '<trim prefix="" suffix="" suffixesToOverride="" prefixesToOverride="">\n\n</trim>'
+                    };
+                    if (this.editor) this.editor.replaceSelection(templates[type] || '');
+                },
+                loadGroups: function() {
+                    var me = this;
+                    dbapi.ajax('/group/getAll/', function(res) {
+                        me.groupList = res.data || res || [];
+                    });
+                },
+                loadDatasources: function() {
+                    var me = this;
+                    dbapi.ajax('/datasource/getAll', function(res) {
+                        me.datasourceList = res.data || res || [];
+                    });
+                },
+                loadDetail: function(id) {
+                    var me = this;
+                    dbapi.ajax('/apiConfig/detail/' + id, function(res) {
+                        var data = res.data || res;
+                        me.form = {
+                            name: data.name || '',
+                            path: data.path || '',
+                            groupId: data.groupId || '',
+                            datasourceId: data.datasourceId || '',
+                            note: data.note || '',
+                            previlege: data.previlege || 0,
+                            cachePlugin: data.cachePlugin || '',
+                            transformPlugin: data.transformPlugin || ''
+                        };
+                        if (me.editor && data.sql) {
+                            me.editor.setValue(data.sql);
+                        }
+                        if (data.params) {
+                            try {
+                                me.params = JSON.parse(data.params);
+                            } catch(e) {
+                                me.params = [];
+                            }
+                        }
+                    });
+                },
+                addParam: function() {
+                    this.params.push({ name: '', type: 'string', note: '' });
+                },
+                removeParam: function(index) {
+                    this.params.splice(index, 1);
+                },
+                parseParams: function() {
+                    var me = this;
+                    var sql = this.editor ? this.editor.getValue() : '';
+                    if (!sql.trim()) return this.$message.warning('请输入 SQL');
+                    dbapi.ajax('/apiConfig/parseParam', { sql: sql }, function(res) {
+                        var data = res.data || res || [];
+                        if (Array.isArray(data)) {
+                            me.params = data.map(function(item) {
+                                return { name: item.name || item, type: item.type || 'string', note: item.note || '' };
+                            });
+                            me.$message.success('解析到 ' + me.params.length + ' 个参数');
+                        }
+                    });
+                },
+                submit: function() {
+                    var me = this;
+                    if (!this.form.name) return this.$message.warning('请输入 API 名称');
+                    if (!this.form.path) return this.$message.warning('请输入 API 路径');
+                    if (!this.form.datasourceId) return this.$message.warning('请选择数据源');
+                    var sql = this.editor ? this.editor.getValue() : '';
+                    if (!sql.trim()) return this.$message.warning('请输入 SQL');
+
+                    var url = this.isEdit ? '/apiConfig/update' : '/apiConfig/add';
+                    var data = {
+                        name: this.form.name,
+                        path: this.form.path,
+                        groupId: this.form.groupId,
+                        datasourceId: this.form.datasourceId,
+                        note: this.form.note,
+                        previlege: this.form.previlege,
+                        cachePlugin: this.form.cachePlugin,
+                        transformPlugin: this.form.transformPlugin,
+                        sql: sql,
+                        params: JSON.stringify(this.params)
+                    };
+                    if (this.isEdit) data.id = this.editId;
+
+                    dbapi.ajax(url, data, function(res) {
+                        me.$message.success(me.isEdit ? '修改成功' : '添加成功');
+                        me.goBack();
+                    });
+                },
+                goBack: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'db-2-1', name: 'API列表', url: 'sa-view/dbapi/api-list.html'});
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

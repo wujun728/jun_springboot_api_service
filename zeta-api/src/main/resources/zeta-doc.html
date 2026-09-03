@@ -1,0 +1,223 @@
+<html>
+<head>
+    <title>Zeta doc</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        * {
+            font-family: "Courier New", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        }
+
+        body {
+            background: #454d55;
+        }
+
+        .response-block {
+            background: #000;
+            color: #fff;
+            padding: 10px;
+            border-radius: .25rem;
+            max-height: 500px;
+            /*white-space: pre-wrap;*/
+            /*word-wrap: break-word;*/
+        }
+
+        table td {
+            vertical-align: middle !important;;
+        }
+
+        pre {
+            margin-bottom: 0;
+            color: inherit;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div id="main" v-cloak>
+    <h1 v-if="status" style="color: #fff;text-align: center;margin-top: 20px;font-size: 6em">
+        {{status}}
+    </h1>
+    <table class="table table-hover table-bordered table-dark" v-if="root">
+        <tr>
+            <th colspan="10">
+                {{root.desc}}
+                <div style="float: right">
+                    <a href="https://gitee.com/erupt/zeta-api" target="_blank"><img
+                            src="https://gitee.com/erupt/zeta-api/badge/star.svg?theme=dark" alt=""></a>
+                    <a href="https://github.com/erupts/zeta-api" target="_blank"><img
+                            src="https://img.shields.io/github/stars/erupts/zeta-api?style=social" alt=""></a>
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <th colspan="10">
+                <span class="badge badge-success">Domain</span>&nbsp;{{root.domain}}
+            </th>
+        </tr>
+        <tr>
+            <th colspan="10">
+                <span class="badge badge-primary">POST</span>&nbsp;( Content-Type: <span
+                    class="text-warning">application/json</span> )
+            </th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th>接口名称 (title)</th>
+            <th>请求地址</th>
+            <th>参数 &lt;param&gt;</th>
+            <th>描述 (desc)</th>
+            <th>缓存时间【毫秒】(cache)</th>
+            <th class="text-center" style="width: 100px;">操作</th>
+            <th class="text-center" style="width: 50px;">标记</th>
+        </tr>
+        <tr v-for="(ele,index) in root.elements" :style="{background: ele.tag}">
+            <td>{{index+1}}</td>
+            <td>{{ele.title||ele.name}}</td>
+            <td>
+                <a :href="root.domain + ele.path" target="_blank">{{ele.path}}</a>
+            </td>
+            <td>
+                <pre>{{ele.body}}</pre>
+            </td>
+            <td>{{ele.desc}}</td>
+            <td class="text-center">{{ele.cache}}</td>
+            <td class="text-center">
+                <button class="btn btn-outline-warning btn-sm" @click="reqTest(ele)">
+                    Test
+                </button>
+            </td>
+            <td class="text-center">
+                <input type="color" @change="elementTag(index)" v-model.lazy="ele.tag">
+            </td>
+        </tr>
+    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="reqModal" tabindex="-1" role="dialog" aria-labelledby="reqModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" v-if="currApi">
+                    <div class="form-group row" v-for="(p,index) in currApi.params">
+                        <label class="col-sm-3 col-form-label">{{p.title||p.key}}:</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" v-model="currApi.params[index].value">
+                        </div>
+                    </div>
+                    <pre v-if="result" :style="result.success?'color: #fff':'color: #f00'"
+                         class="response-block">{{result.content}}</pre>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-sm" @click="send()" :disabled="querying">
+                        SEND
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="jquery.min.js"></script>
+<script src="bootstrap.min.js"></script>
+<script src="vue.min.js"></script>
+<script>
+    var tagKey = "zeta-tag:";
+    var vue = new Vue({
+        el: '#main',
+        data: {
+            root: null,
+            fileName: null,
+            value: true,
+            currApi: null,
+            result: null,
+            querying: false,
+            status: null
+        },
+        mounted: function () {
+            var that = this;
+            var pn = location.pathname.split("/");
+            this.fileName = pn[pn.length - 1].split(".html")[0];
+            $.get("build/doc/" + this.fileName, function (res) {
+                rootProcess.call(that, res);
+            }).fail(function (e) {
+                if (e.status !== 200) {
+                    that.status = e.status;
+                }
+            });
+
+            function rootProcess(res) {
+
+                for (var i in res.elements) {
+                    var ele = res.elements[i];
+                    ele.tag = localStorage.getItem(tagKey + ele.name)
+                    if (ele.params) {
+                        var pm = {};
+                        ele.params = JSON.parse(ele.params);
+                        for (var p in ele.params) {
+                            var param = ele.params[p];
+                            pm[param.key] = param.value;
+                        }
+                        ele.body = JSON.stringify(pm, null, 2);
+                    }
+                }
+                this.root = res;
+            }
+        },
+        methods: {
+            elementTag: function (index) {
+                var ele = this.root.elements[index];
+                localStorage.setItem(tagKey + ele.name, this.root.elements[index].tag)
+            },
+            reqTest: function (data) {
+                this.result = null;
+                this.currApi = data;
+                $('#reqModal').modal('show');
+                if (!data.body) {
+                    this.send()
+                }
+            },
+            send: function () {
+                var that = this;
+                var reqParams = {};
+                for (var key in this.currApi.params) {
+                    var param = this.currApi.params[key];
+                    reqParams[param.key] = param.value;
+                }
+                this.querying = true;
+                $.ajax({
+                    type: 'POST',
+                    url: this.root.domain + this.currApi.path,
+                    data: JSON.stringify(reqParams),
+                    contentType: "application/json",
+                    success: function (res) {
+                        that.result = null;
+                        that.result = {
+                            success: true,
+                            content: JSON.stringify(res, null, 2)
+                        };
+                    },
+                    error: function (res) {
+                        that.result = null;
+                        that.result = {
+                            success: false,
+                            content: JSON.stringify(res, null, 2)
+                        };
+                    },
+                    complete: function (res) {
+                        that.querying = false;
+                    }
+                });
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+    <!-- CodeMirror -->
+    <link rel="stylesheet" href="../../static/kj/codemirror/codemirror.min.css">
+    <link rel="stylesheet" href="../../static/kj/codemirror/theme/idea.css">
+    <style>
+        .CodeMirror { height: 200px; border: 1px solid #dcdfe6; font-size: 13px; }
+        .detail-label { color: #606266; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">API 详情</div>
+            <div style="padding-top: 20px; max-width: 900px;">
+                <el-descriptions :column="2" border size="medium">
+                    <el-descriptions-item label="API 名称">{{ detail.name }}</el-descriptions-item>
+                    <el-descriptions-item label="API 路径">/api/{{ detail.path }}</el-descriptions-item>
+                    <el-descriptions-item label="所属分组">{{ groupName }}</el-descriptions-item>
+                    <el-descriptions-item label="数据源">{{ datasourceName }}</el-descriptions-item>
+                    <el-descriptions-item label="状态">
+                        <el-tag :type="detail.status === 1 ? 'success' : 'info'" size="small">
+                            {{ detail.status === 1 ? '已上线' : '已下线' }}
+                        </el-tag>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="访问权限">
+                        <el-tag :type="detail.previlege === 1 ? 'success' : 'warning'" size="small">
+                            {{ detail.previlege === 1 ? '公开' : '私有' }}
+                        </el-tag>
+                    </el-descriptions-item>
+                    <el-descriptions-item label="缓存插件">{{ detail.cachePlugin || '无' }}</el-descriptions-item>
+                    <el-descriptions-item label="转换插件">{{ detail.transformPlugin || '无' }}</el-descriptions-item>
+                    <el-descriptions-item label="描述" :span="2">{{ detail.note || '无' }}</el-descriptions-item>
+                    <el-descriptions-item label="更新时间" :span="2">{{ formatDate(detail.updateTime) }}</el-descriptions-item>
+                </el-descriptions>
+
+                <!-- SQL -->
+                <div style="margin-top: 20px;">
+                    <div class="detail-label" style="margin-bottom: 8px;">SQL 语句</div>
+                    <div ref="sqlEditor"></div>
+                </div>
+
+                <!-- 参数 -->
+                <div style="margin-top: 20px;" v-if="params.length > 0">
+                    <div class="detail-label" style="margin-bottom: 8px;">请求参数</div>
+                    <el-table :data="params" border size="mini">
+                        <el-table-column prop="name" label="参数名" min-width="150"></el-table-column>
+                        <el-table-column prop="type" label="类型" width="150"></el-table-column>
+                        <el-table-column prop="note" label="描述" min-width="200"></el-table-column>
+                    </el-table>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <el-button @click="goBack">返回列表</el-button>
+                    <el-button type="primary" @click="goEdit">编辑</el-button>
+                    <el-button type="success" @click="goRequest">测试请求</el-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <script src="../../static/kj/codemirror/codemirror.min.js"></script>
+    <script src="../../static/kj/codemirror/mode/sql.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                detail: {},
+                params: [],
+                groupList: [],
+                datasourceList: [],
+                groupName: '',
+                datasourceName: '',
+                editor: null,
+                apiId: null
+            },
+            mounted: function() {
+                this.apiId = sa.p('id');
+                if (this.apiId) {
+                    this.loadGroups();
+                    this.loadDatasources();
+                    this.loadDetail(this.apiId);
+                }
+            },
+            methods: {
+                formatDate: function(ts) { return dbapi.formatDate(ts); },
+                initEditor: function(sql) {
+                    var container = this.$refs.sqlEditor;
+                    if (window.CodeMirror) {
+                        this.editor = CodeMirror(container, {
+                            value: sql || '',
+                            mode: 'text/x-sql',
+                            theme: 'idea',
+                            lineNumbers: true,
+                            lineWrapping: true,
+                            readOnly: true
+                        });
+                    } else {
+                        var pre = document.createElement('pre');
+                        pre.style.cssText = 'background:#f5f7fa;padding:10px;border:1px solid #dcdfe6;font-size:13px;overflow:auto;max-height:200px;';
+                        pre.textContent = sql || '';
+                        container.appendChild(pre);
+                    }
+                },
+                loadGroups: function() {
+                    var me = this;
+                    dbapi.ajax('/group/getAll/', function(res) {
+                        me.groupList = res.data || res || [];
+                        me.resolveNames();
+                    });
+                },
+                loadDatasources: function() {
+                    var me = this;
+                    dbapi.ajax('/datasource/getAll', function(res) {
+                        me.datasourceList = res.data || res || [];
+                        me.resolveNames();
+                    });
+                },
+                resolveNames: function() {
+                    if (this.detail.groupId) {
+                        for (var i = 0; i < this.groupList.length; i++) {
+                            if (this.groupList[i].id == this.detail.groupId) {
+                                this.groupName = this.groupList[i].name;
+                                break;
+                            }
+                        }
+                    }
+                    if (this.detail.datasourceId) {
+                        for (var j = 0; j < this.datasourceList.length; j++) {
+                            if (this.datasourceList[j].id == this.detail.datasourceId) {
+                                this.datasourceName = this.datasourceList[j].name;
+                                break;
+                            }
+                        }
+                    }
+                },
+                loadDetail: function(id) {
+                    var me = this;
+                    dbapi.ajax('/apiConfig/detail/' + id, function(res) {
+                        me.detail = res.data || res;
+                        if (me.detail.params) {
+                            try { me.params = JSON.parse(me.detail.params); } catch(e) { me.params = []; }
+                        }
+                        me.resolveNames();
+                        me.$nextTick(function() {
+                            me.initEditor(me.detail.sql);
+                        });
+                    });
+                },
+                goBack: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'db-2-1', name: 'API列表', url: 'sa-view/dbapi/api-list.html'});
+                    }
+                },
+                goEdit: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'api-edit-' + this.apiId, name: '编辑 API', url: 'sa-view/dbapi/api-add.html?id=' + this.apiId});
+                    }
+                },
+                goRequest: function() {
+                    if (window.parent && parent.sa_admin) {
+                        parent.sa_admin.showTab({id: 'api-req-' + this.apiId, name: '测试 API', url: 'sa-view/dbapi/api-request.html?id=' + this.apiId});
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

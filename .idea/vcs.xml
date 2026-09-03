@@ -2,20 +2,16 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc/qiniu-springboot-demo" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/beetl-sql-online" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/code-maker" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/crabc" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/layuiGenerator" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/springboot-api" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/springboot-api-v2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/springboot-dubbo-api" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/springboot-jwt-sso" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/springboot-manager" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/springboot-plus" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/webdeploy" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/weblog" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/doc2/websql2" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/jqp-admin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/API/fastapi" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/API/zeta-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/apidev" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/crabc" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/lite-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/lite-boot-vben" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/rocket-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/rocket-api-demo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/rocket-api-platform" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/jun_api_service低代码服务/surpass" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/doc1/rocket-api-platform" vcs="Git" />
   </component>
 </project>

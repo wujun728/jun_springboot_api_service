@@ -1,0 +1,285 @@
+# my-project - 进度跟踪
+
+## 项目概述
+分析 jun_dbapi 项目代码，识别和修复潜在的 bug，涵盖安全漏洞、资源泄漏、线程安全、输入校验等问题。
+
+## 架构决策
+- 保持现有项目结构不变，仅修复已识别的 bug
+- 优先修复 CRITICAL 和 HIGH 级别的安全和资源泄漏问题
+- 修复后补充单元测试确保无回归
+
+## 会话记录
+
+### Session #1 - 规划 (2026-04-02)
+- 分析了 jun_dbapi 项目 74 个 Java 文件
+- 识别了 33 个 bug（5 Critical, 8 High, 11 Medium, 9 Low）
+- 创建了 task_list.json（共 33 个修复任务）
+- 创建了 init.sh / init.bat
+- 状态: 规划完成
+
+### Session #1 - T001 (2026-04-02)
+- 实现了: 修复 JdbcUtil SQL 注入漏洞
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JdbcUtil.java
+- 修复内容: 添加 validateTableName 白名单校验（正则+长度限制），默认分支增加反引号转义
+- 自测结果: 通过（编译成功，白名单正则可拦截特殊字符表名）
+- Git 提交: 180ae07
+- 下一步建议: 继续修复 T002 及后续 CRITICAL/HIGH 级别任务
+
+### Session #2 - T002 (2026-04-02)
+- 实现了: 修复 JdbcUtil.query() 资源泄漏
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JdbcUtil.java
+- 修复内容: 将 query() 从返回 ResultSet 重构为返回 List<JSONObject>，使用 try-with-resources 确保 PreparedStatement 和 ResultSet 正确关闭
+- 自测结果: 通过（mvn compile 成功，无调用方需要同步修改）
+- Git 提交: 650a3e9
+- 下一步建议: 继续修复 T003 及后续任务
+
+### Session #3 - T003 (2026-04-02)
+- 实现了: 修复 getRDBMSColumnProperties ResultSet 泄漏
+- 修改的文件: dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JdbcUtil.java
+- 修复内容: 将 pst.executeQuery().getMetaData() 拆分为先存储 ResultSet 到变量 rs，再获取 MetaData，并在 finally 块中关闭 rs
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 8133022
+- 下一步建议: 继续修复 T004 及后续任务
+
+### Session #2 - T004 (2026-04-02)
+- 实现了: 修复 PoolManager NPE 风险
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/PoolManager.java
+- 修复内容: 在 getPooledConnection 方法中对 getJdbcConnectionPool 返回值增加 null 检查，null 时抛出包含数据源信息的 SQLException
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 5538ac9
+- 下一步建议: 继续修复 T005 及后续任务
+
+### Session #3 - T005 (2026-04-02)
+- 实现了: 修复 JWT 使用密码作为密钥的问题
+- 修改的文件: JwtUtils.java, JwtConfig.java(新增), JwtAuthenticationInterceptor.java, UserController.java, application.properties
+- 修复内容: JWT 签名从使用用户密码改为使用独立配置的强密钥(dbapi.jwt.secret)，通过 JwtConfig 组件在启动时注入 JwtUtils 静态字段
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 128a690
+- 下一步建议: 继续修复 T006 及后续任务；生产部署时需替换 application.properties 中的默认 JWT 密钥
+
+### Session #4 - T006 (2026-04-02)
+- 实现了: 修复 Cache.status 线程安全问题
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/Cache.java
+- 修复内容: 将 status 字段从未初始化的 HashMap 声明改为 ConcurrentHashMap 实例，确保多线程并发读写安全
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 1c1ca54
+- 下一步建议: 继续修复 T007 及后续任务
+
+### Session #5 - T007 (2026-04-02)
+- 实现了: 修复 IPService 竞态条件
+- 修改的文件: Cache.java (加 volatile), IPService.java (加 double-checked locking)
+- 修复内容: Cache.status 加 volatile 关键字保证多线程可见性；IPService.detail() 中对 Cache.status 的 check-then-act 模式使用 double-checked locking 加锁保护，防止并发重复初始化
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: e2c6d11
+- 下一步建议: 继续修复 T008 及后续任务
+
+### Session #6 - T008 (2026-04-02)
+- 实现了: 修复 JwtUtils 弱密钥问题 - 增加密钥强度校验
+- 修改的文件: JwtUtils.java (增加 setSecret 密钥长度校验), JwtConfig.java (增加启动时密钥校验和默认密钥警告)
+- 修复内容: T005 已将 JWT 从用户密码改为独立密钥；T008 进一步加固：setSecret 拒绝短于32字符的密钥，JwtConfig 启动时校验密钥非空/长度/是否为默认值
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 8410ca6
+- 下一步建议: 继续修复 T009 及后续任务
+
+### Session #7 - T009 (2026-04-02)
+- 实现了: 替换 DES 加密为 AES-256-GCM
+- 修改的文件: EncrypDES.java (重写为 AES-256-GCM), EncryptConfig.java (新增，Spring 密钥注入), application.properties (新增 dbapi.encrypt.key)
+- 修复内容: DES 算法替换为 AES/GCM/NoPadding；密钥从配置文件加载而非每次随机生成；GCM 模式自带认证，每次加密生成随机 12 字节 IV
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 3adc42e
+- 下一步建议: 继续修复 T010 及后续任务；生产部署时用 `openssl rand -base64 32` 生成强密钥替换默认值
+
+### Session #8 - T010 (2026-04-02)
+- 实现了: 替换 MD5 密码哈希为 BCrypt
+- 修改的文件: PasswordUtil.java (新增), UserService.java, UserMapper.java, dbapi-core/pom.xml
+- 修复内容: 密码存储从明文改为 BCrypt 哈希；登录验证从 SQL 比对改为 Java 层 BCrypt 验证；旧明文密码登录成功后自动迁移为 BCrypt；resetPassword 存储 BCrypt 哈希
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 2778f39
+- 下一步建议: 继续修复 T011 及后续任务；首次升级部署后，admin 用户需登录一次触发密码自动迁移
+
+### Session #9 - T011 (2026-04-02)
+- 实现了: 修复 HttpUtil 资源泄漏
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/HttpUtil.java
+- 修复内容: 将 HttpClient 和 Response 从手动 finally 关闭改为 try-with-resources，确保异常时资源也能正确释放；移除未使用的 StatusLine/IOException import
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: e97183c
+- 下一步建议: 继续修复 T012 及后续任务
+
+### Session #10 - T012 (2026-04-02)
+- 实现了: 修复 JwtUtils 空 catch 块
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/JwtUtils.java
+- 修复内容: getAudience() 方法中 JWTDecodeException 空 catch 块改为 log.warn 记录异常信息；返回 null 在调用方 JwtAuthenticationInterceptor 中会触发 NumberFormatException 拒绝请求
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 7cd44ec
+- 下一步建议: 继续修复 T013 及后续任务
+
+### Session #12 - T013 (2026-04-02)
+- 实现了: 修复 UUIDUtil 弱 ID 生成
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/UUIDUtil.java
+- 修复内容: 将 RandomStringUtils.random(8) 替换为 UUID.randomUUID().toString().replace("-","")，消除碰撞风险和可预测性
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 9e63f9a
+- 下一步建议: 继续修复 T014 及后续任务
+
+### Session #13 - T014 (2026-04-02)
+- 实现了: 修复 IPUtil 重复条件判断
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/IPUtil.java
+- 修复内容: getOriginIp() 方法第46-48行存在重复的 null/empty 检查（外层和内层第一个 if 条件完全相同），移除冗余的内层 if，使第一个 fallback 直接获取 Proxy-Client-IP header
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: d5789c2
+- 下一步建议: 继续修复 T015 及后续任务
+
+### Session #14 - T015 (2026-04-02)
+- 实现了: 修复 ApiService 类型转换异常
+- 修改的文件: ApiService.java (4处 Double.valueOf/Long.valueOf 加 try-catch), ApiInterceptor.java (getSqlParam 调用处捕获 IllegalArgumentException 返回 400)
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: d515430
+- 下一步建议: 继续修复 T016 及后续任务
+
+### Session #15 - T016 (2026-04-02)
+- 实现了: 修复 JdbcUtil finally 块连接关闭 NPE
+- 修改的文件: JdbcUtil.java (getAllTables 增加 ResultSet null 检查和关闭; executeSql 将 Statement/ResultSet 提到 try 外部，finally 中按 RS→Stmt→Conn 顺序关闭)
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: f48d3a8
+- 下一步建议: 继续修复 T017 及后续任务
+
+### Session #16 - T017 (2026-04-02)
+- 实现了: 修复分页插件参数校验
+- 修改的文件: PaginationPlugin.java (jun-dbapi-plugin 和 dbapi/pagination-plugin-1.0.0.src 两处)
+- 修复内容: pageNo 和 pageSize 解析后增加 >= 1 校验，非法值抛出包含参数名和当前值的 RuntimeException
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: b2e9e3d
+- 下一步建议: 继续修复 T018 及后续任务
+
+### Session #17 - T018 (2026-04-02)
+- 实现了: 修复 PaginationPlugin NPE 风险
+- 修改的文件: PaginationPlugin.java (jun-dbapi-plugin 和 dbapi/pagination-plugin-1.0.0.src 两处)
+- 修复内容: 类型转换链中 Integer.parseInt() 增加 NumberFormatException 捕获，非数字字符串参数返回有意义错误信息；dbapi 版本同步支持 String 类型参数
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 016f35c
+- 下一步建议: 继续修复 T019 及后续任务
+
+### Session #18 - T019 (2026-04-02)
+- 实现了: 修复 ApiConfigService substring 越界
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/service/ApiConfigService.java
+- 修复内容: type.substring(6, type.length()-1) 前增加 startsWith("Array<")、endsWith(">") 和 length>=8 三重检查；不符合 Array<X> 格式但以 Array 开头的降级为"数组"
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 960990e
+- 下一步建议: 继续修复 T020 及后续任务
+
+### Session #19 - T020 (2026-04-02)
+- 实现了: 修复 DataSourceController 文件上传校验
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/controller/DataSourceController.java
+- 修复内容: 添加10MB文件大小限制、.json扩展名校验、Content-Type校验、JSON反序列化异常捕获；返回值从void改为ResponseDto
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: cf6b827
+- 下一步建议: 继续修复 T021 及后续任务
+
+### Session #20 - T021 (2026-04-02)
+- 实现了: 修复 ApiConfigController 文件上传校验
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/controller/ApiConfigController.java
+- 修复内容: /import 和 /importGroup 端点添加统一校验方法 validateUploadFile（10MB大小限制、.json扩展名、Content-Type校验）；返回类型从 void 改为 ResponseDto；增加 JSON 解析异常捕获和空内容检查
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 14246bb
+- 下一步建议: 继续修复 T022 及后续任务
+
+### Session #21 - T022 (2026-04-02)
+- 实现了: 修复 ApiInterceptor IDOR 漏洞
+- 修改的文件: ApiInterceptor.java (数据源权限校验), ApiConfigMapper.java (新增 countByDatasourceAndGroups 查询)
+- 修复内容: 私有接口访问时，在获取数据源后增加权限校验——验证该数据源被 token 授权组内的 API 引用，未授权返回 403
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: d740a97
+- 下一步建议: 继续修复 T023 及后续任务
+
+### Session #22 - T026 (2026-04-02)
+- 实现了: 修复 SignPlugin NumberFormatException
+- 修改的文件: jun-dbapi-plugin/sign-plugin/src/main/java/com/dbapi/SignPlugin.java
+- 修复内容: Long.parseLong(tsObj.toString()) 增加 NumberFormatException 捕获，非法时间戳返回包含字段名和实际值的错误信息
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 6f2346a
+- 下一步建议: 继续修复 T023 及后续任务
+
+### Session #23 - T027 (2026-04-02)
+- 实现了: 修复 HttpUtil 缺少超时配置
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/HttpUtil.java
+- 修复内容: 添加 RequestConfig 设置 connectTimeout、socketTimeout、connectionRequestTimeout 均为 30 秒；通过 httpPost.setConfig() 应用到请求
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: dbb9edc
+- 下一步建议: 继续修复 T023 及后续任务
+
+### Session #24 - T023 (2026-04-02)
+- 实现了: 优化 TreeUtil O(n²) 算法为 O(n)
+- 修改的文件: jun_dbapi/jun-dbapi-plugin/tree-format-plugin/src/main/java/com/dbapi/TreeUtil.java, dbapi/tree-format-plugin-1.0.0.src/com/dbapi/TreeUtil.java
+- 修复内容: 将递归嵌套循环 findChildren O(n²) 改为两遍遍历：第一遍用 HashMap 建立 id→node 索引，第二遍通过 Map.get() O(1) 查找父节点并挂载子节点
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 8a8cb8a
+- 下一步建议: 继续修复剩余任务
+
+### Session #25 - T024 (2026-04-02)
+- 实现了: 替换 e.printStackTrace() 为 slf4j log.error()
+- 修改的文件: JdbcUtil.java (5处), DataSourceController.java (2处), ApiConfigController.java (6处), JwtAuthenticationInterceptor.java (1处), ApiInterceptor.java (1处)
+- 自测结果: 通过（grep printStackTrace 返回零结果，mvn compile 成功）
+- Git 提交: 1a5f91f
+- 下一步建议: 继续修复剩余任务
+
+### Session #26 - T028 (2026-04-02)
+- 实现了: 修复插件中的未检查类型转换
+- 修改的文件: TreePlugin.java, DateFormatPlugin.java, CamelRenamePlugin.java, SingleValueExtractPlugin.java, EncryptPlugin.java, AdvancedTreeFormatPlugin.java (jun-dbapi-plugin 和 dbapi/ 共9个文件)
+- 修复内容: 在所有插件的 transform() 方法中，对 data 参数增加 instanceof List 检查，类型不匹配时抛出包含实际类型信息的 IllegalArgumentException
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: a6d63a5
+- 下一步建议: 继续修复剩余任务
+
+### Session #27 - T029 (2026-04-02)
+- 实现了: 修复 PluginConf InputStream 泄漏
+- 修改的文件: jun_dbapi/dbapi-plugin/src/main/java/com/gitee/freakchicken/dbapi/plugin/PluginConf.java
+- 修复内容: 将 InputStream 从手动 try-catch 改为 try-with-resources，确保流自动关闭；增加 null 检查防止 NPE
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 961a984
+- 下一步建议: 继续修复剩余任务
+
+### Session #28 - T031 (2026-04-02)
+- 实现了: 为 JdbcUtil 编写单元测试
+- 修改的文件: jun_dbapi/dbapi-core/pom.xml (添加 junit/mockito 依赖), jun_dbapi/dbapi-core/src/test/java/com/gitee/freakchicken/dbapi/util/JdbcUtilTest.java (新增)
+- 测试覆盖: 24 个测试用例，覆盖 query()、getAllTables()、getRDBMSColumnProperties()、validateTableName SQL 注入防护、资源关闭验证、异常路径
+- 自测结果: 通过（24 tests, 0 failures, 0 errors）
+- Git 提交: d457170
+- 下一步建议: 继续修复剩余任务
+
+### Session #29 - T032 (2026-04-02)
+- 实现了: 为安全相关修复编写测试
+- 修改的文件: jun_dbapi/dbapi-core/src/test/java/com/gitee/freakchicken/dbapi/util/SecurityTest.java (新增)
+- 测试覆盖: 25 个测试用例，覆盖：
+  - JWT: 创建/验证、伪造 token 拒绝、篡改检测、垃圾输入、弱密钥拒绝、空密钥拒绝、最小长度校验、未初始化异常
+  - BCrypt 密码: 哈希/验证、唯一盐值、旧版明文兼容、null 处理、弱密码保护
+  - AES-256-GCM: 加解密往返、随机 IV 不同密文、篡改检测(GCM tag)、密钥校验(null/空/长度)、有效密钥、空字符串
+  - UUID: 格式(32位hex)、唯一性(10000次)、无连字符
+- 自测结果: 通过（25 tests, 0 failures, 0 errors）
+- Git 提交: c6c5b6a
+- 下一步建议: 继续修复剩余任务
+
+### Session #30 - T025 (2026-04-02)
+- 实现了: 修复 IPUtil 不必要的类型转换
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/IPUtil.java
+- 自测结果: 通过（mvn compile 成功）
+- Git 提交: 3944bef
+- 下一步建议: 继续处理剩余任务
+
+### Session #31 - T030 (2026-04-02)
+- 实现了: 移除 IPUtil 多余的 throws IOException
+- 修改的文件: jun_dbapi/dbapi-core/src/main/java/com/gitee/freakchicken/dbapi/util/IPUtil.java
+- 修复内容: getOriginIp() 方法体内无 IOException 抛出，移除方法签名中的 throws IOException 声明及未使用的 import java.io.IOException
+- 自测结果: 通过（mvn compile 成功，调用方 ApiInterceptor 无需修改）
+- Git 提交: 682e253
+- 下一步建议: 继续处理剩余任务
+
+### Session #32 - T033 (2026-04-02)
+- 实现了: 全量编译和冒烟测试
+- 修改的文件: 无代码修改（验证性任务）
+- 自测结果: 通过
+  - mvn clean compile: BUILD SUCCESS（23 个模块全部编译成功）
+  - mvn test: BUILD SUCCESS（49 tests, 0 failures, 0 errors）
+    - JdbcUtilTest: 24 tests passed
+    - SecurityTest: 25 tests passed
+- Git 提交: 1371f8d
+- 下一步建议: 所有 33 个任务已完成，项目可进入发布准备阶段

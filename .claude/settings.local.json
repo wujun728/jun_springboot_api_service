@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\")",
+      "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\\\\sa-frame\")",
+      "Bash(dir \"D:\\\\workspace_github\\\\jun_api_service\\\\jun_dbapi\\\\jun_ui_sa_admin\\\\static\")",
+      "Bash(nginx.exe -s reload)",
+      "Bash(python test_log_format.py)",
+      "Bash(python main.py --status)",
+      "Bash(python long-running-agent/main.py --status)",
+      "Bash(python long-running-agent/main.py --report)",
+      "Bash(python test_model_provider.py)",
+      "Bash(python test_all.py)",
+      "Bash(cd:*)",
+      "Bash(cp task_manager.py core/)",
+      "Bash(cp agent_runner.py core/)",
+      "Bash(cp logger.py core/)",
+      "Bash(python restructure.py)",
+      "Read(//d/workspace_github_v2/20平台能力层/jun_api_service/long-running-agent/**)",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(python cleanup.py)",
+      "Bash(python verify_and_cleanup.py)",
+      "Bash(rm -rf configs/)",
+      "Bash(mv docs/NEW_MODELS_SUMMARY.md .)",
+      "Bash(rm -rf docs/)",
+      "Bash(rm -rf utils/)",
+      "Bash(python tests/test_model_provider.py)",
+      "Bash(python tests/test_all.py)",
+      "Bash(python main.py --help)",
+      "Bash(python tests/test_core_functionality.py)",
+      "Bash(python tests/test_integration.py)",
+      "Bash(python run_all_tests.py)",
+      "Bash(python tests/test_budget_and_layered_model.py)"
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../../static/sa.css">
+</head>
+<body>
+    <div class="vue-box" style="display: none;" :style="'display: block;'">
+        <div class="c-panel">
+            <div class="c-title">IP 防火墙设置</div>
+            <div style="max-width: 700px; padding-top: 20px;">
+                <el-form label-width="120px">
+                    <el-form-item label="防火墙开关">
+                        <el-switch v-model="firewall.status" active-value="on" inactive-value="off"
+                            active-text="开启" inactive-text="关闭"></el-switch>
+                    </el-form-item>
+                    <el-form-item label="模式">
+                        <el-radio-group v-model="firewall.mode">
+                            <el-radio label="black">黑名单（禁止以下 IP 访问）</el-radio>
+                            <el-radio label="white">白名单（仅允许以下 IP 访问）</el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+                    <el-form-item label="黑名单 IP" v-show="firewall.mode === 'black'">
+                        <el-input type="textarea" v-model="firewall.blackIP" :rows="8"
+                            placeholder="每行一个 IP 地址"></el-input>
+                    </el-form-item>
+                    <el-form-item label="白名单 IP" v-show="firewall.mode === 'white'">
+                        <el-input type="textarea" v-model="firewall.whiteIP" :rows="8"
+                            placeholder="每行一个 IP 地址"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="save">保存设置</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui@2.13.0/lib/index.js"></script>
+    <script src="https://unpkg.com/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="../../static/sa.js"></script>
+    <script src="../../static/dbapi.js"></script>
+    <script>
+        var app = new Vue({
+            el: '.vue-box',
+            data: {
+                firewall: {
+                    status: 'off',
+                    mode: 'black',
+                    blackIP: '',
+                    whiteIP: ''
+                }
+            },
+            mounted: function() {
+                this.loadDetail();
+            },
+            methods: {
+                loadDetail: function() {
+                    var me = this;
+                    dbapi.ajax('/firewall/detail', function(res) {
+                        if (res && res.status) {
+                            me.firewall = {
+                                status: res.status || 'off',
+                                mode: res.mode || 'black',
+                                blackIP: res.blackIP || '',
+                                whiteIP: res.whiteIP || ''
+                            };
+                        }
+                    });
+                },
+                save: function() {
+                    dbapi.ajax('/firewall/save', this.firewall, function(res) {
+                        ELEMENT.Message.success('保存成功');
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

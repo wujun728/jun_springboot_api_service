@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<zeta desc="zeta接口示例">
+    <hello-world title="基础使用">
+        select 'hello world' key
+    </hello-world>
+    <cache title="使用缓存(cache单位毫秒)" cache="5000">
+        select 'cache' cache,now() now
+    </cache>
+    <params title="参数获取与处理">
+        <param key="param" default="hello zeta"/>
+        select :param param
+    </params>
+    <condition title="条件处理">
+        <param key="param" title="数值参数"/>
+        select
+        <if test="param&gt;10">
+            'gt 10' param_status
+        </if>
+        <if test="param&lt;10">
+            'lt 10' param_status
+        </if>
+        <if test="param==10">
+            'eq 10' param_status
+        </if>
+    </condition>
+    <insert title="插入数据">
+        <param key="content" title="内容"/>
+        insert into demo(content) values (:content)
+    </insert>
+    <links title="同时执行多条SQL">
+        select 'hi' hi
+        <link id="now">
+            select now() now;
+        </link>
+        <link id="second">
+            select '第二条SQL执行结果' result;
+        </link>
+    </links>
+</zeta>

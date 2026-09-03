@@ -7,32 +7,51 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="snakerflow" />
-        <module name="bizservice" />
-        <module name="jun_common" />
-        <module name="generator" />
-        <module name="quartz" />
-        <module name="fileservice" />
-        <module name="jun_api_online_groovy" />
-        <module name="system" />
-        <module name="common" />
-        <module name="aoplog" />
-        <module name="shiro" />
-        <module name="jun_system" />
-        <module name="sms" />
-        <module name="jun_admin" />
+        <module name="feishu-alarm-plugin" />
+        <module name="memory-cache-plugin" />
+        <module name="single-value-extract-plugin" />
+        <module name="advanced-tree-format-plugin" />
+        <module name="camel-rename-plugin" />
+        <module name="dbapi-plugin" />
+        <module name="amis-global-transform-plugin" />
+        <module name="pagination-plugin" />
+        <module name="dbapi-ui" />
+        <module name="encrypt-plugin" />
+        <module name="string-concat-plugin" />
+        <module name="sign-plugin" />
+        <module name="date-format-plugin" />
+        <module name="dbapi-common" />
+        <module name="dbapi-core" />
+        <module name="email-alarm-plugin" />
+        <module name="dbapi-assembly" />
+        <module name="dingtalk-alarm-plugin" />
+        <module name="aes-param-decrypt-plugin" />
+        <module name="data-extract-plugin" />
+        <module name="tree-format-plugin" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="jun_springboot_api_simple" target="1.8" />
-      <module name="main" target="1.8" />
-      <module name="modules" target="1.8" />
-      <module name="plugins" target="1.8" />
+      <module name="dbapi (1)" target="1.8" />
+      <module name="dbapi-assembly (1)" target="1.8" />
+      <module name="dbapi-cluster-apiServer" target="1.8" />
+      <module name="dbapi-cluster-gateway" target="1.8" />
+      <module name="dbapi-cluster-manager" target="1.8" />
+      <module name="dbapi-common (1)" target="1.8" />
+      <module name="dbapi-controller" target="1.8" />
+      <module name="dbapi-plugin (1)" target="1.8" />
+      <module name="dbapi-plugin-demo" target="1.8" />
+      <module name="dbapi-spring-boot-starter" target="1.8" />
+      <module name="dbapi-standalone" target="1.8" />
+      <module name="dbapi-ui (1)" target="1.8" />
+      <module name="jun_api_online_groovy" target="1.8" />
+      <module name="jun_api_service (1)" target="1.8" />
+      <module name="starterDemo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="jun_springboot_api_simple" options="-parameters" />
+      <module name="dbapi-spring-boot-starter" options="-parameters" />
+      <module name="starterDemo" options="-parameters" />
     </option>
   </component>
 </project>
