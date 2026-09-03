@@ -1,0 +1,74 @@
+server:
+  port: ${GATEWAY_PORT}
+spring:
+  application:
+    name: sqlrest-gateway
+  main:
+    web-application-type: reactive
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQLDB_HOST}:${MYSQLDB_PORT}/${MYSQLDB_NAME}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&useSSL=false&allowMultiQueries=true&failOverReadOnly=false&connectTimeout=30000
+    username: ${MYSQLDB_USERNAME}
+    password: ${MYSQLDB_PASSWORD}
+    validation-query: SELECT 1
+    test-on-borrow: true
+  cloud:
+    gateway:
+      routes:
+        - id: api_executor_route
+          uri: lb://sqlrest-executor
+          predicates:
+            - Path=/api/**
+        - id: api_token_executor_route
+          uri: lb://sqlrest-executor
+          predicates:
+            - Path=/token/generate
+        - id: api_doc_executor_route
+          uri: lb://sqlrest-executor
+          predicates:
+            - Path=/apidoc/**
+        - id: user_manager_route
+          uri: lb://sqlrest-manager
+          predicates:
+            - Path=/user/**
+        - id: manager_route
+          uri: lb://sqlrest-manager
+          predicates:
+            - Path=/sqlrest/manager/**
+        - id: eureka_manager_route
+          uri: lb://sqlrest-manager
+          predicates:
+            - Path=/dashboard/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: '*'
+            allowed-methods: '*'
+            allowed-headers: "*"
+
+mybatis:
+  configuration:
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  config: classpath:logback-gateway.xml
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    secure-port-enabled: false
+    non-secure-port-enabled: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+    healthcheck:
+      enabled: true
+    registry-fetch-interval-seconds: 5
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${MANAGER_HOST}:${MANAGER_PORT}/eureka/
+

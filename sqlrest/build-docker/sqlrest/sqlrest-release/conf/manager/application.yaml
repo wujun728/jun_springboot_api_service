@@ -1,0 +1,51 @@
+server:
+  port: ${MANAGER_PORT}
+spring:
+  application:
+    name: sqlrest-manager
+  mvc:
+    throw-exception-if-no-handler-found: false
+    static-path-pattern: /**
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQLDB_HOST}:${MYSQLDB_PORT}/${MYSQLDB_NAME}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF8&autoReconnect=true&useSSL=false&allowMultiQueries=true&failOverReadOnly=false&connectTimeout=30000
+    username: ${MYSQLDB_USERNAME}
+    password: ${MYSQLDB_PASSWORD}
+    validation-query: SELECT 1
+    test-on-borrow: true
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    table: SQLREST_SCHEMA_HISTORY
+    enabled: true
+
+mybatis:
+  configuration:
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    map-underscore-to-camel-case: true
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  config: classpath:logback-manager.xml
+
+eureka:
+  dashboard:
+    enabled: false
+    path: /dashboard
+  instance:
+    prefer-ip-address: true
+    secure-port-enabled: false
+    non-secure-port-enabled: true
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+    registry-fetch-interval-seconds: 5
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${MANAGER_HOST}:${MANAGER_PORT}/eureka/
+
+datasource:
+  driver:
+    base-path: ${APP_DRIVERS_PATH}

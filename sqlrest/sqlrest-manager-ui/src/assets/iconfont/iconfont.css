@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1646232408265') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shujuku:before {
+  content: "\e615";
+}
+
+.icon-viewList:before {
+  content: "\e65f";
+}
+
+.icon-shujuku1:before {
+  content: "\e997";
+}
+
+.icon-shitu_biaoge:before {
+  content: "\e6a2";
+}
+

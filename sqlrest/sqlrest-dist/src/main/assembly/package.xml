@@ -1,0 +1,262 @@
+<assembly>
+
+  <id>${project.version}</id>
+
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+
+  <includeBaseDirectory>true</includeBaseDirectory>
+
+  <dependencySets>
+    <dependencySet>
+      <useProjectArtifact>true</useProjectArtifact>
+      <outputDirectory>lib</outputDirectory>
+      <excludes>
+        <!--  排除sqlrest-dist自身打的jar包-->
+        <exclude>com.gitee.sqlrest:sqlrest-dist</exclude>
+      </excludes>
+    </dependencySet>
+  </dependencySets>
+
+  <fileSets>
+
+    <!-- 打包assembly中的bin目录到 打包目录/sbin 下 -->
+    <fileSet>
+      <directory>src/main/assembly/bin</directory>
+      <outputDirectory>bin</outputDirectory>
+      <!-- lineEnding>unix</lineEnding -->
+      <fileMode>0755</fileMode>
+    </fileSet>
+
+    <!-- 创建logs目录文件夹 -->
+    <fileSet>
+      <directory>${project.basedir}</directory>
+      <outputDirectory>logs</outputDirectory>
+      <excludes>
+        <exclude>**/*</exclude>
+      </excludes>
+    </fileSet>
+
+    <!-- 创建lib目录文件夹 -->
+    <fileSet>
+      <directory>${project.basedir}</directory>
+      <outputDirectory>lib</outputDirectory>
+      <excludes>
+        <exclude>**/*</exclude>
+      </excludes>
+    </fileSet>
+
+    <!-- 创建conf目录文件夹 -->
+    <fileSet>
+      <directory>src/main/assembly/conf</directory>
+      <outputDirectory>conf</outputDirectory>
+      <!-- lineEnding>unix</lineEnding -->
+    </fileSet>
+
+    <!-- 打包sqlrest-manager中的配置文件到打包目录/conf/manager 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-manager/src/main/resources/
+      </directory>
+      <outputDirectory>conf/manager</outputDirectory>
+      <includes>
+        <include>*.yml</include>
+        <include>*.yaml</include>
+        <include>*.xml</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-executor中的配置文件到打包目录/conf/executor 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-executor/src/main/resources
+      </directory>
+      <outputDirectory>conf/executor</outputDirectory>
+      <includes>
+        <include>*.yml</include>
+        <include>*.yaml</include>
+        <include>*.xml</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-gateway中的配置文件到打包目录/conf/gateway 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-gateway/src/main/resources
+      </directory>
+      <outputDirectory>conf/gateway</outputDirectory>
+      <includes>
+        <include>*.yml</include>
+        <include>*.yaml</include>
+        <include>*.xml</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-common的jar文件放到打包目录/lib 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-common/target
+      </directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-template的jar文件放到打包目录/lib 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-template/target
+      </directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-persistence的jar文件放到打包目录/lib 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-persistence/target
+      </directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-core的jar文件放到打包目录/lib 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-core/target</directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-manager的jar文件放到打包目录/lib/{common,manager} 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-manager/target</directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <excludes>
+        <exclude>sqlrest-manager-*.jar</exclude>
+        <exclude>flyway-core-*.jar</exclude>
+        <exclude>spring-boot-starter-tomcat-*.jar</exclude>
+        <exclude>spring-boot-starter-web-*.jar</exclude>
+        <exclude>tomcat-embed-websocket-*.jar</exclude>
+        <exclude>tomcat-embed-core-*.jar</exclude>
+        <exclude>spring-webmvc-*.jar</exclude>
+        <exclude>spring-cloud-netflix-eureka-server-*.jar</exclude>
+        <exclude>spring-cloud-starter-netflix-eureka-server-*.jar</exclude>
+      </excludes>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-manager/target</directory>
+      <outputDirectory>lib/webmvc</outputDirectory>
+      <includes>
+        <include>spring-boot-starter-tomcat-*.jar</include>
+        <include>spring-boot-starter-web-*.jar</include>
+        <include>tomcat-embed-websocket-*.jar</include>
+        <include>tomcat-embed-core-*.jar</include>
+        <include>spring-webmvc-*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-manager/target</directory>
+      <outputDirectory>lib/manager</outputDirectory>
+      <includes>
+        <include>sqlrest-manager-*.jar</include>
+        <include>flyway-core-*.jar</include>
+        <include>spring-cloud-netflix-eureka-server-*.jar</include>
+        <include>spring-cloud-starter-netflix-eureka-server-*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-executor的jar文件放到打包目录/lib/{common,executor} 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-executor/target
+      </directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <excludes>
+        <exclude>sqlrest-executor-*.jar</exclude>
+        <exclude>spring-boot-starter-tomcat-*.jar</exclude>
+        <exclude>spring-boot-starter-web-*.jar</exclude>
+        <exclude>tomcat-embed-websocket-*.jar</exclude>
+        <exclude>tomcat-embed-core-*.jar</exclude>
+        <exclude>spring-webmvc-*.jar</exclude>
+      </excludes>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-executor/target</directory>
+      <outputDirectory>lib/webmvc</outputDirectory>
+      <includes>
+        <include>spring-boot-starter-tomcat-*.jar</include>
+        <include>spring-boot-starter-web-*.jar</include>
+        <include>tomcat-embed-websocket-*.jar</include>
+        <include>tomcat-embed-core-*.jar</include>
+        <include>spring-webmvc-*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-executor/target
+      </directory>
+      <outputDirectory>lib/executor</outputDirectory>
+      <includes>
+        <include>sqlrest-executor-*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 打包sqlrest-gateway的jar文件单独移动到目录/lib/{common,ext,gateway} 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-gateway/target
+      </directory>
+      <outputDirectory>lib/common</outputDirectory>
+      <excludes>
+        <exclude>sqlrest-gateway-*.jar</exclude>
+
+        <exclude>spring-boot-starter-tomcat-*.jar</exclude>
+        <exclude>spring-boot-starter-web-*.jar</exclude>
+        <exclude>tomcat-embed-websocket-*.jar</exclude>
+        <exclude>tomcat-embed-core-*.jar</exclude>
+        <exclude>spring-webmvc-*.jar</exclude>
+
+        <exclude>spring-boot-starter-webflux-*.jar</exclude>
+        <exclude>spring-webflux-*.jar</exclude>
+        <exclude>spring-cloud-starter-gateway-*.jar</exclude>
+        <exclude>spring-cloud-gateway-server-*.jar</exclude>
+      </excludes>
+      <includes>
+        <include>*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-gateway/target
+      </directory>
+      <outputDirectory>lib/webflux</outputDirectory>
+      <includes>
+        <include>spring-boot-starter-webflux-*.jar</include>
+        <include>spring-webflux-*.jar</include>
+        <include>spring-cloud-starter-gateway-*.jar</include>
+        <include>spring-cloud-gateway-server-*.jar</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.parent.basedir}/sqlrest-gateway/target
+      </directory>
+      <outputDirectory>lib/gateway</outputDirectory>
+      <includes>
+        <include>sqlrest-gateway-*.jar</include>
+      </includes>
+    </fileSet>
+
+    <!-- 将模块drivers驱动等打包目录/drivers 下 -->
+    <fileSet>
+      <directory>${project.parent.basedir}/drivers/
+      </directory>
+      <outputDirectory>drivers</outputDirectory>
+    </fileSet>
+
+  </fileSets>
+
+</assembly>
