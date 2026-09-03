@@ -1,0 +1,4 @@
+1. 删除 Spring Security，集成 Sa-Token
+2. 集成 Hutool
+3. 删除任务调度，改为 magic-api
+4. 集成magic-api

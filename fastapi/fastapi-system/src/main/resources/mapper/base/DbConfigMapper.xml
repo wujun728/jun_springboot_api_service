@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.base.mapper.DbConfigMapper">
+
+    <resultMap type="DbConfig" id="DbConfigResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="ipAddress"    column="ip_address"    />
+        <result property="connectUrl"    column="connect_url"    />
+        <result property="connectDriver"    column="connect_driver"    />
+        <result property="userName"    column="user_name"    />
+        <result property="password"    column="password"    />
+        <result property="checkStatus"    column="check_status"    />
+        <result property="checkTime"    column="check_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectDbConfigVo">
+        select id, name, ip_address, connect_url, connect_driver, user_name, password, check_status, check_time, create_by, create_time, update_by, update_time, remark from db_config
+    </sql>
+
+    <select id="selectDbConfigList" parameterType="DbConfig" resultMap="DbConfigResult">
+        <include refid="selectDbConfigVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="ipAddress != null  and ipAddress != ''"> and ip_address like concat('%', #{ipAddress}, '%')</if>
+            <if test="connectUrl != null  and connectUrl != ''"> and connect_url = #{connectUrl}</if>
+            <if test="connectDriver != null  and connectDriver != ''"> and connect_driver = #{connectDriver}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="checkStatus != null "> and check_status = #{checkStatus}</if>
+        </where>
+    </select>
+
+    <select id="selectDbConfigListByName" parameterType="DbConfig" resultMap="DbConfigResult">
+        <include refid="selectDbConfigVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name = #{name}</if>
+        </where>
+    </select>
+
+    <select id="selectDbConfigById" parameterType="Long" resultMap="DbConfigResult">
+        <include refid="selectDbConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDbConfig" parameterType="DbConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into db_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="ipAddress != null">ip_address,</if>
+            <if test="connectUrl != null">connect_url,</if>
+            <if test="connectDriver != null">connect_driver,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="password != null">password,</if>
+            <if test="checkStatus != null">check_status,</if>
+            <if test="checkTime != null">check_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="ipAddress != null">#{ipAddress},</if>
+            <if test="connectUrl != null">#{connectUrl},</if>
+            <if test="connectDriver != null">#{connectDriver},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="password != null">#{password},</if>
+            <if test="checkStatus != null">#{checkStatus},</if>
+            <if test="checkTime != null">#{checkTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateDbConfig" parameterType="DbConfig">
+        update db_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="ipAddress != null">ip_address = #{ipAddress},</if>
+            <if test="connectUrl != null">connect_url = #{connectUrl},</if>
+            <if test="connectDriver != null">connect_driver = #{connectDriver},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="checkStatus != null">check_status = #{checkStatus},</if>
+            <if test="checkTime != null">check_time = #{checkTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDbConfigById" parameterType="Long">
+        delete from db_config where id = #{id}
+    </delete>
+
+    <delete id="deleteDbConfigByIds" parameterType="String">
+        delete from db_config where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="findAll" resultMap="DbConfigResult">
+        <include refid="selectDbConfigVo"/>
+    </select>
+
+</mapper>

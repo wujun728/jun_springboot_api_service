@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.iservice.mapper.IntfaceReverseHistoryMapper">
+
+    <resultMap type="IntfaceReverseHistory" id="IntfaceReverseHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="selectIntfaceManagerId"    column="select_intface_manager_id"    />
+        <result property="name"    column="name"    />
+        <result property="appManagerName"    column="app_manager_name"    />
+        <result property="appManagerPrefix"    column="app_manager_prefix"    />
+        <result property="depict"    column="depict"    />
+        <result property="inputParam"    column="input_param"    />
+        <result property="type"    column="type"    />
+        <result property="reverseUserId"    column="reverse_user_id"    />
+        <result property="reverseUserName"    column="reverse_user_name"    />
+        <result property="reverseAppApplyForId"    column="reverse_app_apply_for_id"    />
+        <result property="reverseAppApplyForName"    column="reverse_app_apply_for_name"    />
+        <result property="reverseStatus"    column="reverse_status"    />
+        <result property="reverseTime"    column="reverse_time"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectIntfaceReverseHistoryVo">
+        select id, select_intface_manager_id, name, app_manager_name, app_manager_prefix, depict, input_param, type, reverse_user_id, reverse_user_name, reverse_app_apply_for_id, reverse_app_apply_for_name, reverse_status, reverse_time, create_time from intface_reverse_history
+    </sql>
+
+    <select id="selectIntfaceReverseHistoryList" parameterType="IntfaceReverseHistory" resultMap="IntfaceReverseHistoryResult">
+        (<include refid="selectIntfaceReverseHistoryVo"/>
+        where 1=1
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="appManagerName != null  and appManagerName != ''"> and app_manager_name like concat('%', #{appManagerName}, '%')</if>
+            <if test="depict != null  and depict != ''"> and depict = #{depict}</if>
+            <if test="inputParam != null  and inputParam != ''"> and input_param = #{inputParam}</if>
+            <if test="reverseUserId != null "> and reverse_user_id = #{reverseUserId}</if>
+            <if test="reverseAppApplyForId != null "> and reverse_app_apply_for_id = #{reverseAppApplyForId}</if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by id desc
+        limit 1000)
+    </select>
+
+    <select id="selectIntfaceReverseHistoryById" parameterType="Long" resultMap="IntfaceReverseHistoryResult">
+        <include refid="selectIntfaceReverseHistoryVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertIntfaceReverseHistory" parameterType="IntfaceReverseHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into intface_reverse_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="selectIntfaceManagerId != null">select_intface_manager_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="appManagerName != null">app_manager_name,</if>
+            <if test="appManagerPrefix != null and appManagerPrefix != ''">app_manager_prefix,</if>
+            <if test="depict != null">depict,</if>
+            <if test="inputParam != null and inputParam != ''">input_param,</if>
+            <if test="type != null">type,</if>
+            <if test="reverseUserId != null">reverse_user_id,</if>
+            <if test="reverseUserName != null">reverse_user_name,</if>
+            <if test="reverseAppApplyForId != null">reverse_app_apply_for_id,</if>
+            <if test="reverseAppApplyForName != null">reverse_app_apply_for_name,</if>
+            <if test="reverseStatus != null">reverse_status,</if>
+            <if test="reverseTime != null">reverse_time,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="selectIntfaceManagerId != null">#{selectIntfaceManagerId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="appManagerName != null">#{appManagerName},</if>
+            <if test="appManagerPrefix != null and appManagerPrefix != ''">#{appManagerPrefix},</if>
+            <if test="depict != null">#{depict},</if>
+            <if test="inputParam != null and inputParam != ''">#{inputParam},</if>
+            <if test="type != null">#{type},</if>
+            <if test="reverseUserId != null">#{reverseUserId},</if>
+            <if test="reverseUserName != null">#{reverseUserName},</if>
+            <if test="reverseAppApplyForId != null">#{reverseAppApplyForId},</if>
+            <if test="reverseAppApplyForName != null">#{reverseAppApplyForName},</if>
+            <if test="reverseStatus != null">#{reverseStatus},</if>
+            <if test="reverseTime != null">#{reverseTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <update id="updateIntfaceReverseHistory" parameterType="IntfaceReverseHistory">
+        update intface_reverse_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="selectIntfaceManagerId != null">select_intface_manager_id = #{selectIntfaceManagerId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="appManagerName != null">app_manager_name = #{appManagerName},</if>
+            <if test="appManagerPrefix != null and appManagerPrefix != ''">app_manager_prefix = #{appManagerPrefix},</if>
+            <if test="depict != null">depict = #{depict},</if>
+            <if test="inputParam != null and inputParam != ''">input_param = #{inputParam},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="reverseUserId != null">reverse_user_id = #{reverseUserId},</if>
+            <if test="reverseUserName != null">reverse_user_name = #{reverseUserName},</if>
+            <if test="reverseAppApplyForId != null">reverse_app_apply_for_id = #{reverseAppApplyForId},</if>
+            <if test="reverseAppApplyForName != null">reverse_app_apply_for_name = #{reverseAppApplyForName},</if>
+            <if test="reverseStatus != null">reverse_status = #{reverseStatus},</if>
+            <if test="reverseTime != null">reverse_time = #{reverseTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIntfaceReverseHistoryById" parameterType="Long">
+        delete from intface_reverse_history where id = #{id}
+    </delete>
+
+    <delete id="deleteIntfaceReverseHistoryByIds" parameterType="String">
+        delete from intface_reverse_history where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

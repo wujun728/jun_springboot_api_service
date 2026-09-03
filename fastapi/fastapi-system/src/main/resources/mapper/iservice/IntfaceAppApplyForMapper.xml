@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.iservice.mapper.IntfaceAppApplyForMapper">
+
+    <resultMap type="IntfaceAppApplyFor" id="IntfaceAppApplyForResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="accessIp"    column="access_ip"    />
+        <result property="linkPerson"    column="link_person"    />
+        <result property="linkPhone"    column="link_phone"    />
+        <result property="clientId"    column="client_id"    />
+        <result property="clientSecret"    column="client_secret"    />
+        <result property="clientStartTime"    column="client_start_time"    />
+        <result property="clientExpireDay"    column="client_expire_day"    />
+        <result property="createId"    column="create_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectIntfaceAppApplyForVo">
+        select id, name, access_ip, link_person, link_phone, create_id, create_by, create_time, update_by, update_time from intface_app_apply_for
+    </sql>
+
+    <select id="selectIntfaceAppApplyForList" parameterType="IntfaceAppApplyFor" resultMap="IntfaceAppApplyForResult">
+        <include refid="selectIntfaceAppApplyForVo"/>
+        where 1=1
+        <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+    <select id="selectIntfaceAppApplyForById" parameterType="Long" resultMap="IntfaceAppApplyForResult">
+        <include refid="selectIntfaceAppApplyForVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertIntfaceAppApplyFor" parameterType="IntfaceAppApplyFor" useGeneratedKeys="true" keyProperty="id">
+        insert into intface_app_apply_for
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="accessIp != null and accessIp != ''">access_ip,</if>
+            <if test="linkPerson != null and linkPerson != ''">link_person,</if>
+            <if test="linkPhone != null and linkPhone != ''">link_phone,</if>
+            <if test="clientId != null">client_id,</if>
+            <if test="clientSecret != null">client_secret,</if>
+            <if test="clientStartTime != null">client_start_time,</if>
+            <if test="clientExpireDay != null">client_expire_day,</if>
+            <if test="createId != null">create_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="accessIp != null and accessIp != ''">#{accessIp},</if>
+            <if test="linkPerson != null and linkPerson != ''">#{linkPerson},</if>
+            <if test="linkPhone != null and linkPhone != ''">#{linkPhone},</if>
+            <if test="clientId != null">#{clientId},</if>
+            <if test="clientSecret != null">#{clientSecret},</if>
+            <if test="clientStartTime != null">#{clientStartTime},</if>
+            <if test="clientExpireDay != null">#{clientExpireDay},</if>
+            <if test="createId != null">#{createId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateIntfaceAppApplyFor" parameterType="IntfaceAppApplyFor">
+        update intface_app_apply_for
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="accessIp != null and accessIp != ''">access_ip = #{accessIp},</if>
+            <if test="linkPerson != null and linkPerson != ''">link_person = #{linkPerson},</if>
+            <if test="linkPhone != null and linkPhone != ''">link_phone = #{linkPhone},</if>
+            <if test="clientId != null">client_id = #{clientId},</if>
+            <if test="clientSecret != null">client_secret = #{clientSecret},</if>
+            <if test="clientStartTime != null">client_start_time = #{clientStartTime},</if>
+            <if test="clientExpireDay != null">client_expire_day = #{clientExpireDay},</if>
+            <if test="createId != null">create_id = #{createId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteIntfaceAppApplyForById" parameterType="Long">
+        delete from intface_app_apply_for where id = #{id}
+    </delete>
+
+    <delete id="deleteIntfaceAppApplyForByIds" parameterType="String">
+        delete from intface_app_apply_for where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectSecret" parameterType="Long" resultMap="IntfaceAppApplyForResult">
+        select
+        client_id,
+        client_secret,
+        client_start_time,
+        client_expire_day
+        from intface_app_apply_for where id = #{id}
+    </select>
+
+    <select id="selectAppApplyBySecret" resultMap="IntfaceAppApplyForResult">
+        select
+        id,
+        name,
+        create_id,
+        create_by,
+        access_ip,
+        client_id,
+        client_secret,
+        client_start_time,
+        client_expire_day
+        from intface_app_apply_for where client_id = #{clientId} and client_secret = #{clientSecret} limit 1
+    </select>
+
+</mapper>

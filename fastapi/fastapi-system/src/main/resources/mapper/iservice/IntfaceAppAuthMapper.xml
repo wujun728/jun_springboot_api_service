@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.iservice.mapper.IntfaceAppAuthMapper">
+
+    <resultMap type="IntfaceAppAuth" id="IntfaceAppAuthResult">
+        <result property="intfaceAppId"    column="intface_app_id"    />
+        <result property="selectIntfaceId"    column="select_intface_id"    />
+    </resultMap>
+
+    <select id="selectIntfaceAppAuthList" parameterType="com.zy.iservice.domain.bo.SelectIntfaceAppAuthListBO" resultType="com.zy.iservice.domain.bo.SelectIntfaceAppAuthListBO">
+        select
+                im.id as id,
+                im.app_manager_name as appManagerName,
+                im.app_manager_prefix as appManagerPrefix,
+                im.name as name,
+                im.depict as depict,
+                (CASE WHEN ia.select_intface_id IS NOT NULL THEN '1' ELSE '2' END) AS status
+                from select_intface_manager im
+                left join (select * from intface_app_auth where intface_app_id=#{intfaceAppId}) ia
+                on im.id = ia.select_intface_id
+                <where>
+                    <if test="appManagerName != null  and appManagerName != ''"> and im.app_manager_name like concat('%', #{appManagerName}, '%')</if>
+                    <if test="name != null  and name != ''"> and im.name = #{name}</if>
+                    <if test="depict != null  and depict != ''"> and im.depict like concat('%', #{depict}, '%')</if>
+                </where>
+        order by ia.select_intface_id desc
+    </select>
+
+    <insert id="insertIntfaceAppAuth" parameterType="IntfaceAppAuth">
+        insert ignore into intface_app_auth
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="intfaceAppId != null">intface_app_id,</if>
+            <if test="selectIntfaceId != null">select_intface_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="intfaceAppId != null">#{intfaceAppId},</if>
+            <if test="selectIntfaceId != null">#{selectIntfaceId},</if>
+         </trim>
+    </insert>
+
+    <delete id="cancleAuth" parameterType="com.zy.iservice.domain.bo.InsertUpdateIntfaceAppAuthBO">
+        delete from intface_app_auth where select_intface_id in
+        <foreach item="item" collection="selectIntfaceId" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and intface_app_id = #{intfaceAppId}
+    </delete>
+
+    <delete id="deleteIntfaceAppAuthController" parameterType="Long" >
+        delete from intface_app_auth where intface_app_id = #{intfaceAppId}
+    </delete>
+
+    <select id="cheHaveIntfaceAppAuth" parameterType="IntfaceAppAuth" resultType="IntfaceAppAuth">
+       select intface_app_id,select_intface_id from intface_app_auth where
+       intface_app_id = #{intfaceAppId} and select_intface_id = #{selectIntfaceId}
+    </select>
+
+</mapper>

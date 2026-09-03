@@ -1,0 +1,184 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=renderer content=webkit><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel=icon href=/fastapi/favicon.ico><title>接口管理平台</title><!--[if lt IE 11]><script>window.location.href='/html/ie.html';</script><![endif]--><style>html,
+    body,
+    #app {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+    .chromeframe {
+      margin: 0.2em 0;
+      background: #ccc;
+      color: #000;
+      padding: 0.2em 0;
+    }
+
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+    }
+
+    #loader {
+      display: block;
+      position: relative;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      margin: -75px 0 0 -75px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 2s linear infinite;
+      -ms-animation: spin 2s linear infinite;
+      -moz-animation: spin 2s linear infinite;
+      -o-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+      z-index: 1001;
+    }
+
+    #loader:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -webkit-animation: spin 3s linear infinite;
+      -moz-animation: spin 3s linear infinite;
+      -o-animation: spin 3s linear infinite;
+      -ms-animation: spin 3s linear infinite;
+      animation: spin 3s linear infinite;
+    }
+
+    #loader:after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: #FFF;
+      -moz-animation: spin 1.5s linear infinite;
+      -o-animation: spin 1.5s linear infinite;
+      -ms-animation: spin 1.5s linear infinite;
+      -webkit-animation: spin 1.5s linear infinite;
+      animation: spin 1.5s linear infinite;
+    }
+
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+
+    #loader-wrapper .loader-section {
+      position: fixed;
+      top: 0;
+      width: 51%;
+      height: 100%;
+      background: #7171C6;
+      z-index: 1000;
+      -webkit-transform: translateX(0);
+      -ms-transform: translateX(0);
+      transform: translateX(0);
+    }
+
+    #loader-wrapper .loader-section.section-left {
+      left: 0;
+    }
+
+    #loader-wrapper .loader-section.section-right {
+      right: 0;
+    }
+
+
+    .loaded #loader-wrapper .loader-section.section-left {
+      -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+      transform: translateX(-100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader-wrapper .loader-section.section-right {
+      -webkit-transform: translateX(100%);
+      -ms-transform: translateX(100%);
+      transform: translateX(100%);
+      -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+      transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
+    }
+
+    .loaded #loader {
+      opacity: 0;
+      -webkit-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+    }
+
+    .loaded #loader-wrapper {
+      visibility: hidden;
+      -webkit-transform: translateY(-100%);
+      -ms-transform: translateY(-100%);
+      transform: translateY(-100%);
+      -webkit-transition: all 0.3s 1s ease-out;
+      transition: all 0.3s 1s ease-out;
+    }
+
+    .no-js #loader-wrapper {
+      display: none;
+    }
+
+    .no-js h1 {
+      color: #222222;
+    }
+
+    #loader-wrapper .load_title {
+      font-family: 'Open Sans';
+      color: #FFF;
+      font-size: 19px;
+      width: 100%;
+      text-align: center;
+      z-index: 9999999999999;
+      position: absolute;
+      top: 60%;
+      opacity: 1;
+      line-height: 30px;
+    }
+
+    #loader-wrapper .load_title span {
+      font-weight: normal;
+      font-style: italic;
+      font-size: 13px;
+      color: #FFF;
+      opacity: 0.5;
+    }</style><link href=/fastapi/static/css/chunk-libs.ea078ece.css rel=stylesheet><link href=/fastapi/static/css/app.ab63afe1.css rel=stylesheet></head><body><div id=app><div id=loader-wrapper><div id=loader></div><div class="loader-section section-left"></div><div class="loader-section section-right"></div><div class=load_title>正在加载系统资源，请耐心等待</div></div></div><script>(function(c){function e(e){for(var d,u,h=e[0],t=e[1],k=e[2],r=0,b=[];r<h.length;r++)u=h[r],Object.prototype.hasOwnProperty.call(f,u)&&f[u]&&b.push(f[u][0]),f[u]=0;for(d in t)Object.prototype.hasOwnProperty.call(t,d)&&(c[d]=t[d]);o&&o(e);while(b.length)b.shift()();return a.push.apply(a,k||[]),n()}function n(){for(var c,e=0;e<a.length;e++){for(var n=a[e],d=!0,u=1;u<n.length;u++){var h=n[u];0!==f[h]&&(d=!1)}d&&(a.splice(e--,1),c=t(t.s=n[0]))}return c}var d={},u={runtime:0},f={runtime:0},a=[];function h(c){return t.p+"static/js/"+({}[c]||c)+"."+{"chunk-005cb0c7":"fbed13a8","chunk-04621586":"3fa4a282","chunk-1537fc93":"527e0375","chunk-210ca3e9":"137fa787","chunk-210ce324":"f8e796ce","chunk-2727631f":"3e831796","chunk-2d0b1626":"de8246f5","chunk-2d0b2b28":"26e90221","chunk-cf6ed78a":"4d63fa73","chunk-2d0bce05":"79024402","chunk-2d0c8e18":"164d3168","chunk-2d0da2ea":"14fdc3a6","chunk-2d0e2366":"00afd6b9","chunk-314784fd":"e3cab813","chunk-7fd190a8":"f14acfe4","chunk-2d0f012d":"43988c3d","chunk-2d20955d":"93fdf647","chunk-2d212b99":"eadf8bea","chunk-2d2102b6":"1d997a85","chunk-60006966":"24caea21","chunk-8f9bb2c8":"a9915fd4","chunk-22ac05af":"0a5e9dfa","chunk-0d5b0085":"888ba9c7","chunk-e2ef1232":"7edd6e40","chunk-2d217a3b":"c1d0ead3","chunk-2d217c9e":"53638ed7","chunk-2d21a3bb":"b78e776d","chunk-2d22252c":"e168f5ee","chunk-2d230898":"ba9cdfa9","chunk-2d238605":"4fcbdf2f","chunk-37cf9d97":"fe4f14f4","chunk-39413ce8":"ac08c02b","chunk-3a08d90c":"a4b826fb","chunk-56e8e43e":"8a66fb50","chunk-582b2a7a":"f0817364","chunk-5a2f9c7b":"dff94589","chunk-28e35278":"2302cdf9","chunk-2d0de3b1":"29975295","chunk-548b6580":"3353e7e0","chunk-3b0424d2":"f34ebabe","chunk-4379b6f3":"83d3881b","chunk-712f179b":"d0fcd4bf","chunk-74ad0b3a":"af5e2e96","chunk-5b83c289":"16faa41a","chunk-7fa21b9b":"04401eac","chunk-68702101":"2606ff05","chunk-74680cd7":"d3c96359","chunk-772e2f40":"c8383b1c","chunk-7749c383":"9272fa9d","chunk-7e203972":"4d19d566","chunk-81a2a40e":"5bb062ad","chunk-8579d4da":"098a25cd","chunk-8ee3fc10":"b6fa92a6","chunk-a662c34e":"44a56b4c","chunk-cfe687d2":"21cddaa3","chunk-d19c1a98":"e093e68d","chunk-d6ec12d8":"cec82251","chunk-f95fdb36":"548f137c","chunk-1348daec":"ffcd788b","chunk-2bb7b688":"1f7de5c9","chunk-2d0c94ba":"336e5ab9","chunk-4b1e4dca":"f3fad93b","chunk-50e312d8":"75c3398f","chunk-b217db68":"00bbaf70"}[c]+".js"}function t(e){if(d[e])return d[e].exports;var n=d[e]={i:e,l:!1,exports:{}};return c[e].call(n.exports,n,n.exports,t),n.l=!0,n.exports}t.e=function(c){var e=[],n={"chunk-1537fc93":1,"chunk-cf6ed78a":1,"chunk-314784fd":1,"chunk-7fd190a8":1,"chunk-8f9bb2c8":1,"chunk-22ac05af":1,"chunk-37cf9d97":1,"chunk-56e8e43e":1,"chunk-5a2f9c7b":1,"chunk-28e35278":1,"chunk-74ad0b3a":1,"chunk-5b83c289":1,"chunk-74680cd7":1,"chunk-772e2f40":1,"chunk-81a2a40e":1,"chunk-cfe687d2":1,"chunk-d6ec12d8":1,"chunk-b217db68":1};u[c]?e.push(u[c]):0!==u[c]&&n[c]&&e.push(u[c]=new Promise((function(e,n){for(var d="static/css/"+({}[c]||c)+"."+{"chunk-005cb0c7":"31d6cfe0","chunk-04621586":"31d6cfe0","chunk-1537fc93":"bbc9fa95","chunk-210ca3e9":"31d6cfe0","chunk-210ce324":"31d6cfe0","chunk-2727631f":"31d6cfe0","chunk-2d0b1626":"31d6cfe0","chunk-2d0b2b28":"31d6cfe0","chunk-cf6ed78a":"f59a1d86","chunk-2d0bce05":"31d6cfe0","chunk-2d0c8e18":"31d6cfe0","chunk-2d0da2ea":"31d6cfe0","chunk-2d0e2366":"31d6cfe0","chunk-314784fd":"c621826b","chunk-7fd190a8":"c621826b","chunk-2d0f012d":"31d6cfe0","chunk-2d20955d":"31d6cfe0","chunk-2d212b99":"31d6cfe0","chunk-2d2102b6":"31d6cfe0","chunk-60006966":"31d6cfe0","chunk-8f9bb2c8":"26edb5dd","chunk-22ac05af":"4b262291","chunk-0d5b0085":"31d6cfe0","chunk-e2ef1232":"31d6cfe0","chunk-2d217a3b":"31d6cfe0","chunk-2d217c9e":"31d6cfe0","chunk-2d21a3bb":"31d6cfe0","chunk-2d22252c":"31d6cfe0","chunk-2d230898":"31d6cfe0","chunk-2d238605":"31d6cfe0","chunk-37cf9d97":"a00b75fd","chunk-39413ce8":"31d6cfe0","chunk-3a08d90c":"31d6cfe0","chunk-56e8e43e":"3e10cd59","chunk-582b2a7a":"31d6cfe0","chunk-5a2f9c7b":"84f98409","chunk-28e35278":"67ce7013","chunk-2d0de3b1":"31d6cfe0","chunk-548b6580":"31d6cfe0","chunk-3b0424d2":"31d6cfe0","chunk-4379b6f3":"31d6cfe0","chunk-712f179b":"31d6cfe0","chunk-74ad0b3a":"793cbdf1","chunk-5b83c289":"ce2a2394","chunk-7fa21b9b":"31d6cfe0","chunk-68702101":"31d6cfe0","chunk-74680cd7":"4e8637e7","chunk-772e2f40":"db631dbc","chunk-7749c383":"31d6cfe0","chunk-7e203972":"31d6cfe0","chunk-81a2a40e":"17fbdb6b","chunk-8579d4da":"31d6cfe0","chunk-8ee3fc10":"31d6cfe0","chunk-a662c34e":"31d6cfe0","chunk-cfe687d2":"99c9f7ca","chunk-d19c1a98":"31d6cfe0","chunk-d6ec12d8":"5a402cd2","chunk-f95fdb36":"31d6cfe0","chunk-1348daec":"31d6cfe0","chunk-2bb7b688":"31d6cfe0","chunk-2d0c94ba":"31d6cfe0","chunk-4b1e4dca":"31d6cfe0","chunk-50e312d8":"31d6cfe0","chunk-b217db68":"74496202"}[c]+".css",f=t.p+d,a=document.getElementsByTagName("link"),h=0;h<a.length;h++){var k=a[h],r=k.getAttribute("data-href")||k.getAttribute("href");if("stylesheet"===k.rel&&(r===d||r===f))return e()}var b=document.getElementsByTagName("style");for(h=0;h<b.length;h++){k=b[h],r=k.getAttribute("data-href");if(r===d||r===f)return e()}var o=document.createElement("link");o.rel="stylesheet",o.type="text/css",o.onload=e,o.onerror=function(e){var d=e&&e.target&&e.target.src||f,a=new Error("Loading CSS chunk "+c+" failed.\n("+d+")");a.code="CSS_CHUNK_LOAD_FAILED",a.request=d,delete u[c],o.parentNode.removeChild(o),n(a)},o.href=f;var i=document.getElementsByTagName("head")[0];i.appendChild(o)})).then((function(){u[c]=0})));var d=f[c];if(0!==d)if(d)e.push(d[2]);else{var a=new Promise((function(e,n){d=f[c]=[e,n]}));e.push(d[2]=a);var k,r=document.createElement("script");r.charset="utf-8",r.timeout=120,t.nc&&r.setAttribute("nonce",t.nc),r.src=h(c);var b=new Error;k=function(e){r.onerror=r.onload=null,clearTimeout(o);var n=f[c];if(0!==n){if(n){var d=e&&("load"===e.type?"missing":e.type),u=e&&e.target&&e.target.src;b.message="Loading chunk "+c+" failed.\n("+d+": "+u+")",b.name="ChunkLoadError",b.type=d,b.request=u,n[1](b)}f[c]=void 0}};var o=setTimeout((function(){k({type:"timeout",target:r})}),12e4);r.onerror=r.onload=k,document.head.appendChild(r)}return Promise.all(e)},t.m=c,t.c=d,t.d=function(c,e,n){t.o(c,e)||Object.defineProperty(c,e,{enumerable:!0,get:n})},t.r=function(c){"undefined"!==typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(c,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(c,"__esModule",{value:!0})},t.t=function(c,e){if(1&e&&(c=t(c)),8&e)return c;if(4&e&&"object"===typeof c&&c&&c.__esModule)return c;var n=Object.create(null);if(t.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:c}),2&e&&"string"!=typeof c)for(var d in c)t.d(n,d,function(e){return c[e]}.bind(null,d));return n},t.n=function(c){var e=c&&c.__esModule?function(){return c["default"]}:function(){return c};return t.d(e,"a",e),e},t.o=function(c,e){return Object.prototype.hasOwnProperty.call(c,e)},t.p="/fastapi/",t.oe=function(c){throw console.error(c),c};var k=window["webpackJsonp"]=window["webpackJsonp"]||[],r=k.push.bind(k);k.push=e,k=k.slice();for(var b=0;b<k.length;b++)e(k[b]);var o=r;n()})([]);</script><script src=/fastapi/static/js/chunk-elementUI.10f7392f.js></script><script src=/fastapi/static/js/chunk-libs.bf168cb0.js></script><script src=/fastapi/static/js/app.ba525abf.js></script></body></html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.imanager.mapper.SelectIntfaceManagerMapper">
+
+    <resultMap type="SelectIntfaceManager" id="SelectIntfaceManagerResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="sqlStr"    column="sql_str"    />
+        <result property="resultType"    column="result_type"    />
+        <result property="appManagerId"    column="app_manager_id"    />
+        <result property="appManagerName"    column="app_manager_name"    />
+        <result property="appManagerPrefix"    column="app_manager_prefix"    />
+        <result property="openCache"    column="open_cache"    />
+        <result property="depict"    column="depict"    />
+        <result property="kvConver"    column="kv_conver"    />
+        <result property="rcConver"    column="rc_conver"    />
+        <result property="keyExtract"    column="key_extract"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectSelectIntfaceManagerVo">
+        select id, name, sql_str, result_type, app_manager_id, app_manager_name, app_manager_prefix, open_cache, depict, kv_conver, rc_conver, key_extract, create_by, create_time, update_by, update_time, remark from select_intface_manager
+    </sql>
+
+    <select id="selectSelectIntfaceManagerList" parameterType="SelectIntfaceManager" resultMap="SelectIntfaceManagerResult">
+        <include refid="selectSelectIntfaceManagerVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name = #{name}</if>
+            <if test="appManagerPrefix != null  and appManagerPrefix != ''"> and app_manager_prefix = #{appManagerPrefix}</if>
+            <if test="resultType != null "> and result_type = #{resultType}</if>
+            <if test="appManagerId != null "> and app_manager_id = #{appManagerId}</if>
+            <if test="appManagerName != null  and appManagerName != ''"> and app_manager_name like concat('%', #{appManagerName}, '%')</if>
+            <if test="openCache != null "> and open_cache = #{openCache}</if>
+            <if test="depict != null  and depict != ''"> and depict like concat('%', #{depict}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectSelectIntfaceManagerById" parameterType="Long" resultMap="SelectIntfaceManagerResult">
+        <include refid="selectSelectIntfaceManagerVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertSelectIntfaceManager" parameterType="SelectIntfaceManager" useGeneratedKeys="true" keyProperty="id">
+        insert into select_intface_manager
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="sqlStr != null and sqlStr != ''">sql_str,</if>
+            <if test="resultType != null">result_type,</if>
+            <if test="appManagerId != null">app_manager_id,</if>
+            <if test="appManagerName != null">app_manager_name,</if>
+            <if test="appManagerPrefix != null">app_manager_prefix,</if>
+            <if test="openCache != null">open_cache,</if>
+            <if test="depict != null">depict,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="sqlStr != null and sqlStr != ''">#{sqlStr},</if>
+            <if test="resultType != null">#{resultType},</if>
+            <if test="appManagerId != null">#{appManagerId},</if>
+            <if test="appManagerName != null">#{appManagerName},</if>
+            <if test="appManagerPrefix != null">#{appManagerPrefix},</if>
+            <if test="openCache != null">#{openCache},</if>
+            <if test="depict != null">#{depict},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <update id="updateSelectIntfaceManager" parameterType="SelectIntfaceManager">
+        update select_intface_manager
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="sqlStr != null and sqlStr != ''">sql_str = #{sqlStr},</if>
+            <if test="resultType != null">result_type = #{resultType},</if>
+            <if test="appManagerId != null">app_manager_id = #{appManagerId},</if>
+            <if test="appManagerName != null">app_manager_name = #{appManagerName},</if>
+            <if test="appManagerPrefix != null">app_manager_prefix = #{appManagerPrefix},</if>
+            <if test="openCache != null">open_cache = #{openCache},</if>
+            <if test="depict != null">depict = #{depict},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSelectIntfaceManagerById" parameterType="Long">
+        delete from select_intface_manager where id = #{id}
+    </delete>
+
+    <delete id="deleteSelectIntfaceManagerByIds" parameterType="String">
+        delete from select_intface_manager where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateAppManagerInfo" parameterType="AppManager">
+        update select_intface_manager set app_manager_name = #{name},app_manager_prefix = #{prefix}
+        where app_manager_id = #{id}
+    </update>
+
+    <update id="updateConverInfo" parameterType="SelectIntfaceManager">
+        update select_intface_manager
+        <trim prefix="SET" suffixOverrides=",">
+            kv_conver = #{kvConver},
+            rc_conver = #{rcConver},
+            key_extract = #{keyExtract},
+        </trim>
+        where id = #{id}
+    </update>
+
+</mapper>
