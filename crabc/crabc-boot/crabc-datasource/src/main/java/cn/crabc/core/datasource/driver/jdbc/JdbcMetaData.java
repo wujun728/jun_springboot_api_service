@@ -1,0 +1,150 @@
+package cn.crabc.core.datasource.driver.jdbc;
+
+import cn.crabc.core.datasource.config.JdbcDataSourceRouter;
+import cn.crabc.core.datasource.exception.CustomException;
+import cn.crabc.core.spi.MetaDataMapper;
+import cn.crabc.core.spi.bean.Column;
+import cn.crabc.core.spi.bean.Schema;
+import cn.crabc.core.spi.bean.Table;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class JdbcMetaData implements MetaDataMapper {
+
+    @Override
+    public List<Schema> getCatalogs(String dataSourceId) {
+        List<Schema> catalogs = new ArrayList<>();
+        try (Connection connection = JdbcDataSourceRouter.getDataSource(dataSourceId).getConnection();
+             ResultSet resultSet = connection.getMetaData().getCatalogs()) {
+            while (resultSet.next()) {
+                String schemaName = resultSet.getString(1);
+                if (isSystemSchema(schemaName)) {
+                    continue;
+                }
+                Schema schema = new Schema();
+                schema.setSchema(schemaName);
+                schema.setCatalog(schemaName);
+                catalogs.add(schema);
+            }
+            return catalogs;
+        } catch (Exception e) {
+            throw new IllegalStateException("查询catalogs失败", e);
+        }
+    }
+
+    @Override
+    public List<Schema> getSchemas(String dataSourceId, String catalog) {
+        List<Schema> schemas = new ArrayList<>();
+        try (Connection connection = JdbcDataSourceRouter.getDataSource(dataSourceId).getConnection();
+             ResultSet resultSet = connection.getMetaData().getSchemas(catalog, null)) {
+            while (resultSet.next()) {
+                String schemaName = resultSet.getString(1);
+                if (isSystemSchema(schemaName)) {
+                    continue;
+                }
+                Schema schema = new Schema();
+                schema.setSchema(schemaName);
+                schema.setCatalog(catalog);
+                schemas.add(schema);
+            }
+            return schemas;
+        } catch (Exception e) {
+            throw new CustomException(51002, "查询schema失败，请检查数据源是否正确");
+        }
+    }
+
+    @Override
+    public List<Table> getTables(String dataSourceId, String catalog, String schema) {
+        List<Table> tables = new ArrayList<>();
+        String[] tableType = {"TABLE", "VIEW"};
+        try (Connection connection = JdbcDataSourceRouter.getDataSource(dataSourceId).getConnection()) {
+            // 获取表和视图
+            try (ResultSet resultSet = connection.getMetaData().getTables(catalog, schema, "%", tableType)) {
+                while (resultSet.next()) {
+                    tables.add(buildTable(resultSet, schema));
+                }
+            }
+            
+            // 获取存储过程
+            try (ResultSet procedures = connection.getMetaData().getProcedures(catalog, schema, null)) {
+                while (procedures.next()) {
+                    tables.add(buildProcedure(procedures, schema));
+                }
+            } catch (Exception ignored) {}
+            
+            return tables;
+        } catch (Exception e) {
+            throw new CustomException(51003, "查询table失败，请检查数据源是否正确");
+        }
+    }
+
+    @Override
+    public List<Column> getColumns(String dataSourceId, String catalog, String schema, String table) {
+        List<Column> columns = new ArrayList<>();
+        try (Connection connection = JdbcDataSourceRouter.getDataSource(dataSourceId).getConnection();
+             ResultSet resultSet = connection.getMetaData().getColumns(catalog, schema, table, null)) {
+            while (resultSet.next()) {
+                columns.add(buildColumn(resultSet, schema, table));
+            }
+            return columns;
+        } catch (Exception e) {
+            throw new CustomException(51004, "查询字段失败，请检查数据源是否正确");
+        }
+    }
+
+    private boolean isSystemSchema(String schemaName) {
+        return "information_schema".equalsIgnoreCase(schemaName) 
+            || "performance_schema".equalsIgnoreCase(schemaName) 
+            || "pg_catalog".equals(schemaName);
+    }
+
+    private Table buildTable(ResultSet rs, String schema) throws SQLException {
+        Table table = new Table();
+        table.setTableName(rs.getString("TABLE_NAME"));
+        table.setRemarks(rs.getString("REMARKS")); 
+        table.setTableType(rs.getString("TABLE_TYPE"));
+        table.setCatalog(rs.getString("TABLE_CAT"));
+        table.setSchema(schema);
+        return table;
+    }
+
+    private Table buildProcedure(ResultSet rs, String schema) throws SQLException {
+        Table table = new Table();
+        table.setTableName(rs.getString("PROCEDURE_NAME"));
+        table.setRemarks(rs.getString("REMARKS"));
+        table.setTableType("PROCEDURE");
+        table.setCatalog(rs.getString("PROCEDURE_CAT")); 
+        table.setSchema(schema);
+        return table;
+    }
+
+    private Column buildColumn(ResultSet rs, String schema, String table) throws SQLException {
+        Column column = new Column();
+        column.setColumnName(rs.getString("COLUMN_NAME"));
+        column.setRemarks(rs.getString("REMARKS"));
+        column.setColumnType(rs.getString("TYPE_NAME"));
+        column.setColumnSize(rs.getString("COLUMN_SIZE"));
+        column.setColumnDefault(rs.getString("COLUMN_DEF"));
+        column.setDecimalDigits(rs.getString("DECIMAL_DIGITS"));
+        column.setCatalog(rs.getString("TABLE_CAT"));
+        column.setSchema(schema);
+        column.setTableName(table);
+        
+        String columnType = column.getColumnType() == null ? "" : column.getColumnType().toUpperCase();
+        if (columnType.contains("DATE") || columnType.contains("TIME")) {
+            column.setTypeIcon("date");
+        } else if (columnType.contains("INT") || columnType.contains("NUMBER")
+                || columnType.contains("FLOAT") || columnType.contains("DECIMAL")) {
+            column.setTypeIcon("int");
+        } else {
+            column.setTypeIcon("str");
+        }
+        
+        return column;
+    }
+}

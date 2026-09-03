@@ -1,0 +1,38 @@
+# Tomcat
+server:
+  port: 9377
+spring:
+  application:
+    name: crabc-admin
+  main:
+    banner-mode: off
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/crabc?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+# mybatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: cn.crabc.core.admin.entity
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*.xml
+  config-location: classpath:mybatis-config.xml
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+pagehelper:
+  autoRuntimeDialect: true   # 开启多数据源分页识别
+
+# es健康检查
+management:
+  health:
+    elasticsearch:
+      enabled: false
+# 签名认证过期时间
+crabc:
+  auth:
+    expiresTime: 10
